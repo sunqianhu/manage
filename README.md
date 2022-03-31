@@ -1,2 +1,2 @@
-# manage_template
+# manage
 管理后台模板
