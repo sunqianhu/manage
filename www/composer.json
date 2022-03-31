@@ -1,0 +1,19 @@
+{
+    "name": "sunqianhu/manage",
+    "description": "后台管理框架",
+    "type": "project",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "sunqianhu",
+            "email": "469661426@qq.com"
+        }
+    ],
+    "require": {},
+    "autoload":{
+        "psr-4": {
+            "app\\": "app"
+        },
+        "file"
+    }
+}
