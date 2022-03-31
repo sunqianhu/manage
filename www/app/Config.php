@@ -5,6 +5,12 @@
 namespace app;
 
 class Config{
+    /**
+     * 全部配置
+     */
+    static function all(){
+        return require(dirname(__DIR__).'/config.php');
+    }
     
     /**
      * 渲染视图显示

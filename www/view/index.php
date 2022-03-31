@@ -6,6 +6,8 @@
 </head>
 
 <body>
-<?php echo $data;?>
+<?php echo $data;
+print_r($config);
+?>
 </body>
 </html>

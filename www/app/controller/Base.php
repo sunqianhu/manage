@@ -10,14 +10,15 @@ class Base{
     
     /**
      * 渲染视图显示
-     * @param String $filePath 视图文件路径
+     * @param String $pathFile 视图文件路径
      * @param null $data 渲染的数据
      */
-    static function display($filePath, $data){
-        $path = '';
-        $viewPath = Config::get("view_path");
-        $path = $viewPath.$filePath;
+    static function display($pathFile, $data){
+        $config = Config::all();
+        $pathFull = '';
+        $pathView = $config['view_path'];
+        $pathFull = $pathView.$pathFile;
         
-        require_once $path;
+        require_once $pathFull;
     }
 }
