@@ -1,0 +1,87 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 3296852 */
+  src: url('iconfont.woff2?t=1648804853744') format('woff2'),
+       url('iconfont.woff?t=1648804853744') format('woff'),
+       url('iconfont.ttf?t=1648804853744') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-collection:before {
+  content: "\e670";
+}
+
+.icon-help:before {
+  content: "\e629";
+}
+
+.icon-user:before {
+  content: "\e6cb";
+}
+
+.icon-home:before {
+  content: "\e62b";
+}
+
+.icon-success:before {
+  content: "\e6bc";
+}
+
+.icon-error:before {
+  content: "\e615";
+}
+
+.icon-prompt:before {
+  content: "\e60a";
+}
+
+.icon-edit:before {
+  content: "\e60c";
+}
+
+.icon-delete:before {
+  content: "\e671";
+}
+
+.icon-magnifier:before {
+  content: "\e62d";
+}
+
+.icon-replay:before {
+  content: "\e66f";
+}
+
+.icon-exit:before {
+  content: "\e625";
+}
+
+.icon-file:before {
+  content: "\e64d";
+}
+
+.icon-camera:before {
+  content: "\e60b";
+}
+
+.icon-and:before {
+  content: "\e605";
+}
+
+.icon-password:before {
+  content: "\e62a";
+}
+
+.icon-up:before {
+  content: "\e60d";
+}
+
+.icon-push:before {
+  content: "\e67f";
+}
+

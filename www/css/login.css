@@ -1,0 +1,20 @@
+/**
+ * 登录
+ */
+@import url(iconfont/iconfont.css);
+@import url(sun.css);
+
+html{ height: 100%}
+.page_login{ background-image: url(../image/login/bg.jpg); background-repeat: no-repeat; background-size: cover; overflow: hidden; position: relative; height: 100%}
+
+.page_login .wrap{ width: 280px; position: absolute; top: 50%; left: 50%; margin-top: -180px; margin-left: -170px; background: #ffffff; border-radius: 5px; padding: 10px 30px 30px 30px; box-shadow: 0px 0px 8px #919191}
+.page_login .wrap .title{}
+.page_login .wrap .title h1{ text-align: center; font-size: 18px; line-height: 150%; font-weight: 400}
+
+.page_login .wrap .form{}
+.page_login .wrap .form .form_group{ margin-top: 20px; position: relative}
+.page_login .wrap .form .form_group .icon{ position: absolute; left: 12px; top: 7px; z-index: 2; color: #919191; font-size: 16px}
+.page_login .wrap .form .form_group input{ box-sizing: border-box; width: 100%; padding: 10px; padding-left: 40px}
+.page_login .wrap .form .button_box{ margin-top: 30px}
+
+.page_login .copyright{ position: absolute; bottom: 10px; text-align: center; width: 100%; color: #919191}

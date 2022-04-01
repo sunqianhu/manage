@@ -4,7 +4,6 @@
  */
 namespace app\model;
 
-use app\helper\Db;
 use app\Config;
 use app\Exception;
 

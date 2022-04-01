@@ -13,7 +13,7 @@ class Base{
      * @param String $pathFile 视图文件路径
      * @param null $data 渲染的数据
      */
-    static function display($pathFile, $data){
+    function display($pathFile, $data = ''){
         $config = Config::all();
         $pathFull = '';
         $pathView = $config['view_path'];
