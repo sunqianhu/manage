@@ -11,8 +11,16 @@
  * @param Exception $line 错误行
  * @param Exception $context 错误上下文
  */
-function sunError($level, $message, $file, $line, $context){
-    echo '<div><b>错误</b><br/>错误号：'.$level.'<br/>错误描述：'.$message.'<br/>错误文件：'.$file.'<br/>错误行：'.$line.'</div>';
+function sunError($code, $message, $file, $line, $context){
+    $errors = array(
+        'type'=>'错误',
+        'code'=>$code,
+        'message'=>$message,
+        'file'=>$file,
+        'line'=>$line
+        //'context'=>$context
+    );
+    echo sunEchoFormat($errors);
     exit;
 }
 
@@ -21,11 +29,40 @@ function sunError($level, $message, $file, $line, $context){
  * @param Exception $e 异常对象
  */
 function sunException($e){
-    $line = $e->getLine();
-    $message = $e->getMessage();
-    $file = $e->getFile();
+    $errors = array(
+        'type'=>'异常',
+        'message'=>$e->getMessage(),
+        'file'=>$e->getFile(),
+        'line'=>$e->getLine()
+    );
+    echo sunEchoFormat($errors);
+}
+
+/**
+ * 错误输出
+ * @param Exception $e 异常对象
+ */
+function sunEchoFormat($errors){
+    $response = 'html';
+    $echo = ''; // 输出
     
-    echo '<div><b>异常</b><br/>异常描述：'.$message.'<br/>异常文件：'.$file.'<br/>异常行：'.$line.'</div>';
+    if(!empty($_GET['response'])){
+        $response = $_GET['response'];
+    }
+    
+    if($response == 'json'){
+        $echo = implode('，', $errors);
+        $returnJsons = array(
+            'status'=>'error',
+            'msg'=>$echo
+        );
+        echo json_encode($returnJsons);
+        exit;
+    }
+    
+    $echo = implode('<br/>', $errors);
+    echo $echo;
+    exit;
 }
 
 set_error_handler("sunError");

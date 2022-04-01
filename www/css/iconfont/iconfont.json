@@ -6,6 +6,13 @@
   "description": "管理后台模板",
   "glyphs": [
     {
+      "icon_id": "2570127",
+      "name": "认证",
+      "font_class": "auth",
+      "unicode": "e657",
+      "unicode_decimal": 58967
+    },
+    {
       "icon_id": "2418255",
       "name": "收藏",
       "font_class": "collection",

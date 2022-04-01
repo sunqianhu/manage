@@ -6,6 +6,7 @@ namespace app\controller;
 
 use app\controller\Base;
 use app\View;
+use app\helper\Captcha;
 
 class Login extends Base{
     /**
@@ -14,4 +15,12 @@ class Login extends Base{
     function main(){
         $this->display("login.php");
     }
+    
+    /**
+     * 验证码
+     */
+    function captcha(){
+        Captcha::createImage();
+    }
+    
 }
