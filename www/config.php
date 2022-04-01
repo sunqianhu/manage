@@ -14,9 +14,9 @@ return array(
         'type'=>'mysql',
         'host'=>'127.0.0.1',
         'port'=>'3306',
-        'database'=>'yydizi',
-        'username'=>'yydizi',
-        'password'=>'YawQD0ksYlY8s9AS',
+        'database'=>'manage',
+        'username'=>'root',
+        'password'=>'sqh_mysql',
         'charset'=>'utf8mb4'
     )
 );
