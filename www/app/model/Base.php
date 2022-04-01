@@ -191,7 +191,7 @@ class Base{
      * @param array $parameters sql参数
      * @return string 字段内容
      */
-    function getRow($sql, $parameters = array()){
+    function getAll($sql, $parameters = array()){
         $pdo = null;
         $pdoStatement = null;
         $errorMessage = '';
