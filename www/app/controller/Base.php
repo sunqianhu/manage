@@ -4,7 +4,7 @@
  */
 namespace app\controller;
 
-use app\Config;
+use app\View;
 use app\service\Auth;
 
 class Base{
@@ -35,11 +35,7 @@ class Base{
      * @param null $data 渲染的数据
      */
     function display($pathFile, $data = ''){
-        $config = Config::all();
-        $pathFull = '';
-        $pathView = $config['view_path'];
-        $pathFull = $pathView.$pathFile;
-        
-        require_once $pathFull;
+        $view = new View();
+        $view->display($pathFile, $data);
     }
 }

@@ -1,24 +1,23 @@
 <?php
 /**
-* 错误捕获
+* 系统错误/异常处理
 */
 
 /**
  * 自定义错误处理
- * @param Exception $level 错误号
+ * @param Exception $code 错误级别
  * @param Exception $message 错误描述
  * @param Exception $file 错误文件
  * @param Exception $line 错误行
  * @param Exception $context 错误上下文
  */
-function sunError($code, $message, $file, $line, $context){
+function sunError($code, $message, $file, $line){
     $errors = array(
         'type'=>'错误',
         'code'=>$code,
         'message'=>$message,
         'file'=>$file,
         'line'=>$line
-        //'context'=>$context
     );
     echo sunEchoFormat($errors);
     exit;
@@ -31,9 +30,11 @@ function sunError($code, $message, $file, $line, $context){
 function sunException($e){
     $errors = array(
         'type'=>'异常',
+        'code'=>$e->getCode(),
         'message'=>$e->getMessage(),
         'file'=>$e->getFile(),
-        'line'=>$e->getLine()
+        'line'=>$e->getLine(),
+        'trace'=>$e->getTraceAsString()
     );
     echo sunEchoFormat($errors);
 }
@@ -43,28 +44,30 @@ function sunException($e){
  * @param Exception $e 异常对象
  */
 function sunEchoFormat($errors){
-    $response = 'html';
-    $echo = ''; // 输出
+    $response = 'html'; // 响应类型
+    $message = ''; // 错误消息
+    $jsonEchos = array(); // json输出
+    $view = null; // 视图对象
+    
     
     if(!empty($_GET['response'])){
         $response = $_GET['response'];
     }
     
+    // json
     if($response == 'json'){
-        $echo = implode('，', $errors);
-        $returnJsons = array(
+        $message = implode('，', $errors);
+        $jsonEchos = array(
             'status'=>'error',
-            'msg'=>$echo
+            'msg'=>$message
         );
-        echo json_encode($returnJsons);
-        exit;
+        return json_encode($jsonEchos);
     }
     
-    $echo = implode('<br/>', $errors);
-    echo $echo;
-    exit;
+    // html
+    return implode('<br/>', $errors);
 }
 
-set_error_handler("sunError");
+set_error_handler("sunError", E_ALL);
 set_exception_handler("sunException");
 ?>

@@ -11,7 +11,7 @@
 <script type="text/javascript" src="<?php echo $config['site_domain'];?>js/login.js"></script>
 </head>
 
-<body class="page_login">
+<body class="body">
 <div class="wrap">
 <div class="title"><h1><?php echo $config['site_name'];?></h1></div>
 <form action="index.php?c=login&a=login&response=json" method="post" class="form">
@@ -29,7 +29,7 @@
     <img src="<?php echo $config['site_domain'];?>index.php?c=login&a=captcha&mo=<?php echo time();?>" title="点击更新验证码" onClick="changeCaptcha();" />
 </div>
 <div class="button_box">
-    <button class="button button_block">登录</button>
+    <button class="sun_button sun_button_block">登录</button>
 </div>
 </form>
 </div>
