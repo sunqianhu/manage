@@ -25,7 +25,7 @@
 </div>
 <div class="form_group captcha">
     <span class="iconfont icon-auth icon"></span>
-    <input type="password" id="captcha" name="captcha" value="" placeholder="请输入密码">
+    <input type="text" id="captcha" name="captcha" value="" placeholder="请输入密码">
     <img src="<?php echo $config['site_domain'];?>index.php?c=login&a=captcha&mo=<?php echo time();?>" title="点击更新验证码" onClick="changeCaptcha();" />
 </div>
 <div class="button_box">

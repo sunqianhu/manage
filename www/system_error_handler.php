@@ -14,10 +14,10 @@
 function sunError($code, $message, $file, $line){
     $errors = array(
         'type'=>'错误',
-        'code'=>$code,
+        //'code'=>$code,
         'message'=>$message,
-        'file'=>$file,
-        'line'=>$line
+        //'file'=>$file,
+        //'line'=>$line
     );
     echo sunEchoFormat($errors);
     exit;
@@ -30,11 +30,11 @@ function sunError($code, $message, $file, $line){
 function sunException($e){
     $errors = array(
         'type'=>'异常',
-        'code'=>$e->getCode(),
+        //'code'=>$e->getCode(),
         'message'=>$e->getMessage(),
-        'file'=>$e->getFile(),
-        'line'=>$e->getLine(),
-        'trace'=>$e->getTraceAsString()
+        //'file'=>$e->getFile(),
+        //'line'=>$e->getLine(),
+        //'trace'=>$e->getTraceAsString()
     );
     echo sunEchoFormat($errors);
 }
