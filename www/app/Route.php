@@ -8,16 +8,16 @@ use \app\Exception;
 
 class Route{
     /**
-     * 得到控制器对象
+     * 得到控制器
      * @access public
-     * @return 控制器对象
+     * @return string 控制器
      */
     static function getController(){
         $c = '';
         $match = array();
         
         if(empty($_GET['c'])){
-            $_GET['c'] = 'Index';
+            $_GET['c'] = 'index';
         }
         
         $c = $_GET['c'];
@@ -35,9 +35,9 @@ class Route{
     }
     
     /**
-     * 得到方法
+     * 得到控制器方法
      * @access public
-     * @return 控制器对象
+     * @return string 控制器方法
      */
     static function getAction(){
         $a = '';
@@ -54,7 +54,21 @@ class Route{
             throw new Exception("a参数只能由字母数字或下划线组成");
         }
         
-        return $_GET['a'];
+        return $a;
+    }
+    
+    /**
+     * 运行找路
+     * @access public
+     * @return string 控制器方法
+     */
+    static function run(){
+        $getC = '';
+        $getA = '';
+
+        $getC = Route::getController();
+        $getA = Route::getAction();   
+        (new $getC)->$getA();
     }
 }
 

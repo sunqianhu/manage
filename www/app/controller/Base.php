@@ -5,8 +5,29 @@
 namespace app\controller;
 
 use app\Config;
+use app\service\Auth;
 
 class Base{
+    
+    /**
+     * 构造
+     */
+    function __construct(){
+        $accessController = array(
+            'login'
+        ); // 公开访问控制器
+        
+        // 登录
+        if(!Auth::isLogin()){
+            if(!in_array($_GET['c'], $accessController)){
+                header('location:index.php?c=login&a=main');
+                exit;
+            }
+        }
+        
+        // 权限
+        
+    }
     
     /**
      * 渲染视图显示

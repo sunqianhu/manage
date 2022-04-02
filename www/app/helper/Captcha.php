@@ -7,10 +7,10 @@ namespace app\helper;
 class Captcha{
     /**
      * 创建验证码图片
-     * @param array $datas 数组
+     * @param string $name session名称
      * @param json json字符串
      */
-    static function createImage(){
+    static function createImage($name){
         $code = '';
         $colorBg = null;
         $colorFront = null;
@@ -27,7 +27,7 @@ class Captcha{
             imagestring($image, rand(1, 5), (($i * 14) + rand(2, 10)), rand(0, 10), $rand, $colorFront);
         }
 
-        $_SESSION['caption'] = strtolower($code);
+        $_SESSION[$name] = strtolower($code);
 
         header("Content-type: image/png");
         imagepng($image);
