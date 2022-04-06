@@ -6,7 +6,7 @@ namespace app\controller;
 
 use app\Exception;
 use app\helper\Captcha;
-use app\model\User;
+use app\model\Admin;
 use app\service\Auth;
 
 class Login extends Base{
@@ -69,9 +69,9 @@ class Login extends Base{
             exit;
         }
         
-        $user = new User();
+        $admin = new Admin();
         try{
-            $user->getRowByUsernamePassword($_POST['username'], $_POST['password']);
+            $admin->getRowByUsernamePassword($_POST['username'], $_POST['password']);
         }catch(Exception $e){
             $return['msg'] = $e->getMessage();
             echo json_encode($return);
@@ -79,7 +79,7 @@ class Login extends Base{
         }
         
         // 服务层
-        Auth::saveSessionUser($user);
+        Auth::saveSessionAdmin($admin);
         
         $return['status'] = 'success';
         $return['msg'] = '登录成功';

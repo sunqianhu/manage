@@ -7,7 +7,7 @@ namespace app\model;
 use app\helper\Db;
 use app\Exception;
 
-class User extends Base{
+class Admin extends Base{
     /**
      * 获取一个字段
      * @access public
@@ -19,10 +19,10 @@ class User extends Base{
         $sql = '';
         $db = DB::getInstance();
         $pdoStatement = null;
-        $user = array();
+        $admin = array();
         $errorMessage = '';
         
-        $sql = "select * from user where username = :username and `password` = :password limit 0,1";
+        $sql = "select * from admin where username = :username and `password` = :password limit 0,1";
         $pdoStatement = $db->pdo->prepare($sql);
         $pdoStatement->bindValue(':username', $_POST['username']);
         $pdoStatement->bindValue(':password', md5($_POST['password']));
@@ -31,11 +31,11 @@ class User extends Base{
             throw new Exception($errorMessage);
         }
         
-        $user = $db->getRow($pdoStatement);
-        if(empty($user)){
+        $admin = $db->getRow($pdoStatement);
+        if(empty($admin)){
             throw new Exception('用户名或密码错误');
         }
         
-        return $user;
+        return $admin;
     }
 }

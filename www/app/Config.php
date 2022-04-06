@@ -18,7 +18,13 @@ class Config{
      */
     static function get($key){
         $config = require(dirname(__DIR__).'/config.php');
-        return $config[$key];
+        $value = '';
+        
+        if(isset($config[$key])){
+            $value = $config[$key];
+        }
+        
+        return $value;
     }
 }
 
