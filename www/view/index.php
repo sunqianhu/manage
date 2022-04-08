@@ -5,6 +5,8 @@
 <title><?php echo $config['site_name'];?></title>
 <link href="<?php echo $config['site_domain'];?>css/index.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['site_domain'];?>js/plug/jquery/jquery-1.12.4.min.js"></script>
+<link rel="stylesheet" href="<?php echo $config['site_domain'];?>js/plug/layui-2.6.8/css/layui.css">
+<script src="<?php echo $config['site_domain'];?>js/plug/layui-2.6.8/layui.js"></script>
 <script type="text/javascript" src="<?php echo $config['site_domain'];?>js/index.js"></script>
 </head>
 
@@ -356,3 +358,10 @@ right
 </div>
 </body>
 </html>
+
+<script>
+var layer = layui.layer
+  ,form = layui.form;
+  
+  layer.msg('Hello World');
+</script> 

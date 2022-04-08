@@ -5,6 +5,7 @@
 require_once '../vendor/autoload.php';
 
 use model\User;
+use service\Auth;
 
 $return = array(
     'status'=>'error',
