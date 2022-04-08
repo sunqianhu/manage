@@ -1,9 +1,6 @@
 /**
  * 首页
  */
-@import url(iconfont/iconfont.css);
-@import url(plug/sun-1.0.0/sun.css);
-
 .body{}
 .body > .header{ background: #3c8dbc; color: #ffffff; height: 50px; line-height: 50px}
 .body > .header:after{ content: ""; clear: both; zoom: 1; display: block}

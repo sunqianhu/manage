@@ -5,6 +5,8 @@
 <title>系统登录</title>
 <link href="<?php echo $config['site_domain'];?>js/plug/bootstrap-5.1.3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['site_domain'];?>js/plug/bootstrap-5.1.3/js/bootstrap.bundle.min.js"></script>
+<link href="<?php echo $config['site_domain'];?>css/iconfont/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $config['site_domain'];?>css/plug/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $config['site_domain'];?>css/login/index.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['site_domain'];?>js/plug/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="<?php echo $config['site_domain'];?>js/plug/sun_form_submit-1.0.0/sun_form_submit.js"></script>
