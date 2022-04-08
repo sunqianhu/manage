@@ -15,13 +15,13 @@
 .body > .header .link > ul > li > a{ color: #ffffff; display: block; padding: 0px 20px}
 .body > .header .link > ul > li:hover > a{ background: #1c6d9c; text-decoration: none}
 
-.body > .header .link > ul > .admin{ position: relative}
-.body > .header .link > ul > .admin .dropdown_menu{ position: absolute; right: -2px; top: 50px; width: 120px; box-shadow: 0px 0px 3px #919191; line-height: 35px; z-index: 99; margin: 0px; padding: 5px 0px; text-align: center; display: none}
-.body > .header .link > ul > .admin .dropdown_menu li{ list-style: none}
-.body > .header .link > ul > .admin .dropdown_menu li a{ color: #191919}
-.body > .header .link > ul > .admin .dropdown_menu li:hover{ background: #f5f5f5}
-.body > .header .link > ul > .admin .dropdown_menu li:hover a{ text-decoration: none}
-.body > .header .link > ul > .admin:hover .dropdown_menu{ display: block}
+.body > .header .link > ul > .user{ position: relative}
+.body > .header .link > ul > .user .dropdown_menu{ position: absolute; right: 0px; top: 50px; width: 120px; box-shadow: 0px 0px 3px #919191; line-height: 35px; z-index: 99; margin: 0px; padding: 5px 0px; text-align: center; display: none}
+.body > .header .link > ul > .user .dropdown_menu li{ list-style: none}
+.body > .header .link > ul > .user .dropdown_menu li a{ color: #191919}
+.body > .header .link > ul > .user .dropdown_menu li:hover{ background: #f5f5f5}
+.body > .header .link > ul > .user .dropdown_menu li:hover a{ text-decoration: none}
+.body > .header .link > ul > .user:hover .dropdown_menu{ display: block}
 
 .body > .container{ position: absolute; left: 0px; top: 50px; right: 0px; bottom: 0px}
 .body > .container > .left{ position: absolute; left: 0px; bottom: 0px; top: 0px; width: 200px; background: #2F4050; color: #a7b1c2; overflow-y: auto}

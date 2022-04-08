@@ -13,7 +13,11 @@ button{ font-size: 14px; line-height: 175%}
 a{ text-decoration: none; color: #2d64b3}
 a:hover{ text-decoration: underline; color: #0d4493}
 input,select, textarea{ padding: 5px}
-
+*,::after,::before{
+box-sizing: border-box;
+-moz-box-sizing:border-box; /* Firefox */
+-webkit-box-sizing:border-box; /* Safari */
+}
 .iconfont{ font-size: 14px}
 
 /*按钮*/

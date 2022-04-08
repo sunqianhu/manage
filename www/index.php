@@ -1,9 +1,16 @@
 <?php
-session_start();
+/**
+ * 首页
+ */
 require_once 'vendor/autoload.php';
-require_once 'system_error_handler.php';
 
-use app\Route;
+use service\Auth;
+use service\View;
 
-Route::run();
+if(!Auth::isLogin()){
+    header('location:login/index.php');
+    exit;
+}
+
+View::display('index.php');
 ?>
