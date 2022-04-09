@@ -6,18 +6,18 @@ namespace app;
 
 class Config{
     /**
-     * 全部配置
+     * 得到全部配置
      */
     static function all(){
-        return require(dirname(__DIR__).'/config.php');
+        return require_once dirname(__DIR__).'/config.php';
     }
     
     /**
-     * 渲染视图显示
-     * @param String $path 视图文件路径
+     * 得到一个配置项
+     * @param String $key 配置项key
      */
     static function get($key){
-        $config = require(dirname(__DIR__).'/config.php');
+        $config = require_once dirname(__DIR__).'/config.php';
         $value = '';
         
         if(isset($config[$key])){

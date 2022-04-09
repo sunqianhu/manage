@@ -31,7 +31,7 @@ class User extends Base{
         
         $user = DbHelper::getRow($pdoStatement);
         if(empty($user)){
-            throw new Exception('用户名或密码错误');
+            throw new \Exception('用户名或密码错误');
         }
         
         return $user;
