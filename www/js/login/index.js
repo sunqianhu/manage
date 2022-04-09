@@ -4,7 +4,7 @@
 
 // 修改验证码
 function changeCaptcha(){
-    var url = "captcha.php?"+Math.random();
+    var url = "../login/captcha?"+Math.random();
     var domImg = $(".captcha img");
     domImg.attr("src", url);
 }
@@ -27,7 +27,7 @@ function formSubmit(){
                 });
                 return;
             }
-            location.href = "../";
+            location.href = "../index/index";
         }
     });
 }

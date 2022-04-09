@@ -4,7 +4,7 @@
 .body{}
 .body > .header{ background: #3c8dbc; color: #ffffff; height: 50px; line-height: 50px}
 .body > .header:after{ content: ""; clear: both; zoom: 1; display: block}
-.body > .header .sitename{ font-size: 20px; padding-left: 20px; float: left}
+.body > .header .sitename{ font-size: 20px; padding-left: 30px; float: left}
 .body > .header .link{ float: right}
 .body > .header .link > ul{ margin: 0px; padding: 0px}
 .body > .header .link > ul:after{ content: ""; clear: both}
@@ -13,14 +13,20 @@
 .body > .header .link > ul > li:hover > a{ background: #1c6d9c; text-decoration: none}
 
 .body > .header .link > ul > .user{ position: relative}
-.body > .header .link > ul > .user .dropdown_menu{ position: absolute; right: 0px; top: 50px; width: 120px; box-shadow: 0px 0px 3px #919191; line-height: 35px; z-index: 99; margin: 0px; padding: 5px 0px; text-align: center; display: none}
-.body > .header .link > ul > .user .dropdown_menu li{ list-style: none}
-.body > .header .link > ul > .user .dropdown_menu li a{ color: #191919}
-.body > .header .link > ul > .user .dropdown_menu li:hover{ background: #f5f5f5}
-.body > .header .link > ul > .user .dropdown_menu li:hover a{ text-decoration: none}
-.body > .header .link > ul > .user:hover .dropdown_menu{ display: block}
+.body > .header .link > ul > .user ul{ position: absolute; right: 0px; top: 50px; width: 120px; box-shadow: 0px 0px 3px #919191; line-height: 35px; z-index: 99; margin: 0px; padding: 5px 0px; text-align: center; display: none}
+.body > .header .link > ul > .user ul li{ list-style: none}
+.body > .header .link > ul > .user ul li a{ color: #191919}
+.body > .header .link > ul > .user ul li:hover{ background: #f5f5f5}
+.body > .header .link > ul > .user ul li:hover a{ text-decoration: none}
+.body > .header .link > ul > .user:hover ul{ display: block}
 
 .body > .container{ position: absolute; left: 0px; top: 50px; right: 0px; bottom: 0px}
 .body > .container > .left{ position: absolute; left: 0px; bottom: 0px; top: 0px; width: 200px; background: #2F4050; color: #a7b1c2; overflow-y: auto}
-.body > .container > .right{ position: absolute; left: 200px; right: 0px; top: 0px; bottom: 0px; overflow-y: auto}
+
+.body > .container > .left .menu{}
+.body > .container > .left .menu ul{ margin: 0px; padding: 0px}
+.body > .container > .left .menu ul li{ list-style: none}
+.body > .container > .left .menu ul li a{ display: block; height: 35px; line-height: 35px; padding-left: 30px; color: #ffffff}
+
+.body > .container > .right{ position: absolute; left: 200px; right: 0px; top: 0px; bottom: 0px; overflow-y: auto; background: #f5f5f5}
 

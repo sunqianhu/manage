@@ -2,27 +2,17 @@
 /**
  * 认证
  */
-namespace service;
+namespace app\service;
 
 class Auth{
     /**
      * 保存登录
      * @access public
-     * @param array $user 管理员记录
+     * @param array $user 用户记录
      * @return boolean
      */
     static function saveSessionUser($user){
         $_SESSION['user'] = $user;
-    }
-    
-    /**
-     * 销毁session user
-     * @access public
-     * @param array $user 管理员记录
-     * @return boolean
-     */
-    static function unsetSessionUser(){
-         unset($_SESSION['user']);
     }
     
     /**
@@ -38,4 +28,12 @@ class Auth{
         return true;
     }
     
+    /**
+     * 销毁用户
+     * @access public
+     * @return boolean
+     */
+    static function unsetSessionUser(){
+        unset($_SESSION['user']);
+    }
 }

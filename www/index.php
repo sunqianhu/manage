@@ -1,16 +1,11 @@
 <?php
-/**
- * 首页
- */
+session_start();
 require_once 'vendor/autoload.php';
 
-use service\Auth;
-use service\View;
+use app\Route;
 
-if(!Auth::isLogin()){
-    header('location:login/index.php');
-    exit;
-}
+$route = null;
 
-View::display('index.php');
+$route = new Route();
+$route->run();
 ?>

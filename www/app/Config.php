@@ -2,7 +2,7 @@
 /**
  * 配置
  */
-namespace service;
+namespace app;
 
 class Config{
     /**

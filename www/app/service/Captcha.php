@@ -2,15 +2,15 @@
 /**
  * 验证码
  */
-namespace service;
+namespace app\service;
 
 class Captcha{
     /**
-     * 创建验证码图片
+     * 创建验证码
      * @param string $name session名称
      * @param json json字符串
      */
-    static function createImage($name){
+    static function create($name){
         $code = '';
         $colorBg = null;
         $colorFront = null;

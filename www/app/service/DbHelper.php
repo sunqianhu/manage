@@ -1,67 +1,16 @@
 <?php
 /**
- * 数据库操作
+ * 数据库助手类
  */
-namespace service;
+namespace app\service;
 
-use service\Config;
-use service\Exception;
-
-class Db{
-    private static $instance; // 实例
-    public $pdo = null; // pdo对象
-    
-    /**
-     * 构造 阻止new对象
-     */
-    private function __construct(){
-        $dsn = '';
-        $config = array();
-        
-        $config = Config::get('db');
-        if(
-            empty($config) || 
-            empty($config['type']) ||
-            empty($config['host']) ||
-            empty($config['port']) ||
-            empty($config['database']) ||
-            empty($config['charset']) ||
-            empty($config['username']) ||
-            empty($config['password'])
-        ){
-            throw new Exception('数据库配置错误');
-        }
-        
-        $dsn = $config['type'].
-        ':host='.$config['host'].
-        ';port='.$config['port'].
-        ';dbname='.$config['database'].
-        ';charset='.$config['charset'];
-        
-        $this->pdo = new \PDO($dsn, $config['username'], $config['password']);
-    }
-    
-    /**
-     * 阻止克隆对象
-     */
-    private function __clone(){}
-    
-    /**
-     * 得到db实例
-     */
-    public static function getInstance(){
-        if(!(self::$instance instanceof self)){
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
-    
+class DbHelper{
     /**
      * 获取一个字段
      * @param PDOStatement $pdoStatement 结果集对象
      * @return string 字段内容
      */
-    function getOne($pdoStatement){
+    static function getOne($pdoStatement){
         $field = '';
 
         if(!$pdoStatement){
@@ -77,7 +26,7 @@ class Db{
      * @param PDOStatement $pdoStatement 结果集对象
      * @return array 字段内容
      */
-    function getRow($pdoStatement){
+    static function getRow($pdoStatement){
         $row = array();
 
         if(!$pdoStatement){
@@ -98,7 +47,7 @@ class Db{
      * @param PDOStatement $pdoStatement 结果集对象
      * @return array 字段内容
      */
-    function getAll($pdoStatement){
+    static function getAll($pdoStatement){
         $rows = array();
 
         if(!$pdoStatement){
@@ -118,7 +67,7 @@ class Db{
      * @param PDO $pdo pdo对象
      * @return string 错误描述
      */
-    function getPdoError($pdo){
+    static function getPdoError($pdo){
         $errors = array();
         $error = '';
 
@@ -141,7 +90,7 @@ class Db{
      * @param PDOStatement $pdoStatement 结果集对象
      * @return string 错误描述
      */
-    function getStatementError($pdoStatement){
+    static function getStatementError($pdoStatement){
         $errors = array();
         $error = '';
 
