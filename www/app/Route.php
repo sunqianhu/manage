@@ -36,7 +36,7 @@ class Route{
             
             // get参数
             if(isset($uris[1])){
-                $parameters = parse_str($uris[1]);
+                parse_str($uris[1], $parameters);
                 if(count($parameters) > 1){
                     $_GET = array_merge($_GET, $parameters);
                 }
