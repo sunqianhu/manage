@@ -5,32 +5,31 @@
 html{ margin: 0px; padding: 0px}
 body{ margin: 0px; padding: 0px; font-family: "微软雅黑",Arial; font-size: 14px; color: #191919; line-height: 175%}
 pre{ font-family: "微软雅黑",Arial; font-size: 14px; color: #191919; line-height: 175%; white-space: pre-wrap; word-wrap: break-word; margin: 0px; padding: 0px}
+*,::after,::before{ box-sizing: border-box; -moz-box-sizing:border-box; -webkit-box-sizing:border-box}
+
 textarea{ font-family: "微软雅黑",Arial; font-size: 14px; color: #191919; line-height: 175%}
 input{ font-size: 14px}
 input[type='submit'],
 input[type='button'],
 button{ font-size: 14px; line-height: 175%}
-a{ text-decoration: none; color: #2d64b3}
-a:hover{ text-decoration: underline; color: #0d4493}
 input,select, textarea{ padding: 5px}
-*,::after,::before{
-box-sizing: border-box;
--moz-box-sizing:border-box; /* Firefox */
--webkit-box-sizing:border-box; /* Safari */
-}
+
+a{ text-decoration: none; color: #326496}
+a:hover{ text-decoration: underline; color: #5284b6}
+
 .iconfont{ font-size: 14px}
 
 /*按钮*/
-.sun_button{ background-color: #3296fa; border:none; outline:none; color:#ffffff !important; border-radius: 3px; cursor: pointer; display:inline-block; padding:0px 10px; line-height:175%; overflow:visible; font-size:14px; white-space: nowrap;
+.sun_button{ background-color: #326496; border:none; outline:none; color:#ffffff !important; border-radius: 3px; cursor: pointer; display:inline-block; padding:0px 10px; line-height:175%; overflow:visible; font-size:14px; white-space: nowrap;
 transition: all 0.5s ease;
 -ms-transition: all 0.5s ease;
 -moz-transition: all 0.5s ease;
 -webkit-transition: all 0.5s ease;
 -o-transition: all 0.5s ease;
 }
-.sun_button:hover{ background: #1276da; text-decoration:none; color:#ffffff !important}
-.sun_button:active{ background: #1276da}
-.sun_button[disabled] { background: #aaaaaa; color: #888888 }
+.sun_button:hover{ background: #5284b6; text-decoration:none; color:#ffffff !important}
+.sun_button:active{ background: #5284b6}
+.sun_button[disabled] { background: #aaaaaa; color: #888888}
 
 .sun_button_block{ display: block; width: 100%; height: 40px; line-height: 40px}
 

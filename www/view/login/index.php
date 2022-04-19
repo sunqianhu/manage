@@ -3,19 +3,17 @@
 <head>
 <meta charset="utf-8">
 <title>系统登录</title>
-<link href="<?php echo $config['site_domain'];?>css/iconfont/iconfont.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo $config['site_domain'];?>css/plug/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="<?php echo $config['site_domain'];?>js/plug/jquery/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="<?php echo $config['site_domain'];?>js/plug/sun_form_submit-1.0.0/sun_form_submit.js"></script>
-<link href="<?php echo $config['site_domain'];?>js/plug/sun_toast-1.0.0/sun_toast.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="<?php echo $config['site_domain'];?>js/plug/sun_toast-1.0.0/sun_toast.js"></script>
-<link href="<?php echo $config['site_domain'];?>css/login/index.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="<?php echo $config['site_domain'];?>js/login/index.js"></script>
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/jquery/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/sun_form_submit-1.0.0/sun_form_submit.js"></script>
+<link href="<?php echo $config['app_domain'];?>js/plug/sun_toast-1.0.0/sun_toast.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/sun_toast-1.0.0/sun_toast.js"></script>
+<link href="<?php echo $config['app_domain'];?>css/login/index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/login/index.js"></script>
 </head>
 
 <body class="body">
 <div class="wrap">
-<div class="title"><h1><?php echo $config['site_name'];?></h1></div>
+<div class="title"><h1><?php echo $config['app_name'];?></h1></div>
 <form action="../login/login" method="post" class="needs-validation form">
 <div class="form_row">
 <span class="iconfont icon-user icon"></span>

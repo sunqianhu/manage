@@ -24,7 +24,7 @@ class Base{
         // 登录
         if(!Auth::isLogin()){
             if(!in_array(Route::$controller, $accessControllerPublics)){
-                header('location:'.$config['site_domain'].'/login/index');
+                header('location:'.$config['app_domain'].'/login/index');
                 exit;
             }
         }

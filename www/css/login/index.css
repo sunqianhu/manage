@@ -1,6 +1,9 @@
 /**
  * 登录
  */
+@import url(../iconfont/iconfont.css);
+@import url(../plug/sun-1.0.0/sun.css);
+
 html{ height: 100%}
 .body{ background-image: url(../../image/login/bg.jpg); background-repeat: no-repeat; background-size: cover; overflow: hidden; position: relative; height: 100%}
 

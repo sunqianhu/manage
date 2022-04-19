@@ -6,6 +6,20 @@
   "description": "管理后台模板",
   "glyphs": [
     {
+      "icon_id": "566774",
+      "name": "左箭头",
+      "font_class": "arrow_left",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "244823",
+      "name": "系统管理",
+      "font_class": "setup",
+      "unicode": "e689",
+      "unicode_decimal": 59017
+    },
+    {
       "icon_id": "2570127",
       "name": "认证",
       "font_class": "auth",
