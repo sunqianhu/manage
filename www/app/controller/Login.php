@@ -13,7 +13,7 @@ class Login extends Base{
      * 入口
      */
     function index(){
-        $this->display('login/index.php');
+        $this->display('login.php');
     }
     
     /**
@@ -90,6 +90,6 @@ class Login extends Base{
      */
     function exit(){
         Auth::unsetSessionUser();
-        header('location:../login/index');
+        header('location:/login/index');
     }
 }

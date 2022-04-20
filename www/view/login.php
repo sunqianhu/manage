@@ -7,8 +7,8 @@
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/sun_form_submit-1.0.0/sun_form_submit.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/plug/sun_toast-1.0.0/sun_toast.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/sun_toast-1.0.0/sun_toast.js"></script>
-<link href="<?php echo $config['app_domain'];?>css/login/index.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/login/index.js"></script>
+<link href="<?php echo $config['app_domain'];?>css/login.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/login.js"></script>
 </head>
 
 <body class="body">

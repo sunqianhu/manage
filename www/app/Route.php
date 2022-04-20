@@ -16,6 +16,7 @@ class Route{
         $uris = array(); // uris
         $path = ''; // 页面路径
         $paths = array(); // 页面路径
+        $pathNumber = 0; // 页面路径数量
         $parameters = array(); // 参数
 
         if(isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] != '/'){
@@ -25,14 +26,22 @@ class Route{
             // 页面
             $path = trim($uris[0], '/');
             $paths = explode('/', $path);
-            if(isset($paths[0])){
-                self::$controller = $paths[0];
+            $pathNumber = count($paths);
+            
+            if($pathNumber < 2){
+                throw \Exception('url参数错误');
             }
-            if(isset($paths[1])){
-                self::$action = $paths[1];
-            }else{
-                self::$action = 'index';
+            
+            // action
+            if(isset($paths[$pathNumber - 1])){
+                self::$action = $paths[$pathNumber - 1];
             }
+            
+            // 控制器类
+            $paths[$pathNumber - 2] = ucfirst($paths[$pathNumber - 2]);
+            array_splice($paths, -1);
+
+            self::$controller = implode('\\', $paths);
             
             // get参数
             if(isset($uris[1])){
@@ -45,9 +54,6 @@ class Route{
             self::$controller = 'index';
             self::$action = 'index';
         }
-        
-        self::$controller = str_replace('_', '\\', self::$controller);
-        self::$controller = ucfirst(self::$controller);
     }
     
     /**
