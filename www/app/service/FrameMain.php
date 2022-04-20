@@ -50,6 +50,7 @@ class FrameMain{
 </a>
 <ul>
 <li'.($current == 'system_user' ? ' class="current"' : '').'><a href="'.$config['app_domain'].'user/index">用户管理</a></li>
+<li'.($current == 'system_department' ? ' class="current"' : '').'><a href="'.$config['app_domain'].'department/index">部门管理</a></li>
 <li><a href="'.$config['app_domain'].'role/index">角色管理</a></li>
 <li><a href="'.$config['app_domain'].'permission/index">权限管理</a></li>
 <li><a href="'.$config['app_domain'].'dictionary/index">字典管理</a></li>
