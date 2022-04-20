@@ -2,26 +2,32 @@
 <div class="menu">
 <ul>
 <li>
-<a href="#">
+<a href="javascript:;">
 <span class="iconfont icon-setup icon"></span>
 <span class="text">功能栏目1</span>
 <span class="iconfont icon-arrow_left arrow"></span>
 </a>
 <ul>
 <li>
-<a href="#">功能1</a>
+<a href="javascript:;">功能1</a>
 <ul>
-<li class="highlight"><a href="#">功能1_1</a></li>
+<li><a href="#">功能1_1</a></li>
 <li><a href="#">功能1_2</a></li>
 </ul>
 
 </li>
-<li><a href="#">功能2</a></li>
+<li>
+<a href="#">功能2</a>
+<ul>
+<li><a href="#">功能2_1</a></li>
+<li class="current"><a href="#">功能2_2</a></li>
+</ul>
+</li>
 <li><a href="#">功能3</a></li>
 </ul>
 </li>
 <li>
-<a href="#">
+<a href="javascript:;">
 <span class="iconfont icon-setup icon"></span>
 <span class="text">系统管理</span>
 <span class="iconfont icon-arrow_left arrow"></span>
