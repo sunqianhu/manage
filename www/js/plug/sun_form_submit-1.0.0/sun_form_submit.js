@@ -8,8 +8,8 @@
         var domForm = $(this);
         var url = "";
         var method = "";
-        var domButtonSubmit1 = null;
-        var domButtonSubmit2 = null;
+        var domInputSubmit = null;
+        var domButtonSubmit = null;
         var button = null; // 每个提交按钮
         var data = "";
 
@@ -28,11 +28,11 @@
             method = domForm.attr("method");
             data = domForm.serialize();
 
-            domButtonSubmit1 = $("input:submit", domForm);
-            domButtonSubmit2 = $("button[type='submit']", domForm);
+            domInputSubmit = $("input:submit", domForm);
+            domButtonSubmit = $("button[type='submit']", domForm);
 
             // 按钮文字改成提交中
-            domButtonSubmit1.each(function(index, element) {
+            domInputSubmit.each(function(index, element) {
                 button = $(this);
                 button.attr({"disabled":"disabled"});
                 if(config.buttonSubmitText){
@@ -43,7 +43,7 @@
                     button.addClass(config.buttonSubmitClass);
                 }
             });
-            domButtonSubmit2.each(function(index, element) {
+            domButtonSubmit.each(function(index, element) {
                 button = $(this);
                 button.attr({"disabled":"disabled"});
                 if(config.buttonSubmitText){
@@ -76,7 +76,7 @@
 
                     //按钮还原
                     setTimeout(function(){
-                        domButtonSubmit1.each(function(index, element) {
+                        domInputSubmit.each(function(index, element) {
                             button = $(this);
                             if(config.buttonSubmitText){
                                 button.val(button.attr("value_old"));
@@ -86,7 +86,7 @@
                             }
                             button.removeAttr("disabled");
                         });
-                        domButtonSubmit2.each(function(index, element) {
+                        domButtonSubmit.each(function(index, element) {
                             button = $(this);
                             if(config.buttonSubmitText){
                                 button.html(button.attr("value_old"));
@@ -96,7 +96,7 @@
                             }
                             button.removeAttr("disabled");
                         });
-                    }, 2000);
+                    }, 1000);
                 }
             });
 

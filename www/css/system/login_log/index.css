@@ -3,6 +3,6 @@
  */
 @import url(../../iconfont/iconfont.css);
 @import url(../../plug/sun-1.0.0/sun.css);
-@import url(../../app/frame_main.css);
+@import url(../../inc/frame_main.css);
 
-.body{}
+.page{}

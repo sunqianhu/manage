@@ -9,11 +9,11 @@ use app\Config;
 class FrameMain{
     /**
      * 得到菜单
-     * @param string $current 当前功能项
+     * @param string $active 活跃项
      * @access public
      * @return string
      */
-    static function getMenu($current = ''){
+    static function getMenu($active = ''){
         $config = Config::all();
         $menu = '<div class="menu">
 <ul>
@@ -49,12 +49,12 @@ class FrameMain{
 <span class="iconfont icon-arrow_left arrow"></span>
 </a>
 <ul>
-<li'.($current == 'system_user' ? ' class="current"' : '').'><a href="'.$config['app_domain'].'user/index">用户管理</a></li>
-<li'.($current == 'system_department' ? ' class="current"' : '').'><a href="'.$config['app_domain'].'department/index">部门管理</a></li>
+<li'.($active == 'system_user' ? ' class="active"' : '').'><a href="'.$config['app_domain'].'user/index">用户管理</a></li>
+<li'.($active == 'system_department' ? ' class="active"' : '').'><a href="'.$config['app_domain'].'department/index">部门管理</a></li>
 <li><a href="'.$config['app_domain'].'role/index">角色管理</a></li>
 <li><a href="'.$config['app_domain'].'permission/index">权限管理</a></li>
 <li><a href="'.$config['app_domain'].'dictionary/index">字典管理</a></li>
-<li'.($current == 'system_login_log' ? ' class="current"' : '').'><a href="'.$config['app_domain'].'system/loginLog/index">登录日志</a></li>
+<li'.($active == 'system_login_log' ? ' class="active"' : '').'><a href="'.$config['app_domain'].'system/loginLog/index">登录日志</a></li>
 <li><a href="'.$config['app_domain'].'accessLog/index">访问日志</a></li>
 </ul>
 </li>

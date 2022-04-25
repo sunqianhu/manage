@@ -5,19 +5,19 @@
 @import url(plug/sun-1.0.0/sun.css);
 
 html{ height: 100%}
-.body{ background-image: url(../../image/login/bg.jpg); background-repeat: no-repeat; background-size: cover; overflow: hidden; position: relative; height: 100%}
+.page{ background-image: url(../../image/login/bg.jpg); background-repeat: no-repeat; background-size: cover; overflow: hidden; position: relative; height: 100%}
 
-.body .wrap{ width: 340px; position: absolute; top: 50%; left: 50%; margin-top: -180px; margin-left: -170px; background: #ffffff; border-radius: 5px; padding: 20px 30px 30px 30px; box-shadow: 0px 0px 8px #919191}
-.body .wrap .title{}
-.body .wrap .title h1{ text-align: center; font-size: 18px; line-height: 150%; font-weight: 400}
+.page .wrap{ width: 340px; position: absolute; top: 50%; left: 50%; margin-top: -180px; margin-left: -170px; background: #ffffff; border-radius: 5px; padding: 20px 30px 30px 30px; box-shadow: 0px 0px 8px #919191}
+.page .wrap .title{}
+.page .wrap .title h1{ text-align: center; font-size: 18px; line-height: 150%; font-weight: 400}
 
-.body .wrap .form{}
-.body .wrap .form .form_row{ margin-top: 20px; position: relative}
-.body .wrap .form .form_row .icon{ position: absolute; left: 10px; top: 8px}
-.body .wrap .form .form_row input{ padding-left: 35px; width: 100%; height: 40px}
-.body .wrap .form .captcha input{ padding-left: 35px; width: 170px; display: inline-block}
-.body .wrap .form .captcha img{ height: 40px; vertical-align: middle; margin-left: 5px}
+.page .wrap .form{}
+.page .wrap .form .form_row{ margin-top: 20px; position: relative}
+.page .wrap .form .form_row .icon{ position: absolute; left: 10px; top: 8px}
+.page .wrap .form .form_row input{ padding-left: 35px; width: 100%; height: 40px}
+.page .wrap .form .captcha input{ padding-left: 35px; width: 170px; display: inline-block}
+.page .wrap .form .captcha img{ height: 40px; vertical-align: middle; margin-left: 5px}
 
-.body .wrap .form .button_box{ margin-top: 30px}
+.page .wrap .form .button_box{ margin-top: 30px}
 
-.body .copyright{ position: absolute; bottom: 10px; text-align: center; width: 100%; color: #919191}
+.page .copyright{ position: absolute; bottom: 10px; text-align: center; width: 100%; color: #919191}

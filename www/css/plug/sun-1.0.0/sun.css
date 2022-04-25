@@ -3,19 +3,20 @@
  */
 
 html{ margin: 0px; padding: 0px}
-body{ margin: 0px; padding: 0px; font-family: "微软雅黑",Arial; font-size: 14px; color: #191919; line-height: 175%}
-pre{ font-family: "微软雅黑",Arial; font-size: 14px; color: #191919; line-height: 175%; white-space: pre-wrap; word-wrap: break-word; margin: 0px; padding: 0px}
+body{ margin: 0px; padding: 0px; font-family: Arial,"微软雅黑"; font-size: 14px; color: #191919; line-height: 175%}
+pre{ font-family: Arial,"微软雅黑"; font-size: 14px; color: #191919; line-height: 175%; white-space: pre-wrap; word-wrap: break-word; margin: 0px; padding: 0px}
 *,::after,::before{ box-sizing: border-box; -moz-box-sizing:border-box; -webkit-box-sizing:border-box}
 
+a{ text-decoration: none; color: #326496}
+a:hover{ text-decoration: underline; color: #5284b6}
+
+/*表单元素*/
 textarea{ font-family: "微软雅黑",Arial; font-size: 14px; color: #191919; line-height: 175%}
 input{ font-size: 14px}
 input[type='submit'],
 input[type='button'],
 button{ font-size: 14px; line-height: 175%}
 input,select, textarea{ padding: 5px}
-
-a{ text-decoration: none; color: #326496}
-a:hover{ text-decoration: underline; color: #5284b6}
 
 .iconfont{ font-size: 14px}
 

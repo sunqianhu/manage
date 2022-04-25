@@ -1,0 +1,56 @@
+/**
+ * 页面框架主要
+ */
+
+.frame_main{}
+.frame_main > .header{ background: #326496; color: #ffffff; height: 50px; line-height: 50px}
+.frame_main > .header:after{ content: ""; clear: both; zoom: 1; display: block}
+.frame_main > .header a{ color: #ffffff}
+.frame_main > .header .app_name{ font-size: 20px; float: left; padding-left: 20px}
+.frame_main > .header .link{ float: right}
+.frame_main > .header .link > ul{ margin: 0px; padding: 0px}
+.frame_main > .header .link > ul:after{ content: ""; clear: both}
+.frame_main > .header .link > ul > li{ list-style: none; float: left; padding: 0px 20px}
+.frame_main > .header .link > ul > .user{ position: relative}
+.frame_main > .header .link > ul > .user .name{}
+.frame_main > .header .link > ul > .user .nav{ position: absolute; right: 0px; top: 50px; width: 120px; box-shadow: 0px 0px 3px #919191; line-height: 35px; z-index: 99; margin: 0px; padding: 5px 0px; text-align: center; display: none}
+.frame_main > .header .link > ul > .user .nav > li{ list-style: none}
+.frame_main > .header .link > ul > .user .nav > li a{ color: #191919}
+.frame_main > .header .link > ul > .user:hover .nav{ display: block}
+
+.frame_main > .container{ position: absolute; left: 0px; top: 50px; right: 0px; bottom: 0px}
+.frame_main > .container > .left{ position: absolute; left: 0px; bottom: 0px; top: 0px; width: 200px; background: #323c46; color: rgba(255,255,255,0.8); overflow-y: auto}
+.frame_main > .container > .left a{ color: rgba(255,255,255,0.8)}
+
+/*菜单*/
+.frame_main > .container > .left .menu{}
+.frame_main > .container > .left .menu ul{ margin: 0px; padding: 0px}
+.frame_main > .container > .left .menu ul li{ list-style: none}
+.frame_main > .container > .left .menu ul li > a{ display: block; height: 40px; line-height: 40px; padding:0px 10px 0px 20px; overflow: hidden}
+.frame_main > .container > .left .menu ul li > a:hover{ background: rgba(0,0,0,0.2); color: #ffffff; text-decoration: none}
+.frame_main > .container > .left .menu ul li > a .icon{}
+.frame_main > .container > .left .menu ul li > a .arrow{ float: right; font-size: 12px;
+transition: all 0.5s ease;
+-ms-transition: all 0.5s ease;
+-moz-transition: all 0.5s ease;
+-webkit-transition: all 0.5s ease;
+-o-transition: all 0.5s ease
+}
+.frame_main > .container > .left .menu ul li > ul{ display: none}
+
+.frame_main > .container > .left .menu ul > li > ul > li > a{ padding-left: 40px}
+.frame_main > .container > .left .menu ul > li > ul > li > ul > li > a{ padding-left: 60px}
+.frame_main > .container > .left .menu ul > li > ul > li > ul > li > ul > li > a{ padding-left: 80px}
+
+.frame_main > .container > .left .menu ul li.open{ background: #222c36}
+.frame_main > .container > .left .menu ul li.open > a{ color: #ffffff}
+.frame_main > .container > .left .menu ul li.open > a .arrow{
+transform:rotate(-90deg);
+-ms-transform:rotate(-90deg);
+-moz-transform:rotate(-90deg);
+-webkit-transform:rotate(-90deg);
+-o-transform:rotate(-90deg);
+}
+.frame_main > .container > .left .menu ul li.active > a{ background: #326496; color: #ffffff; font-weight: bold}
+
+.frame_main > .container > .right{ position: absolute; left: 200px; right: 0px; top: 0px; bottom: 0px; overflow-y: auto; background: #f5f5f5}

@@ -11,7 +11,7 @@
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/login.js"></script>
 </head>
 
-<body class="body">
+<body class="page">
 <div class="wrap">
 <div class="title"><h1><?php echo $config['app_name'];?></h1></div>
 <form action="../login/login" method="post" class="needs-validation form">

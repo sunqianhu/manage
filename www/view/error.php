@@ -6,7 +6,7 @@
 <link href="<?php echo $config['app_domain'];?>css/error.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body class="body">
+<body class="page">
 
 </body>
 </html>
