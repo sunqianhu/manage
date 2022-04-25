@@ -33,17 +33,14 @@ frameMain.menuToggle = function(){
         
         // 展开折叠
         if(domClickLi.hasClass("open")){
-			domClickLiUl.slideUp(function(){
-                domClickLi.removeClass("open"); // 去掉open
-            }); // 折叠
+            domClickLi.removeClass("open"); // 去掉open
+			domClickLiUl.slideUp(); // 折叠
 		}else{
-			domClickLiUl.slideDown(function(){
-                domClickLi.addClass("open"); // 添加open
-            }); // 展开
+            domClickLi.addClass("open"); // 添加open
+			domClickLiUl.slideDown(); // 展开
             
-            domSiblingLiUls.slideUp(function(){
-                domSiblingLis.removeClass("open"); // 同级去掉open
-            }); // 同级折叠
+            domSiblingLis.removeClass("open"); // 同级去掉open
+            domSiblingLiUls.slideUp(); // 同级折叠
 		}
     });
 }
