@@ -10,12 +10,16 @@
 .page > .page_header .link{ float: right}
 .page > .page_header .link > ul{ margin: 0px; padding: 0px}
 .page > .page_header .link > ul:after{ content: ""; clear: both}
-.page > .page_header .link > ul > li{ list-style: none; float: left; padding: 0px 20px}
+.page > .page_header .link > ul > li{ list-style: none; float: left}
+.page > .page_header .link > ul > li > a{ display: block; padding: 0px 20px}
+.page > .page_header .link > ul > li > a:hover{ background: rgba(0,0,0,0.2); text-decoration: none}
+.page > .page_header .link > ul > li > a .icon{ font-size: 14px; margin-right: 2px}
 .page > .page_header .link > ul > .user{ position: relative}
 .page > .page_header .link > ul > .user .name{}
-.page > .page_header .link > ul > .user .nav{ position: absolute; right: 0px; top: 50px; width: 120px; box-shadow: 0px 0px 3px #919191; line-height: 35px; z-index: 99; margin: 0px; padding: 5px 0px; text-align: center; display: none}
+.page > .page_header .link > ul > .user .nav{ position: absolute; right: 0px; top: 50px; width: 130px; box-shadow: 0px 0px 3px #919191; line-height: 35px; z-index: 99; margin: 0px; padding: 5px; text-align: center; display: none}
 .page > .page_header .link > ul > .user .nav > li{ list-style: none}
-.page > .page_header .link > ul > .user .nav > li a{ color: #191919}
+.page > .page_header .link > ul > .user .nav > li a{ color: #191919; display: block; border-radius: 3px}
+.page > .page_header .link > ul > .user .nav > li a:hover{ background: #e1e5e9; text-decoration: none}
 .page > .page_header .link > ul > .user:hover .nav{ display: block}
 
 .page > .page_body{ position: absolute; left: 0px; top: 50px; right: 0px; bottom: 0px}

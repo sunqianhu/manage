@@ -2,8 +2,10 @@
  * sun ui
  */
 html{ margin: 0px; padding: 0px}
-body{ margin: 0px; padding: 0px; font-family: Arial,"微软雅黑"; font-size: 14px; color: #191919; line-height: 175%}
-pre{ font-family: Arial,"微软雅黑"; font-size: 14px; color: #191919; line-height: 175%; white-space: pre-wrap; word-wrap: break-word; margin: 0px; padding: 0px}
+body{ margin: 0px; padding: 0px; 
+font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+font-size: 14px; color: #191919; line-height: 150%}
+pre{ font-size: 14px; color: #191919; line-height: 150%; white-space: pre-wrap; word-wrap: break-word; margin: 0px; padding: 0px}
 *,*:after,*:before{ box-sizing:border-box}
 
 /*超级链接*/
@@ -11,27 +13,59 @@ a{ text-decoration: none; color: #326496}
 a:hover{ text-decoration: underline; color: #5284b6}
 
 /*表单元素*/
-textarea{ font-family: Arial,"微软雅黑"; font-size: 14px; color: #191919; line-height: 175%; padding: 5px}
+textarea{ font-size: 14px; color: #191919; line-height: 150%; padding: 5px; border: 1px solid #ced4da; appearance: none; border-radius: 3px; min-height: 80px; width: 100%; outline: none}
+textarea:focus{ box-shadow: 0px 0px 4px rgba(0,0,0,0.4)}
+
 input[type='text'],
-input[type='number']{ font-size: 14px; padding: 5px; line-height: 175%}
+input[type='number'],
+input[type='password'],
+input[type='phone'],
+input[type='email'],
+input[type='date'],
+input[type='datetime']{ padding: 0px 5px; height: 30px; line-height: 30px; border: 1px solid #ced4da; appearance: none; outline: none; border-radius: 3px}
+
+select{  padding: 0px 5px 0px 5px; height: 30px; line-height: 30px; border: 1px solid #ced4da; outline: none; border-radius: 3px}
+
 input[type='submit'],
 input[type='button'],
-button{ font-size: 14px; line-height: 175%}
-select{ padding: 5px; line-height: 175%}
+button{ font-size: 14px; outline: none}
+
+/*间距*/
+.sun_mt5{ margin-top: 5px}
+.sun_mt10{ margin-top: 10px}
+.sun_mt20{ margin-top: 20px}
+.sun_ml5{ margin-left: 5px}
+.sun_ml10{ margin-left: 10px}
+.sun_ml20{ margin-left: 20px}
+.sun_mr5{ margin-right: 5px}
+.sun_mr10{ margin-right: 10px}
+.sun_mr20{ margin-right: 20px}
+.sun_mb5{ margin-bottom: 5px}
+.sun_mb10{ margin-bottom: 10px}
+.sun_mb20{ margin-bottom: 20px}
 
 /*按钮*/
-.sun_button{ background-color: #326496; border:none; outline:none; color:#ffffff !important; border-radius: 3px; cursor: pointer; display:inline-block; padding:0px 10px; line-height:175%; overflow:visible; font-size:14px; white-space: nowrap;
+.sun_button{ appearance:none; background-color: #326496; border: none; outline: none; color:#ffffff; border-radius: 3px; cursor: pointer; display:inline-block; padding: 0px 10px; line-height: 30px; height: 30px; font-size: 14px; white-space: nowrap;
 transition: all 0.5s ease;
 -ms-transition: all 0.5s ease;
 -moz-transition: all 0.5s ease;
 -webkit-transition: all 0.5s ease;
 -o-transition: all 0.5s ease;
 }
-.sun_button:hover{ background: #5284b6; text-decoration:none; color:#ffffff !important}
+.sun_button:hover{ background: #5284b6; text-decoration: none; color: #ffffff}
 .sun_button:active{ background: #5284b6}
-.sun_button[disabled] { background: #aaaaaa; color: #888888}
+.sun_button[disabled] { background: #aaaaaa; color: #919191}
 
-.sun_button_block{ display: block; width: 100%; height: 40px; line-height: 40px}
+.sun_button_primary{}
+.sun_button_secondary{ background: #f5f7f9; color: #191919; border: 1px solid #cccccc}
+.sun_button_secondary:hover{ background: #e5e7e9; color: #191919; border-color: #acacac}
+.sun_button_warning{ background: #FF5722}
+.sun_button_warning:hover{ background: #FF7742}
+
+.sun_button_sm{ height: 22px; line-height: 22px; padding: 0px 5px; font-size: 12px}
+.sun_button_big{ height: 40px; line-height: 40px; padding: 0px 18px}
+
+.sun_button_block{ display: block; width: 100%}
 
 /*toast*/
 .sun_toast{ display: flex; align-items: center; background: #ffffff; max-width: 300px; border: 1px solid #eeeeee; box-shadow:0px 0px 5px #888888; border-radius: 3px; padding: 15px; position: absolute; left: 0px; top: 0px; z-index: 1090}
