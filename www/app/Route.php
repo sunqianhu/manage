@@ -54,6 +54,7 @@ class Route{
             self::$controller = 'index';
             self::$action = 'index';
         }
+        self::$controller = self::$controller.'Controller';
     }
     
     /**

@@ -4,9 +4,9 @@
  */
 namespace app\model;
 
-use app\service\DbHelper;
+use app\service\DbHelperService;
 
-class User extends Base{
+class UserModel extends BaseModel{
     /**
      * 获取一个字段
      * @access public
@@ -25,11 +25,11 @@ class User extends Base{
         $pdoStatement->bindValue(':username', $_POST['username']);
         $pdoStatement->bindValue(':password', md5($_POST['password']));
         if(!$pdoStatement->execute()){
-            $errorMessage = DbHelper::getStatementError($pdoStatement);
+            $errorMessage = DbHelperService::getStatementError($pdoStatement);
             throw new \Exception($errorMessage);
         }
         
-        $user = DbHelper::getRow($pdoStatement);
+        $user = DbHelperService::getRow($pdoStatement);
         if(empty($user)){
             throw new Exception('用户名或密码错误');
         }

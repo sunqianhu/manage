@@ -4,7 +4,7 @@
  */
 namespace service;
 
-class Out{
+class OutService{
     /**
      * 输出json
      * @param array $datas 数组

@@ -4,11 +4,11 @@
  */
 namespace app\controller;
 
-use app\service\Captcha;
-use app\service\Auth;
-use app\model\User;
+use app\service\CaptchaService;
+use app\service\AuthService;
+use app\model\UserModel;
 
-class Login extends Base{
+class LoginController extends BaseController{
     /**
      * 入口
      */
@@ -20,7 +20,7 @@ class Login extends Base{
      * 验证码
      */
     function captcha(){
-        Captcha::create('captcha_login');
+        CaptchaService::create('captcha_login');
     }
     
     /**
@@ -68,7 +68,7 @@ class Login extends Base{
             exit;
         }
         
-        $userModel = new User();
+        $userModel = new UserModel();
         try{
             $user = $userModel->getRowByUsernamePassword($_POST['username'], $_POST['password']);
         }catch(\Exception $e){
@@ -78,7 +78,7 @@ class Login extends Base{
         }
         
         // 服务层
-        Auth::saveSessionUser($user);
+        AuthService::saveToken($user);
         
         $return['status'] = 'success';
         $return['msg'] = '登录成功';
@@ -89,7 +89,7 @@ class Login extends Base{
      * 退出登录
      */
     function exit(){
-        Auth::unsetSessionUser();
+        AuthService::unsetToken();
         header('location:/login/index');
     }
 }

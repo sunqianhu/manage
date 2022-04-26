@@ -6,23 +6,22 @@ namespace app\controller;
 
 use app\Route;
 use app\Config;
-use app\service\Auth;
+use app\service\AuthService;
 
-class Base{
+class BaseController{
     public $viewDatas = array(); // 视图数据
-    
     
     /**
      * 构造
      */
     function __construct(){
         $accessControllerPublics = array(
-            'Login'
+            'LoginController'
         ); // 公开访问控制器
         $config = Config::all();
         
         // 登录
-        if(!Auth::isLogin()){
+        if(!AuthService::isLogin()){
             if(!in_array(Route::$controller, $accessControllerPublics)){
                 header('location:'.$config['app_domain'].'/login/index');
                 exit;
@@ -32,7 +31,7 @@ class Base{
         // 权限
         
         // 配置
-        $this->viewDatas['config'] = $config;
+        $this->assign('config', $config);
     }
     
     /**
@@ -49,10 +48,11 @@ class Base{
      * @param String $file 视图文件路径
      */
     function display($file){
-        $path = Config::get('view_path');
+        $dir = Config::get('view_dir');
+        $path = '';
         
         extract($this->viewDatas);
-        $path = $path.$file;
+        $path = $dir.$file;
         
         require_once $path;
     }

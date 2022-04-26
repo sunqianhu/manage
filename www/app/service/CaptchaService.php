@@ -4,7 +4,7 @@
  */
 namespace app\service;
 
-class Captcha{
+class CaptchaService{
     /**
      * 创建验证码
      * @param string $name session名称

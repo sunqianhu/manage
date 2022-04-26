@@ -5,9 +5,9 @@
 namespace app\model;
 
 use app\Config;
-use app\service\DbHelper;
+use app\service\DbHelperService;
 
-class Base extends \PDO{
+class BaseModel extends \PDO{
     /**
      * 构造函数
      */

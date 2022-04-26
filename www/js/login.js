@@ -11,13 +11,13 @@ function changeCaptcha(){
 
 /**
  * 表单提交
+ * @param selector 表单jquery选择器
  */
-function formSubmit(){
-    $(".form").sunFormSubmit({
-        buttonSubmitText: "处理中...",
+function formSubmit(selector){
+    sun.formSubmit(selector, {
         success: function(ret){
             if(ret.status == "error"){
-                sunToast.open("error", ret.msg, 3000, function(){
+                sun.toast("error", ret.msg, 3000, function(){
                     if(ret.dom){
                         $(ret.dom).focus();
                     }
@@ -30,9 +30,6 @@ function formSubmit(){
             location.href = "../index/index";
         }
     });
+    return false;
 }
-
-$(function(){
-    formSubmit();
-});
 

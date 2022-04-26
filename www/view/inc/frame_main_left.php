@@ -1,3 +1,3 @@
-<div class="left">
+<div class="body_left">
 <?php echo $frameMainMenu;?>
 </div>

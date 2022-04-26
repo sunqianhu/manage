@@ -4,7 +4,7 @@
  */
 namespace app\service;
 
-class DbHelper{
+class DbHelperService{
     /**
      * 获取一个字段
      * @param PDOStatement $pdoStatement 结果集对象

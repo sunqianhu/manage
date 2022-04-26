@@ -6,8 +6,8 @@ var frameMain = {};
 
 // 菜单活跃
 frameMain.menuActive = function(){
-    var domActiveLi = $(".left .menu li.active"); // 活跃的li
-    var domActiveParentLis = domActiveLi.parents(".left .menu li"); // 活跃的li的所有父li
+    var domActiveLi = $(".body_left .menu li.active"); // 活跃的li
+    var domActiveParentLis = domActiveLi.parents(".body_left .menu li"); // 活跃的li的所有父li
     var domActiveParentLiUls = $(" > ul", domActiveParentLis); // 活跃的li的所有父li的ul
     
     domActiveParentLis.addClass("open");
@@ -16,7 +16,7 @@ frameMain.menuActive = function(){
 
 // 菜单切换
 frameMain.menuToggle = function(){
-    var domAs = $(".left .menu li a");
+    var domAs = $(".body_left .menu li a");
     
     domAs.on("click", function(){
         var domClickA = $(this); // 点击的a

@@ -4,15 +4,15 @@
  */
 namespace app\controller\system;
 
-use app\controller\Base;
-use app\service\FrameMain;
+use app\controller\BaseController;
+use app\service\MenuService;
 
-class User extends Base{
+class UserController extends BaseController{
     /**
      * 入口
      */
     function index(){
-        $frameMainMenu = FrameMain::getMenu('system_user');
+        $frameMainMenu = MenuService::getFrameMainHtml('system_user');
         
         $this->assign('frameMainMenu', $frameMainMenu);
         $this->display('system/user/index.php');

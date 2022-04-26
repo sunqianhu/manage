@@ -90,3 +90,123 @@ sun.loading.close = function(id){
 	$(".sun_loading_bg_"+id).remove();
 	$(".sun_loading_"+id).remove();
 }
+
+/**
+ * 表单提交
+ * @param selector 表单jquery选择器
+ * @param config 配置
+ */
+sun.formSubmit = function(selector, config){
+    if(!selector){
+        sun.toast("error", "表单选择器参数错误", 3000);
+        return false;
+    }
+    
+    var domForm = $(selector);
+    var domInputSubmits; // 所有input提交按钮
+    var domInputSubmit; // 一个input提交按钮
+    var domButtonSubmits; // 所有button提交按钮
+    var domButtonSubmit; // 一个button提交按钮
+    var url = ""; // 提交url
+    var method = ""; // 提交方式
+    var data; // 提交数据
+    
+    // 验证
+    if(domForm.length == 0){
+        sun.toast("error", "没有找到表单节点", 3000);
+        return false;
+    }
+    
+    // 初始值
+    if(!config){
+        config = {};
+    }
+    if(!config.buttonSubmitText){
+        config.buttonSubmitText = "处理中...";
+    }
+    
+    url = domForm.attr("action");
+    method = domForm.attr("method");
+    data = domForm.serialize();
+
+    domInputSubmits = $("input:submit", domForm);
+    domButtonSubmits = $("button[type='submit']", domForm);
+
+    // 提交前
+    if(config.before){
+        if(!config.before()){
+            return false;
+        }
+    }
+
+    // 按钮文字改成提交中
+    domInputSubmits.each(function(index, element) {
+        domInputSubmit = $(this);
+        domInputSubmit.attr({"disabled":"disabled"}); // 禁用防止重复提交
+        if(config.buttonSubmitText){
+            domInputSubmit.attr({"value_old":domInputSubmit.val()});
+            domInputSubmit.val(config.buttonSubmitText);
+        }
+        if(config.buttonSubmitClass){
+            domInputSubmit.addClass(config.buttonSubmitClass);
+        }
+    });
+    domButtonSubmits.each(function(index, element) {
+        domButtonSubmit = $(this);
+        domButtonSubmit.attr({"disabled":"disabled"});
+        if(config.buttonSubmitText){
+            domButtonSubmit.attr({"value_old":domButtonSubmit.html()});
+            domButtonSubmit.html(config.buttonSubmitText);
+        }
+        if(config.buttonSubmitClass){
+            domButtonSubmit.addClass(config.buttonSubmitClass);
+        }
+    });
+    
+    // 请求网络
+    $.ajax({
+        url: url,
+        data: data,
+        type: method,
+        dataType: "json",
+        success: function(ret){
+            if(config.success){
+                config.success(ret);
+            }
+        },
+        error: function(obj, info, e){
+            sun.toast("error", info, 3000);
+        },
+        complete: function(){
+            if(config.complete){
+                config.complete();
+            }
+
+            // 按钮还原
+            setTimeout(function(){
+                domInputSubmits.each(function(index, element) {
+                    domInputSubmit = $(this);
+                    if(config.buttonSubmitText){
+                        domInputSubmit.val(domInputSubmit.attr("value_old"));
+                    }
+                    if(config.buttonSubmitClass){
+                        domInputSubmit.removeClass(config.buttonSubmitClass);
+                    }
+                    domInputSubmit.removeAttr("disabled");
+                });
+                domButtonSubmits.each(function(index, element) {
+                    domButtonSubmit = $(this);
+                    if(config.buttonSubmitText){
+                        domButtonSubmit.html(domButtonSubmit.attr("value_old"));
+                    }
+                    if(config.buttonSubmitClass){
+                        domButtonSubmit.removeClass(config.buttonSubmitClass);
+                    }
+                    domButtonSubmit.removeAttr("disabled");
+                });
+            }, 1000);
+        }
+    });
+
+    return false;
+}

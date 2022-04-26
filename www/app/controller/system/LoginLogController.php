@@ -4,15 +4,15 @@
  */
 namespace app\controller\system;
 
-use app\controller\Base;
-use app\service\FrameMain;
+use app\controller\BaseController;
+use app\service\MenuService;
 
-class LoginLog extends Base{
+class LoginLogController extends BaseController{
     /**
      * 入口
      */
     function index(){
-        $frameMainMenu = FrameMain::getMenu('system_login_log');
+        $frameMainMenu = MenuService::getFrameMainHtml('system_login_log');
         
         $this->assign('frameMainMenu', $frameMainMenu);
         $this->display('system/login_log/index.php');

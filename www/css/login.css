@@ -2,6 +2,7 @@
  * 登录
  */
 @import url(iconfont/iconfont.css);
+@import url(inc/app.css);
 
 html{ height: 100%}
 .page{ background-image: url(../../image/login/bg.jpg); background-repeat: no-repeat; background-size: cover; overflow: hidden; position: relative; height: 100%}

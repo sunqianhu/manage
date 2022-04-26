@@ -1,0 +1,20 @@
+/**
+ * 应用公共css
+ */
+html{ margin: 0px; padding: 0px}
+body{ margin: 0px; padding: 0px; font-family: Arial,"微软雅黑"; font-size: 14px; color: #191919; line-height: 175%}
+pre{ font-family: Arial,"微软雅黑"; font-size: 14px; color: #191919; line-height: 175%; white-space: pre-wrap; word-wrap: break-word; margin: 0px; padding: 0px}
+*,*:after,*:before{ box-sizing:border-box}
+
+/*超级链接*/
+a{ text-decoration: none; color: #326496}
+a:hover{ text-decoration: underline; color: #5284b6}
+
+/*表单元素*/
+textarea{ font-family: Arial,"微软雅黑"; font-size: 14px; color: #191919; line-height: 175%; padding: 5px}
+input[type='text'],
+input[type='number']{ font-size: 14px; padding: 5px; line-height: 175%}
+input[type='submit'],
+input[type='button'],
+button{ font-size: 14px; line-height: 175%}
+select{ padding: 5px; line-height: 175%}

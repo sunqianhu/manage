@@ -10,11 +10,11 @@
 <link href="<?php echo $config['app_domain'];?>css/index.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body class="frame_main page">
+<body class="page">
 <?php require_once __DIR__.'/inc/frame_main_header.php';?>
-<div class="container">
+<div class="page_body">
 <?php require_once __DIR__.'/inc/frame_main_left.php';?>
-<div class="right">
+<div class="body_right">
 首页
 </div>
 </div>

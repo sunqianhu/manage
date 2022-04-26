@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <title>系统登录</title>
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/jquery/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/sun_form_submit-1.0.0/sun_form_submit.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.js"></script>
 <link href="<?php echo $config['app_domain'];?>css/login.css" rel="stylesheet" type="text/css" />
@@ -14,7 +13,7 @@
 <body class="page">
 <div class="wrap">
 <div class="title"><h1><?php echo $config['app_name'];?></h1></div>
-<form action="../login/login" method="post" class="needs-validation form">
+<form action="../login/login" method="post" class="needs-validation form" onSubmit="return formSubmit(this);">
 <div class="form_row">
 <span class="iconfont icon-user icon"></span>
 <input type="text" id="username" name="username" placeholder="请输入用户名" required />

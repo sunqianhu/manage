@@ -4,14 +4,14 @@
  */
 namespace app\service;
 
-class Auth{
+class AuthService{
     /**
-     * 保存登录
+     * 保存token
      * @access public
      * @param array $user 用户记录
      * @return boolean
      */
-    static function saveSessionUser($user){
+    static function saveToken($user){
         $_SESSION['user'] = $user;
     }
     
@@ -29,11 +29,11 @@ class Auth{
     }
     
     /**
-     * 销毁用户
+     * 销毁token
      * @access public
      * @return boolean
      */
-    static function unsetSessionUser(){
+    static function unsetToken(){
         unset($_SESSION['user']);
     }
 }
