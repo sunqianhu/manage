@@ -16,7 +16,7 @@
 .page > .page_header .link > ul > li > a .icon{ font-size: 14px; margin-right: 2px}
 .page > .page_header .link > ul > .user{ position: relative}
 .page > .page_header .link > ul > .user .name{}
-.page > .page_header .link > ul > .user .nav{ position: absolute; right: 0px; top: 50px; width: 130px; box-shadow: 0px 0px 3px #919191; line-height: 35px; z-index: 99; margin: 0px; padding: 5px; text-align: center; display: none}
+.page > .page_header .link > ul > .user .nav{ position: absolute; right: 0px; top: 50px; width: 130px; box-shadow: 0px 0px 3px #919191; line-height: 35px; z-index: 99; margin: 0px; padding: 5px; text-align: center; display: none; background: #ffffff}
 .page > .page_header .link > ul > .user .nav > li{ list-style: none}
 .page > .page_header .link > ul > .user .nav > li a{ color: #191919; display: block; border-radius: 3px}
 .page > .page_header .link > ul > .user .nav > li a:hover{ background: #e1e5e9; text-decoration: none}
@@ -57,4 +57,29 @@ transform:rotate(-90deg);
 }
 .page > .page_body > .body_left .menu ul li.active > a{ background: rgba(0,0,0,0.2); color: #ffffff; font-weight: bold}
 
-.page > .page_body > .body_right{ position: absolute; left: 200px; right: 0px; top: 0px; bottom: 0px; overflow-y: auto; background: #f5f5f5}
+.page > .page_body > .body_right{ position: absolute; left: 200px; right: 0px; top: 0px; bottom: 0px; overflow-y: auto; background: #F1F2Fa}
+
+.page > .page_body > .body_right .main_header{ height: 40px; background: #ffffff; border-bottom: 1px solid #cccccc; line-height: 40px; box-shadow: 0px 0px 5px #cccccc}
+.page > .page_body > .body_right .main_header:after{ content: ""; clear: both}
+.page > .page_body > .body_right .main_header .page_name{ font-weight: bold; margin-left: 10px}
+.page > .page_body > .body_right .main_header .refresh{ float: right; display: inline-block; padding: 0px 5px; color: #919191}
+.page > .page_body > .body_right .main_header .refresh .icon{ margin-right: 2px}
+.page > .page_body > .body_right .main_header .refresh:hover{ color: #717171; text-decoration: none}
+
+.page > .page_body > .body_right .main_body{ padding: 10px}
+
+.page > .page_body > .body_right .main_body > .section_search{ background: #ffffff; border-radius: 5px; padding: 15px}
+.page > .page_body > .body_right .main_body > .section_search:after{ content: ""; clear: both; display: block}
+.page > .page_body > .body_right .main_body > .section_search ul{ margin: 0px; padding: 0px}
+.page > .page_body > .body_right .main_body > .section_search ul li{ margin: 5px 15px 5px 0px; list-style: none; float: left}
+
+.page > .page_body > .body_right .main_body > .section_data{ background: #ffffff; border-radius: 5px; padding: 15px; margin-top: 10px}
+.page > .page_body > .body_right .main_body > .section_data .toolbar{}
+.page > .page_body > .body_right .main_body > .section_data .table{ margin-top: 10px}
+.page > .page_body > .body_right .main_body > .section_data .pagination{}
+
+/*手机设备*/
+@media ( max-width : 768px) {
+	.page > .page_body > .body_right .main_body > .section_search ul li{ float: none}
+}
+

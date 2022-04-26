@@ -45,7 +45,7 @@ button{ font-size: 14px; outline: none}
 .sun_mb20{ margin-bottom: 20px}
 
 /*按钮*/
-.sun_button{ appearance:none; background-color: #326496; border: none; outline: none; color:#ffffff; border-radius: 3px; cursor: pointer; display:inline-block; padding: 0px 10px; line-height: 30px; height: 30px; font-size: 14px; white-space: nowrap;
+.sun_button{ appearance:none; background-color: #326496; border: none; outline: none; color:#ffffff; border-radius: 3px; cursor: pointer; display:inline-block; padding: 0px 14px; line-height: 30px; height: 30px; font-size: 14px; white-space: nowrap;
 transition: all 0.5s ease;
 -ms-transition: all 0.5s ease;
 -moz-transition: all 0.5s ease;
