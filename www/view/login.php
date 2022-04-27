@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>系统登录</title>
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/jquery/jquery-1.12.4.min.js"></script>
+<link href="<?php echo $config['app_domain'];?>js/plug/animate-4.1.1/animate.min.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.js"></script>
 <link href="<?php echo $config['app_domain'];?>css/login.css" rel="stylesheet" type="text/css" />
@@ -13,7 +14,7 @@
 
 <body class="page">
 
-<div class="wrap">
+<div class="wrap animate__animated animate__bounceInDown">
 <div class="title"><h1><?php echo $config['app_name'];?></h1></div>
 <form action="../login/login" method="post" class="needs-validation form" onSubmit="return formSubmit(this);">
 <div class="form_item">
