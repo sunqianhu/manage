@@ -15,13 +15,17 @@
 <?php require_once __DIR__.'/inc/frame_main_header.php';?>
 <div class="page_body">
 <?php require_once __DIR__.'/inc/frame_main_left.php';?>
-<div class="body_right">
-<div class="main_header">
+<div class="page_right">
+<div class="header">
 <span class="page_name">系统首页</span>
 <a href="javascript:;" onClick="location.reload();" class="refresh"><span class="iconfont icon-refresh icon"></span>刷新</a>
 </div>
-<div class="main_body">
+<div class="body">
 
+<div class="welcome">
+欢迎<span>运营单位孙乾户</span>登录系统，上次登录时间：2022-05-06 10:57:12，上次登录IP：218.88.23.158<div>
+</div>
+</div>
 
 
 </div>

@@ -17,4 +17,11 @@ class UserController extends BaseController{
         $this->assign('frameMainMenu', $frameMainMenu);
         $this->display('system/user/index.php');
     }
+    
+    /**
+     * 添加用户
+     */
+    function add(){
+        $this->display('system/user/add.php');
+    }
 }

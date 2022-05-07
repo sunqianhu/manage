@@ -1,7 +1,6 @@
 /**
  * 页面框架主要
  */
-
 .page{}
 .page > .page_header{ background: #326496; color: #ffffff; height: 50px; line-height: 50px}
 .page > .page_header:after{ content: ""; clear: both; zoom: 1; display: block}
@@ -23,63 +22,39 @@
 .page > .page_header .link > ul > .user:hover .nav{ display: block}
 
 .page > .page_body{ position: absolute; left: 0px; top: 50px; right: 0px; bottom: 0px}
-.page > .page_body > .body_left{ position: absolute; left: 0px; bottom: 0px; top: 0px; width: 200px; background: #323c46; color: rgba(255,255,255,0.8); overflow-y: auto}
-.page > .page_body > .body_left a{ color: rgba(255,255,255,0.8)}
+.page > .page_body > .page_left{ position: absolute; left: 0px; bottom: 0px; top: 0px; width: 200px; background: #323c46; color: rgba(255,255,255,0.8); overflow-y: auto}
+.page > .page_body > .page_left a{ color: rgba(255,255,255,0.8)}
 
 /*菜单*/
-.page > .page_body > .body_left .menu{}
-.page > .page_body > .body_left .menu ul{ margin: 0px; padding: 0px}
-.page > .page_body > .body_left .menu ul li{ list-style: none}
-.page > .page_body > .body_left .menu ul li > a{ display: block; height: 40px; line-height: 40px; padding:0px 10px 0px 20px; overflow: hidden}
-.page > .page_body > .body_left .menu ul li > a:hover{ background: rgba(0,0,0,0.2); color: #ffffff; text-decoration: none}
-.page > .page_body > .body_left .menu ul li > a .icon{}
-.page > .page_body > .body_left .menu ul li > a .arrow{ float: right; font-size: 12px;
+.page > .page_body > .page_left .menu{}
+.page > .page_body > .page_left .menu ul{ margin: 0px; padding: 0px}
+.page > .page_body > .page_left .menu ul li{ list-style: none}
+.page > .page_body > .page_left .menu ul li > a{ display: block; height: 40px; line-height: 40px; padding:0px 10px 0px 20px; overflow: hidden}
+.page > .page_body > .page_left .menu ul li > a:hover{ background: rgba(0,0,0,0.2); color: #ffffff; text-decoration: none}
+.page > .page_body > .page_left .menu ul li > a .icon{}
+.page > .page_body > .page_left .menu ul li > a .arrow{ float: right; font-size: 12px;
 transition: all 0.5s ease;
 -ms-transition: all 0.5s ease;
 -moz-transition: all 0.5s ease;
 -webkit-transition: all 0.5s ease;
 -o-transition: all 0.5s ease
 }
-.page > .page_body > .body_left .menu ul li > ul{ display: none}
+.page > .page_body > .page_left .menu ul li > ul{ display: none}
 
-.page > .page_body > .body_left .menu ul > li > ul > li > a{ padding-left: 40px}
-.page > .page_body > .body_left .menu ul > li > ul > li > ul > li > a{ padding-left: 60px}
-.page > .page_body > .body_left .menu ul > li > ul > li > ul > li > ul > li > a{ padding-left: 80px}
+.page > .page_body > .page_left .menu ul > li > ul > li > a{ padding-left: 40px}
+.page > .page_body > .page_left .menu ul > li > ul > li > ul > li > a{ padding-left: 60px}
+.page > .page_body > .page_left .menu ul > li > ul > li > ul > li > ul > li > a{ padding-left: 80px}
 
-.page > .page_body > .body_left .menu ul li.open{ background: #222c36}
-.page > .page_body > .body_left .menu ul li.open > a{ color: #ffffff}
-.page > .page_body > .body_left .menu ul li.open > a .arrow{
+.page > .page_body > .page_left .menu ul li.open{ background: #222c36}
+.page > .page_body > .page_left .menu ul li.open > a{ color: #ffffff}
+.page > .page_body > .page_left .menu ul li.open > a .arrow{
 transform:rotate(-90deg);
 -ms-transform:rotate(-90deg);
 -moz-transform:rotate(-90deg);
 -webkit-transform:rotate(-90deg);
 -o-transform:rotate(-90deg);
 }
-.page > .page_body > .body_left .menu ul li.active > a{ background: rgba(0,0,0,0.2); color: #ffffff; font-weight: bold}
+.page > .page_body > .page_left .menu ul li.active > a{ background: rgba(0,0,0,0.2); color: #ffffff; font-weight: bold}
 
-.page > .page_body > .body_right{ position: absolute; left: 200px; right: 0px; top: 0px; bottom: 0px; overflow-y: auto; background: #F1F2Fa}
-
-.page > .page_body > .body_right .main_header{ height: 40px; background: #ffffff; border-bottom: 1px solid #cccccc; line-height: 40px; box-shadow: 0px 0px 5px #cccccc}
-.page > .page_body > .body_right .main_header:after{ content: ""; clear: both}
-.page > .page_body > .body_right .main_header .page_name{ font-weight: bold; margin-left: 10px}
-.page > .page_body > .body_right .main_header .refresh{ float: right; display: inline-block; padding: 0px 5px; color: #919191}
-.page > .page_body > .body_right .main_header .refresh .icon{ margin-right: 2px}
-.page > .page_body > .body_right .main_header .refresh:hover{ color: #717171; text-decoration: none}
-
-.page > .page_body > .body_right .main_body{ padding: 10px}
-
-.page > .page_body > .body_right .main_body > .section_search{ background: #ffffff; border-radius: 5px; padding: 15px}
-.page > .page_body > .body_right .main_body > .section_search:after{ content: ""; clear: both; display: block}
-.page > .page_body > .body_right .main_body > .section_search ul{ margin: 0px; padding: 0px}
-.page > .page_body > .body_right .main_body > .section_search ul li{ margin: 5px 15px 5px 0px; list-style: none; float: left}
-
-.page > .page_body > .body_right .main_body > .section_data{ background: #ffffff; border-radius: 5px; padding: 15px; margin-top: 10px}
-.page > .page_body > .body_right .main_body > .section_data .toolbar{}
-.page > .page_body > .body_right .main_body > .section_data .table{ margin-top: 10px}
-.page > .page_body > .body_right .main_body > .section_data .pagination{}
-
-/*手机设备*/
-@media ( max-width : 768px) {
-	.page > .page_body > .body_right .main_body > .section_search ul li{ float: none}
-}
+.page > .page_body > .page_right{ position: absolute; left: 200px; right: 0px; top: 0px; bottom: 0px; overflow-y: auto; background: #F1F2Fa}
 

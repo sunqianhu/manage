@@ -6,6 +6,13 @@
   "description": "管理后台模板",
   "glyphs": [
     {
+      "icon_id": "1285539",
+      "name": "下拉箭头",
+      "font_class": "arrow_down",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
       "icon_id": "712332",
       "name": "刷新",
       "font_class": "refresh",

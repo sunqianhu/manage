@@ -1,0 +1,18 @@
+/**
+ * layui样式重新
+ */
+
+/**
+ * 弹层
+ */
+.sun_layer .layui-layer-btn{ border-top: 1px solid #cccccc}
+.sun_layer .layui-layer-btn a{ appearance:none; background-color: #326496; border: none; outline: none; color:#ffffff; border-radius: 3px; cursor: pointer; display:inline-block; padding: 0px 14px; line-height: 30px; height: 30px; font-size: 14px; white-space: nowrap;
+transition: all 0.5s ease;
+-ms-transition: all 0.5s ease;
+-moz-transition: all 0.5s ease;
+-webkit-transition: all 0.5s ease;
+-o-transition: all 0.5s ease;}
+.sun_layer .layui-layer-btn a:hover{ background: #5284b6; text-decoration: none; color: #ffffff}
+.sun_layer .layui-layer-btn .layui-layer-btn0{ }
+.sun_layer .layui-layer-btn .layui-layer-btn1{ background: #f5f7f9; color: #191919; border: 1px solid #cccccc}
+.sun_layer .layui-layer-btn .layui-layer-btn1:hover{ background: #e5e7e9; color: #191919; border-color: #acacac}

@@ -93,16 +93,15 @@ sun.loading.close = function(id){
 
 /**
  * 表单提交
- * @param selector 表单jquery选择器
  * @param config 配置
  */
-sun.formSubmit = function(selector, config){
-    if(!selector){
+sun.formSubmit = function(config){
+    if(!config.selector){
         sun.toast("error", "表单选择器参数错误", 3000);
         return false;
     }
     
-    var domForm = $(selector);
+    var domForm = $(config.selector);
     var domInputSubmits; // 所有input提交按钮
     var domInputSubmit; // 一个input提交按钮
     var domButtonSubmits; // 所有button提交按钮
@@ -209,4 +208,32 @@ sun.formSubmit = function(selector, config){
     });
 
     return false;
+}
+
+/**
+ * 下拉菜单
+ */
+sun.dropdown = function(){
+    var domDocument; // 文档
+    var domDropdownButtons; // 下拉按钮
+    var domDropdownMenus; // 菜单
+    
+    domDocument = $(document);
+    domDropdownButtons = $(".sun_dropdown_button");
+    domDropdownMenus = $(".sun_dropdown_menu");
+    
+    domDropdownButtons.on("click", function(){
+        var domDropdownButton = $(this);
+        var domDropdownMenu = domDropdownButton.nextAll(".sun_dropdown_menu");
+        
+        domDropdownMenus.hide();
+        domDropdownMenu.stop().slideToggle(100);
+    });
+    
+    // 关闭
+	domDocument.on("click", function(e){
+		if($(e.target).closest(".sun_dropdown_button").length === 0){
+			domDropdownMenus.slideUp(100);
+		}
+	});
 }

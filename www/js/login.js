@@ -14,7 +14,8 @@ function changeCaptcha(){
  * @param selector 表单jquery选择器
  */
 function formSubmit(selector){
-    sun.formSubmit(selector, {
+    sun.formSubmit({
+        selector: selector,
         success: function(ret){
             if(ret.status == "error"){
                 sun.toast("error", ret.msg, 3000, function(){
