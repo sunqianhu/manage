@@ -212,28 +212,43 @@ sun.formSubmit = function(config){
 
 /**
  * 下拉菜单
+ * @param config.selector 选择器
  */
-sun.dropdown = function(){
+sun.dropdown = function(config){
     var domDocument; // 文档
-    var domDropdownButtons; // 下拉按钮
-    var domDropdownMenus; // 菜单
+    var domDropdowns; // 菜单组所有
+    var domDropdownButtons; // 按钮所有
+    var domDropdownMenus; // 菜单所有
     
+    // 配置
+    if(!config.selector){
+        sun.toast("error", "selector参数错误", 3000);
+        return false;
+    }
+    if(!config.trigger){
+        config.trigger = ["click"];
+    }
+    
+    // 对象
     domDocument = $(document);
-    domDropdownButtons = $(".sun_dropdown_button");
-    domDropdownMenus = $(".sun_dropdown_menu");
+    domDropdowns = $(config.selector);
+    domDropdownMenus = $(".sun_dropdown_menu", domDropdowns);
+    domDropdownButtons = $(".sun_dropdown_button", domDropdowns);
     
-    domDropdownButtons.on("click", function(){
+    // 事件
+    domDropdownButtons.on(config.trigger.join(","), function(){
         var domDropdownButton = $(this);
-        var domDropdownMenu = domDropdownButton.nextAll(".sun_dropdown_menu");
+        var domDropdown = domDropdownButton.parent();
+        var domDropdownMenu = $(".sun_dropdown_menu", domDropdown);
         
         domDropdownMenus.hide();
-        domDropdownMenu.stop().slideToggle(100);
+        domDropdownMenu.slideDown(100);
     });
     
     // 关闭
 	domDocument.on("click", function(e){
 		if($(e.target).closest(".sun_dropdown_button").length === 0){
-			domDropdownMenus.slideUp(100);
+			domDropdownMenus.hide();
 		}
 	});
 }

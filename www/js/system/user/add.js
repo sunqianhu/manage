@@ -15,5 +15,9 @@ add.formSubmit = function(){
 }
 
 $(function(){
-    
+    $('#example-getting-started').multiselect({
+            enableFiltering: true,
+            includeSelectAllOption: true,
+            selectAllText: '全选'
+        });
 });

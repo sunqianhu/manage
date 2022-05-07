@@ -3,13 +3,6 @@
  */
 var index = {};
 
-index.bootstrapInit = function(){
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-    });
-}
-
 /**
  * 添加用户
  */
@@ -34,10 +27,12 @@ index.add = function(){
  * 列表更多操作
  */
 index.operationMore = function(){
-    sun.dropdown();
+    sun.dropdown({
+        selector: ".data .sun_dropdown",
+        trigger: ["click"]
+    });
 }
 
 $(function(){
-    index.bootstrapInit();
     index.operationMore();
 });

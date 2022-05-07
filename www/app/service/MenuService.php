@@ -31,7 +31,10 @@ class MenuService{
 </a>
 <ul>
 <li>
-<a href="javascript:;">功能1_1</a>
+<a href="javascript:;">
+<span class="text">功能1_1</span>
+<span class="iconfont icon-arrow_left arrow"></span>
+</a>
 <ul>
 <li><a href="#">功能1_1_1</a></li>
 <li><a href="#">功能1_1_2</a></li>
@@ -39,7 +42,10 @@ class MenuService{
 
 </li>
 <li>
-<a href="#">功能1_2</a>
+<a href="javascript:;">
+<span class="text">功能1_2</span>
+<span class="iconfont icon-arrow_left arrow"></span>
+</a>
 <ul>
 <li><a href="#">功能1_2_1</a></li>
 <li><a href="#">功能1_2_2</a></li>

@@ -58,7 +58,16 @@
 <div class="sun_form_item">
 <div class="sun_form_label"><span class="sun_form_required">*</span> 角色</div>
 <div class="sun_form_content">
-<input type="text" name="xxx" id="xxx" />
+
+<select id="example-getting-started" multiple="multiple">
+    <option value="cheese">Cheese</option>
+    <option value="tomatoes">Tomatoes</option>
+    <option value="mozarella">Mozzarella</option>
+    <option value="mushrooms">Mushrooms</option>
+    <option value="pepperoni">Pepperoni</option>
+    <option value="onions">Onions</option>
+</select>
+
 </div>
 </div>
 
