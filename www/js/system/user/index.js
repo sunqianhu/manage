@@ -24,6 +24,16 @@ index.add = function(){
 }
 
 /**
+ * 提示框
+ */
+index.bootstrapTooltip = function(){
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+}
+
+/**
  * 列表更多操作
  */
 index.operationMore = function(){
@@ -34,5 +44,6 @@ index.operationMore = function(){
 }
 
 $(function(){
+    index.bootstrapTooltip();
     index.operationMore();
 });

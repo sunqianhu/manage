@@ -22,9 +22,9 @@ input[type='password'],
 input[type='phone'],
 input[type='email'],
 input[type='date'],
-input[type='datetime']{ padding: 0px 3px; height: 30px; line-height: 30px; border: 1px solid #ced4da; appearance: none; outline: none; border-radius: 3px}
+input[type='datetime']{ padding: 0px 3px; height: 30px; line-height: 30px; border: 1px solid #ced4da; appearance: none; outline: none; border-radius: 3px; width: 150px}
 
-select{  padding: 0px 5px 0px 5px; height: 30px; line-height: 30px; border: 1px solid #ced4da; outline: none; border-radius: 3px}
+select{  padding: 0px 5px 0px 5px; height: 30px; line-height: 30px; border: 1px solid #ced4da; outline: none; border-radius: 3px; width: 150px}
 
 input[type='submit'],
 input[type='button'],
