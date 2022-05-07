@@ -5,13 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>添加用户</title>
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/jquery/jquery-1.12.4.min.js"></script>
-
-<link href="<?php echo $config['app_domain'];?>js/plug/layui-2.6.8/css/layui.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/layui-2.6.8/layui.js"></script>
-
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/xm-select-1.2.4/xm-select.js"></script>
-
-
+<link href="<?php echo $config['app_domain'];?>js/plug/select2-4.1.0/css/select2.min.css" rel="stylesheet" />
+<script src="<?php echo $config['app_domain'];?>js/plug/select2-4.1.0/js/select2.min.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.js"></script>
 <link href="<?php echo $config['app_domain'];?>css/system/user/add.css" rel="stylesheet" type="text/css" />
@@ -65,16 +60,10 @@
 <div class="sun_form_item">
 <div class="sun_form_label"><span class="sun_form_required">*</span> 角色</div>
 <div class="sun_form_content">
-<div id="role" style="width: 150px"></div>
-<div class="role_input_box"></div>
-<script type="text/javascript">
-var data = [
-    {name: '张三', value: 1, selected: true},
-    {name: '李四', value: 2},
-    {name: '王五', value: 3},
-];
-add.roleSelect(data);
-</script>
+<select name="role[]" multiple="multiple" class="role" id="role" style=" width: 300px">
+  <option value="1">超级管理员</option>
+  <option value="2">一般管理员</option>
+</select>
 </div>
 </div>
 

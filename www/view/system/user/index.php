@@ -103,14 +103,12 @@
     </tbody>
 </table>
 
-<div class="sun_pagination_intact sun_mt10">
-<div class="left">
+<div class="sun_pagination sun_mt10">
 <span class="count">共<span>100</span>条</span>
-</div>
-<div class="right">
+
 <div class="limit">
 每页显示<select>
-<option value="10" selected="">10</option>
+<option value="10">10</option>
 <option value="20">20</option>
 <option value="30">30</option>
 <option value="40">40</option>
@@ -134,7 +132,6 @@
 <a href="javascript:;" class="next">下一页</a>
 </div>
 
-</div>
 </div>
 
 </div>

@@ -13,7 +13,7 @@ a{ text-decoration: none; color: #326496}
 a:hover{ text-decoration: underline; color: #5284b6}
 
 /*表单元素*/
-textarea{ font-size: 14px; color: #191919; line-height: 150%; padding: 5px; border: 1px solid #ced4da; appearance: none; border-radius: 3px; min-height: 80px; width: 100%; outline: none}
+textarea{ font-size: 14px; color: #191919; line-height: 150%; padding: 5px; border-left: 1px solid #cccccc; border-top: 1px solid #cccccc; border-right: 1px solid #bcbcbc; border-bottom: 1px solid #bcbcbc; appearance: none; border-radius: 3px; outline: none}
 textarea:focus{ box-shadow: 0px 0px 4px rgba(0,0,0,0.4)}
 
 input[type='text'],
@@ -22,9 +22,9 @@ input[type='password'],
 input[type='phone'],
 input[type='email'],
 input[type='date'],
-input[type='datetime']{ padding: 0px 3px; height: 30px; line-height: 30px; border: 1px solid #ced4da; appearance: none; outline: none; border-radius: 3px; width: 150px}
+input[type='datetime']{ padding: 0px 3px; height: 30px; line-height: 30px; border-left: 1px solid #cccccc; border-top: 1px solid #cccccc; border-right: 1px solid #bcbcbc; border-bottom: 1px solid #bcbcbc; appearance: none; outline: none; border-radius: 3px}
 
-select{  padding: 0px 5px 0px 5px; height: 30px; line-height: 30px; border: 1px solid #ced4da; outline: none; border-radius: 3px; width: 150px}
+select{  padding: 0px 5px 0px 5px; height: 30px; line-height: 30px; border-left: 1px solid #cccccc; border-top: 1px solid #cccccc; border-right: 1px solid #bcbcbc; border-bottom: 1px solid #bcbcbc; outline: none; border-radius: 3px}
 
 input[type='submit'],
 input[type='button'],
@@ -94,35 +94,23 @@ transition: all 0.5s ease;
 .sun_table_keyvalue .key{ color: #2d64b3; background-color: #F4F6F8}
 
 /*分页完整*/
-.sun_pagination_intact{ line-height: 28px}
-.sun_pagination_intact:after{ content: ""; display: block; clear: both}
-.sun_pagination_intact .left{ float: left}
-.sun_pagination_intact .left .count{}
-.sun_pagination_intact .left .count span{}
+.sun_pagination{ line-height: 28px; display: flex; align-items: center}
+.sun_pagination .count{ flex: auto}
+.sun_pagination .count span{}
 
-.sun_pagination_intact .right{ float: right}
-.sun_pagination_intact .right .limit{ display: inline-block; vertical-align: middle}
-.sun_pagination_intact .right .limit select{ height: 22px}
+.sun_pagination .limit{ display: inline-block; vertical-align: middle}
+.sun_pagination .limit select{ height: 22px}
 
-.sun_pagination_intact .right .skip{ display: inline-block; margin-left: 10px; vertical-align: middle}
-.sun_pagination_intact .right .skip .number{ width: 30px; height: 22px; text-align: center}
+.sun_pagination .skip{ display: inline-block; margin-left: 10px; vertical-align: middle}
+.sun_pagination .skip .number{ width: 30px; height: 22px; text-align: center}
 
-.sun_pagination_intact .right .link{ display: inline-block; margin-left: 10px; vertical-align: middle}
-.sun_pagination_intact .right .link a{ float:left; border:1px solid #cccccc; display:block; padding: 0px 10px; background-color:#ffffff; color: #191919; margin-right: -1px}
-.sun_pagination_intact .right .link a:hover{ background:#f5f5f5; text-decoration: none}
-.sun_pagination_intact .right .link a.disabled{ cursor: not-allowed; color:#aaaaaa}
-.sun_pagination_intact .right .link a.disabled:hover{ background: #ffffff}
-.sun_pagination_intact .right .link a.active{ color:#ffffff; background:#326496; border: 1px solid #326496}
-.sun_pagination_intact .right .link a.active:hover{ background:#326496; cursor:default}
-
-/*分页简洁*/
-.sun_pagination_concise{ line-height: 28px; text-align: right}
-.sun_pagination_concise a{ border:1px solid #cccccc; display:inline-block; padding: 0px 10px; background-color:#ffffff; color: #191919; margin-right: -1px}
-.sun_pagination_concise a:hover{ background:#f5f5f5; text-decoration: none}
-.sun_pagination_concise a.disabled{ cursor: not-allowed; color:#aaaaaa}
-.sun_pagination_concise a.disabled:hover{ background: #ffffff}
-.sun_pagination_concise a.active{ color:#ffffff; background:#326496; border: 1px solid #326496}
-.sun_pagination_concise a.active:hover{ background:#326496; cursor:default}
+.sun_pagination .link{ display: inline-block; margin-left: 10px; vertical-align: middle}
+.sun_pagination .link a{ float:left; border:1px solid #cccccc; display:block; padding: 0px 10px; background-color:#ffffff; color: #191919; margin-right: -1px}
+.sun_pagination .link a:hover{ background:#f5f5f5; text-decoration: none}
+.sun_pagination .link a.disabled{ cursor: not-allowed; color:#aaaaaa}
+.sun_pagination .link a.disabled:hover{ background: #ffffff}
+.sun_pagination .link a.active{ color:#ffffff; background:#326496; border: 1px solid #326496}
+.sun_pagination .link a.active:hover{ background:#326496; cursor:default}
 
 /*表单*/
 .sun_form{}
