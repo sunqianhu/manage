@@ -144,3 +144,11 @@ transition: all 0.5s ease;
 .sun_badge_blue{ background: #1E9FFF}
 .sun_badge_black{ background: #393D49}
 .sun_badge_gray{ background: #FAFAFA; color: #666666}
+
+/*选卡*/
+.sun_tab{}
+.sun_tab .sun_tab_title{ white-space: nowrap; border-bottom: 1px solid #eeeeee; height: 40px; line-height: 40px}
+.sun_tab .sun_tab_title a{ display: inline-block; position: relative; padding: 0px 14px; min-width: 65px; text-align: center; cursor: pointer; color: #191919}
+.sun_tab .sun_tab_title a:hover{ text-decoration: none}
+.sun_tab .sun_tab_title .active{ height: 40px; background: #ffffff; border-radius: 3px 3px 0px 0px; border: 1px solid #eeeeee; border-bottom: none}
+.sun_tab .sun_tab_content{}
