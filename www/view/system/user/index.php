@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>用户管理_<?php echo $config['app_name'];?></title>
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/jquery/jquery-1.12.4.min.js"></script>
-<link rel="stylesheet" href="<?php echo $config['app_domain'];?>js/plug/bootstrap-5.1.3/css/bootstrap.min.css" />
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/bootstrap-5.1.3/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="<?php echo $config['app_domain'];?>js/plug/bootstrap-4.6.1/css/bootstrap.min.css" />
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/bootstrap-4.6.1/js/bootstrap.bundle.min.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/plug/layui-2.6.8/css/layui.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/layui-2.6.8/layui.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
@@ -47,7 +47,7 @@
 
 <div class="data sun_mt10">
 <div class="toolbar">
-<a href="javascript:;" class="sun_button" data-bs-toggle="tooltip" data-bs-placement="top" title="添加用户" onClick="index.add();">添加</a>
+<a href="javascript:;" class="sun_button" data-toggle="tooltip" title="添加用户" onClick="index.add();">添加</a>
 </div>
 <table class="sun_table sun_table_hover sun_mt10" width="100%">
     <thead>

@@ -14,7 +14,7 @@ a:hover{ text-decoration: underline; color: #5284b6}
 
 /*表单元素*/
 textarea{ font-size: 14px; color: #191919; line-height: 150%; padding: 5px; border-left: 1px solid #cccccc; border-top: 1px solid #cccccc; border-right: 1px solid #bcbcbc; border-bottom: 1px solid #bcbcbc; appearance: none; border-radius: 3px; outline: none}
-textarea:focus{ box-shadow: 0px 0px 4px rgba(0,0,0,0.4)}
+textarea:focus{ box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25)}
 
 input[type='text'],
 input[type='number'],
@@ -23,8 +23,16 @@ input[type='phone'],
 input[type='email'],
 input[type='date'],
 input[type='datetime']{ padding: 0px 3px; height: 30px; line-height: 30px; border-left: 1px solid #cccccc; border-top: 1px solid #cccccc; border-right: 1px solid #bcbcbc; border-bottom: 1px solid #bcbcbc; appearance: none; outline: none; border-radius: 3px}
+input[type='text']:focus,
+input[type='number']:focus,
+input[type='password']:focus,
+input[type='phone']:focus,
+input[type='email']:focus,
+input[type='date']:focus,
+input[type='datetime']:focus{ box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25)}
 
 select{  padding: 0px 5px 0px 5px; height: 30px; line-height: 30px; border-left: 1px solid #cccccc; border-top: 1px solid #cccccc; border-right: 1px solid #bcbcbc; border-bottom: 1px solid #bcbcbc; outline: none; border-radius: 3px}
+select:focus{ box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25)}
 
 input[type='submit'],
 input[type='button'],
@@ -126,3 +134,13 @@ transition: all 0.5s ease;
 .sun_dropdown .sun_dropdown_menu li{ list-style: none}
 .sun_dropdown .sun_dropdown_menu li a{ display: block; color: #191919; padding: 0px 10px}
 .sun_dropdown .sun_dropdown_menu li a:hover{text-decoration: none; background: #f5f5f5}
+
+/*徽章*/
+.sun_badge{ display: inline-block; padding: 3px 5px; line-height: 100%; font-size: 75%; white-space: nowrap; vertical-align: baseline; border-radius: 2px; color: #ffffff}
+.sun_badge:hover{ text-decoration: none}
+.sun_badge_orange{ background: #FFB800}
+.sun_badge_green{ background: #009688}
+.sun_badge_cyan{ background: #008888}
+.sun_badge_blue{ background: #1E9FFF}
+.sun_badge_black{ background: #393D49}
+.sun_badge_gray{ background: #FAFAFA; color: #666666}

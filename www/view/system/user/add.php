@@ -5,8 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>添加用户</title>
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/jquery/jquery-1.12.4.min.js"></script>
-<link href="<?php echo $config['app_domain'];?>js/plug/select2-4.1.0/css/select2.min.css" rel="stylesheet" />
-<script src="<?php echo $config['app_domain'];?>js/plug/select2-4.1.0/js/select2.min.js"></script>
+<link rel="stylesheet" href="<?php echo $config['app_domain'];?>js/plug/bootstrap-4.6.1/css/bootstrap.min.css" />
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/bootstrap-4.6.1/js/bootstrap.bundle.min.js"></script>
+
+<link rel="stylesheet" href="<?php echo $config['app_domain'];?>js/plug/bootstrap-select-1.13.9/css/bootstrap-select.min.css" />
+<script src="<?php echo $config['app_domain'];?>js/plug/bootstrap-select-1.13.9/js/bootstrap-select.min.js"></script>
+<script src="<?php echo $config['app_domain'];?>js/plug/bootstrap-select-1.13.9/js/i18n/defaults-zh_CN.min"></script>
+
 <link href="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.js"></script>
 <link href="<?php echo $config['app_domain'];?>css/system/user/add.css" rel="stylesheet" type="text/css" />
@@ -25,14 +30,14 @@
 <div class="sun_form_item">
 <div class="sun_form_label"><span class="sun_form_required">*</span> 密码</div>
 <div class="sun_form_content">
-<input type="text" name="xxx" id="xxx" />
+<input type="password" name="xxx" id="xxx" />
 </div>
 </div>
 
 <div class="sun_form_item">
 <div class="sun_form_label"><span class="sun_form_required">*</span> 确认密码</div>
 <div class="sun_form_content">
-<input type="text" name="xxx" id="xxx" />
+<input type="password" name="xxx" id="xxx" />
 </div>
 </div>
 
@@ -60,9 +65,9 @@
 <div class="sun_form_item">
 <div class="sun_form_label"><span class="sun_form_required">*</span> 角色</div>
 <div class="sun_form_content">
-<select name="role[]" multiple="multiple" class="role" id="role" style=" width: 300px">
-  <option value="1">超级管理员</option>
-  <option value="2">一般管理员</option>
+<select name="role[]" multiple="multiple" class="selectpicker role" id="role" data-live-search="true" title="请选择" data-width="170px">
+<option value="1">超级管理员</option>
+<option value="2">一般管理员</option>
 </select>
 </div>
 </div>
@@ -70,7 +75,7 @@
 <div class="sun_form_item">
 <div class="sun_form_label">备注</div>
 <div class="sun_form_content">
-<textarea name="xxx" id="xxx" class="remark" ></textarea>
+<textarea name="xxx" id="xxx" class="remark"></textarea>
 </div>
 </div>
 </form>

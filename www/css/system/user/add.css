@@ -6,4 +6,4 @@
 @import url(../../inc/layer_form.css);
 
 .page{}
-.page .remark{ width: 300px}
+.page .remark{ width: 300px !important}

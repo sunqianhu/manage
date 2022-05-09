@@ -27,10 +27,7 @@ index.add = function(){
  * 提示框
  */
 index.bootstrapTooltip = function(){
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-    });
+    $('[data-toggle="tooltip"]').tooltip();
 }
 
 /**
