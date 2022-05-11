@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>用户管理_<?php echo $config['app_name'];?></title>
+<title>部门管理_<?php echo $config['app_name'];?></title>
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/jquery/jquery-1.12.4.min.js"></script>
 <link rel="stylesheet" href="<?php echo $config['app_domain'];?>js/plug/bootstrap-4.6.1/css/bootstrap.min.css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/bootstrap-4.6.1/js/bootstrap.bundle.min.js"></script>
@@ -12,8 +12,8 @@
 <link href="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.js"></script>
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/inc/frame_main.js"></script>
-<link href="<?php echo $config['app_domain'];?>css/system/user/index.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/system/user/index.js"></script>
+<link href="<?php echo $config['app_domain'];?>css/system/department/index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/system/department/index.js"></script>
 </head>
 
 <body class="page">
@@ -23,11 +23,8 @@
 <div class="page_right">
 <div class="header">
 <div class="location">
-<a href="../../index/index">首页</a>
-<span class="split">&gt;</span>
-用户管理
+<a href="../../index/index">首页</a> <span class="split">&gt;</span> 部门管理
 </div>
-
 <a href="javascript:;" onClick="location.reload();" class="refresh"><span class="iconfont icon-refresh icon"></span>刷新</a>
 </div>
 <div class="body">
@@ -35,13 +32,8 @@
 <div class="search">
 <form method="get" action="" class="form">
 <ul>
-<li>所属部门：<input type="text" name="xxx" /></li>
-<li>用户名：<input type="text" name="xxx" /></li>
-<li>手机号码：<input type="text" name="xxx" /></li>
-<li>用户状态：<input type="text" name="xxx" /></li>
-<li>登录时间：<span id="time_range"><input type="text" name="time_start" id="time_start" autocomplete="off" /> 到
-<input type="text" name="time_end" id="time_end" autocomplete="off" />
-</span></li>
+<li>部门id：<input type="text" name="xxx" /></li>
+<li>部门名称：<input type="text" name="xxx" /></li>
 <li>
 <input type="submit" value="搜索" class="sun_button" />
 <input type="reset" class="sun_button sun_button_secondary sun_ml5" value="重置" />
@@ -52,57 +44,66 @@
 
 <div class="data sun_mt10">
 <div class="toolbar">
-<a href="javascript:;" class="sun_button" data-toggle="tooltip" title="添加用户" onClick="index.add();">添加</a>
+<a href="javascript:;" class="sun_button" data-toggle="tooltip" title="添加部门" onClick="index.add();">添加</a>
 </div>
 <table class="sun_table sun_table_hover sun_mt10" width="100%">
     <thead>
       <tr>
-        <th>用户id</th>
-        <th>用户名</th>
-        <th>姓名</th>
-        <th>所属部门</th>
-        <th>状态</th>
+        <th>部门id</th>
+        <th>部门名称</th>
+        <th>部门编号</th>
+        <th>排序</th>
         <th>添加时间</th>
         <th width="160">操作</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr id="tr_1" parent_id="0">
         <td>1</td>
-        <td>admin</td>
-        <td>管理员</td>
-        <td>部门1</td>
-        <td>启用</td>
+        <td class="name"><span class="iconfont icon-sjx_right"></span>部门1</td>
+        <td>100</td>
+        <td>1</td>
         <td>2022-05-06 13:34:25</td>
         <td>
-<a href="javascript:;" class="sun_button sun_button_sm sun_mr5">修改</a>
+<a href="javascript:;" class="sun_button sun_button_sm sun_mr5" data-toggle="tooltip" title="添加子部门">添加</a>
+<a href="javascript:;" class="sun_button sun_button_sm sun_button_secondary sun_mr5">修改</a>
 <a href="javascript:;" class="sun_button sun_button_secondary sun_button_sm sun_mr5">删除</a>
-<div class="sun_dropdown">
-<a href="javascript:;" class="sun_button sun_button_secondary sun_button_sm sun_dropdown_button">更多<span class="iconfont icon-arrow_down icon"></span></a>
-<ul class="sun_dropdown_menu">
-<li><a href="javascript:;">启用</a></li>
-</ul>
-</div>
-
 </td>
       </tr>
-      <tr>
+      <tr id="tr_2" parent_id="tr_1">
+        <td>2</td>
+        <td><span class="indent"></span>部门1_1</td>
+        <td>100100</td>
         <td>1</td>
-        <td>admin</td>
-        <td>管理员</td>
-        <td>部门1</td>
-        <td>启用</td>
         <td>2022-05-06 13:34:25</td>
         <td>
-<a href="javascript:;" class="sun_button sun_button_sm sun_mr5">修改</a>
+<a href="javascript:;" class="sun_button sun_button_sm sun_mr5">添加</a>
+<a href="javascript:;" class="sun_button sun_button_sm sun_button_secondary sun_mr5">修改</a>
 <a href="javascript:;" class="sun_button sun_button_secondary sun_button_sm sun_mr5">删除</a>
-<div class="sun_dropdown">
-<a href="javascript:;" class="sun_button sun_button_secondary sun_button_sm sun_dropdown_button">更多<span class="iconfont icon-arrow_down icon"></span></a>
-<ul class="sun_dropdown_menu">
-<li><a href="javascript:;">启用</a></li>
-</ul>
-</div>
-
+</td>
+      </tr>
+      <tr id="tr_3" parent_id="tr_1">
+        <td>3</td>
+        <td><span class="indent"></span><span class="indent"></span>部门1_1_1</td>
+        <td>100100100</td>
+        <td>1</td>
+        <td>2022-05-06 13:34:25</td>
+        <td>
+<a href="javascript:;" class="sun_button sun_button_sm sun_mr5">添加</a>
+<a href="javascript:;" class="sun_button sun_button_sm sun_button_secondary sun_mr5">修改</a>
+<a href="javascript:;" class="sun_button sun_button_secondary sun_button_sm sun_mr5">删除</a>
+</td>
+      </tr>
+      <tr id="tr_4" parent_id="0">
+        <td>4</td>
+        <td class="name"><span class="iconfont icon-sjx_right"></span>部门2</td>
+        <td>101</td>
+        <td>1</td>
+        <td>2022-05-06 13:34:25</td>
+        <td>
+<a href="javascript:;" class="sun_button sun_button_sm sun_mr5" data-toggle="tooltip" title="添加子部门">添加</a>
+<a href="javascript:;" class="sun_button sun_button_sm sun_button_secondary sun_mr5">修改</a>
+<a href="javascript:;" class="sun_button sun_button_secondary sun_button_sm sun_mr5">删除</a>
 </td>
       </tr>
     </tbody>

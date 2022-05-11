@@ -23,6 +23,8 @@ input[type='phone'],
 input[type='email'],
 input[type='date'],
 input[type='datetime']{ padding: 0px 3px; height: 30px; line-height: 30px; border-left: 1px solid #cccccc; border-top: 1px solid #cccccc; border-right: 1px solid #bcbcbc; border-bottom: 1px solid #bcbcbc; appearance: none; outline: none; border-radius: 3px}
+input[type='number']{ padding-right: 0px}
+
 input[type='text']:focus,
 input[type='number']:focus,
 input[type='password']:focus,
@@ -120,13 +122,19 @@ transition: all 0.5s ease;
 .sun_pagination .link a.active{ color:#ffffff; background:#326496; border: 1px solid #326496}
 .sun_pagination .link a.active:hover{ background:#326496; cursor:default}
 
-/*表单*/
+/*表单布局*/
 .sun_form{}
 .sun_form .sun_form_item{ display: flex; align-items: center; margin-bottom: 10px}
 .sun_form .sun_form_item:last-child{ margin-right: 0px}
 .sun_form .sun_form_item .sun_form_label{ flex: 4; text-align: right; margin-right: 20px}
 .sun_form .sun_form_item .sun_form_label .sun_form_required{ font-weight: bold; color: #ff0000}
 .sun_form .sun_form_item .sun_form_content{ flex: 8}
+
+/*表单输入框组*/
+.sun_input_group{ position: relative; display: flex}
+.sun_input_group input{  z-index: 1; position: relative}
+.sun_input_group input:focus{ z-index: 3}
+.sun_input_group_append{ margin-left: -2px; background: #e9ecef; border: 1px solid #cccccc; padding: 0px 8px; border-radius: 0px 3px 3px 0px; line-height: 25px; position: relative; z-index: 2}
 
 /*下拉菜单*/
 .sun_dropdown{ display: inline-block; position: relative}
