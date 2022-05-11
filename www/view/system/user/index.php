@@ -108,7 +108,7 @@
     </tbody>
 </table>
 
-<div class="sun_pagination sun_mt10">
+<div class="sun_pagination_intact sun_mt10">
 <div class="count">共<span>100</span>条</div>
 <div class="seat"></div>
 <div class="limit">
