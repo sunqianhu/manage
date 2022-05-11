@@ -103,7 +103,7 @@ transition: all 0.5s ease;
 .sun_table_hover tr:hover{ background: #EFF3F8}
 .sun_table_keyvalue .key{ color: #2d64b3; background-color: #F4F6F8}
 
-/*分页完整*/
+/*分页*/
 .sun_pagination{ line-height: 28px; display: flex; align-items: center}
 .sun_pagination .count{ flex: auto}
 .sun_pagination .count span{}
@@ -134,7 +134,8 @@ transition: all 0.5s ease;
 .sun_input_group{ position: relative; display: flex}
 .sun_input_group input{  z-index: 1; position: relative}
 .sun_input_group input:focus{ z-index: 3}
-.sun_input_group_append{ margin-left: -2px; background: #e9ecef; border: 1px solid #cccccc; padding: 0px 8px; border-radius: 0px 3px 3px 0px; line-height: 25px; position: relative; z-index: 2}
+.sun_input_group .sun_input_group_icon_left{ margin-right: -2px; background: #e9ecef; border: 1px solid #cccccc; padding: 0px 8px; border-radius: 3px 0px 0px 3px; line-height: 25px; position: relative; z-index: 2}
+.sun_input_group .sun_input_group_icon_right{ margin-left: -2px; background: #e9ecef; border: 1px solid #cccccc; padding: 0px 8px; border-radius: 0px 3px 3px 0px; line-height: 25px; position: relative; z-index: 2}
 
 /*下拉菜单*/
 .sun_dropdown{ display: inline-block; position: relative}

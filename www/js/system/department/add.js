@@ -29,7 +29,6 @@ add.selectDepartment = function(){
 add.formSubmit = function(){
     var layerIndex = 0;
     
-    
     layerIndex = parent.layer.getFrameIndex(window.name);
     parent.layer.close(layerIndex);
 }

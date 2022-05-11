@@ -19,7 +19,7 @@
 
 <div class="sun_input_group" onClick="add.selectDepartment();">
 <input type="text" name="xxx" id="xxx" />
-<div class="sun_input_group_append"><span class="iconfont icon-magnifier icon"></span></div>
+<div class="sun_input_group_icon_right"><span class="iconfont icon-magnifier icon"></span></div>
 </div>
 
 </div>
