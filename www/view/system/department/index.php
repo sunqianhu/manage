@@ -110,8 +110,8 @@
 </table>
 
 <div class="sun_pagination sun_mt10">
-<span class="count">共<span>100</span>条</span>
-
+<div class="count">共<span>100</span>条</div>
+<div class="seat"></div>
 <div class="limit">
 每页显示<select>
 <option value="10">10</option>
