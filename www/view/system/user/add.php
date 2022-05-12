@@ -20,6 +20,7 @@
 
 <body class="page">
 <form method="post" action="addSave" class="sun_form">
+<div class="page_body">
 <div class="sun_form_item">
 <div class="sun_form_label"><span class="sun_form_required">*</span> 用户名</div>
 <div class="sun_form_content">
@@ -78,7 +79,11 @@
 <textarea name="xxx" id="xxx" class="remark"></textarea>
 </div>
 </div>
+</div>
+<div class="page_button">
+<a href="javascript:;" class="sun_button sun_button_secondary" onClick="window.parent.sun.layer.close('layer_department_add');">关闭</a>
+<input type="submit" class="sun_button" value="提交" />
+</div>
 </form>
-
 </body>
 </html>

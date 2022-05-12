@@ -17,7 +17,9 @@
 <?php require_once __DIR__.'/inc/frame_main_left.php';?>
 <div class="page_right">
 <div class="header">
-<span class="page_name">系统首页</span>
+<div class="location">
+<span class="iconfont icon-home icon"></span> 系统首页
+</div>
 <a href="javascript:;" onClick="location.reload();" class="refresh"><span class="iconfont icon-refresh icon"></span>刷新</a>
 </div>
 <div class="body">

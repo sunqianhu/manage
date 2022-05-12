@@ -8,18 +8,13 @@ var index = {};
  */
 index.add = function(){
     var url = "add";
-    layer.open({
-        type: 2, // iframe层
-        title: "添加用户",
-        maxmin: true, // 开启最大化最小化按钮
-        area: ["700px", "500px"],
-        skin: "sun_layer",
-        content: url,
-        btn: ["提交", "关闭"],
-        yes: function(index, layero){
-            var layerWindow = $(layero).find("iframe")[0].contentWindow;
-            layerWindow.add.formSubmit();
-        }
+
+    sun.layer.open({
+        id: "layer_user_add",
+        name: "添加用户",
+        url: url,
+        width: 700,
+        height: 500
     });
 }
 
@@ -43,4 +38,11 @@ index.operationMore = function(){
 $(function(){
     index.bootstrapTooltip();
     index.operationMore();
+    
+    laydate.render({
+      elem: ".time_range",
+      range: ['#time_start', "#time_end"],
+      theme: "#326496",
+      format: "yyyy-MM-dd HH:mm:ss"
+    });
 });

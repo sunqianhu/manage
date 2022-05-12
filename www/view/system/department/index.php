@@ -7,8 +7,6 @@
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/jquery/jquery-1.12.4.min.js"></script>
 <link rel="stylesheet" href="<?php echo $config['app_domain'];?>js/plug/bootstrap-4.6.1/css/bootstrap.min.css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/bootstrap-4.6.1/js/bootstrap.bundle.min.js"></script>
-<link href="<?php echo $config['app_domain'];?>js/plug/layui-2.6.8/css/layui.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/layui-2.6.8/layui.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.js"></script>
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/inc/frame_main.js"></script>
@@ -23,7 +21,8 @@
 <div class="page_right">
 <div class="header">
 <div class="location">
-<a href="../../index/index">首页</a> <span class="split">&gt;</span> 部门管理
+<span class="iconfont icon-home icon"></span>
+<a href="../../index/index">系统首页</a> <span class="split">&gt;</span> 部门管理
 </div>
 <a href="javascript:;" onClick="location.reload();" class="refresh"><span class="iconfont icon-refresh icon"></span>刷新</a>
 </div>

@@ -12,40 +12,44 @@
 </head>
 
 <body class="page">
-<form method="post" action="addSave" class="sun_form">
+<form method="post" action="addSave" class="sun_form form">
+<div class="page_body">
 <div class="sun_form_item">
 <div class="sun_form_label"><span class="sun_form_required">*</span> 上级部门</div>
 <div class="sun_form_content">
-
+<input type="hidden" name="parent_id" id="parent_id" value="1" />
 <div class="sun_input_group" onClick="add.selectDepartment();">
-<input type="text" name="xxx" id="xxx" />
+<input type="text" name="parent_name" id="parent_name" readonly value="顶级部门" />
 <div class="sun_input_group_icon_right"><span class="iconfont icon-magnifier icon"></span></div>
 </div>
-
 </div>
 </div>
 
 <div class="sun_form_item">
 <div class="sun_form_label"><span class="sun_form_required">*</span> 部门名称</div>
 <div class="sun_form_content">
-<input type="text" name="xxx" id="xxx" />
+<input type="text" name="name" id="name" />
 </div>
 </div>
 
 <div class="sun_form_item">
 <div class="sun_form_label"><span class="sun_form_required">*</span> 显示排序</div>
 <div class="sun_form_content">
-<input type="number" name="xxx" id="xxx" />
+<input type="number" name="sort" id="sort" value="0" />
 </div>
 </div>
 
 <div class="sun_form_item">
 <div class="sun_form_label">备注</div>
 <div class="sun_form_content">
-<textarea name="xxx" id="xxx" class="remark"></textarea>
+<textarea name="remark" id="remark" class="remark"></textarea>
 </div>
+</div>
+</div>
+<div class="page_button">
+<a href="javascript:;" class="sun_button sun_button_secondary" onClick="window.parent.sun.layer.close('layer_department_add');">关闭</a>
+<input type="submit" class="sun_button" value="提交" />
 </div>
 </form>
-
 </body>
 </html>

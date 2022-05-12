@@ -4,7 +4,47 @@
  */
 namespace app\service;
 
-class DbHelperService{
+use app\Config;
+
+class DbService extends \PDO{
+    
+    static public $pdo = null;
+
+    /**
+     * 构造函数
+     */
+    static function getInstance(){
+        $dsn = '';    
+        $config = array();
+        
+        if(self::$pdo != null){
+            return self::$pdo;
+        }
+    
+        $config = Config::get('db');
+        if(
+            empty($config) || 
+            empty($config['type']) ||
+            empty($config['host']) ||
+            empty($config['port']) ||
+            empty($config['database']) ||
+            empty($config['charset']) ||
+            empty($config['username']) ||
+            empty($config['password'])
+        ){
+            throw new \Exception('数据库配置错误');
+        }
+        
+        $dsn = $config['type'].
+        ':host='.$config['host'].
+        ';port='.$config['port'].
+        ';dbname='.$config['database'].
+        ';charset='.$config['charset'];
+        self::$pdo = new \PDO($dsn, $config['username'], $config['password']);
+        
+        return self::$pdo;
+    }
+
     /**
      * 获取一个字段
      * @param PDOStatement $pdoStatement 结果集对象

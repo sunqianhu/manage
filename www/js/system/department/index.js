@@ -8,18 +8,12 @@ var index = {};
  */
 index.add = function(){
     var url = "add";
-    layer.open({
-        type: 2, // iframe层
-        title: "添加部门",
-        maxmin: true, // 开启最大化最小化按钮
-        area: ["600px", "400px"],
-        skin: "sun_layer",
-        content: url,
-        btn: ["提交", "关闭"],
-        yes: function(index, layero){
-            var layerWindow = $(layero).find("iframe")[0].contentWindow;
-            layerWindow.add.formSubmit();
-        }
+    sun.layer.open({
+        id: "layer_department_add",
+        name: "添加部门",
+        url: url,
+        width: 600,
+        height: 400
     });
 }
 

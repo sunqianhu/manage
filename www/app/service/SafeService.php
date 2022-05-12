@@ -1,18 +1,10 @@
 <?php
 /**
- * 输出
+ * 安全
  */
-namespace service;
+namespace app\service;
 
-class OutService{
-    /**
-     * 输出json
-     * @param array $datas 数组
-     * @param json json字符串
-     */
-    static function json($datas){
-        return json_encode($datas);
-    }
+class SafeService{
     
     /**
      * 实体化

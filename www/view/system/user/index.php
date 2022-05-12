@@ -7,8 +7,7 @@
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/jquery/jquery-1.12.4.min.js"></script>
 <link rel="stylesheet" href="<?php echo $config['app_domain'];?>js/plug/bootstrap-4.6.1/css/bootstrap.min.css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/bootstrap-4.6.1/js/bootstrap.bundle.min.js"></script>
-<link href="<?php echo $config['app_domain'];?>js/plug/layui-2.6.8/css/layui.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/layui-2.6.8/layui.js"></script>
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/laydate-5.3.1/laydate.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.js"></script>
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/inc/frame_main.js"></script>
@@ -23,7 +22,8 @@
 <div class="page_right">
 <div class="header">
 <div class="location">
-<a href="../../index/index">首页</a>
+<span class="iconfont icon-home icon"></span>
+<a href="../../index/index">系统首页</a>
 <span class="split">&gt;</span>
 用户管理
 </div>
@@ -39,7 +39,7 @@
 <li>用户名：<input type="text" name="xxx" /></li>
 <li>手机号码：<input type="text" name="xxx" /></li>
 <li>用户状态：<input type="text" name="xxx" /></li>
-<li>登录时间：<span id="time_range"><input type="text" name="time_start" id="time_start" autocomplete="off" /> 到
+<li>登录时间：<span class="time_range"><input type="text" name="time_start" id="time_start" autocomplete="off" /> 到
 <input type="text" name="time_end" id="time_end" autocomplete="off" />
 </span></li>
 <li>

@@ -6,7 +6,8 @@ namespace app\controller;
 
 use app\service\CaptchaService;
 use app\service\AuthService;
-use app\model\UserModel;
+use app\model\system\UserModel;
+use app\service\ValidateService;
 
 class LoginController extends BaseController{
     /**
@@ -34,25 +35,27 @@ class LoginController extends BaseController{
             'captcha'=>'0'
         );
         $user = null;
+        $validateService = new ValidateService();
         
-        if(empty($_POST['username'])){
-            $return['msg'] = '请输入用户名';
-            $return['dom'] = '#username';
+        // 验证
+        $validateService->rule = array(
+            'username' => 'require',
+            'password' => 'require',
+            'captcha' => 'require|max_length:6'
+        );
+        $validateService->message = array(
+            'username.require' => '请输入用户名',
+            'password.require' => '请输入密码',
+            'captcha.require' => '请输入验证码',
+            'captcha.max_length' => '验证码长度不能大于6个字符'
+        );
+        if(!$validateService->check($_POST)){
+            $return['msg'] = $validateService->getErrorMessage();
+            $return['dom'] = $validateService->getErrorField();
             echo json_encode($return);
             exit;
         }
-        if(empty($_POST['password'])){
-            $return['msg'] = '请输入密码';
-            $return['dom'] = '#password';
-            echo json_encode($return);
-            exit;
-        }
-        if(empty($_POST['captcha'])){
-            $return['msg'] = '请输入验证码';
-            $return['dom'] = '#captcha';
-            echo json_encode($return);
-            exit;
-        }
+        
         if(empty($_SESSION['captcha_login'])){
             $return['msg'] = '请重新获取验证码';
             $return['dom'] = '#captcha';

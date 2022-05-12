@@ -17,12 +17,6 @@ class MenuService{
         $config = Config::all();
         $menu = '<div class="menu">
 <ul>
-<li'.($active == 'home' ? ' class="active"' : '').'>
-<a href="'.$config['app_domain'].'index/index">
-<span class="iconfont icon-home icon"></span>
-<span class="text">系统首页</span>
-</a>
-<li>
 <li>
 <a href="javascript:;">
 <span class="iconfont icon-setup icon"></span>
