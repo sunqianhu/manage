@@ -20,7 +20,6 @@ class ValidateService{
     /**
      * 验证
      * @param array $datas 数据
-     * @return string 字段内容
      * @return boolean
      */
     public function check($datas){
@@ -31,7 +30,7 @@ class ValidateService{
         $ruleItems = array(); // 一个字段的一个规则项数组
         $ruleName = ''; // 规则名
         $ruleValue = ''; // 规则值
-        $errorMessage = '';
+        $message = ''; // 描述
         
         // 验证
         if(empty($datas)){
@@ -62,17 +61,14 @@ class ValidateService{
                 }
                 
                 // 错误描述
-                $errorMessage = $this->getDefineMessage($field, $ruleName);
+                $message = $this->getMessage($field, $ruleName, $ruleValue);
                 
                 // 检测
                 switch($ruleName){
                     // 必填
                     case 'require':
                         if(!$this->checkRequire($value)){
-                            if(empty($errorMessage)){
-                                $errorMessage = $field.'不能为空';
-                            }
-                            $this->setError($field, $errorMessage);
+                            $this->setError($field, $message);
                             return false;
                         }
                     break;
@@ -80,10 +76,7 @@ class ValidateService{
                     // 最大长度
                     case 'max_length':
                         if(!$this->checkMax($value, $ruleValue)){
-                            if(empty($errorMessage)){
-                                $errorMessage = $field.'最大长度不能大于'.$ruleValue;
-                            }
-                            $this->setError($field, $errorMessage);
+                            $this->setError($field, $message);
                             return false;
                         }
                     break;
@@ -91,10 +84,7 @@ class ValidateService{
                     // 数字
                     case 'number':
                         if(!$this->checkNumber($value)){
-                            if(empty($errorMessage)){
-                                $errorMessage = $field.'必须是个数字';
-                            }
-                            $this->setError($field, $errorMessage);
+                            $this->setError($field, $message);
                             return false;
                         }
                     break;
@@ -102,10 +92,7 @@ class ValidateService{
                     // 正则
                     case 'regex':
                         if(!$this->checkRegex($value, $ruleValue)){
-                            if(empty($errorMessage)){
-                                $errorMessage = $field.'不符合规则';
-                            }
-                            $this->setError($field, $errorMessage);
+                            $this->setError($field, $message);
                             return false;
                         }
                     break;
@@ -171,16 +158,36 @@ class ValidateService{
     }
     
     /**
-     * 得到定义的描述
+     * 得到描述
      * @return string
      */
-    function getDefineMessage($field, $ruleName){
-        $errorMessage = '';
+    function getMessage($field, $ruleName, $ruleValue){
+        $message = '';
+        
+        // 自定义描述
         if(!empty($this->message[$field.'.'.$ruleName])){
-            $errorMessage = $this->message[$field.'.'.$ruleName];
+            $message = $this->message[$field.'.'.$ruleName];
         }
         
-        return $errorMessage;
+        // 默认描述
+        if(empty($message)){
+            switch($ruleName){
+                case 'require':
+                    $message = $ruleName.'不能为空';
+                break;
+                case 'max_length':
+                    $message = $ruleName.'长度不能超过'.$ruleValue;
+                break;
+                case 'number':
+                    $message = $ruleName.'不是一个数字';
+                break;
+                case 'regex':
+                    $message = $ruleName.'不符合规则';
+                break;
+            }
+        }
+        
+        return $message;
     }
     
     /**

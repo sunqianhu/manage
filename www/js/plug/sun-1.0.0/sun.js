@@ -370,3 +370,21 @@ sun.layer.close = function(id){
 		domLayer.remove();
 	});
 }
+
+/**
+ * 找到指定id的弹层iframe
+ * @param obj win window对象
+ * @param int id id
+ * @return obj window对象
+ */
+sun.layer.getIframeWindow = function(win, id){
+    var iframeWindow;
+    
+    if(!win.frames[id]){
+        sun.toast("error", "没有找到弹层页面对象", 3000);
+        return false;
+    }
+    iframeWindow = win.frames[id];
+    
+    return iframeWindow;
+}
