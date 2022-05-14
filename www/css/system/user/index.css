@@ -1,0 +1,9 @@
+/**
+ * 用户管理
+ */
+@import url(../../iconfont/iconfont.css);
+@import url(../../inc/frame_main.css);
+@import url(../../inc/frame_main_list.css);
+
+.page{}
+.page .data table .sun_dropdown_menu{ right: 0px; left: inherit; width: 120px}

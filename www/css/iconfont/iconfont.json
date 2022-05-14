@@ -1,10 +1,52 @@
 {
   "id": "3296852",
-  "name": "管理后台",
+  "name": "sun管理系统框架",
   "font_family": "iconfont",
   "css_prefix_text": "icon-",
   "description": "管理后台模板",
   "glyphs": [
+    {
+      "icon_id": "12175552",
+      "name": "右箭头",
+      "font_class": "arrow_right",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "1135531",
+      "name": "三角形",
+      "font_class": "sjx_right",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "1285539",
+      "name": "下拉箭头",
+      "font_class": "arrow_down",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "712332",
+      "name": "刷新",
+      "font_class": "refresh",
+      "unicode": "e65e",
+      "unicode_decimal": 58974
+    },
+    {
+      "icon_id": "566774",
+      "name": "左箭头",
+      "font_class": "arrow_left",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "244823",
+      "name": "系统管理",
+      "font_class": "setup",
+      "unicode": "e689",
+      "unicode_decimal": 59017
+    },
     {
       "icon_id": "2570127",
       "name": "认证",

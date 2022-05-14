@@ -2,11 +2,14 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>错误反馈</title>
-<link href="<?php echo $config['site_domain'];?>css/error.css" rel="stylesheet" type="text/css" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>系统提示</title>
+<link href="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.js"></script>
+<link href="<?php echo $config['app_domain'];?>css/error.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body class="body">
+<body class="page">
 
 </body>
 </html>
