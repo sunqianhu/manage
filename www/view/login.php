@@ -16,7 +16,7 @@
 
 <div class="wrap animate__animated animate__bounceInDown">
 <div class="title"><h1><?php echo $config['app_name'];?></h1></div>
-<form action="../login/login" method="post" class="needs-validation form" onSubmit="return formSubmit(this);">
+<form action="login" method="post" class="form">
 <div class="form_item">
 <span class="iconfont icon-user icon"></span>
 <input type="text" id="username" name="username" placeholder="请输入用户名" required />
@@ -28,10 +28,10 @@
 <div class="form_item captcha">
 <span class="iconfont icon-auth icon"></span>
 <input type="text" id="captcha" name="captcha" placeholder="请输入密码" required />
-<img src="../login/captcha?mo=<?php echo time();?>" title="点击更新验证码" onClick="changeCaptcha();" />
+<img src="captcha?mo=<?php echo time();?>" title="点击更新验证码" onClick="login.changeCaptcha();" />
 </div>
 <div class="button_box">
-<button class="sun_button sun_button_big sun_button_block">登录</button>
+<input type="submit" class="sun_button sun_button_big sun_button_block" value="登录" />
 </div>
 </form>
 </div>

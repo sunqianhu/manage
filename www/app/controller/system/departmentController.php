@@ -55,9 +55,9 @@ class departmentController extends BaseController{
         );
         $validateService = new ValidateService();
         $departmentModel = new departmentModel();
-        $wheres = array(); // 条件
-        $id = 0; // id
-        $parentIds = ''; // 所有父级id
+        $departmentParent = array(); // 上级部门
+        $id = 0; // 添加部门id
+        $parentIds = ''; // 所有上级部门id
         $data = array();
         
         // 验证
@@ -80,15 +80,16 @@ class departmentController extends BaseController{
             exit;
         }
         
-        // 上级部门parent_ids
-        $wheres = array(
+        // 上级部门
+        $departmentParent = $departmentModel->getRow(
+            'parent_ids, level',
             array(
-                'field'=>'id',
-                'mark'=>'id = :id',
-                'value'=>$_POST['parent_id']
+                'mark'=> 'id = :id',
+                'value'=> array(
+                    ':id'=>$_POST['parent_id']
+                )
             )
         );
-        $parentIds = $departmentModel->getOne("parent_ids", $wheres);
         
         // 入库
         $data = array(
@@ -96,6 +97,7 @@ class departmentController extends BaseController{
             'name'=>$_POST['name'],
             'sort'=>$_POST['sort'],
             'remark'=>$_POST['remark'],
+            'level'=>$departmentParent['level'] + 1,
             'time_add'=>time(),
             'time_update'=>time()
         );
@@ -107,14 +109,13 @@ class departmentController extends BaseController{
             exit;
         }
         
-        $parentIds = $parentIds.','.$id;
+        $parentIds = $departmentParent['parent_ids'].','.$id;
         $departmentModel->update(
             array('parent_ids'=>$parentIds),
             array(
-                array(
-                    'field'=>'id',
-                    'mark'=>'id = :id',
-                    'value'=>$id
+                'mark'=>'id = :id',
+                'value'=> array(
+                    ':id'=>$id
                 )
             )
         );

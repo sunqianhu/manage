@@ -35,7 +35,7 @@
 <div class="sun_form_item">
 <div class="sun_form_label"><span class="sun_form_required">*</span> 显示排序</div>
 <div class="sun_form_content">
-<input type="number" name="sort" id="sort" value="0" />
+<input type="number" name="sort" id="sort" value="1" />
 </div>
 </div>
 

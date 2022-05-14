@@ -118,13 +118,11 @@ sun.formSubmit = function(config){
         sun.toast("error", "没有找到表单节点", 3000);
         return false;
     }
+    if(!config.buttonSubmitText){
+        config.buttonSubmitText = "处理中...";
+    }
     
     domForm.on("submit", function(){
-        // 初始值
-        if(!config.buttonSubmitText){
-            config.buttonSubmitText = "处理中...";
-        }
-
         url = domForm.attr("action");
         method = domForm.attr("method");
         data = domForm.serialize();

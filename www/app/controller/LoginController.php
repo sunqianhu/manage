@@ -34,17 +34,18 @@ class LoginController extends BaseController{
             'dom'=>'',
             'captcha'=>'0'
         );
-        $user = null;
+        $userModel = null;
         $validateService = new ValidateService();
         
         // 验证
         $validateService->rule = array(
-            'username' => 'require',
+            'username' => 'require|max_length:64',
             'password' => 'require',
             'captcha' => 'require|max_length:6'
         );
         $validateService->message = array(
             'username.require' => '请输入用户名',
+            'username.max_length' => '用户名不能超过64个字',
             'password.require' => '请输入密码',
             'captcha.require' => '请输入验证码',
             'captcha.max_length' => '验证码长度不能大于6个字符'
@@ -56,6 +57,7 @@ class LoginController extends BaseController{
             exit;
         }
         
+        // 验证码
         if(empty($_SESSION['captcha_login'])){
             $return['msg'] = '请重新获取验证码';
             $return['dom'] = '#captcha';
@@ -70,12 +72,32 @@ class LoginController extends BaseController{
             echo json_encode($return);
             exit;
         }
+        unset($_SESSION['captcha_login']);
+        $return['captcha'] = '1';
+        
+        // 登录失败次数验证
         
         $userModel = new UserModel();
         try{
-            $user = $userModel->getRowByUsernamePassword($_POST['username'], $_POST['password']);
+            $user = $userModel->getRow(
+                'id, username, name', 
+                array(
+                    'mark'=>'username = :username and password = :password',
+                    'value'=>array(
+                        ':username'=>$_POST['username'],
+                        ':password'=>md5($_POST['password'])
+                    )
+                )
+            );
         }catch(\Exception $e){
             $return['msg'] = $e->getMessage();
+            echo json_encode($return);
+            exit;
+        }
+        
+        if(empty($user)){
+            
+            $return['msg'] = '用户名或密码错误';
             echo json_encode($return);
             exit;
         }
