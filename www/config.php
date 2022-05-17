@@ -7,7 +7,7 @@ return array(
     'app_name'=>'sun管理系统框架', // 站点名称
     'app_domain'=>'http://manage.sunqianhu123.cc/', // 站点访问域名
     
-    'view_dir'=>__DIR__.'/view/', // 视图目录
+    'view_dir'=>__DIR__.'/app/view/', // 视图目录
     
     // 缓存
     'cache'=>array(
