@@ -9,6 +9,9 @@ use app\service\MenuService;
 use app\model\system\DepartmentModel;
 use app\service\ValidateService;
 use app\service\ZtreeService;
+use app\service\TreeService;
+use app\service\SafeService;
+use app\service\system\DepartmentService;
 
 class DepartmentController extends BaseController{
     /**
@@ -17,15 +20,47 @@ class DepartmentController extends BaseController{
     function index(){
         $departmentModel = new DepartmentModel();
         $departments = array();
+        $departmentNode = ''; // 部门表格节点
         $frameMainMenu = '';
+        $search = array(
+            'id'=>'',
+            'name'=>''
+        );
+        $whereMarks = array();
+        $whereValues = array();
+        $where = array();
         
+        // 菜单
         $frameMainMenu = MenuService::getFrameMainHtml('system_department');
-        $departments = $departmentModel->getAll('id, name, parent_id, `sort`', array(
-            'mark'=>'parent_id = 1 and level = 2'
-        ), 'order by `sort` asc');
         
+        // 搜索
+        if(!empty($_GET['id'])){
+            $whereMarks[] = 'id = :id';
+            $whereValues[':id'] = $_GET['id'];
+            $search['id'] = SafeService::entity($_GET['id']);
+        }
+        if(isset($_GET['name']) && $_GET['name'] !== ''){
+            $whereMarks[] = 'name like :name';
+            $whereValues[':name'] = '%'.$_GET['name'].'%';
+            $search['name'] = SafeService::entity($_GET['name']);
+        }
+        if(!empty($whereMarks)){
+            $where['mark'] = implode(' and ', $whereMarks);
+        }
+        $where['value'] = $whereValues;
+        
+        // 数据
+        $departments = $departmentModel->getAll('id, name, parent_id, `sort`, `level`', $where, 'order by `sort` asc');
+        $departments = SafeService::entity($departments, array('id', 'parent_id', 'sort', 'level'));
+        
+        // 转换
+        $departments = TreeService::getDataTree($departments, 'child', 'id', 'parent_id');
+        $departmentNode = DepartmentService::getIndexTreeNode($departments);
+        
+        // 显示
         $this->assign('frameMainMenu', $frameMainMenu);
-        $this->assign('departments', $departments);
+        $this->assign('search', $search);
+        $this->assign('departmentNode', $departmentNode);
         $this->display('system/department/index.php');
     }
     
@@ -105,9 +140,7 @@ class DepartmentController extends BaseController{
             'name'=>$_POST['name'],
             'sort'=>$_POST['sort'],
             'remark'=>$_POST['remark'],
-            'level'=>$departmentParent['level'] + 1,
-            'time_add'=>time(),
-            'time_update'=>time()
+            'level'=>$departmentParent['level'] + 1
         );
         try{
             $id = $departmentModel->insert($data);

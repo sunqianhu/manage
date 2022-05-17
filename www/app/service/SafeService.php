@@ -9,26 +9,23 @@ class SafeService{
     /**
      * 实体化
      * @param $datas 数据
-     * @param $outKey 排除字段
+     * @param $excludeField 排除字段
      * @return 实体化后的数据
      */
-    static function entity($datas, $outKey = ''){
-        $outKeys = array();
-
+    static function entity($datas, $excludeFields = array()){
         if(empty($datas)){
             return $datas;
         }
 
         if(is_array($datas)){
-            foreach ($datas as $key => $data){
-                if(!empty($outKey)){
-                    $outKeys = explode(',', $outKey);
-                    if(in_array($key, $outKeys, true)){
+            foreach ($datas as $field => $data){
+                if(!empty($excludeField)){
+                    if(in_array($field, $excludeFields, true)){
                         continue;
                     }
                 }
 
-                $datas[$key] = self::entity($data, $outKey);
+                $datas[$field] = self::entity($data, $excludeFields);
             }
         }else{
             $datas = htmlspecialchars($datas);

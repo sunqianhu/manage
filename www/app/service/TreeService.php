@@ -6,11 +6,11 @@ namespace app\service;
 
 class TreeService{
     /**
-     * 格式化数据树
+     * 得到数据树
      * @param array $datas 数据
      * @return array
      */
-    static function toStructure($datas, $child = 'child', $id = 'id', $parentId = 'parent_id'){
+    static function getDataTree($datas, $child = 'child', $id = 'id', $parentId = 'parent_id'){
         $middle = array(); // 中间数组
         $tree = array(); // 树形结构数组
         
