@@ -1,6 +1,6 @@
 <?php
 /**
- * 验证器
+ * ztree服务
  */
 namespace app\service;
 

@@ -6,18 +6,26 @@ namespace app\controller\system;
 
 use app\controller\BaseController;
 use app\service\MenuService;
-use app\model\system\departmentModel;
+use app\model\system\DepartmentModel;
 use app\service\ValidateService;
 use app\service\ZtreeService;
 
-class departmentController extends BaseController{
+class DepartmentController extends BaseController{
     /**
      * 首页
      */
     function index(){
+        $departmentModel = new DepartmentModel();
+        $departments = array();
+        $frameMainMenu = '';
+        
         $frameMainMenu = MenuService::getFrameMainHtml('system_department');
+        $departments = $departmentModel->getAll('id, name, parent_id, `sort`', array(
+            'mark'=>'parent_id = 1 and level = 2'
+        ), 'order by `sort` asc');
         
         $this->assign('frameMainMenu', $frameMainMenu);
+        $this->assign('departments', $departments);
         $this->display('system/department/index.php');
     }
     
