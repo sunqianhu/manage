@@ -35,7 +35,7 @@ class MenuController extends BaseController{
         $menu = ''; // 菜单json数据
         
         $menus = $menuModel->getAll('id, name, parent_id', array(), 'order by id asc');
-        $menus = ZtreeService::setOpenByLevel($menus, 1);
+        $menus = ZtreeService::setOpenByFirst($menus);
         $menu = json_encode($menus);
         $this->assign('menu', $menu);
         
@@ -76,23 +76,11 @@ class MenuController extends BaseController{
             exit;
         }
         
-        // 上级菜单
-        $menuParent = $menuModel->getRow(
-            'level',
-            array(
-                'mark'=> 'id = :id',
-                'value'=> array(
-                    ':id'=>$_POST['parent_id']
-                )
-            )
-        );
-        
         // 入库
         $data = array(
             'parent_id'=>$_POST['parent_id'],
             'name'=>$_POST['name'],
-            'sort'=>$_POST['sort'],
-            'level'=>$menuParent['level'] + 1
+            'sort'=>$_POST['sort']
         );
         try{
             $menuModel->insert($data);

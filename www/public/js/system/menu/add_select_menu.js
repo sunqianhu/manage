@@ -1,11 +1,7 @@
 /**
  * 添加选择菜单
  */
-var add = {};
-
-add.ztree = null;
-
-add.ztreeInit = function(){
+function ztreeInit(){
     var setting = {
         data: {
             simpleData: {
@@ -15,14 +11,14 @@ add.ztreeInit = function(){
             }
         }
     };
-    var nodes = add.menuData;
-    add.ztree = $.fn.zTree.init($("#ztree"), setting, nodes)
+    var nodes = menuData;
+    ztree = $.fn.zTree.init($("#ztree"), setting, nodes)
 }
 
 // 确定选择
-add.submit = function(){
+function submit(){
     var node = {}
-    var nodes = add.ztree.getSelectedNodes();
+    var nodes = ztree.getSelectedNodes();
     var iframeWindow;
     
     if(!nodes || nodes.length == 0){
@@ -37,10 +33,10 @@ add.submit = function(){
     node = nodes[0];
     
     iframeWindow = sun.layer.getIframeWindow(window.parent, 'layer_menu_add_iframe');
-    iframeWindow.add.selectDepartmentCallback(node);
+    iframeWindow.selectDepartmentCallback(node);
     window.parent.sun.layer.close('layer_add_select_menu');
 }
 
 $(function(){
-    add.ztreeInit();
+    ztreeInit();
 });

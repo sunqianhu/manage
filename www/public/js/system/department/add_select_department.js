@@ -1,11 +1,8 @@
 /**
  * 添加选择部门
  */
-var add = {};
 
-add.ztree = null;
-
-add.ztreeInit = function(){
+function ztreeInit(){
     var setting = {
         data: {
             simpleData: {
@@ -15,14 +12,14 @@ add.ztreeInit = function(){
             }
         }
     };
-    var nodes = add.departmentData;
-    add.ztree = $.fn.zTree.init($("#treeDemo"), setting, nodes)
+    var nodes = departmentData;
+    ztree = $.fn.zTree.init($("#treeDemo"), setting, nodes)
 }
 
 // 确定选择
-add.submit = function(){
+function submit(){
     var node = {}
-    var nodes = add.ztree.getSelectedNodes();
+    var nodes = ztree.getSelectedNodes();
     var iframeWindow;
     
     if(!nodes || nodes.length == 0){
@@ -37,10 +34,10 @@ add.submit = function(){
     node = nodes[0];
     
     iframeWindow = sun.layer.getIframeWindow(window.parent, 'layer_department_add_iframe');
-    iframeWindow.add.selectDepartmentCallback(node);
+    iframeWindow.selectDepartmentCallback(node);
     window.parent.sun.layer.close('layer_add_select_department');
 }
 
 $(function(){
-    add.ztreeInit();
+    ztreeInit();
 });

@@ -1,12 +1,10 @@
 /**
  * 部门管理
  */
-var index = {};
-
 /**
  * 添加用户
  */
-index.add = function(){
+function add(){
     var url = "add";
     sun.layer.open({
         id: "layer_department_add",
@@ -18,57 +16,73 @@ index.add = function(){
 }
 
 /**
- * 表格行切换
+ * 提示框
  */
-index.tableTrToggle = function(th){
-    var domArrow = $(th);
-    var domTrThis = domArrow.parents("tr").eq(0);
-    var departmentId = domTrThis.attr("department_id");
-    var domTrChilds = $(".data table tr[department_parent_id="+departmentId+"]");
-    
-    if(domTrThis.hasClass("open")){
-        domTrThis.removeClass("open");
-        domTrChilds.hide();
-    }else{
-        domTrThis.addClass("open");
-        domTrChilds.show();
-    }
+function bootstrapTooltip(){
+    $('[data-toggle="tooltip"]').tooltip();
 }
 
 /**
- * 表格初始化
+ * 表格树展开关闭
  */
-index.tableInit = function(th){
-    var domTrs = $(".data table .init_open");
-    var domTr;
-    var domTrChilds;
+function treeTableToggle(th){
+    var domArrow = $(th);
+    var domTr = domArrow.parents("tr").eq(0);
+    var id = domTr.attr("tree_table_id");
+    var close = domTr.hasClass("parent_close"); // 是否关闭
     
+    if(close){
+        domTr.removeClass("parent_close");
+        treeTableSonOpen(id);
+    }else{
+        domTr.addClass("parent_close");
+        // 递归关闭子项 添加 child_close
+        treeTableChildClose(id);
+    }
+    
+}
+
+/**
+ * 表格树打开儿子层
+ */
+function treeTableSonOpen(id){
+    var domTrs = $(".data table tr[tree_table_parent_id='"+id+"']");
+    var domTr;
     var trLength = domTrs.length;
-    var i = 0;
-    var departmentId = 0;
     
     if(trLength == 0){
         return;
     }
     
-    for(i = 0; i < trLength; i++){
-        domTr = domTrs.eq(i);
-        departmentId = domTr.attr("department_id");
-        domTrChilds = $(".data table tr[department_parent_id="+departmentId+"]");
-        
-        domTr.addClass("open");
-        domTrChilds.show();
-    }
+    domTrs.each(function(){
+        domTr = $(this);
+        domTr.removeClass("child_close");
+    });
 }
 
 /**
- * 提示框
+ * 表格树递归关闭子项
  */
-index.bootstrapTooltip = function(){
-    $('[data-toggle="tooltip"]').tooltip();
+function treeTableChildClose(id){
+    var domTrs = $(".data table tr[tree_table_parent_id='"+id+"']");
+    var domTr;
+    var trLength = domTrs.length;
+    var id = 0;
+    
+    if(trLength == 0){
+        return;
+    }
+    
+    domTrs.each(function(){
+        domTr = $(this);
+        id = domTr.attr("tree_table_id");
+        
+        domTr.addClass("child_close");
+        domTr.addClass("parent_close");
+        treeTableChildClose(id);
+    });
 }
 
 $(function(){
-    index.bootstrapTooltip();
-    index.tableInit();
+    bootstrapTooltip();
 });

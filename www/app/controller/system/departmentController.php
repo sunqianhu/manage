@@ -19,7 +19,7 @@ class DepartmentController extends BaseController{
      */
     function index(){
         $departmentModel = new DepartmentModel();
-        $departments = array();
+        $departments = array(); // 部门数据
         $departmentNode = ''; // 部门表格节点
         $frameMainMenu = '';
         $search = array(
@@ -50,11 +50,11 @@ class DepartmentController extends BaseController{
         $where['value'] = $whereValues;
         
         // 数据
-        $departments = $departmentModel->getAll('id, name, parent_id, `sort`, `level`', $where, 'order by `sort` asc');
-        $departments = SafeService::entity($departments, array('id', 'parent_id', 'sort', 'level'));
-        
-        // 转换
+        $departments = $departmentModel->getAll('id, parent_id, name, `sort`', $where, 'order by `sort` asc, id asc');
         $departments = TreeService::getDataTree($departments, 'child', 'id', 'parent_id');
+        $departments = TreeService::addLevel($departments, 1);
+        
+        $departments = SafeService::entity($departments, array('id', 'parent_id'));
         $departmentNode = DepartmentService::getIndexTreeNode($departments);
         
         // 显示
@@ -79,8 +79,8 @@ class DepartmentController extends BaseController{
         $departments = array();
         $department = ''; // 部门json数据
         
-        $departments = $departmentModel->getAll('id, name, parent_id, level', array(), 'order by id asc');
-        $departments = ZtreeService::setOpenByLevel($departments, 1);
+        $departments = $departmentModel->getAll('id, name, parent_id', array(), 'order by parent_id asc, id asc');
+        $departments = ZtreeService::setOpenByFirst($departments);
         $department = json_encode($departments);
         $this->assign('department', $department);
         
@@ -125,7 +125,7 @@ class DepartmentController extends BaseController{
         
         // 上级部门
         $departmentParent = $departmentModel->getRow(
-            'parent_ids, level',
+            'parent_ids',
             array(
                 'mark'=> 'id = :id',
                 'value'=> array(
@@ -139,8 +139,7 @@ class DepartmentController extends BaseController{
             'parent_id'=>$_POST['parent_id'],
             'name'=>$_POST['name'],
             'sort'=>$_POST['sort'],
-            'remark'=>$_POST['remark'],
-            'level'=>$departmentParent['level'] + 1
+            'remark'=>$_POST['remark']
         );
         try{
             $id = $departmentModel->insert($data);

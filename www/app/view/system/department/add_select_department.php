@@ -12,7 +12,7 @@
 <link href="<?php echo $config['app_domain'];?>css/system/department/add_select_department.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/system/department/add_select_department.js"></script>
 <script type="text/javascript">
-add.departmentData = <?php echo $department;?>;
+departmentData = <?php echo $department;?>;
 </script>
 </head>
 
@@ -22,7 +22,7 @@ add.departmentData = <?php echo $department;?>;
 </div>
 <div class="page_button">
 <a href="javascript:;" class="sun_button sun_button_secondary" onClick="window.parent.sun.layer.close('layer_add_select_department');">关闭</a>
-<input type="button" class="sun_button" value="确定" onClick="add.submit();" />
+<input type="button" class="sun_button" value="确定" onClick="submit();" />
 </div>
 </body>
 </html>

@@ -1,12 +1,10 @@
 /**
  * 用户管理
  */
-var index = {};
-
 /**
  * 添加用户
  */
-index.add = function(){
+function add(){
     var url = "add";
 
     sun.layer.open({
@@ -21,14 +19,14 @@ index.add = function(){
 /**
  * 提示框
  */
-index.bootstrapTooltip = function(){
+function bootstrapTooltip(){
     $('[data-toggle="tooltip"]').tooltip();
 }
 
 /**
  * 列表更多操作
  */
-index.operationMore = function(){
+ function operationMore(){
     sun.dropdown({
         selector: ".data .sun_dropdown",
         trigger: ["click"]
@@ -36,8 +34,8 @@ index.operationMore = function(){
 }
 
 $(function(){
-    index.bootstrapTooltip();
-    index.operationMore();
+    bootstrapTooltip();
+    operationMore();
     
     laydate.render({
       elem: ".time_range",

@@ -12,7 +12,7 @@
 <link href="<?php echo $config['app_domain'];?>css/system/menu/add_select_menu.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/system/menu/add_select_menu.js"></script>
 <script type="text/javascript">
-add.menuData = <?php echo $menu;?>;
+menuData = <?php echo $menu;?>;
 </script>
 </head>
 
@@ -22,7 +22,7 @@ add.menuData = <?php echo $menu;?>;
 </div>
 <div class="page_button">
 <a href="javascript:;" class="sun_button sun_button_secondary" onClick="window.parent.sun.layer.close('layer_add_select_menu');">关闭</a>
-<input type="button" class="sun_button" value="确定" onClick="add.submit();" />
+<input type="button" class="sun_button" value="确定" onClick="submit();" />
 </div>
 </body>
 </html>

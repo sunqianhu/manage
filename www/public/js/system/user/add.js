@@ -1,12 +1,10 @@
 /**
  * 添加用户
  */
-var add = {};
-
 /**
  * 提交表单
  */
-add.formSubmit = function(){
+function formSubmit(){
     
 }
 

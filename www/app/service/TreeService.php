@@ -33,4 +33,22 @@ class TreeService{
 
         return $tree;
     }
+    
+    /**
+     * 为树形结构数据加上级别
+     * @param array $datas 数据
+     * @param int $level 开始级别
+     * @return array
+     */
+    static function addLevel($datas, $level = 1){
+        foreach($datas as $key => $data){
+            $datas[$key]['level'] = $level;
+            
+            if(!empty($data['child'])){
+                $datas[$key]['child'] = self::addLevel($data['child'], ($level + 1));
+            }
+        }
+        
+        return $datas;
+    }
 }

@@ -43,7 +43,7 @@
 
 <div class="data sun_mt10">
 <div class="toolbar">
-<a href="javascript:;" class="sun_button" data-toggle="tooltip" title="添加菜单" onClick="index.add();">添加</a>
+<a href="javascript:;" class="sun_button" data-toggle="tooltip" title="添加菜单" onClick="add();">添加</a>
 </div>
 <table class="sun_table sun_table_hover sun_mt10" width="100%">
   <tr>

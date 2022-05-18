@@ -25,15 +25,16 @@ class ZtreeService{
     /**
      * 通过级别设置打开
      * @param array $datas 数据
-     * @param int $level 级别
      * @return array
      */
-    static function setOpenByLevel($datas, $level){
+    static function setOpenByFirst($datas){
         if(empty($datas)){
             return $datas;
         }
+        $index = 0;
         foreach($datas as $key => $data){
-            if($data['level'] == $level){
+            $index ++;
+            if($index == 1){
                 $datas[$key]['open'] = 1;
             }
         }

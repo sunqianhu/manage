@@ -1,12 +1,11 @@
 /**
  * 添加部门
  */
-var add = {};
 
 /**
  * 选择部门
  */
-add.selectDepartment = function(){
+function selectDepartment(){
     var url = "addSelectDepartment";
     window.parent.sun.layer.open({
         id: "layer_add_select_department",
@@ -21,7 +20,7 @@ add.selectDepartment = function(){
  * 选择部门回调
  * @param json node 节点数据
  */
-add.selectDepartmentCallback = function(node){
+function selectDepartmentCallback(node){
     var domParentId = $("#parent_id");
     var domParentName = $("#parent_name");
     
@@ -32,7 +31,7 @@ add.selectDepartmentCallback = function(node){
 /**
  * 提交表单
  */
-add.formSubmit = function(){
+function formSubmit(){
     sun.formSubmit({
         selector: ".form",
         success: function(ret){
@@ -42,12 +41,12 @@ add.formSubmit = function(){
                 return;
             }
             sun.toast("success", ret.msg, 1000, function(){
-                window.parent.sun.layer.close("layer_department_add");
+                window.parent.location.reload();
             });
         }
     });
 }
 
 $(function(){
-    add.formSubmit();
+    formSubmit();
 });

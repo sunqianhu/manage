@@ -18,7 +18,7 @@
 <div class="sun_form_label"><span class="sun_form_required">*</span> 上级菜单</div>
 <div class="sun_form_content">
 <input type="hidden" name="parent_id" id="parent_id" value="1" />
-<div class="sun_input_group" onClick="add.selectMenu();">
+<div class="sun_input_group" onClick="selectMenu();">
 <input type="text" name="parent_name" id="parent_name" readonly value="顶级菜单" />
 <div class="sun_input_group_icon_right"><span class="iconfont icon-magnifier icon"></span></div>
 </div>

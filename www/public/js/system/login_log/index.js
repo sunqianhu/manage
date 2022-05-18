@@ -1,9 +1,8 @@
 /**
  * 登录日志
  */
-var index = {};
 
-index.searchTimeRange = function(){
+function searchTimeRange(){
     var laydate = layui.laydate;
     laydate.render({
         elem: "#time_range",
@@ -14,5 +13,5 @@ index.searchTimeRange = function(){
 }
 
 $(function(){
-    index.searchTimeRange();
+    searchTimeRange();
 });
