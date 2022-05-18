@@ -1,7 +1,9 @@
 /**
  * 添加选择菜单
  */
-function ztreeInit(){
+var addSelectMenu = {};
+
+addSelectMenu.ztreeInit = function(){
     var setting = {
         data: {
             simpleData: {
@@ -16,7 +18,7 @@ function ztreeInit(){
 }
 
 // 确定选择
-function submit(){
+addSelectMenu.submit = function(){
     var node = {}
     var nodes = ztree.getSelectedNodes();
     var iframeWindow;
@@ -38,5 +40,5 @@ function submit(){
 }
 
 $(function(){
-    ztreeInit();
+    addSelectMenu.ztreeInit();
 });

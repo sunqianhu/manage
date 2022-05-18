@@ -1,11 +1,11 @@
 /**
  * 添加菜单
  */
-
+var add = {};
 /**
  * 选择上级
  */
-function selectMenu(){
+add.selectMenu = function(){
     var url = "addSelectMenu";
     window.parent.sun.layer.open({
         id: "layer_add_select_menu",
@@ -20,7 +20,7 @@ function selectMenu(){
  * 选择部门回调
  * @param json node 节点数据
  */
-function selectMenuCallback(node){
+add.selectMenuCallback = function(node){
     var domParentId = $("#parent_id");
     var domParentName = $("#parent_name");
     
@@ -31,7 +31,7 @@ function selectMenuCallback(node){
 /**
  * 提交表单
  */
-function formSubmit(){
+add.formSubmit = function(){
     sun.formSubmit({
         selector: ".form",
         success: function(ret){
@@ -48,5 +48,5 @@ function formSubmit(){
 }
 
 $(function(){
-    formSubmit();
+    add.formSubmit();
 });

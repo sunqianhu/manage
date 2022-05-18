@@ -2,8 +2,10 @@
  * 登录
  */
 
+var login = {};
+
 // 修改验证码
-function changeCaptcha(){
+login.changeCaptcha = function(){
     var url = "captcha?"+Math.random();
     var domImg = $(".captcha img");
     domImg.attr("src", url);
@@ -13,7 +15,7 @@ function changeCaptcha(){
  * 表单提交
  * @param selector 表单jquery选择器
  */
-function formSubmit(selector){
+login.formSubmit = function(selector){
     sun.formSubmit({
         selector: selector,
         success: function(ret){
@@ -28,7 +30,7 @@ function formSubmit(selector){
             }
             
             if(ret.captcha == "1"){
-                changeCaptcha();
+                login.changeCaptcha();
             }
             
             location.href = "../index/index";
@@ -37,6 +39,6 @@ function formSubmit(selector){
 }
 
 $(function(){
-    formSubmit(".form");
+    login.formSubmit(".form");
 });
 

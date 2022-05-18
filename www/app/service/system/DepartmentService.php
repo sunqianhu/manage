@@ -37,7 +37,7 @@ class DepartmentService{
                 $node .= '<span class="indent"></span>';
             }
             if(!empty($department['child'])){
-                $node .= '<span class="iconfont icon-arrow_down arrow" onclick="treeTableToggle(this)"></span>';
+                $node .= '<span class="iconfont icon-arrow_down arrow" onclick="index.treeTableToggle(this)"></span>';
             }
             $node .= $department['name'].'
 </td>

@@ -1,10 +1,11 @@
 /**
  * 部门管理
  */
+var index = {};
 /**
  * 添加用户
  */
-function add(){
+index.add = function(){
     var url = "add";
     sun.layer.open({
         id: "layer_department_add",
@@ -18,14 +19,14 @@ function add(){
 /**
  * 提示框
  */
-function bootstrapTooltip(){
+index.bootstrapTooltip = function(){
     $('[data-toggle="tooltip"]').tooltip();
 }
 
 /**
  * 表格树展开关闭
  */
-function treeTableToggle(th){
+index.treeTableToggle = function(th){
     var domArrow = $(th);
     var domTr = domArrow.parents("tr").eq(0);
     var id = domTr.attr("tree_table_id");
@@ -33,11 +34,11 @@ function treeTableToggle(th){
     
     if(close){
         domTr.removeClass("parent_close");
-        treeTableSonOpen(id);
+        index.treeTableSonOpen(id);
     }else{
         domTr.addClass("parent_close");
         // 递归关闭子项 添加 child_close
-        treeTableChildClose(id);
+        index.treeTableChildClose(id);
     }
     
 }
@@ -45,7 +46,7 @@ function treeTableToggle(th){
 /**
  * 表格树打开儿子层
  */
-function treeTableSonOpen(id){
+index.treeTableSonOpen = function(id){
     var domTrs = $(".data table tr[tree_table_parent_id='"+id+"']");
     var domTr;
     var trLength = domTrs.length;
@@ -63,7 +64,7 @@ function treeTableSonOpen(id){
 /**
  * 表格树递归关闭子项
  */
-function treeTableChildClose(id){
+index.treeTableChildClose = function(id){
     var domTrs = $(".data table tr[tree_table_parent_id='"+id+"']");
     var domTr;
     var trLength = domTrs.length;
@@ -79,10 +80,10 @@ function treeTableChildClose(id){
         
         domTr.addClass("child_close");
         domTr.addClass("parent_close");
-        treeTableChildClose(id);
+        index.treeTableChildClose(id);
     });
 }
 
 $(function(){
-    bootstrapTooltip();
+    index.bootstrapTooltip();
 });

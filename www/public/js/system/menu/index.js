@@ -1,10 +1,11 @@
 /**
  * 菜单管理
  */
+var index = {};
 /**
  * 添加
  */
-function add(){
+index.add = function(){
     var url = "add";
     sun.layer.open({
         id: "layer_menu_add",
@@ -18,10 +19,10 @@ function add(){
 /**
  * 提示框
  */
-function bootstrapTooltip(){
+index.bootstrapTooltip = function(){
     $('[data-toggle="tooltip"]').tooltip();
 }
 
 $(function(){
-    bootstrapTooltip();
+    index.bootstrapTooltip();
 });

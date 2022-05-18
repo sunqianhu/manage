@@ -12,7 +12,7 @@
 <link href="<?php echo $config['app_domain'];?>css/system/menu/add_select_menu.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/system/menu/add_select_menu.js"></script>
 <script type="text/javascript">
-menuData = <?php echo $menu;?>;
+addSelectMenu.menuData = <?php echo $menu;?>;
 </script>
 </head>
 

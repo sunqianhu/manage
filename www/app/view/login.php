@@ -28,7 +28,7 @@
 <div class="form_item captcha">
 <span class="iconfont icon-auth icon"></span>
 <input type="text" id="captcha" name="captcha" placeholder="请输入密码" required />
-<img src="captcha?mo=<?php echo time();?>" title="点击更新验证码" onClick="changeCaptcha();" />
+<img src="captcha?mo=<?php echo time();?>" title="点击更新验证码" onClick="login.changeCaptcha();" />
 </div>
 <div class="button_box">
 <input type="submit" class="sun_button sun_button_big sun_button_block" value="登录" />
