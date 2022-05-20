@@ -8,6 +8,7 @@ use app\service\CaptchaService;
 use app\service\AuthService;
 use app\model\system\UserModel;
 use app\service\ValidateService;
+use app\service\ResponseService;
 
 class LoginController extends BaseController{
     /**
@@ -28,12 +29,6 @@ class LoginController extends BaseController{
      * 登录处理
      */
     function login(){
-        $return = array(
-            'status'=>'error',
-            'msg'=>'',
-            'dom'=>'',
-            'captcha'=>'0'
-        );
         $userModel = null;
         $validateService = new ValidateService();
         
@@ -51,31 +46,20 @@ class LoginController extends BaseController{
             'captcha.max_length' => '验证码长度不能大于6个字符'
         );
         if(!$validateService->check($_POST)){
-            $return['msg'] = $validateService->getErrorMessage();
-            $return['dom'] = $validateService->getErrorField();
-            echo json_encode($return);
+            echo ResponseService::json('error', $validateService->getErrorMessage(), array('dom'=>$validateService->getErrorField()));
             exit;
         }
         
         // 验证码
         if(empty($_SESSION['captcha_login'])){
-            $return['msg'] = '请重新获取验证码';
-            $return['dom'] = '#captcha';
-            $return['captcha'] = '1';
-            echo json_encode($return);
+            echo ResponseService::json('error', '请重新获取验证码', array('dom'=>'#captcha', 'captcha'=>1));
             exit;
         }
         if($_SESSION['captcha_login'] != $_POST['captcha']){
-            $return['msg'] = '验证码错误';
-            $return['dom'] = '#captcha';
-            $return['captcha'] = '1';
-            echo json_encode($return);
+            echo ResponseService::json('error', '验证码错误', array('dom'=>'#captcha', 'captcha'=>1));
             exit;
         }
         unset($_SESSION['captcha_login']);
-        $return['captcha'] = '1';
-        
-        // 登录失败次数验证
         
         $userModel = new UserModel();
         try{
@@ -90,24 +74,19 @@ class LoginController extends BaseController{
                 )
             );
         }catch(\Exception $e){
-            $return['msg'] = $e->getMessage();
-            echo json_encode($return);
+            echo ResponseService::json('error', '验证码错误', array('captcha'=>1));
             exit;
         }
         
         if(empty($user)){
-            
-            $return['msg'] = '用户名或密码错误';
-            echo json_encode($return);
+            echo ResponseService::json('error', '用户名或密码错误', array('captcha'=>1));
             exit;
         }
         
         // 服务层
         AuthService::saveToken($user);
         
-        $return['status'] = 'success';
-        $return['msg'] = '登录成功';
-        echo json_encode($return);
+        echo ResponseService::json('success', '登录成功', array('captcha'=>1));
     }
     
     /**

@@ -3,7 +3,7 @@
  */
 var index = {};
 /**
- * 添加用户
+ * 添加
  */
 index.add = function(){
     var url = "add";
@@ -13,6 +13,25 @@ index.add = function(){
         url: url,
         width: 600,
         height: 400
+    });
+}
+
+/**
+ * 删除
+ */
+index.delete = function(id){
+    var url = "delete?id="+id;
+    var domTr = $(".data table .tr"+id);
+    if(!confirm("确定删除吗？")){
+        return;
+    }
+    
+    $.getJSON(url, function(ret){
+        if(ret.status == "error"){
+            sun.toast("error", ret.message, 3000);
+            return;
+        }
+        domTr.remove();
     });
 }
 

@@ -38,11 +38,13 @@ add.formSubmit = function(){
         selector: ".form",
         success: function(ret){
             if(ret.status == "error"){
-                sun.toast("error", ret.msg, 3000);
-                $(ret.dom).focus();
+                sun.toast("error", ret.message, 3000);
+                if(ret.data && ret.data.dom){
+                    $(ret.data.dom).focus();
+                }
                 return;
             }
-            sun.toast("success", ret.msg, 1000, function(){
+            sun.toast("success", ret.message, 1000, function(){
                 window.parent.location.reload();
             });
         }

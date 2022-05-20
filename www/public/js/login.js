@@ -21,7 +21,7 @@ login.formSubmit = function(selector){
         success: function(ret){
             console.log(ret);
             if(ret.status == "error"){
-                sun.toast("error", ret.msg, 3000, function(){
+                sun.toast("error", ret.message, 3000, function(){
                     if(ret.dom){
                         $(ret.dom).focus();
                     }

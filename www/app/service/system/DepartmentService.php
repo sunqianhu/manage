@@ -30,7 +30,7 @@ class DepartmentService{
             }
 
             $node .= '
-<tr tree_table_id="'.$department['id'].'" tree_table_parent_id="'.$department['parent_id'].'" class="tr'.$styleClass.'">
+<tr tree_table_id="'.$department['id'].'" tree_table_parent_id="'.$department['parent_id'].'" class="tr tr'.$department['id'].''.$styleClass.'">
 <td>'.$department['id'].'</td>
 <td class="name">';
             for($i = 0; $i < $indent; $i ++){
@@ -45,7 +45,7 @@ class DepartmentService{
 <td>
 <a href="javascript:;" class="sun_button sun_button_sm sun_mr5" data-toggle="tooltip" title="添加子部门" onClick="index.add('.$department['id'].');">添加</a>
 <a href="javascript:;" class="sun_button sun_button_sm sun_button_secondary sun_mr5">修改</a>
-<a href="javascript:;" class="sun_button sun_button_secondary sun_button_sm sun_mr5">删除</a>
+<a href="javascript:;" class="sun_button sun_button_secondary sun_button_sm sun_mr5" onclick="index.delete('.$department['id'].');">删除</a>
 </td>
 </tr>
 ';

@@ -12,6 +12,7 @@ use app\service\ZtreeService;
 use app\service\TreeService;
 use app\service\SafeService;
 use app\service\system\DepartmentService;
+use app\service\ResponseService;
 
 class DepartmentController extends BaseController{
     /**
@@ -91,11 +92,6 @@ class DepartmentController extends BaseController{
      * 添加部门保存
      */
     function addSave(){
-        $return = array(
-            'status'=>'error',
-            'msg'=>'',
-            'dom'=>''
-        );
         $validateService = new ValidateService();
         $departmentModel = new departmentModel();
         $departmentParent = array(); // 上级部门
@@ -117,9 +113,7 @@ class DepartmentController extends BaseController{
             'sort.max_length' => '排序不能大于10个字'
         );
         if(!$validateService->check($_POST)){
-            $return['msg'] = $validateService->getErrorMessage();
-            $return['dom'] = $validateService->getErrorField();
-            echo json_encode($return);
+            echo ResponseService::json('error', $validateService->getErrorMessage(), array('dom'=>$validateService->getErrorField()));
             exit;
         }
         
@@ -144,8 +138,7 @@ class DepartmentController extends BaseController{
         try{
             $id = $departmentModel->insert($data);
         }catch(Exception $e){
-            $return['msg'] = $e->getMessage();
-            echo json_encode($return);
+            echo ResponseService::json('error', $e->getMessage());
             exit;
         }
         
@@ -160,8 +153,58 @@ class DepartmentController extends BaseController{
             )
         );
         
-        $return['status'] = 'success';
-        $return['msg'] = '添加成功';
-        echo json_encode($return);
+        echo ResponseService::json('success', '添加成功');
+    }
+    
+    /**
+     * 删除
+     */
+    function delete(){
+        $departmentChild = array();
+        $departmentModel = new departmentModel();
+        $validateService = new ValidateService();
+        
+        // 验证
+        $validateService->rule = array(
+            'id' => 'require:number'
+        );
+        $validateService->message = array(
+            'id.require' => 'id参数错误',
+            'id.number' => 'id必须是个数字'
+        );
+        if(!$validateService->check($_GET)){
+            echo ResponseService::json('error', $validateService->getErrorMessage());
+            exit;
+        }
+        
+        $departmentChild = $departmentModel->getRow(
+            'id',
+            array(
+                'mark'=>'parent_id = :id',
+                'value'=> array(
+                    ':id'=>$_GET['id']
+                )
+            )
+        );
+        if(!empty($departmentChild)){
+            echo ResponseService::json('error', '该部门存在下级部门');
+            exit;
+        }
+        
+        try{
+            $departmentModel->delete(
+                array(
+                    'mark'=>'id = :id',
+                    'value'=> array(
+                        ':id'=>$_GET['id']
+                    )
+                )
+            );
+        }catch(Exception $e){
+            echo ResponseService::json('error', $e->getMessage());
+            exit;
+        }
+        
+        echo ResponseService::json('success', '删除成功');
     }
 }
