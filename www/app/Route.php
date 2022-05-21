@@ -5,56 +5,21 @@
 namespace app;
 
 class Route{
-    static public $controller = '';
-    static public $action = '';
-    
     /**
-     * 构造
+     * 得到路径
      */
-    public function __construct(){
-        $uri = ''; // uri
-        $uris = array(); // uris
-        $path = ''; // 页面路径
-        $paths = array(); // 页面路径
-        $pathNumber = 0; // 页面路径数量
-        $parameters = array(); // 参数
-
+    static function getPath(){
+        $uri = '';
+        $uris = array();
+        $path = '';
+        
         if(isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] != '/'){
             $uri = $_SERVER['REQUEST_URI'];
             $uris = explode('?', $uri);
-            
-            // 页面
-            $path = trim($uris[0], '/');
-            $paths = explode('/', $path);
-            $pathNumber = count($paths);
-            
-            if($pathNumber < 2){
-                throw \Exception('url参数错误');
-            }
-            
-            // action
-            if(isset($paths[$pathNumber - 1])){
-                self::$action = $paths[$pathNumber - 1];
-            }
-            
-            // 控制器类
-            $paths[$pathNumber - 2] = ucfirst($paths[$pathNumber - 2]);
-            array_splice($paths, -1);
-
-            self::$controller = implode('\\', $paths);
-            
-            // get参数
-            if(isset($uris[1])){
-                parse_str($uris[1], $parameters);
-                if(count($parameters) > 1){
-                    $_GET = array_merge($_GET, $parameters);
-                }
-            }
-        }else{
-            self::$controller = 'index';
-            self::$action = 'index';
+            $path = $uris[0];
         }
-        self::$controller = self::$controller.'Controller';
+        
+        return $path;
     }
     
     /**
@@ -62,10 +27,63 @@ class Route{
      * @access public
      */
     function run(){
-        $obj = null;
-        $class = 'app\\controller\\'.self::$controller;
-        $action = self::$action;
+        $obj = null; // 控制器对象
+        $uri = ''; // url
+        $uris = array(); // url数组
+        $parameter = ''; // 页面参数
+        $parameters = array(); // 页面参数数组
+        $path = ''; // 路径
+        $dir = ''; // 目录正斜杠
+        $dirs = array(); // 目录数组
+        $controller = 'Index'; // 控制器
+        $action = 'index'; // 方法
+        $controllerNamespacePrefix = '\\app\\controller\\'; // 控制器命名空间前缀
+        $class = ''; // 控制器class全路径
         
+        if(isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] != '/'){
+            $uri = $_SERVER['REQUEST_URI'];
+            $uris = explode('?', $uri);
+            $path = $uris[0];
+            if(isset($uris[1])){
+                $parameter = $uris[1];
+            }
+            
+            $path = trim($path, '/');
+            $paths = explode('/', $path);
+            $file = array_pop($paths);
+            
+            // 目录
+            if(!empty($paths)){
+                $dirs = $paths;
+                $dir = implode('\\', $dirs).'\\';
+            }
+            
+            // 控制器
+            $file = str_replace('.html', '', $file);
+            $file = str_replace('.json', '', $file);
+            $files = explode('-', $file);
+            
+            $controller = $files[0];
+            $controllers = explode('_', $controller);
+            $controllers = array_map('ucfirst', $controllers);
+            $controller = implode('', $controllers);
+            $controller = $controller.'Controller';
+            
+            // 方法
+            if(isset($files[1])){
+                $action = $files[1];
+            }
+            
+            // get参数
+            if($parameter !== ''){
+                parse_str($parameter, $parameters);
+                if(count($parameters) > 1){
+                    $_GET = array_merge($_GET, $parameters);
+                }
+            }
+        }
+        
+        $class = $controllerNamespacePrefix.$dir.$controller;
         $obj = new $class();
         $obj->$action();
     }

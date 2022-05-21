@@ -19,7 +19,7 @@ class BaseController{
             'LoginController'
         ); // 公开访问控制器
         $config = Config::all();
-        
+        /*
         // 登录
         if(!AuthService::isLogin()){
             if(!in_array(Route::$controller, $accessControllerPublics)){
@@ -27,7 +27,7 @@ class BaseController{
                 exit;
             }
         }
-        
+        */
         // 权限
         
         // 配置
