@@ -4,7 +4,7 @@
  */
 namespace app\model;
 
-use app\service\DbService;
+use \app\service\DbService;
 
 class BaseModel{
 

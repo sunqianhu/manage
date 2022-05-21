@@ -4,7 +4,7 @@
  */
 namespace app\model\system;
 
-use app\model\BaseModel;
+use \app\model\BaseModel;
 
 class DepartmentModel extends BaseModel{
     public $tableName = 'department'; // 数据表名

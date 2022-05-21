@@ -2,19 +2,20 @@
 /**
  * 登录
  */
-namespace app\controller;
+namespace app\controller\login;
 
-use app\service\CaptchaService;
-use app\service\AuthService;
-use app\model\system\UserModel;
-use app\service\ValidateService;
+use \app\controller\BaseController;
+use \app\service\CaptchaService;
+use \app\service\AuthService;
+use \app\model\system\UserModel;
+use \app\service\ValidateService;
 
 class LoginController extends BaseController{
     /**
      * 入口
      */
     function index(){
-        $this->display('login.php');
+        $this->display('login/index.php');
     }
     
     /**
@@ -77,8 +78,6 @@ class LoginController extends BaseController{
         unset($_SESSION['captcha_login']);
         $return['data']['captcha'] = '1';
         
-        // 登录失败次数验证
-        
         $userModel = new UserModel();
         try{
             $user = $userModel->getRow(
@@ -116,6 +115,6 @@ class LoginController extends BaseController{
      */
     function exit(){
         AuthService::unsetToken();
-        header('location:/login/index');
+        header('location:login.html');
     }
 }

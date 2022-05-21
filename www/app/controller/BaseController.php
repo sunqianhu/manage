@@ -4,9 +4,9 @@
  */
 namespace app\controller;
 
-use app\Route;
-use app\Config;
-use app\service\AuthService;
+use \app\Route;
+use \app\Config;
+use \app\service\AuthService;
 
 class BaseController{
     public $viewDatas = array(); // 视图数据

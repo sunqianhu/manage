@@ -4,7 +4,7 @@
  */
 namespace app\service;
 
-use app\Config;
+use \app\Config;
 
 class DbService extends \PDO{
     

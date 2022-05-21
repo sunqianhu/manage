@@ -2,11 +2,13 @@
  * 登录
  */
 
-var login = {};
+var index = {};
 
-// 修改验证码
-login.changeCaptcha = function(){
-    var url = "captcha?"+Math.random();
+/**
+ * 修改验证码
+ */
+index.changeCaptcha = function(){
+    var url = "login-captcha.html?"+Math.random();
     var domImg = $(".captcha img");
     domImg.attr("src", url);
 }
@@ -15,7 +17,7 @@ login.changeCaptcha = function(){
  * 表单提交
  * @param selector 表单jquery选择器
  */
-login.formSubmit = function(selector){
+index.formSubmit = function(selector){
     sun.formSubmit({
         selector: selector,
         success: function(ret){
@@ -29,15 +31,15 @@ login.formSubmit = function(selector){
             }
             
             if(ret.data.captcha == "1"){
-                login.changeCaptcha();
+                index.changeCaptcha();
             }
             
-            location.href = "../index/index";
+            location.href = "../index.html";
         }
     });
 }
 
 $(function(){
-    login.formSubmit(".form");
+    index.formSubmit(".form");
 });
 

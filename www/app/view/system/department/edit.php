@@ -12,7 +12,7 @@
 </head>
 
 <body class="page">
-<form method="post" action="editSave" class="sun_form form">
+<form method="post" action="department-edit_save.html" class="sun_form form">
 <div class="page_body">
 <input type="hidden" name="id" value="<?php echo $department['id'];?>" />
 <div class="sun_form_item">

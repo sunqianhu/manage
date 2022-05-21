@@ -1,5 +1,5 @@
 /**
- * 添加选择部门
+ * 修改选择部门
  */
 var editSelectDepartment = {
     ztree: null

@@ -16,7 +16,8 @@ class DepartmentService{
         $indent = 0;
         $i = 0;
         $styleClass = '';
-    
+        
+        if(!empty($departments)){
         foreach($departments as $department){
             $indent = $department['level'] - 1;
             if($department['level'] == 1 && empty($department['child'])){
@@ -55,7 +56,9 @@ class DepartmentService{
                 $node .= self::getIndexTreeNode($department['child']);
             }
         }
-
+        }else{
+            $node = '<tr><td colspan="5" align="center">无部门</td></td>';
+        }
         return $node;
     }
     

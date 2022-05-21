@@ -4,7 +4,7 @@
  */
 namespace app\controller;
 
-use app\service\SafeService;
+use \app\service\SafeService;
 
 class ErrorController extends BaseController{
     /**

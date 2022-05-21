@@ -33,11 +33,13 @@ class Route{
         $parameter = ''; // 页面参数
         $parameters = array(); // 页面参数数组
         $path = ''; // 路径
+        $paths = array(); // 路径数组
         $dir = ''; // 目录正斜杠
         $dirs = array(); // 目录数组
-        $controller = 'Index'; // 控制器
+        $controller = 'IndexController'; // 控制器
         $action = 'index'; // 方法
-        $controllerNamespacePrefix = '\\app\\controller\\'; // 控制器命名空间前缀
+        $actions = array(); // 方法数组
+        $namespaceControllerPrefix = '\\app\\controller\\'; // 控制器命名空间前缀
         $class = ''; // 控制器class全路径
         
         if(isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] != '/'){
@@ -72,6 +74,9 @@ class Route{
             // 方法
             if(isset($files[1])){
                 $action = $files[1];
+                $actions = explode('_', $action);
+                $actions = array_map('ucfirst', $actions);
+                $action = implode('', $actions);
             }
             
             // get参数
@@ -83,7 +88,7 @@ class Route{
             }
         }
         
-        $class = $controllerNamespacePrefix.$dir.$controller;
+        $class = $namespaceControllerPrefix.$dir.$controller;
         $obj = new $class();
         $obj->$action();
     }

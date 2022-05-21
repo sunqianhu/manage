@@ -12,7 +12,7 @@
 </head>
 
 <body class="page">
-<form method="post" action="addSave" class="sun_form form">
+<form method="post" action="department-add_save.html" class="sun_form form">
 <div class="page_body">
 <div class="sun_form_item">
 <div class="sun_form_label"><span class="sun_form_required">*</span> 上级部门</div>

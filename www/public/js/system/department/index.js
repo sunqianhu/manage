@@ -7,7 +7,7 @@ var index = {};
  * 添加
  */
 index.add = function(){
-    var url = "add";
+    var url = "department-add.html";
     sun.layer.open({
         id: "layer_department_add",
         name: "添加部门",
@@ -21,7 +21,7 @@ index.add = function(){
  * 修改
  */
 index.edit = function(id){
-    var url = "edit?id="+id;
+    var url = "department-edit.html?id="+id;
     sun.layer.open({
         id: "layer_department_edit",
         name: "修改部门",
@@ -35,7 +35,7 @@ index.edit = function(id){
  * 删除
  */
 index.delete = function(id){
-    var url = "delete?id="+id;
+    var url = "department-delete.html?id="+id;
     var domTr = $(".data table .tr"+id);
     if(!confirm("确定删除吗？")){
         return;
