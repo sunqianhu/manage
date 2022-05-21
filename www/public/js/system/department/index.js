@@ -2,6 +2,7 @@
  * 部门管理
  */
 var index = {};
+
 /**
  * 添加
  */
@@ -10,6 +11,20 @@ index.add = function(){
     sun.layer.open({
         id: "layer_department_add",
         name: "添加部门",
+        url: url,
+        width: 600,
+        height: 400
+    });
+}
+
+/**
+ * 修改
+ */
+index.edit = function(id){
+    var url = "edit?id="+id;
+    sun.layer.open({
+        id: "layer_department_edit",
+        name: "修改部门",
         url: url,
         width: 600,
         height: 400

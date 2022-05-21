@@ -70,7 +70,7 @@ class MenuController extends BaseController{
             'sort.max_length' => '排序不能大于10个字'
         );
         if(!$validateService->check($_POST)){
-            $return['msg'] = $validateService->getErrorMessage();
+            $return['message'] = $validateService->getErrorMessage();
             $return['dom'] = $validateService->getErrorField();
             echo json_encode($return);
             exit;
@@ -85,13 +85,13 @@ class MenuController extends BaseController{
         try{
             $menuModel->insert($data);
         }catch(Exception $e){
-            $return['msg'] = $e->getMessage();
+            $return['message'] = $e->getMessage();
             echo json_encode($return);
             exit;
         }
         
         $return['status'] = 'success';
-        $return['msg'] = '添加成功';
+        $return['message'] = '添加成功';
         echo json_encode($return);
     }
 }

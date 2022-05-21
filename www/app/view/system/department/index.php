@@ -33,6 +33,7 @@
 <ul>
 <li>部门id：<input type="text" name="id" value="<?php echo $search['id'];?>" /></li>
 <li>部门名称：<input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
+<li>备注：<input type="text" name="name" value="<?php echo $search['remark'];?>" /></li>
 <li>
 <input type="submit" value="搜索" class="sun_button" />
 <input type="reset" class="sun_button sun_button_secondary sun_ml5" value="重置" />
@@ -50,7 +51,8 @@
     <th width="100">部门id</th>
     <th>部门名称</th>
     <th>排序</th>
-    <th width="160">操作</th>
+    <th>备注</th>
+    <th width="100">操作</th>
   </tr>
 <?php echo $departmentNode;?>
 </table>

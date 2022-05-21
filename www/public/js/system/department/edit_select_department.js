@@ -1,14 +1,14 @@
 /**
  * 添加选择部门
  */
-var addSelectDepartment = {
+var editSelectDepartment = {
     ztree: null
 };
 
 /**
  * ztree初始化
  */
-addSelectDepartment.ztreeInit = function(){
+editSelectDepartment.ztreeInit = function(){
     var setting = {
         data: {
             simpleData: {
@@ -18,16 +18,16 @@ addSelectDepartment.ztreeInit = function(){
             }
         }
     };
-    var nodes = addSelectDepartment.departmentData;
-    addSelectDepartment.ztree = $.fn.zTree.init($("#ztree"), setting, nodes)
+    var nodes = editSelectDepartment.departmentData;
+    editSelectDepartment.ztree = $.fn.zTree.init($("#ztree"), setting, nodes)
 }
 
 /**
  * 确定
  */
-addSelectDepartment.submit = function(){
+editSelectDepartment.submit = function(){
     var node = {}
-    var nodes = addSelectDepartment.ztree.getSelectedNodes();
+    var nodes = editSelectDepartment.ztree.getSelectedNodes();
     var iframeWindow;
     
     if(!nodes || nodes.length == 0){
@@ -41,11 +41,11 @@ addSelectDepartment.submit = function(){
     
     node = nodes[0];
     
-    iframeWindow = sun.layer.getIframeWindow(window.parent, "layer_department_add_iframe");
-    iframeWindow.add.selectDepartmentCallback(node);
-    window.parent.sun.layer.close("layer_add_select_department");
+    iframeWindow = sun.layer.getIframeWindow(window.parent, "layer_department_edit_iframe");
+    iframeWindow.edit.selectDepartmentCallback(node);
+    window.parent.sun.layer.close("layer_edit_select_department");
 }
 
 $(function(){
-    addSelectDepartment.ztreeInit();
+    editSelectDepartment.ztreeInit();
 });

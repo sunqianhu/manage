@@ -36,6 +36,6 @@
 </form>
 </div>
 
-<div class="copyright">copyright © 2021 b5net.com all rights reserved.</div>
+<div class="copyright">copyright © 2022 sun all rights reserved.</div>
 </body>
 </html>

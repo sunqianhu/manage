@@ -19,17 +19,16 @@ login.formSubmit = function(selector){
     sun.formSubmit({
         selector: selector,
         success: function(ret){
-            console.log(ret);
             if(ret.status == "error"){
                 sun.toast("error", ret.message, 3000, function(){
-                    if(ret.dom){
-                        $(ret.dom).focus();
+                    if(ret.data.dom){
+                        $(ret.data.dom).focus();
                     }
                 });
                 return;
             }
             
-            if(ret.captcha == "1"){
+            if(ret.data.captcha == "1"){
                 login.changeCaptcha();
             }
             

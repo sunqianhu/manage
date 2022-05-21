@@ -8,7 +8,6 @@ use app\service\CaptchaService;
 use app\service\AuthService;
 use app\model\system\UserModel;
 use app\service\ValidateService;
-use app\service\ResponseService;
 
 class LoginController extends BaseController{
     /**
@@ -29,6 +28,14 @@ class LoginController extends BaseController{
      * 登录处理
      */
     function login(){
+        $return = array(
+            'status'=>'error',
+            'message'=>'',
+            'data'=>array(
+                'dom'=>'',
+                'captcha'=>'0'
+            )
+        );
         $userModel = null;
         $validateService = new ValidateService();
         
@@ -46,20 +53,31 @@ class LoginController extends BaseController{
             'captcha.max_length' => '验证码长度不能大于6个字符'
         );
         if(!$validateService->check($_POST)){
-            echo ResponseService::json('error', $validateService->getErrorMessage(), array('dom'=>$validateService->getErrorField()));
+            $return['message'] = $validateService->getErrorMessage();
+            $return['data']['dom'] = $validateService->getErrorField();
+            echo json_encode($return);
             exit;
         }
         
         // 验证码
         if(empty($_SESSION['captcha_login'])){
-            echo ResponseService::json('error', '请重新获取验证码', array('dom'=>'#captcha', 'captcha'=>1));
+            $return['message'] = '请重新获取验证码';
+            $return['data']['dom'] = '#captcha';
+            $return['data']['captcha'] = '1';
+            echo json_encode($return);
             exit;
         }
         if($_SESSION['captcha_login'] != $_POST['captcha']){
-            echo ResponseService::json('error', '验证码错误', array('dom'=>'#captcha', 'captcha'=>1));
+            $return['message'] = '验证码错误';
+            $return['data']['dom'] = '#captcha';
+            $return['data']['captcha'] = '1';
+            echo json_encode($return);
             exit;
         }
         unset($_SESSION['captcha_login']);
+        $return['data']['captcha'] = '1';
+        
+        // 登录失败次数验证
         
         $userModel = new UserModel();
         try{
@@ -74,19 +92,23 @@ class LoginController extends BaseController{
                 )
             );
         }catch(\Exception $e){
-            echo ResponseService::json('error', '验证码错误', array('captcha'=>1));
+            $return['message'] = $e->getMessage();
+            echo json_encode($return);
             exit;
         }
         
         if(empty($user)){
-            echo ResponseService::json('error', '用户名或密码错误', array('captcha'=>1));
+            $return['message'] = '用户名或密码错误';
+            echo json_encode($return);
             exit;
         }
         
         // 服务层
         AuthService::saveToken($user);
         
-        echo ResponseService::json('success', '登录成功', array('captcha'=>1));
+        $return['status'] = 'success';
+        $return['message'] = '登录成功';
+        echo json_encode($return);
     }
     
     /**

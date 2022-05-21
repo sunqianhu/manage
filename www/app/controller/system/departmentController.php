@@ -12,7 +12,6 @@ use app\service\ZtreeService;
 use app\service\TreeService;
 use app\service\SafeService;
 use app\service\system\DepartmentService;
-use app\service\ResponseService;
 
 class DepartmentController extends BaseController{
     /**
@@ -25,7 +24,8 @@ class DepartmentController extends BaseController{
         $frameMainMenu = '';
         $search = array(
             'id'=>'',
-            'name'=>''
+            'name'=>'',
+            'remark'=>''
         );
         $whereMarks = array();
         $whereValues = array();
@@ -45,16 +45,20 @@ class DepartmentController extends BaseController{
             $whereValues[':name'] = '%'.$_GET['name'].'%';
             $search['name'] = SafeService::entity($_GET['name']);
         }
+        if(isset($_GET['remark']) && $_GET['remark'] !== ''){
+            $whereMarks[] = 'remark like :remark';
+            $whereValues[':remark'] = '%'.$_GET['remark'].'%';
+            $search['remark'] = SafeService::entity($_GET['remark']);
+        }
         if(!empty($whereMarks)){
             $where['mark'] = implode(' and ', $whereMarks);
         }
         $where['value'] = $whereValues;
         
         // 数据
-        $departments = $departmentModel->getAll('id, parent_id, name, `sort`', $where, 'order by `sort` asc, id asc');
+        $departments = $departmentModel->getAll('id, parent_id, name, `sort`, remark', $where, 'order by `sort` asc, id asc');
         $departments = TreeService::getDataTree($departments, 'child', 'id', 'parent_id');
         $departments = TreeService::addLevel($departments, 1);
-        
         $departments = SafeService::entity($departments, array('id', 'parent_id'));
         $departmentNode = DepartmentService::getIndexTreeNode($departments);
         
@@ -83,8 +87,8 @@ class DepartmentController extends BaseController{
         $departments = $departmentModel->getAll('id, name, parent_id', array(), 'order by parent_id asc, id asc');
         $departments = ZtreeService::setOpenByFirst($departments);
         $department = json_encode($departments);
-        $this->assign('department', $department);
         
+        $this->assign('department', $department);
         $this->display('system/department/add_select_department.php');
     }
     
@@ -92,6 +96,13 @@ class DepartmentController extends BaseController{
      * 添加部门保存
      */
     function addSave(){
+        $return = array(
+            'status'=>'error',
+            'msg'=>'',
+            'data'=>array(
+                'dom'=>''
+            )
+        ); // 返回数据
         $validateService = new ValidateService();
         $departmentModel = new departmentModel();
         $departmentParent = array(); // 上级部门
@@ -113,7 +124,9 @@ class DepartmentController extends BaseController{
             'sort.max_length' => '排序不能大于10个字'
         );
         if(!$validateService->check($_POST)){
-            echo ResponseService::json('error', $validateService->getErrorMessage(), array('dom'=>$validateService->getErrorField()));
+            $return['message'] = $validateService->getErrorMessage();
+            $return['data']['dom'] = '#'.$validateService->getErrorField();
+            echo json_encode($return);
             exit;
         }
         
@@ -138,7 +151,8 @@ class DepartmentController extends BaseController{
         try{
             $id = $departmentModel->insert($data);
         }catch(Exception $e){
-            echo ResponseService::json('error', $e->getMessage());
+            $return['message'] = $e->getMessage();
+            echo json_encode($return);
             exit;
         }
         
@@ -153,13 +167,171 @@ class DepartmentController extends BaseController{
             )
         );
         
-        echo ResponseService::json('success', '添加成功');
+        $return['status'] = 'success';
+        $return['message'] = '添加成功';
+        echo json_encode($return);
+    }
+    
+    /**
+     * 修改部门
+     */
+    function edit(){
+        $validateService = new ValidateService();
+        $departmentModel = new departmentModel();
+        $department = array();
+        
+        // 验证
+        $validateService->rule = array(
+            'id' => 'require|number'
+        );
+        $validateService->message = array(
+            'id.require' => 'id参数错误',
+            'id.number' => 'id必须是个数字'
+        );
+        if(!$validateService->check($_GET)){
+            header('location:../../error/index?message='.urlencode($validateService->getErrorMessage()));
+            exit;
+        }
+        if($_GET['id'] == '1'){
+            header('location:../../error/index?message='.urlencode('根部门不能修改'));
+            exit;
+        }
+        
+        $department = $departmentModel->getRow('id, parent_id, name, `sort`, remark', array(
+            'mark'=>'id = :id',
+            'value'=>array(
+                ':id'=>$_GET['id']
+            )
+        ));
+        $department['parent_name'] = $departmentModel->getOne('name', array(
+            'mark'=>'id = :id',
+            'value'=>array(
+                ':id'=> $department['parent_id']
+            )
+        ));
+        $department = SafeService::entity($department, array('id', 'parent_id'));
+        
+        $this->assign('department', $department);
+        $this->display('system/department/edit.php');
+    }
+    
+    /**
+     * 修改选择部门
+     */
+    function editSelectDepartment(){
+        $departmentModel = new departmentModel();
+        $departments = array();
+        $department = ''; // 部门json数据
+        
+        $departments = $departmentModel->getAll('id, name, parent_id', array(), 'order by parent_id asc, id asc');
+        $departments = ZtreeService::setOpenByFirst($departments);
+        $department = json_encode($departments);
+        
+        $this->assign('department', $department);
+        $this->display('system/department/edit_select_department.php');
+    }
+    
+    /**
+     * 修改部门保存
+     */
+    function editSave(){
+        $return = array(
+            'status'=>'error',
+            'msg'=>'',
+            'data'=>array(
+                'dom'=>''
+            )
+        ); // 返回数据
+        $validateService = new ValidateService();
+        $departmentModel = new departmentModel();
+        $departmentCurrent = array(); // 本部门
+        $departmentParent = array(); // 上级部门
+        $data = array();
+        
+        // 验证
+        $validateService->rule = array(
+            'id' => 'require|number',
+            'parent_id' => 'number',
+            'name' => 'require|max_length:25',
+            'sort' => 'number|max_length:10'
+        );
+        $validateService->message = array(
+            'id.require' => 'id参数错误',
+            'id.number' => 'id必须是个数字',
+            'parent_id.number' => '请选择上级部门',
+            'name.require' => '请输入部门名称',
+            'name.max_length' => '部门名称不能大于32个字',
+            'sort.number' => '排序必须是个数字',
+            'sort.max_length' => '排序不能大于10个字'
+        );
+        if(!$validateService->check($_POST)){
+            $return['message'] = $validateService->getErrorMessage();
+            $return['data']['dom'] = '#'.$validateService->getErrorField();
+            echo json_encode($return);
+            exit;
+        }
+        
+        // 本部门
+        $departmentCurrent = $departmentModel->getRow(
+            'id, parent_id',
+            array(
+                'mark'=> 'id = :id',
+                'value'=> array(
+                    ':id'=>$_POST['id']
+                )
+            )
+        );
+        if(empty($departmentCurrent)){
+            $return['message'] = '此部门没有找到';
+            echo json_encode($return);
+            exit;
+        }
+        
+        // 上级部门
+        $departmentParent = $departmentModel->getRow(
+            'parent_ids',
+            array(
+                'mark'=> 'id = :id',
+                'value'=> array(
+                    ':id'=>$_POST['parent_id']
+                )
+            )
+        );
+        
+        // 更新
+        $data = array(
+            'parent_id'=>$_POST['parent_id'],
+            'parent_ids'=>$departmentParent['parent_ids'].','.$departmentCurrent['id'],
+            'name'=>$_POST['name'],
+            'sort'=>$_POST['sort'],
+            'remark'=>$_POST['remark']
+        );
+        try{
+            $id = $departmentModel->update($data, array(
+                'mark'=>'id = :id',
+                'value'=> array(
+                    ':id'=>$departmentCurrent['id']
+                )
+            ));
+        }catch(Exception $e){
+            $return['message'] = $e->getMessage();
+            echo json_encode($return);
+            exit;
+        }
+        
+        $return['status'] = 'success';
+        $return['message'] = '修改成功';
+        echo json_encode($return);
     }
     
     /**
      * 删除
      */
     function delete(){
+        $return = array(
+            'status'=>'error',
+            'message'=>''
+        );
         $departmentChild = array();
         $departmentModel = new departmentModel();
         $validateService = new ValidateService();
@@ -173,7 +345,13 @@ class DepartmentController extends BaseController{
             'id.number' => 'id必须是个数字'
         );
         if(!$validateService->check($_GET)){
-            echo ResponseService::json('error', $validateService->getErrorMessage());
+            $return['message'] = $validateService->getErrorMessage();
+            echo json_encode($return);
+            exit;
+        }
+        if($_GET['id'] == '1'){
+            $return['message'] = '不能删除根部门';
+            echo json_encode($return);
             exit;
         }
         
@@ -187,7 +365,8 @@ class DepartmentController extends BaseController{
             )
         );
         if(!empty($departmentChild)){
-            echo ResponseService::json('error', '该部门存在下级部门');
+            $return['message'] = '该部门存在下级部门';
+            echo json_encode($return);
             exit;
         }
         
@@ -201,10 +380,13 @@ class DepartmentController extends BaseController{
                 )
             );
         }catch(Exception $e){
-            echo ResponseService::json('error', $e->getMessage());
+            $return['message'] = $e->getMessage();
+            echo json_encode($return);
             exit;
         }
         
-        echo ResponseService::json('success', '删除成功');
+        $return['status'] = 'success';
+        $return['message'] = '删除成功';
+        echo json_encode($return);
     }
 }

@@ -42,10 +42,12 @@ class DepartmentService{
             $node .= $department['name'].'
 </td>
 <td>'.$department['sort'].'</td>
-<td>
-<a href="javascript:;" class="sun_button sun_button_sm sun_mr5" data-toggle="tooltip" title="添加子部门" onClick="index.add('.$department['id'].');">添加</a>
-<a href="javascript:;" class="sun_button sun_button_sm sun_button_secondary sun_mr5">修改</a>
-<a href="javascript:;" class="sun_button sun_button_secondary sun_button_sm sun_mr5" onclick="index.delete('.$department['id'].');">删除</a>
+<td>'.$department['remark'].'</td>
+<td>';
+            if($department['parent_id'] != 0){
+                $node .= '<a href="javascript:;" class="sun_button sun_button_sm sun_button_secondary sun_mr5" onclick="index.edit('.$department['id'].');">修改</a> ';
+            }
+            $node .= '<a href="javascript:;" class="sun_button sun_button_secondary sun_button_sm sun_mr5" onclick="index.delete('.$department['id'].');">删除</a>
 </td>
 </tr>
 ';

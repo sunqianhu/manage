@@ -10,6 +10,9 @@
 </head>
 
 <body class="page">
-
+<div class="container">
+<div class="title"><h1>系统提示</h1></div>
+<div class="message"><?php echo $message;?></div>
+</div>
 </body>
 </html>
