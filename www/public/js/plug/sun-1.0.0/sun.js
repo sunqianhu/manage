@@ -232,8 +232,8 @@ sun.dropdown = function(config){
     // 对象
     domDocument = $(document);
     domDropdowns = $(config.selector);
-    domDropdownMenus = $(".sun_dropdown_menu", domDropdowns);
     domDropdownButtons = $(".sun_dropdown_button", domDropdowns);
+    domDropdownMenus = $(".sun_dropdown_menu", domDropdowns);
     
     // 事件
     domDropdownButtons.on(config.trigger.join(","), function(){

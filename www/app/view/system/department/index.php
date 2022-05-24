@@ -22,7 +22,7 @@
 <div class="header">
 <div class="location">
 <span class="iconfont icon-home icon"></span>
-<a href="../../index/index">系统首页</a> <span class="split">&gt;</span> 部门管理
+<a href="../../index.html">系统首页</a> <span class="split">&gt;</span> 部门管理
 </div>
 <a href="javascript:;" onClick="location.reload();" class="refresh"><span class="iconfont icon-refresh icon"></span>刷新</a>
 </div>

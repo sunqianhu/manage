@@ -35,7 +35,7 @@ index.edit = function(id){
  * 删除
  */
 index.delete = function(id){
-    var url = "department-delete.html?id="+id;
+    var url = "department-delete.json?id="+id;
     var domTr = $(".data table .tr"+id);
     if(!confirm("确定删除吗？")){
         return;

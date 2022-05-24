@@ -8,7 +8,7 @@ var edit = {};
  * 选择部门
  */
 edit.selectDepartment = function(){
-    var url = "department-edit_select_department.html";
+    var url = "department-edit_select_department.json";
     window.parent.sun.layer.open({
         id: "layer_edit_select_department",
         name: "选择上级部门",
