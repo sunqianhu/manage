@@ -6,11 +6,11 @@ namespace app\controller\system\department;
 
 use \app\controller\BaseController;
 use \app\model\system\DepartmentModel;
-use \app\service\MenuService;
 use \app\service\ValidateService;
 use \app\service\ZtreeService;
 use \app\service\TreeService;
 use \app\service\SafeService;
+use \app\service\system\MenuService;
 use \app\service\system\DepartmentService;
 
 class DepartmentController extends BaseController{
@@ -32,7 +32,7 @@ class DepartmentController extends BaseController{
         $where = array();
         
         // 菜单
-        $frameMainMenu = MenuService::getFrameMainHtml('system_department');
+        $frameMainMenu = MenuService::getFrameMainNode('system_department');
         
         // 搜索
         if(!empty($_GET['id'])){

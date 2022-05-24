@@ -5,3 +5,4 @@
 @import url(../../inc/layer_form_button.css);
 
 .page{}
+.page .url{ width: 300px; height: 80px}

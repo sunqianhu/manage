@@ -6,7 +6,7 @@ var index = {};
  * 添加
  */
 index.add = function(){
-    var url = "add";
+    var url = "menu-add.html";
     sun.layer.open({
         id: "layer_menu_add",
         name: "添加菜单",

@@ -4,14 +4,14 @@
  */
 namespace app\controller;
 
-use \app\service\MenuService;
+use \app\service\system\MenuService;
 
 class IndexController extends BaseController{
     /**
      * 入口
      */
     function index(){
-        $frameMainMenu = MenuService::getFrameMainHtml('home');
+        $frameMainMenu = MenuService::getFrameMainNode('home');
         
         $this->assign('frameMainMenu', $frameMainMenu);
         $this->display('index.php');
