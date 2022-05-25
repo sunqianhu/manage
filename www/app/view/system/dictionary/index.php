@@ -31,8 +31,7 @@
 <div class="search">
 <form method="get" action="" class="form">
 <ul>
-<li>字典id：<input type="text" name="id" value="<?php echo $search['id'];?>" /></li>
-<li>字典名称：<input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
+<li>字典类型：<input type="text" name="type" value="<?php echo $search['type'];?>" /></li>
 <li>
 <input type="submit" value="搜索" class="sun_button" />
 <input type="reset" class="sun_button sun_button_secondary sun_ml5" value="重置" />
@@ -47,14 +46,35 @@
 </div>
 <table class="sun_table sun_table_hover sun_mt10" width="100%">
   <tr>
-    <th width="100">字典id</th>
-    <th>字典名称</th>
+    <th>字典类型</th>
+    <th>字典键</th>
+    <th>字典值</th>
     <th>排序</th>
     <th width="100">操作</th>
   </tr>
-<?php echo $dictionaryNode;?>
+<?php
+if(!empty($dictionarys)){
+foreach($dictionarys as $dictionary){
+?>
+  <tr>
+    <td><?php echo $dictionary['type'];?></td>
+    <td><?php echo $dictionary['key'];?></td>
+    <td><?php echo $dictionary['value'];?></td>
+    <td><?php echo $dictionary['sort'];?></td>
+    <td></td>
+  </tr>
+<?php
+}
+}else{
+?>
+<tr>
+<td colspan="5" align="center">无数据</td>
+</tr>
+<?php
+}
+?>
 </table>
-<?php echo $paginationIntact;?>
+<?php echo $paginationIntactNode;?>
 </div>
 
 </div>

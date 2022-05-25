@@ -8,10 +8,10 @@ use \app\Config;
 
 class PaginationService{
     public $id;
-    public $recordTotal; // 总记录
+    public $recordTotal = 0; // 总记录
     public $pageSize = 50; // 每页显示记录数
     public $pageTotal = 0; // 总页数
-    public $pageCurrent = 0; // 当前页
+    public $pageCurrent = 1; // 当前页
     public $urlTemplate = ''; // url模板
     public $limitStart = 0; // 开始记录
     public $nodeLink = ''; // 节点链接
@@ -39,6 +39,9 @@ class PaginationService{
         }
         if($this->pageCurrent > $this->pageTotal){
             $this->pageCurrent = $this->pageTotal;
+        }
+        if($this->pageCurrent < 1){
+            $this->pageCurrent = 1;
         }
         if($urlTemplate == ''){
             $this->urlTemplate = $this->getUrlTemplate();
@@ -86,6 +89,10 @@ class PaginationService{
         $pageEnd = 0;
         $difference = 0;
         
+        if($this->pageTotal == 0){
+            return $node;
+        }
+        
         $pageStart = $this->pageCurrent - 2;
         $pageEnd = $this->pageCurrent + 2;
 
@@ -127,7 +134,7 @@ class PaginationService{
             $node .= '<span class="disabled">下一页</span>';
         }
 
-        return $node;
+        return '<div class="link">'.$node.'</div>';
     }
     
     /**
@@ -146,7 +153,7 @@ class PaginationService{
         }
         $node .= '</select>条';
         
-        return $node;
+        return '<div class="limit">'.$node.'</div>';
     }
     
     /**
@@ -161,16 +168,15 @@ class PaginationService{
         $node = '跳转到第<input type="text" class="number pagination_skip_'.$this->id.'" min="1" class="number" value="'.$this->pageCurrent.'" page_size="'.$this->pageSize.'">页
 <button type="button" class="sun_button sun_button_sm sun_button_secondary" onclick="sun.pagination.skip(\''.$this->urlTemplate.'\', \''.$this->id.'\')">确定</button>';
         
-        return $node;
+        return '<div class="skip">'.$node.'</div>';
     }
     
     
     /**
-     * 得到跳转到第几页
-     * @param $page 分页参数
-     * @return dom
+     * 得到完整分页节点
+     * @return string node
      */
-    function getIntact(){
+    function getIntactNode(){
         $node = '';
         
         $node = '<div class="sun_pagination_intact">
@@ -178,9 +184,9 @@ class PaginationService{
 <div class="count">共<span>'.$this->recordTotal.'</span>条</div>
 </div>
 <div class="right">
-<div class="limit">'.$this->nodeLimit.'</div>
-<div class="skip">'.$this->nodeSkip.'</div>
-<div class="link">'.$this->nodeLink.'</div>
+'.$this->nodeLimit.'
+'.$this->nodeSkip.'
+'.$this->nodeLink.'
 </div>
 </div>';
 
