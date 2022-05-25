@@ -30,7 +30,7 @@ class MenuController extends BaseController{
         $where = array();
         
         // 菜单
-        $frameMainMenu = MenuService::getFrameMainNode('system_menu');
+        $frameMainMenu = FrameMainService::getPageLeftMenu('system_menu');
         
         // 搜索
         if(!empty($_GET['id'])){

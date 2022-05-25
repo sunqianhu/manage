@@ -10,6 +10,7 @@ use \app\service\ValidateService;
 use \app\service\ZtreeService;
 use \app\service\TreeService;
 use \app\service\SafeService;
+use \app\service\FrameMainService;
 use \app\service\system\MenuService;
 use \app\service\system\DepartmentService;
 
@@ -32,7 +33,7 @@ class DepartmentController extends BaseController{
         $where = array();
         
         // 菜单
-        $frameMainMenu = MenuService::getFrameMainNode('system_department');
+        $frameMainMenu = FrameMainService::getPageLeftMenu('system_department');
         
         // 搜索
         if(!empty($_GET['id'])){

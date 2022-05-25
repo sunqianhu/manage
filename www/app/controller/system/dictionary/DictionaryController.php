@@ -5,7 +5,9 @@
 namespace app\controller\system\dictionary;
 
 use \app\controller\BaseController;
-use \app\service\system\MenuService;
+use \app\model\system\DictionaryModel;
+use \app\service\FrameMainService;
+use \app\service\PaginationService;
 
 class DictionaryController extends BaseController{
     /**
@@ -13,12 +15,18 @@ class DictionaryController extends BaseController{
      */
     function index(){
         $frameMainMenu = '';
+        $dictionaryModel = new DictionaryModel(); // 字典模型
+        $paginationIntact = '';
+        
+        $paginationService = new PaginationService(100, $_GET['page_size'], $_GET['page_current']);
+        $paginationIntact = $paginationService->getIntact();
         
         // 菜单
-        $frameMainMenu = MenuService::getFrameMainNode('system_menu');
+        $frameMainMenu = FrameMainService::getPageLeftMenu('system_dictionary');
         
         // 显示
         $this->assign('frameMainMenu', $frameMainMenu);
+        $this->assign('paginationIntact', $paginationIntact);
         $this->display('system/dictionary/index.php');
     }
     

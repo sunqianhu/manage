@@ -11,7 +11,7 @@ class IndexController extends BaseController{
      * 入口
      */
     function index(){
-        $frameMainMenu = MenuService::getFrameMainNode('home');
+        $frameMainMenu = FrameMainService::getPageLeftMenu('home');
         
         $this->assign('frameMainMenu', $frameMainMenu);
         $this->display('index.php');

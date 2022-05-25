@@ -54,7 +54,7 @@
   </tr>
 <?php echo $dictionaryNode;?>
 </table>
-
+<?php echo $paginationIntact;?>
 </div>
 
 </div>

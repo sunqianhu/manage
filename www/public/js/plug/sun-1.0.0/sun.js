@@ -386,3 +386,52 @@ sun.layer.getIframeWindow = function(win, id){
     
     return iframeWindow;
 }
+
+sun.pagination = {}; // 分页
+
+/**
+ * 分页跳转到指定页
+ * @param string url 分页模板链接
+ * @param string id 分页对象id
+ */
+sun.pagination.skip = function(url, id){
+    var domInput = $(".pagination_skip_"+id);
+    var pageSize = 0;
+    var pageCurrent = 0;
+    
+    if(domInput == null){
+        sun.toast("error", "分页参数错误", 3000);
+        return;
+    }
+    
+    pageSize = domInput.attr("page_size");
+    pageCurrent = domInput.val();
+    if(isNaN(pageCurrent) || pageCurrent < 1){
+        sun.toast("error", "页数错误", 3000);
+        return;
+    }
+    
+    url = url.replace("PAGE_SIZE", pageSize);
+    url = url.replace("PAGE_CURRENT", pageCurrent);
+    location.href = url;
+}
+
+/**
+ * 分页每页显示记录数
+ * @param string url 分页模板链接
+ * @param string id 分页对象id
+ */
+sun.pagination.limit = function(url, th){
+    var domSelect = $(th);
+    var pageSize = domSelect.val();
+    var pageCurrent = 1;
+    
+    if(isNaN(pageSize) || pageSize < 1){
+        sun.toast("error", "每页显示记录数参数错误", 3000);
+        return;
+    }
+    
+    url = url.replace("PAGE_SIZE", pageSize);
+    url = url.replace("PAGE_CURRENT", pageCurrent);
+    location.href = url;
+}
