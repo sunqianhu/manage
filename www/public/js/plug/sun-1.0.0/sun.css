@@ -122,8 +122,10 @@ transition: all 0.5s ease;
 .sun_pagination_intact{ line-height: 28px; overflow: hidden}
 .sun_pagination_intact:after{ content: ""; clear: both; display: block}
 .sun_pagination_intact .left{ float: left}
-.sun_pagination_intact .left .count{}
+.sun_pagination_intact .left .count{ display: inline-block}
 .sun_pagination_intact .left .count span{ color: #326496; margin: 0px 3px}
+.sun_pagination_intact .left .record_range{ margin-left: 20px; display: inline-block}
+.sun_pagination_intact .left .record_range span{ color: #326496; margin: 0px 3px}
 
 .sun_pagination_intact .right{ float: right; overflow: hidden}
 .sun_pagination_intact .right .limit{ float: left; margin-left: 20px}

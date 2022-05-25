@@ -14,6 +14,9 @@ class PaginationService{
     public $pageCurrent = 1; // 当前页
     public $urlTemplate = ''; // url模板
     public $limitStart = 0; // 开始记录
+    
+    public $nodeTotal = ''; // 节点总记录
+    public $nodeRecordRange = ''; // 节点记录范围
     public $nodeLink = ''; // 节点链接
     public $nodeLimit = ''; // 节点每页显示
     public $nodeSkip = ''; // 节点跳转
@@ -48,9 +51,11 @@ class PaginationService{
         }
         $this->limitStart = ($this->pageCurrent - 1) * $this->pageSize;
         
-        $this->nodeLink = $this->getLink();
-        $this->nodeLimit = $this->getLimit();
-        $this->nodeSkip = $this->getSkip();
+        $this->nodeTotal = $this->getNodeTotal();
+        $this->nodeRecordRange = $this->getNodeRecordRange();
+        $this->nodeLink = $this->getNodeLink();
+        $this->nodeLimit = $this->getNodeLimit();
+        $this->nodeSkip = $this->getNodeSkip();
     }
     
     /**
@@ -79,11 +84,42 @@ class PaginationService{
     }
     
     /**
-     * 获取link
-     * @param $page 分页参数
-     * @return dom
+     * 得到节点总记录
+     * @return string node
      */
-    function getLink(){
+    function getNodeTotal(){
+        $node = '';
+        
+        if($this->pageTotal == 0){
+            return $node;
+        }
+        
+        $node = '<div class="count">共<span>'.$this->recordTotal.'</span>条</div>';
+        
+        return $node;
+    }
+    
+    /**
+     * 得到节点记录范围
+     * @return string node
+     */
+    function getNodeRecordRange(){
+        $node = '';
+        
+        if($this->pageTotal == 0){
+            return $node;
+        }
+        
+        $node = '<div class="record_range">显示<span>'.($this->limitStart + 1).'-'.($this->limitStart+$this->pageSize).'</span>条</div>';
+        
+        return $node;
+    }
+    
+    /**
+     * 获取节点link
+     * @return string node
+     */
+    function getNodeLink(){
         $node = '';
         $pageStart = 0;
         $pageEnd = 0;
@@ -138,13 +174,16 @@ class PaginationService{
     }
     
     /**
-     * 获取limit
-     * @param $page 分页参数
-     * @return dom
+     * 获取节点limit
+     * @return string node
      */
-    function getLimit(){
+    function getNodeLimit(){
         $node = '';
         $step = 1;
+        
+        if($this->pageTotal == 0){
+            return $node;
+        }
         
         $node = '每页显示<select onchange="sun.pagination.limit(\''.$this->urlTemplate.'\', this)">';
         for($i = 10; $i < 500; $i += $step * 10){
@@ -157,12 +196,16 @@ class PaginationService{
     }
     
     /**
-     * 得到跳转到第几页
-     * @param $page 分页参数
-     * @return dom
+     * 得到节点跳转到第几页
+     * @return string node
      */
-    function getSkip(){
+    function getNodeSkip(){
         $node = '';
+        
+        if($this->pageTotal == 0){
+            return $node;
+        }
+        
         $url = 'location.href=\''.$this->urlTemplate.'\'.replace(\'PAGE_SIZE\', document.getElementById(\'pagination_skip_'.$this->id.'\').value).replace(\'PAGE_CURRENT\', \'1\');';
         
         $node = '跳转到第<input type="text" class="number pagination_skip_'.$this->id.'" min="1" class="number" value="'.$this->pageCurrent.'" page_size="'.$this->pageSize.'">页
@@ -171,17 +214,17 @@ class PaginationService{
         return '<div class="skip">'.$node.'</div>';
     }
     
-    
     /**
-     * 得到完整分页节点
+     * 得到节点完整分页
      * @return string node
      */
-    function getIntactNode(){
+    function getNodeIntact(){
         $node = '';
         
         $node = '<div class="sun_pagination_intact">
 <div class="left">
-<div class="count">共<span>'.$this->recordTotal.'</span>条</div>
+'.$this->nodeTotal.'
+'.$this->nodeRecordRange.'
 </div>
 <div class="right">
 '.$this->nodeLimit.'

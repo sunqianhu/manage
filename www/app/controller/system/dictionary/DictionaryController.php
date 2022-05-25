@@ -47,7 +47,7 @@ class DictionaryController extends BaseController{
         $recordTotal = $dictionaryModel->getOne('count(1)', $where);
         
         $paginationService = new PaginationService($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
-        $paginationIntactNode = $paginationService->getIntactNode();
+        $paginationIntactNode = $paginationService->getNodeIntact();
         
         $dictionarys = $dictionaryModel->getAll('id, type, `key`, `value`, `sort`', $where, 'order by type asc, `sort` asc, id asc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
         
