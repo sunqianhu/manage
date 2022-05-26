@@ -119,7 +119,7 @@ transition: all 0.5s ease;
 .sun_table_keyvalue .key{ color: #2d64b3; background-color: #F4F6F8}
 
 /*分页完整*/
-.sun_pagination_intact{overflow: hidden}
+.sun_pagination_intact{}
 .sun_pagination_intact:after{ content: ""; clear: both; display: block}
 .sun_pagination_intact .left{ float: left}
 .sun_pagination_intact .left .count{ display: inline-block}
@@ -127,7 +127,8 @@ transition: all 0.5s ease;
 .sun_pagination_intact .left .record_range{ margin-left: 20px; display: inline-block}
 .sun_pagination_intact .left .record_range span{ color: #326496; margin: 0px 3px}
 
-.sun_pagination_intact .right{ float: right; overflow: hidden}
+.sun_pagination_intact .right{ float: right}
+.sun_pagination_intact .right:after{ content: ""; clear: both; display: block}
 .sun_pagination_intact .right .limit{ float: left; margin-left: 20px}
 .sun_pagination_intact .right .limit select{ height: 22px}
 

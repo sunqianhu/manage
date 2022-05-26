@@ -4,7 +4,7 @@
  */
 namespace app\controller;
 
-use \app\service\system\MenuService;
+use \app\service\FrameMainService;
 
 class IndexController extends BaseController{
     /**

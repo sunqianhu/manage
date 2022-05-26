@@ -71,7 +71,7 @@ class DepartmentController extends BaseController{
     }
     
     /**
-     * 添加部门
+     * 添加
      */
     function add(){
         $this->display('system/department/add.php');
@@ -94,7 +94,7 @@ class DepartmentController extends BaseController{
     }
     
     /**
-     * 添加部门保存
+     * 添加保存
      */
     function addSave(){
         $return = array(
@@ -174,7 +174,7 @@ class DepartmentController extends BaseController{
     }
     
     /**
-     * 修改部门
+     * 修改
      */
     function edit(){
         $validateService = new ValidateService();
@@ -233,7 +233,7 @@ class DepartmentController extends BaseController{
     }
     
     /**
-     * 修改部门保存
+     * 修改保存
      */
     function editSave(){
         $return = array(

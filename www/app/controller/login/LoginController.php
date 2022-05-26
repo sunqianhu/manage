@@ -9,6 +9,7 @@ use \app\service\CaptchaService;
 use \app\service\AuthService;
 use \app\model\system\UserModel;
 use \app\service\ValidateService;
+use \app\service\FrameMainService;
 
 class LoginController extends BaseController{
     /**
