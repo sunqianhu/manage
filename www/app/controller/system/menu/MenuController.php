@@ -10,7 +10,9 @@ use \app\service\ValidateService;
 use \app\service\ZtreeService;
 use \app\service\TreeService;
 use \app\service\SafeService;
+use \app\service\FrameMainService;
 use \app\service\system\MenuService;
+use \app\service\system\DictionaryService;
 
 class MenuController extends BaseController{
     /**
@@ -66,6 +68,9 @@ class MenuController extends BaseController{
      * 添加
      */
     function add(){
+        $menuTypeRadioNode = DictionaryService::getRadio('menu_type', 'type', 1);
+        
+        $this->assign('menuTypeRadioNode', $menuTypeRadioNode);
         $this->display('system/menu/add.php');
     }
     
@@ -106,11 +111,13 @@ class MenuController extends BaseController{
         // 验证
         $validateService->rule = array(
             'parent_id' => 'number',
-            'name' => 'require|max_length:25',
+            'type' => 'require',
+            'name' => 'require|max_length:32',
             'sort' => 'number|max_length:10'
         );
         $validateService->message = array(
             'parent_id.number' => '请选择上级部门',
+            'type.require' => '请选择菜单类型',
             'name.require' => '请输入部门名称',
             'name.max_length' => '部门名称不能大于32个字',
             'sort.number' => '排序必须是个数字',
@@ -137,9 +144,10 @@ class MenuController extends BaseController{
         // 入库
         $data = array(
             'parent_id'=>$_POST['parent_id'],
+            'type'=>$_POST['type'],
             'name'=>$_POST['name'],
-            'sort'=>$_POST['sort'],
-            'remark'=>$_POST['remark']
+            'url'=>$_POST['url'],
+            'sort'=>$_POST['sort']
         );
         try{
             $id = $menuModel->insert($data);

@@ -287,6 +287,7 @@ class BaseModel{
         if($limit != ''){
             $sql .= ' '.$limit;
         }
+        
         $pdoStatement = $pdo->prepare($sql);
         if(!empty($where['value'])){
             foreach($where['value'] as $whereValueMark => $whereValueValue){

@@ -6,30 +6,25 @@ namespace app;
 
 class Cache{
     
-    static $config = array(); // 配置
+    static $dir = array(); // 缓存目录
     
     /**
      * 设置缓存
+     * @access public
      * @param String $key 缓存key
      * @param String $value 缓存value
-     * @access public
+     * @return boolean 布尔
      */
     static function set($key, $value){
         $path = '';
         
         // 配置
-        if(empty(self::$config)){
-            self::$config = Config::get('cache');
-        }
-        if(!self::$config['open']){
-            return false;
-        }
-        if(empty(self::$config['dir'])){
-            return false;
+        if(empty(self::$dir)){
+            self::$dir = Config::get('cache_dir');
         }
         
         // 保存
-        $path = self::$config['dir'].$key.'.txt';
+        $path = self::$dir.$key.'.txt';
         file_put_contents($path, $value);
         
         return true;
@@ -37,38 +32,34 @@ class Cache{
     
     /**
      * 获取缓存
-     * @param String $key 缓存key
-     * @param String $default 默认返回
      * @access public
+     * @param String $key 缓存key
+     * @param String $return 默认返回
+     * @return string 缓存内容
      */
-    static function get($key, $default = ''){
+    static function get($key, $return = ''){
         $path = '';
-        $timeLast = 0; // 文件最后修改时间
-        $timeNow = time(); // 当前时间
+        $fileTimeLast = 0; // 文件最后修改时间
         
         // 配置
-        if(empty(self::$config)){
-            self::$config = Config::get('cache');
-        }
-        if(!self::$config['open']){
-            return $default;
-        }
-        if(empty(self::$config['dir'])){
-            return $default;
+        if(empty(self::$dir)){
+            self::$dir = Config::get('cache_dir');
         }
         
         // 存在
-        $path = self::$config['dir'].$key.'.txt';
+        $path = self::$dir.$key.'.txt';
         if(!file_exists($path)){
-            return $default;
+            return $return;
         }
         
         // 缓存过期
-        $timeLast = filemtime($path);
-        if($timeNow - $timeLast > self::$config['time']){
-            return $default;
+        $fileTimeLast = filemtime($path);
+        if(time() - $fileTimeLast > 600){
+            return $return;
         }
         
         return file_get_contents($path);
     }
+    
+    
 }

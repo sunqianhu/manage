@@ -28,9 +28,7 @@
 <div class="sun_form_item">
 <div class="sun_form_label"><span class="sun_form_required">*</span> 菜单类型</div>
 <div class="sun_form_content">
-<label><input type="radio" name="type" id="type" value="1" />目录</label>
-<label><input type="radio" name="type" id="type" value="2" />菜单</label>
-<label><input type="radio" name="type" id="type" value="3" />按钮</label>
+<?php echo $menuTypeRadioNode;?>
 </div>
 </div>
 
@@ -51,7 +49,7 @@
 
 
 <div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 显示排序</div>
+<div class="sun_form_label"><span class="sun_form_required">*</span> 排序</div>
 <div class="sun_form_content">
 <input type="number" name="sort" id="sort" value="1" />
 </div>

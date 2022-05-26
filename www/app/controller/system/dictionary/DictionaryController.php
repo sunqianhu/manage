@@ -11,6 +11,8 @@ use \app\service\PaginationService;
 use \app\service\SafeService;
 use \app\service\ValidateService;
 
+use \app\service\system\DictionaryService;
+
 class DictionaryController extends BaseController{
     /**
      * 首页

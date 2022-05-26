@@ -10,11 +10,7 @@ return array(
     'view_dir'=>__DIR__.'/app/view/', // 视图目录
     
     // 缓存
-    'cache'=>array(
-        'open'=>false, // 缓存开启
-        'dir'=>__DIR__.'/cache/', // 缓存目录
-        'time'=>10 // 缓存时间
-    ),
+    'cache_dir'=>__DIR__.'/cache/', // 缓存目录,
     
     // 数据库
     'db'=>array(
