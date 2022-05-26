@@ -45,8 +45,8 @@ class MenuService{
 <td>'.$menu['sort'].'</td>
 <td>';
             if($menu['parent_id'] != 0){
-                $node .= '<a href="javascript:;" class="sun_button sun_button_sm sun_button_secondary sun_mr5" onclick="index.edit('.$menu['id'].');">修改</a> ';
-                $node .= '<a href="javascript:;" class="sun_button sun_button_secondary sun_button_sm sun_mr5" onclick="index.delete('.$menu['id'].');">删除</a>';
+                $node .= '<a href="javascript:;" class="sun_button sun_button_small sun_button_secondary sun_mr5" onclick="index.edit('.$menu['id'].');">修改</a> ';
+                $node .= '<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small sun_mr5" onclick="index.delete('.$menu['id'].');">删除</a>';
             }
             $node .= '</td>
 </tr>

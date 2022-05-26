@@ -88,8 +88,8 @@ transition: all 0.5s ease;
 .sun_button_warning{ background: #FF5722}
 .sun_button_warning:hover{ background: #FF7742}
 
-.sun_button_sm{ height: 22px; line-height: 22px; padding: 0px 5px; font-size: 12px}
-.sun_button_sm .icon{ font-size: 10px; vertical-align: middle}
+.sun_button_small{ height: 22px; line-height: 22px; padding: 0px 5px; font-size: 12px}
+.sun_button_small .icon{ font-size: 10px; vertical-align: middle}
 .sun_button_big{ height: 40px; line-height: 40px; padding: 0px 18px}
 .sun_button_big .icon{ vertical-align: middle}
 
@@ -119,7 +119,7 @@ transition: all 0.5s ease;
 .sun_table_keyvalue .key{ color: #2d64b3; background-color: #F4F6F8}
 
 /*分页完整*/
-.sun_pagination_intact{ line-height: 28px; overflow: hidden}
+.sun_pagination_intact{overflow: hidden}
 .sun_pagination_intact:after{ content: ""; clear: both; display: block}
 .sun_pagination_intact .left{ float: left}
 .sun_pagination_intact .left .count{ display: inline-block}
@@ -135,9 +135,9 @@ transition: all 0.5s ease;
 .sun_pagination_intact .right .skip .number{ width: 30px; height: 22px; text-align: center}
 
 .sun_pagination_intact .right .link{ float: left; margin-left: 20px}
-.sun_pagination_intact .right .link a{ float: left; border:1px solid #cccccc; display:block; padding: 0px 10px; background-color:#ffffff; color: #191919; margin-left: -1px}
+.sun_pagination_intact .right .link a{ float: left; border:1px solid #cccccc; display: block; padding: 0px 8px; background-color:#ffffff; color: #191919; margin-left: 3px; border-radius: 3px}
 .sun_pagination_intact .right .link a:hover{ background:#f5f5f5; text-decoration: none}
-.sun_pagination_intact .right .link span{ float: left; border:1px solid #cccccc; display:block; padding: 0px 10px; background-color:#ffffff; color: #919191; margin-left: -1px}
+.sun_pagination_intact .right .link span{ float: left; border:1px solid #cccccc; display:block; padding: 0px 10px; background-color:#ffffff; color: #919191; margin-left: 3px; border-radius: 3px}
 
 .sun_pagination_intact .right .link .disabled{ cursor: not-allowed; color:#aaaaaa}
 .sun_pagination_intact .right .link .disabled:hover{ background: #ffffff}
@@ -176,6 +176,6 @@ transition: all 0.5s ease;
 .sun_layer > .layer > .title{ height: 50px; line-height: 50px; overflow: hidden; cursor: move; border-bottom: 1px solid #cccccc; padding: 0px 10px}
 .sun_layer > .layer > .title .name{ float: left}
 .sun_layer > .layer > .title .close{ float: right; display: block; width: 30px; height: 30px; line-height: 30px; text-align: center; margin-top: 10px; font-size: 20px; font-weight: bold; color: #191919}
-.sun_layer > .layer > .title .close:hover{ color: #393939}
+.sun_layer > .layer > .title .close:hover{ text-decoration: none; color: #393939}
 .sun_layer > .layer > iframe{ margin: 0px; padding: 0px; background-color: #ffffff}
 .sun_layer > .layer > .loading{ background-image: url(image/loading.gif); background-repeat: no-repeat; background-size: 30px 30px; background-position: 50% 0px; text-align: center; position: absolute; left: 0px; top: 40%; z-index: 2; width: 100%; padding-top: 35px}

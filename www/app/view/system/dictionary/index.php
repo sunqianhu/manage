@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>字典管理_<?php echo $config['app_name'];?></title>
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/jquery/jquery-1.12.4.min.js"></script>
-<link rel="stylesheet" href="<?php echo $config['app_domain'];?>js/plug/bootstrap-4.6.1/css/bootstrap.min.css" />
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/bootstrap-4.6.1/js/bootstrap.bundle.min.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.js"></script>
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/inc/frame_main.js"></script>
@@ -34,7 +32,6 @@
 <li>字典类型：<input type="text" name="type" value="<?php echo $search['type'];?>" /></li>
 <li>
 <input type="submit" value="搜索" class="sun_button" />
-<input type="reset" class="sun_button sun_button_secondary sun_ml5" value="重置" />
 </li>
 </ul>
 </form>
@@ -42,10 +39,11 @@
 
 <div class="data sun_mt10">
 <div class="toolbar">
-<a href="javascript:;" class="sun_button" data-toggle="tooltip" title="添加字典" onClick="index.add();">添加</a>
+<a href="javascript:;" class="sun_button" onClick="index.add();">添加</a>
 </div>
 <table class="sun_table sun_table_hover sun_mt10" width="100%">
   <tr>
+    <th>id</th>
     <th>字典类型</th>
     <th>字典键</th>
     <th>字典值</th>
@@ -57,11 +55,15 @@ if(!empty($dictionarys)){
 foreach($dictionarys as $dictionary){
 ?>
   <tr>
+    <td><?php echo $dictionary['id'];?></td>
     <td><?php echo $dictionary['type'];?></td>
     <td><?php echo $dictionary['key'];?></td>
     <td><?php echo $dictionary['value'];?></td>
     <td><?php echo $dictionary['sort'];?></td>
-    <td></td>
+    <td>
+<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small sun_mr5" onClick="index.edit(<?php echo $dictionary['id'];?>)">修改</a>
+<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small" onClick="index.delete(<?php echo $dictionary['id'];?>)">删除</a>
+    </td>
   </tr>
 <?php
 }

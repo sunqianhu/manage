@@ -54,7 +54,7 @@ class FrameMainService{
 <li'.($active == 'system_department' ? ' class="active"' : '').'><a href="'.$config['app_domain'].'system/department/department.html">部门管理</a></li>
 <li><a href="'.$config['app_domain'].'system/role/role.html">角色管理</a></li>
 <li'.($active == 'system_menu' ? ' class="active"' : '').'><a href="'.$config['app_domain'].'system/menu/menu.html">菜单管理</a></li>
-<li><a href="'.$config['app_domain'].'system/dictionary/dictionary.html">字典管理</a></li>
+<li'.($active == 'system_dictionary' ? ' class="active"' : '').'><a href="'.$config['app_domain'].'system/dictionary/dictionary.html">字典管理</a></li>
 <li'.($active == 'system_login_log' ? ' class="active"' : '').'><a href="'.$config['app_domain'].'system/loginLog/login_log.html">登录日志</a></li>
 <li><a href="'.$config['app_domain'].'system/accessLog/access_log.html">访问日志</a></li>
 </ul>

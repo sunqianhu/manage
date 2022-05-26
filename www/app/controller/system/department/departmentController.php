@@ -81,7 +81,7 @@ class DepartmentController extends BaseController{
      * 添加选择部门
      */
     function addSelectDepartment(){
-        $departmentModel = new departmentModel();
+        $departmentModel = new DepartmentModel();
         $departments = array();
         $department = ''; // 部门json数据
         
@@ -105,7 +105,7 @@ class DepartmentController extends BaseController{
             )
         ); // 返回数据
         $validateService = new ValidateService();
-        $departmentModel = new departmentModel();
+        $departmentModel = new DepartmentModel();
         $departmentParent = array(); // 上级部门
         $id = 0; // 添加部门id
         $parentIds = ''; // 所有上级部门id
@@ -178,7 +178,7 @@ class DepartmentController extends BaseController{
      */
     function edit(){
         $validateService = new ValidateService();
-        $departmentModel = new departmentModel();
+        $departmentModel = new DepartmentModel();
         $department = array();
         
         // 验证
@@ -220,7 +220,7 @@ class DepartmentController extends BaseController{
      * 修改选择部门
      */
     function editSelectDepartment(){
-        $departmentModel = new departmentModel();
+        $departmentModel = new DepartmentModel();
         $departments = array();
         $department = ''; // 部门json数据
         
@@ -244,7 +244,7 @@ class DepartmentController extends BaseController{
             )
         ); // 返回数据
         $validateService = new ValidateService();
-        $departmentModel = new departmentModel();
+        $departmentModel = new DepartmentModel();
         $departmentCurrent = array(); // 本部门
         $departmentParent = array(); // 上级部门
         $data = array();
@@ -339,7 +339,7 @@ class DepartmentController extends BaseController{
             'message'=>''
         );
         $departmentChild = array();
-        $departmentModel = new departmentModel();
+        $departmentModel = new DepartmentModel();
         $validateService = new ValidateService();
         
         // 验证

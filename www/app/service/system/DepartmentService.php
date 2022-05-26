@@ -46,8 +46,8 @@ class DepartmentService{
 <td>'.$department['remark'].'</td>
 <td>';
             if($department['parent_id'] != 0){
-                $node .= '<a href="javascript:;" class="sun_button sun_button_sm sun_button_secondary sun_mr5" onclick="index.edit('.$department['id'].');">修改</a> ';
-                $node .= '<a href="javascript:;" class="sun_button sun_button_secondary sun_button_sm sun_mr5" onclick="index.delete('.$department['id'].');">删除</a>';
+                $node .= '<a href="javascript:;" class="sun_button sun_button_small sun_button_secondary sun_mr5" onclick="index.edit('.$department['id'].');">修改</a> ';
+                $node .= '<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small sun_mr5" onclick="index.delete('.$department['id'].');">删除</a>';
             }
             $node .= '</td>
 </tr>
