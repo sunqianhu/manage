@@ -6,11 +6,12 @@ namespace app\controller\system\role;
 
 use \app\controller\BaseController;
 use \app\model\system\RoleModel;
+use \app\model\system\MenuModel;
 use \app\service\FrameMainService;
 use \app\service\PaginationService;
 use \app\service\SafeService;
 use \app\service\ValidateService;
-
+use \app\service\ZtreeService;
 use \app\service\system\RoleService;
 
 class RoleController extends BaseController{
@@ -71,6 +72,18 @@ class RoleController extends BaseController{
      * 添加
      */
     function add(){
+        $menuModel = new menuModel();
+        $menus = array();
+        $menu = ''; // 菜单json数据
+        $where = array(
+            'mark'=>'parent_id != 0'
+        );
+        
+        $menus = $menuModel->getAll('id, name, parent_id', $where, 'order by parent_id asc, id asc');
+        $menus = ZtreeService::setOpenByFirst($menus);
+        $menu = json_encode($menus);
+        
+        $this->assign('menu', $menu);
         $this->display('system/role/add.php');
     }
     

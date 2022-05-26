@@ -19,7 +19,7 @@ addSelectMenu.ztreeInit = function(){
         }
     };
     var nodes = addSelectMenu.menuData;
-    addSelectMenu.ztree = $.fn.zTree.init($("#ztree"), setting, nodes)
+    addSelectMenu.ztree = $.fn.zTree.init($("#ztree"), setting, nodes);
 }
 
 /**
