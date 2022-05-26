@@ -1,27 +1,27 @@
 <?php
 /**
- * 字典管理
+ * 角色管理
  */
-namespace app\controller\system\dictionary;
+namespace app\controller\system\role;
 
 use \app\controller\BaseController;
-use \app\model\system\DictionaryModel;
+use \app\model\system\RoleModel;
 use \app\service\FrameMainService;
 use \app\service\PaginationService;
 use \app\service\SafeService;
 use \app\service\ValidateService;
 
-use \app\service\system\DictionaryService;
+use \app\service\system\RoleService;
 
-class DictionaryController extends BaseController{
+class RoleController extends BaseController{
     /**
      * 首页
      */
     function index(){
         $frameMainMenu = ''; // 框架菜单
-        $dictionaryModel = new DictionaryModel(); // 模型
+        $roleModel = new RoleModel(); // 模型
         $search = array(
-            'type'=>''
+            'name'=>''
         ); // 搜索
         $whereMarks = array();
         $whereValues = array();
@@ -29,16 +29,16 @@ class DictionaryController extends BaseController{
         $paginationService = null; // 分页
         $recordTotal = 0; // 总记录
         $paginationNodeIntact = ''; // 节点
-        $dictionarys = array();
+        $roles = array();
 
         // 菜单
-        $frameMainMenu = FrameMainService::getPageLeftMenu('system_dictionary');
+        $frameMainMenu = FrameMainService::getPageLeftMenu('system_role');
 
         // 搜索
-        if(isset($_GET['type']) && $_GET['type'] !== ''){
-            $whereMarks[] = 'type = :type';
-            $whereValues[':type'] = $_GET['type'];
-            $search['type'] = SafeService::entity($_GET['type']);
+        if(isset($_GET['name']) && $_GET['name'] !== ''){
+            $whereMarks[] = 'name = :name';
+            $whereValues[':name'] = '%'.$_GET['name'].'%';
+            $search['name'] = SafeService::entity($_GET['name']);
         }
         if(!empty($whereMarks)){
             $where['mark'] = implode(' and ', $whereMarks);
@@ -47,28 +47,31 @@ class DictionaryController extends BaseController{
             $where['value'] = $whereValues;
         }
         
-        $recordTotal = $dictionaryModel->getOne('count(1)', $where);
+        $recordTotal = $roleModel->getOne('count(1)', $where);
         
         $paginationService = new PaginationService($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
         $paginationNodeIntact = $paginationService->getNodeIntact();
         
-        $dictionarys = $dictionaryModel->getAll('id, type, `key`, `value`, `sort`', $where, 'order by type asc, `sort` asc, id asc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
+        $roles = $roleModel->getAll('id, name, time_edit', $where, 'order by id desc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
+        foreach($roles as &$role){
+            $role['time_edit_name'] = date('Y-m-d H:i:s', $role['time_edit']);
+        }
         
-        $dictionarys = SafeService::entity($dictionarys, array('id'));
+        $roles = SafeService::entity($roles, array('id'));
         
         // 显示
         $this->assign('frameMainMenu', $frameMainMenu);
         $this->assign('search', $search);
-        $this->assign('dictionarys', $dictionarys);
+        $this->assign('roles', $roles);
         $this->assign('paginationNodeIntact', $paginationNodeIntact);
-        $this->display('system/dictionary/index.php');
+        $this->display('system/role/index.php');
     }
     
     /**
      * 添加
      */
     function add(){
-        $this->display('system/dictionary/add.php');
+        $this->display('system/role/add.php');
     }
     
     /**
@@ -83,24 +86,15 @@ class DictionaryController extends BaseController{
             )
         ); // 返回数据
         $validateService = new ValidateService();
-        $dictionaryModel = new DictionaryModel();
+        $roleModel = new RoleModel();
         
         // 验证
         $validateService->rule = array(
-            'type' => 'require|max_length:64',
-            'key' => 'require|max_length:64',
-            'value' => 'require|max_length:128',
-            'sort' => 'number|max_length:10'
+            'name' => 'require|max_length:64'
         );
         $validateService->message = array(
-            'type.require' => '请输入字典类型',
-            'type.max_length' => '字典类型不能大于64个字',
-            'key.require' => '请输入字典键',
-            'key.max_length' => '字典键不能大于64个字',
-            'value.require' => '请输入字典值',
-            'value.max_length' => '字典值不能大于128个字',
-            'sort.number' => '排序必须是个数字',
-            'sort.max_length' => '排序不能大于10个字'
+            'name.require' => '请输入角色名称',
+            'name.max_length' => '角色名称不能大于64个字',
         );
         if(!$validateService->check($_POST)){
             $return['message'] = $validateService->getErrorMessage();
@@ -111,13 +105,12 @@ class DictionaryController extends BaseController{
         
         // 入库
         $data = array(
-            'type'=>$_POST['type'],
-            'key'=>$_POST['key'],
-            'value'=>$_POST['value'],
-            'sort'=>$_POST['sort']
+            'name'=>$_POST['name'],
+            'time_add'=>time(),
+            'time_edit'=>time()
         );
         try{
-            $dictionaryModel->insert($data);
+            $roleModel->insert($data);
         }catch(Exception $e){
             $return['message'] = $e->getMessage();
             echo json_encode($return);
@@ -130,12 +123,12 @@ class DictionaryController extends BaseController{
     }
     
     /**
-     * 修改字典
+     * 修改角色
      */
     function edit(){
         $validateService = new ValidateService();
-        $dictionaryModel = new DictionaryModel();
-        $dictionary = array();
+        $roleModel = new RoleModel();
+        $role = array();
         
         // 验证
         $validateService->rule = array(
@@ -150,16 +143,16 @@ class DictionaryController extends BaseController{
             exit;
         }
         
-        $dictionary = $dictionaryModel->getRow('id, type, `key`, `value`, `sort`', array(
+        $role = $roleModel->getRow('id, name', array(
             'mark'=>'id = :id',
             'value'=>array(
                 ':id'=>$_GET['id']
             )
         ));
-        $dictionary = SafeService::entity($dictionary, array('id'));
+        $role = SafeService::entity($role, array('id'));
         
-        $this->assign('dictionary', $dictionary);
-        $this->display('system/dictionary/edit.php');
+        $this->assign('role', $role);
+        $this->display('system/role/edit.php');
     }
     
     /**
@@ -174,29 +167,20 @@ class DictionaryController extends BaseController{
             )
         ); // 返回数据
         $validateService = new ValidateService();
-        $dictionaryModel = new DictionaryModel();
-        $dictionary = array();
+        $roleModel = new RoleModel();
+        $role = array();
         $data = array();
         
         // 验证
         $validateService->rule = array(
             'id' => 'require|number',
-            'type' => 'require|max_length:64',
-            'key' => 'require|max_length:64',
-            'value' => 'require|max_length:128',
-            'sort' => 'number|max_length:10'
+            'name' => 'require|max_length:64'
         );
         $validateService->message = array(
             'id.require' => 'id参数错误',
             'id.number' => 'id必须是个数字',
-            'type.require' => '请输入字典类型',
-            'type.max_length' => '字典类型不能大于64个字',
-            'key.require' => '请输入字典键',
-            'key.max_length' => '字典键不能大于64个字',
-            'value.require' => '请输入字典值',
-            'value.max_length' => '字典值不能大于128个字',
-            'sort.number' => '排序必须是个数字',
-            'sort.max_length' => '排序不能大于10个字'
+            'name.require' => '请输入角色名称',
+            'name.max_length' => '角色名称不能大于64个字'
         );
         if(!$validateService->check($_POST)){
             $return['message'] = $validateService->getErrorMessage();
@@ -205,8 +189,8 @@ class DictionaryController extends BaseController{
             exit;
         }
         
-        // 本字典
-        $dictionary = $dictionaryModel->getRow(
+        // 本角色
+        $role = $roleModel->getRow(
             'id',
             array(
                 'mark'=> 'id = :id',
@@ -215,24 +199,22 @@ class DictionaryController extends BaseController{
                 )
             )
         );
-        if(empty($dictionary)){
-            $return['message'] = '字典没有找到';
+        if(empty($role)){
+            $return['message'] = '角色没有找到';
             echo json_encode($return);
             exit;
         }
         
         // 更新
         $data = array(
-            'type'=>$_POST['type'],
-            'key'=>$_POST['key'],
-            'value'=>$_POST['value'],
-            'sort'=>$_POST['sort']
+            'name'=>$_POST['name'],
+            'time_edit'=>time()
         );
         try{
-            $dictionaryModel->update($data, array(
+            $roleModel->update($data, array(
                 'mark'=>'id = :id',
                 'value'=> array(
-                    ':id'=>$dictionary['id']
+                    ':id'=>$role['id']
                 )
             ));
         }catch(Exception $e){
@@ -254,7 +236,7 @@ class DictionaryController extends BaseController{
             'status'=>'error',
             'message'=>''
         );
-        $dictionaryModel = new DictionaryModel();
+        $roleModel = new RoleModel();
         $validateService = new ValidateService();
         
         // 验证
@@ -272,7 +254,7 @@ class DictionaryController extends BaseController{
         }
         
         try{
-            $dictionaryModel->delete(
+            $roleModel->delete(
                 array(
                     'mark'=>'id = :id',
                     'value'=> array(
