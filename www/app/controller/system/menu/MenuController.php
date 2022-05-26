@@ -68,7 +68,7 @@ class MenuController extends BaseController{
      * 添加
      */
     function add(){
-        $menuTypeRadioNode = DictionaryService::getRadio('menu_type', 'type', 1);
+        $menuTypeRadioNode = DictionaryService::getRadio('system_menu_type', 'type', 1);
         
         $this->assign('menuTypeRadioNode', $menuTypeRadioNode);
         $this->display('system/menu/add.php');
