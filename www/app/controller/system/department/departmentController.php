@@ -39,17 +39,17 @@ class DepartmentController extends BaseController{
         if(!empty($_GET['id'])){
             $whereMarks[] = 'id = :id';
             $whereValues[':id'] = $_GET['id'];
-            $search['id'] = SafeService::entity($_GET['id']);
+            $search['id'] = SafeService::frontDisplay($_GET['id']);
         }
         if(isset($_GET['name']) && $_GET['name'] !== ''){
             $whereMarks[] = 'name like :name';
             $whereValues[':name'] = '%'.$_GET['name'].'%';
-            $search['name'] = SafeService::entity($_GET['name']);
+            $search['name'] = SafeService::frontDisplay($_GET['name']);
         }
         if(isset($_GET['remark']) && $_GET['remark'] !== ''){
             $whereMarks[] = 'remark like :remark';
             $whereValues[':remark'] = '%'.$_GET['remark'].'%';
-            $search['remark'] = SafeService::entity($_GET['remark']);
+            $search['remark'] = SafeService::frontDisplay($_GET['remark']);
         }
         if(!empty($whereMarks)){
             $where['mark'] = implode(' and ', $whereMarks);
@@ -60,7 +60,7 @@ class DepartmentController extends BaseController{
         $departments = $departmentModel->getAll('id, parent_id, name, `sort`, remark', $where, 'order by `sort` asc, id asc');
         $departments = TreeService::getDataTree($departments, 'child', 'id', 'parent_id');
         $departments = TreeService::addLevel($departments, 1);
-        $departments = SafeService::entity($departments, array('id', 'parent_id'));
+        $departments = SafeService::frontDisplay($departments, array('id', 'parent_id'));
         $departmentNode = DepartmentService::getIndexTreeNode($departments);
         
         // 显示
@@ -210,7 +210,7 @@ class DepartmentController extends BaseController{
                 ':id'=> $department['parent_id']
             )
         ));
-        $department = SafeService::entity($department, array('id', 'parent_id'));
+        $department = SafeService::frontDisplay($department, array('id', 'parent_id'));
         
         $this->assign('department', $department);
         $this->display('system/department/edit.php');

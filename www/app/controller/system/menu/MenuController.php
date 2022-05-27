@@ -38,12 +38,12 @@ class MenuController extends BaseController{
         if(!empty($_GET['id'])){
             $whereMarks[] = 'id = :id';
             $whereValues[':id'] = $_GET['id'];
-            $search['id'] = SafeService::entity($_GET['id']);
+            $search['id'] = SafeService::frontDisplay($_GET['id']);
         }
         if(isset($_GET['name']) && $_GET['name'] !== ''){
             $whereMarks[] = 'name like :name';
             $whereValues[':name'] = '%'.$_GET['name'].'%';
-            $search['name'] = SafeService::entity($_GET['name']);
+            $search['name'] = SafeService::frontDisplay($_GET['name']);
         }
         if(!empty($whereMarks)){
             $where['mark'] = implode(' and ', $whereMarks);
@@ -54,7 +54,7 @@ class MenuController extends BaseController{
         $menus = $menuModel->getAll('id, parent_id, name, `sort`', $where, 'order by `sort` asc, id asc');
         $menus = TreeService::getDataTree($menus, 'child', 'id', 'parent_id');
         $menus = TreeService::addLevel($menus, 1);
-        $menus = SafeService::entity($menus, array('id', 'parent_id'));
+        $menus = SafeService::frontDisplay($menus, array('id', 'parent_id'));
         $menuNode = MenuService::getIndexTreeNode($menus);
         
         // 显示
@@ -206,7 +206,7 @@ class MenuController extends BaseController{
                 ':id'=> $menu['parent_id']
             )
         ));
-        $menu = SafeService::entity($menu, array('id', 'type'));
+        $menu = SafeService::frontDisplay($menu, array('id', 'type'));
         
         $menuTypeRadioNode = DictionaryService::getRadio('system_menu_type', 'type', $menu['type']);
         

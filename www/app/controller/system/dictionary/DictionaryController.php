@@ -38,7 +38,7 @@ class DictionaryController extends BaseController{
         if(isset($_GET['type']) && $_GET['type'] !== ''){
             $whereMarks[] = 'type = :type';
             $whereValues[':type'] = $_GET['type'];
-            $search['type'] = SafeService::entity($_GET['type']);
+            $search['type'] = SafeService::frontDisplay($_GET['type']);
         }
         if(!empty($whereMarks)){
             $where['mark'] = implode(' and ', $whereMarks);
@@ -54,7 +54,7 @@ class DictionaryController extends BaseController{
         
         $dictionarys = $dictionaryModel->getAll('id, type, `key`, `value`, `sort`', $where, 'order by type asc, `sort` asc, id asc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
         
-        $dictionarys = SafeService::entity($dictionarys, array('id'));
+        $dictionarys = SafeService::frontDisplay($dictionarys, array('id'));
         
         // 显示
         $this->assign('frameMainMenu', $frameMainMenu);
@@ -156,7 +156,7 @@ class DictionaryController extends BaseController{
                 ':id'=>$_GET['id']
             )
         ));
-        $dictionary = SafeService::entity($dictionary, array('id'));
+        $dictionary = SafeService::frontDisplay($dictionary, array('id'));
         
         $this->assign('dictionary', $dictionary);
         $this->display('system/dictionary/edit.php');

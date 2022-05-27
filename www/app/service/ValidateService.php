@@ -89,6 +89,14 @@ class ValidateService{
                         }
                     break;
                     
+                    // 数字字符串
+                    case 'number_string':
+                        if(!$this->checkNumberString($value, $ruleValue)){
+                            $this->setError($field, $message);
+                            return false;
+                        }
+                    break;
+                    
                     // 正则
                     case 'regex':
                         if(!$this->checkRegex($value, $ruleValue)){
@@ -138,6 +146,26 @@ class ValidateService{
             return false;
         }
 
+        return true;
+    }
+    
+    /**
+     * 检测数字字符串
+     * @return boolean 验证是否通过
+     */
+    function checkNumberString($value, $split){
+        $datas = explode($split, $value);
+        
+        if(empty($datas)){
+            return false;
+        }
+        
+        foreach($datas as $data){
+            if(!is_numeric($data)){
+                return false;
+            }
+        }
+        
         return true;
     }
     

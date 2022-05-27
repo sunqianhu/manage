@@ -41,4 +41,24 @@ class ZtreeService{
         
         return $datas;
     }
+    
+    /**
+     * 设置选中
+     * @param array $datas 数据
+     * @param array $ids 选中id数组
+     * @return array
+     */
+    static function setChecked($datas, $ids, $primaryKey = 'id', $childKey = 'child'){
+        foreach($datas as $key => $data){
+            if(in_array($data[$primaryKey], $ids)){
+                $datas[$key]['checked'] = true;
+            }
+
+            if(!empty($data[$childKey])){
+                $datas[$key][$childKey] = self::setChecked($data[$childKey], $ids);
+            }
+        }
+        
+        return $datas;
+    }
 }

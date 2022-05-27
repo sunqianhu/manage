@@ -15,7 +15,7 @@ class ErrorController extends BaseController{
         if(isset($_GET['message'])){
             $message = $_GET['message'];
         }
-        $message = safeService::entity($message);
+        $message = safeService::frontDisplay($message);
         
         $this->assign('message', $message);
         $this->display('error.php');

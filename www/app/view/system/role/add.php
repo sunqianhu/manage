@@ -38,10 +38,6 @@ add.menuData = <?php echo $menu;?>;
 <div class="sun_form_label">菜单权限</div>
 <div class="sun_form_content">
 <input type="hidden" name="menu_ids" id="menu_ids" />
-<div class="ztree_operation">
-<label><input type="checkbox" />展开/折叠</label>
-<label><input type="checkbox" />全选/全不选</label>
-</div>
 <div class="ztree" id="ztree_menu"></div>
 </div>
 </div>

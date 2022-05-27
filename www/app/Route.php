@@ -4,6 +4,8 @@
  */
 namespace app;
 
+use \app\service\ResponseService;
+
 class Route{
     /**
      * 得到路径
@@ -89,8 +91,36 @@ class Route{
         }
         
         $class = $namespaceControllerPrefix.$dir.$controller;
-        $obj = new $class();
-        $obj->$action();
+        
+        try{
+            $obj = new $class();
+            $obj->$action();
+        }catch(\Exception $e){
+            $this->responseError($e->getMessage());
+        }
+    }
+    
+    /**
+     * 响应错误
+     * @access public
+     * @param string $message 描述
+     */
+    function responseError($message){
+        $appDomain = '';
+        $url = '';
+        $return = array(
+            'status'=>'error',
+            'message'=>''
+        );
+    
+        if(strpos($_SERVER['HTTP_ACCEPT'], 'json') === false){
+            $appDomain = Config::get("app_domain");
+            $url = $appDomain.'error.html?message='.urlencode($message);
+            header('location:'.$url);
+        }else{
+            $return['message'] = $message;
+            echo json_encode($return);
+        }
     }
 }
 

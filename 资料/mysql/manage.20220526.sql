@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2022-05-26 11:19:16
+Date: 2022-05-27 18:18:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -77,7 +77,7 @@ CREATE TABLE `menu` (
   `url` varchar(1024) NOT NULL DEFAULT '' COMMENT 'url',
   `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='菜单';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='菜单';
 
 -- ----------------------------
 -- Records of menu
@@ -87,6 +87,9 @@ INSERT INTO `menu` VALUES ('2', '1', ',2', '1', '系统管理', '', '1');
 INSERT INTO `menu` VALUES ('3', '2', ',2,3', '2', '用户管理', 'system/user/user.html', '1');
 INSERT INTO `menu` VALUES ('4', '2', ',2,4', '2', '部门管理', 'system/department/department.html', '2');
 INSERT INTO `menu` VALUES ('5', '2', ',2,5', '1', '角色管理', 'system/role/role.html', '1');
+INSERT INTO `menu` VALUES ('6', '4', ',2,4,6', '3', '添加部门', 'system/department/department-add.html\r\nsystem/department/department-add_select_department.html\r\nsystem/department/department-add_save.json', '1');
+INSERT INTO `menu` VALUES ('7', '4', ',2,4,7', '3', '修改部门', 'system/department/department-edit.html\r\nsystem/department/department-edit_select_department.html\r\nsystem/department/department-edit_save.json', '2');
+INSERT INTO `menu` VALUES ('8', '4', ',2,4,8', '3', '删除部门', 'system/department/department-delete.html', '3');
 
 -- ----------------------------
 -- Table structure for permission
@@ -111,29 +114,41 @@ CREATE TABLE `permission` (
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '角色id',
-  `name` varchar(64) NOT NULL COMMENT '名称',
-  `add_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `edit_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '编辑时间',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色';
+  `name` varchar(64) NOT NULL DEFAULT '' COMMENT '名称',
+  `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
+  `time_add` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
+  `time_edit` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='角色';
 
 -- ----------------------------
 -- Records of role
 -- ----------------------------
+INSERT INTO `role` VALUES ('1', '超级管理员', '全部权限', '1653557735', '1653644537');
+INSERT INTO `role` VALUES ('2', '普通管理员', '', '1653557917', '1653644600');
 
 -- ----------------------------
--- Table structure for role_permission
+-- Table structure for role_menu
 -- ----------------------------
-DROP TABLE IF EXISTS `role_permission`;
-CREATE TABLE `role_permission` (
+DROP TABLE IF EXISTS `role_menu`;
+CREATE TABLE `role_menu` (
   `role_id` int(10) unsigned NOT NULL COMMENT '角色id',
-  `permission_id` int(10) unsigned NOT NULL COMMENT '权限id'
+  `menu_id` int(10) unsigned NOT NULL COMMENT '权限id',
+  KEY `role_id` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色权限关联';
 
 -- ----------------------------
--- Records of role_permission
+-- Records of role_menu
 -- ----------------------------
+INSERT INTO `role_menu` VALUES ('1', '2');
+INSERT INTO `role_menu` VALUES ('1', '3');
+INSERT INTO `role_menu` VALUES ('1', '4');
+INSERT INTO `role_menu` VALUES ('1', '6');
+INSERT INTO `role_menu` VALUES ('1', '7');
+INSERT INTO `role_menu` VALUES ('1', '8');
+INSERT INTO `role_menu` VALUES ('1', '5');
+INSERT INTO `role_menu` VALUES ('2', '2');
+INSERT INTO `role_menu` VALUES ('2', '3');
 
 -- ----------------------------
 -- Table structure for user

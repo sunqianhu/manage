@@ -6,6 +6,7 @@ namespace app\controller\system\role;
 
 use \app\controller\BaseController;
 use \app\model\system\RoleModel;
+use \app\model\system\RoleMenuModel;
 use \app\model\system\MenuModel;
 use \app\service\FrameMainService;
 use \app\service\PaginationService;
@@ -39,7 +40,7 @@ class RoleController extends BaseController{
         if(isset($_GET['name']) && $_GET['name'] !== ''){
             $whereMarks[] = 'name = :name';
             $whereValues[':name'] = '%'.$_GET['name'].'%';
-            $search['name'] = SafeService::entity($_GET['name']);
+            $search['name'] = $_GET['name'];
         }
         if(!empty($whereMarks)){
             $where['mark'] = implode(' and ', $whereMarks);
@@ -47,7 +48,6 @@ class RoleController extends BaseController{
         if(!empty($whereMarks)){
             $where['value'] = $whereValues;
         }
-        
         $recordTotal = $roleModel->getOne('count(1)', $where);
         
         $paginationService = new PaginationService($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
@@ -58,7 +58,8 @@ class RoleController extends BaseController{
             $role['time_edit_name'] = date('Y-m-d H:i:s', $role['time_edit']);
         }
         
-        $roles = SafeService::entity($roles, array('id'));
+        $search = SafeService::frontDisplay($search);
+        $roles = SafeService::frontDisplay($roles, array('id'));
         
         // 显示
         $this->assign('frameMainMenu', $frameMainMenu);
@@ -75,11 +76,10 @@ class RoleController extends BaseController{
         $menuModel = new menuModel();
         $menus = array();
         $menu = ''; // 菜单json数据
-        $where = array(
-            'mark'=>'parent_id != 0'
-        );
         
-        $menus = $menuModel->getAll('id, name, parent_id', $where, 'order by parent_id asc, id asc');
+        $menus = $menuModel->getAll('id, name, parent_id', array(
+            'mark'=>'parent_id != 0'
+        ), 'order by parent_id asc, id asc');
         $menus = ZtreeService::setOpenByFirst($menus);
         $menu = json_encode($menus);
         
@@ -100,14 +100,22 @@ class RoleController extends BaseController{
         ); // 返回数据
         $validateService = new ValidateService();
         $roleModel = new RoleModel();
+        $roleMenuModel = new RoleMenuModel();
+        $roleId = 0; // 角色id
+        $menuIds = array();
         
         // 验证
         $validateService->rule = array(
-            'name' => 'require|max_length:64'
+            'name' => 'require|max_length:64',
+            'remark' => 'max_length:255',
+            'menu_ids' => 'require|number_string:,'
         );
         $validateService->message = array(
             'name.require' => '请输入角色名称',
             'name.max_length' => '角色名称不能大于64个字',
+            'remark.max_length' => '角色名称不能大于255个字',
+            'menu_ids.require' => '请选择菜单权限',
+            'menu_ids.number_string' => '菜单权限参数错误'
         );
         if(!$validateService->check($_POST)){
             $return['message'] = $validateService->getErrorMessage();
@@ -115,19 +123,36 @@ class RoleController extends BaseController{
             echo json_encode($return);
             exit;
         }
+        $menuIds = explode(',', $_POST['menu_ids']);
         
         // 入库
         $data = array(
             'name'=>$_POST['name'],
+            'remark'=>$_POST['remark'],
             'time_add'=>time(),
             'time_edit'=>time()
         );
         try{
-            $roleModel->insert($data);
+            $roleId = $roleModel->insert($data);
         }catch(Exception $e){
             $return['message'] = $e->getMessage();
             echo json_encode($return);
             exit;
+        }
+        
+        // 关联
+        $roleMenuModel->delete(array(
+            'mark'=>'role_id = :role_id',
+            'value'=>array(
+                ':role_id'=>$roleId
+            )
+        ));
+        foreach($menuIds as $menuId){
+            $data = array(
+                'role_id'=>$roleId,
+                'menu_id'=>$menuId
+            );
+            $roleMenuModel->insert($data);
         }
         
         $return['status'] = 'success';
@@ -141,7 +166,13 @@ class RoleController extends BaseController{
     function edit(){
         $validateService = new ValidateService();
         $roleModel = new RoleModel();
+        $roleMenuModel = new RoleMenuModel();
+        $menuModel = new menuModel();
         $role = array();
+        $roleMenus = array();
+        $roleMenuIds = array();
+        $menus = array();
+        $menu = ''; // 菜单json数据
         
         // 验证
         $validateService->rule = array(
@@ -156,15 +187,36 @@ class RoleController extends BaseController{
             exit;
         }
         
-        $role = $roleModel->getRow('id, name', array(
+        $role = $roleModel->getRow('id, name, remark', array(
             'mark'=>'id = :id',
             'value'=>array(
                 ':id'=>$_GET['id']
             )
         ));
-        $role = SafeService::entity($role, array('id'));
+        if(empty($role)){
+            header('location:../../error.html?message='.urlencode('id参数错误'));
+            exit;
+        }
+        
+        $roleMenus = $roleMenuModel->getAll('menu_id', array(
+            'mark'=>'role_id = :role_id',
+            'value'=>array(
+                ':role_id'=>$role['id']
+            )
+        ));
+        $roleMenuIds = array_column($roleMenus, 'menu_id');
+        $role['menu_ids'] = implode(',', $roleMenuIds);
+        $role = SafeService::frontDisplay($role, array('id'));
+        
+        $menus = $menuModel->getAll('id, name, parent_id', array(
+            'mark'=>'parent_id != 0'
+        ), 'order by parent_id asc, id asc');
+        $menus = ZtreeService::setOpenByFirst($menus);
+        $menus = ZtreeService::setChecked($menus, $roleMenuIds);
+        $menu = json_encode($menus);
         
         $this->assign('role', $role);
+        $this->assign('menu', $menu);
         $this->display('system/role/edit.php');
     }
     
@@ -181,19 +233,26 @@ class RoleController extends BaseController{
         ); // 返回数据
         $validateService = new ValidateService();
         $roleModel = new RoleModel();
+        $roleMenuModel = new RoleMenuModel();
         $role = array();
         $data = array();
+        $menuIds = array();
         
         // 验证
         $validateService->rule = array(
             'id' => 'require|number',
-            'name' => 'require|max_length:64'
+            'name' => 'require|max_length:64',
+            'remark' => 'max_length:255',
+            'menu_ids' => 'require|number_string:,'
         );
         $validateService->message = array(
             'id.require' => 'id参数错误',
             'id.number' => 'id必须是个数字',
             'name.require' => '请输入角色名称',
-            'name.max_length' => '角色名称不能大于64个字'
+            'name.max_length' => '角色名称不能大于64个字',
+            'remark.max_length' => '角色名称不能大于255个字',
+            'menu_ids.require' => '请选择菜单权限',
+            'menu_ids.number_string' => '菜单权限参数错误'
         );
         if(!$validateService->check($_POST)){
             $return['message'] = $validateService->getErrorMessage();
@@ -201,6 +260,7 @@ class RoleController extends BaseController{
             echo json_encode($return);
             exit;
         }
+        $menuIds = explode(',', $_POST['menu_ids']);
         
         // 本角色
         $role = $roleModel->getRow(
@@ -221,6 +281,7 @@ class RoleController extends BaseController{
         // 更新
         $data = array(
             'name'=>$_POST['name'],
+            'remark'=>$_POST['remark'],
             'time_edit'=>time()
         );
         try{
@@ -234,6 +295,21 @@ class RoleController extends BaseController{
             $return['message'] = $e->getMessage();
             echo json_encode($return);
             exit;
+        }
+        
+        // 关联
+        $roleMenuModel->delete(array(
+            'mark'=>'role_id = :role_id',
+            'value'=>array(
+                ':role_id'=>$role['id']
+            )
+        ));
+        foreach($menuIds as $menuId){
+            $data = array(
+                'role_id'=>$role['id'],
+                'menu_id'=>$menuId
+            );
+            $roleMenuModel->insert($data);
         }
         
         $return['status'] = 'success';
@@ -250,7 +326,9 @@ class RoleController extends BaseController{
             'message'=>''
         );
         $roleModel = new RoleModel();
+        $roleMenuModel = new RoleMenuModel();
         $validateService = new ValidateService();
+        $role = array();
         
         // 验证
         $validateService->rule = array(
@@ -266,12 +344,24 @@ class RoleController extends BaseController{
             exit;
         }
         
+        $role = $roleModel->getRow('id', array(
+            'mark'=>'id = :id',
+            'value'=>array(
+                ':id'=>$_GET['id']
+            )
+        ));
+        if(empty($role)){
+            $return['message'] = '角色没有找到';
+            echo json_encode($return);
+            exit;
+        }
+        
         try{
             $roleModel->delete(
                 array(
                     'mark'=>'id = :id',
                     'value'=> array(
-                        ':id'=>$_GET['id']
+                        ':id'=>$role['id']
                     )
                 )
             );
@@ -280,6 +370,15 @@ class RoleController extends BaseController{
             echo json_encode($return);
             exit;
         }
+        
+        $roleMenuModel->delete(
+            array(
+                'mark'=>'role_id = :role_id',
+                'value'=> array(
+                    ':role_id'=>$role['id']
+                )
+            )
+        );
         
         $return['status'] = 'success';
         $return['message'] = '删除成功';

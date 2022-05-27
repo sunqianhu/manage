@@ -7,12 +7,12 @@ namespace app\service;
 class SafeService{
     
     /**
-     * 实体化
-     * @param $datas 数据
-     * @param $excludeField 排除字段
-     * @return 实体化后的数据
+     * 前台显示
+     * @param array $datas 数据
+     * @param array $excludeField 排除字段
+     * @return string 处理后可以被前台显示的字符串
      */
-    static function entity($datas, $excludeFields = array()){
+    static function frontDisplay($datas, $excludeFields = array()){
         if(empty($datas)){
             return $datas;
         }
@@ -25,7 +25,7 @@ class SafeService{
                     }
                 }
 
-                $datas[$field] = self::entity($data, $excludeFields);
+                $datas[$field] = self::frontDisplay($data, $excludeFields);
             }
         }else{
             $datas = htmlspecialchars($datas);
