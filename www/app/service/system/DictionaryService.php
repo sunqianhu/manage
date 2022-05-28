@@ -108,7 +108,7 @@ class DictionaryService{
      * @param string $event 事件
      * @return string value
      */
-    static function getSelect($type, $name = '', $id = '', $selectKey = '', $event = ''){
+    static function getSelect($type, $name = '', $id = '', $selectKeys = array(), $event = ''){
         $node = '<select'; // 返回值
         $data = ''; // 字典数据
         $datas = array(); // 字典数据数组
@@ -131,7 +131,7 @@ class DictionaryService{
             if(!empty($datas)){
                 foreach($datas as $data){
                     $node .= '<option value="'.$data['key'].'"';
-                    if($selectKey == $data['key']){
+                    if(in_array($data['key'], $selectKeys)){
                         $node .= ' selected="selected"';
                     }
                     $node .= '>'.$data['value'].'</option>'."\r\n";
@@ -149,7 +149,7 @@ class DictionaryService{
      * @param string $type 类型
      * @return string value
      */
-    static function getSelectOption($type){
+    static function getSelectOption($type, $selectKeys = array()){
         $node = ''; // 节点
         $data = ''; // 字典数据
         $datas = array(); // 字典数据数组
@@ -166,7 +166,11 @@ class DictionaryService{
         }
         
         foreach($datas as $data){
-            $node .= '<option value="'.$data['key'].'">'.$data['value'].'</option>'."\r\n";
+            $node .= '<option value="'.$data['key'].'"';
+            if(in_array($data['key'], $selectKeys)){
+                $node .= ' selected="selected"';
+            }
+            $node .= '>'.$data['value'].'</option>'."\r\n";
         }
         
         return $node;

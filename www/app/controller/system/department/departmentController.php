@@ -249,6 +249,7 @@ class DepartmentController extends BaseController{
         $departmentParent = array(); // 上级部门
         $data = array();
         
+
         // 验证
         $validateService->rule = array(
             'id' => 'require|number',
@@ -382,6 +383,7 @@ class DepartmentController extends BaseController{
                     'mark'=>'id = :id',
                     'value'=> array(
                         ':id'=>$_GET['id']
+
                     )
                 )
             );

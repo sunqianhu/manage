@@ -75,7 +75,15 @@ class ValidateService{
                     
                     // 最大长度
                     case 'max_length':
-                        if(!$this->checkMax($value, $ruleValue)){
+                        if(!$this->checkMaxLength($value, $ruleValue)){
+                            $this->setError($field, $message);
+                            return false;
+                        }
+                    break;
+                    
+                    // 最小长度
+                    case 'min_length':
+                        if(!$this->checkMinLength($value, $ruleValue)){
                             $this->setError($field, $message);
                             return false;
                         }
@@ -92,6 +100,14 @@ class ValidateService{
                     // 数字字符串
                     case 'number_string':
                         if(!$this->checkNumberString($value, $ruleValue)){
+                            $this->setError($field, $message);
+                            return false;
+                        }
+                    break;
+                    
+                    // 数字数组
+                    case 'number_array':
+                        if(!$this->checkNumberArray($value)){
                             $this->setError($field, $message);
                             return false;
                         }
@@ -124,14 +140,28 @@ class ValidateService{
     }
     
     /**
-     * 检测最大数组长度
+     * 检测最大长度
+     * @param $value 值
+     * @param $max 最大长度
      * @return boolean 验证是否通过
      */
-    function checkMax($value, $max){
-        if(is_numeric($max)){
-            if(mb_strlen($value) > $max){
-                return false;
-            }
+    function checkMaxLength($value, $max){
+        if(mb_strlen($value) > $max){
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /**
+     * 检测最小长度
+     * @param $value 值
+     * @param $min 最小长度
+     * @return boolean 验证是否通过
+     */
+    function checkMinLength($value, $min){
+        if(mb_strlen($value) < $min){
+            return false;
         }
         
         return true;
@@ -155,6 +185,26 @@ class ValidateService{
      */
     function checkNumberString($value, $split){
         $datas = explode($split, $value);
+        
+        if(empty($datas)){
+            return false;
+        }
+        
+        foreach($datas as $data){
+            if(!is_numeric($data)){
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    /**
+     * 检测数字数组
+     * @return boolean 验证是否通过
+     */
+    function checkNumberArray($value){
+        $datas = $value;
         
         if(empty($datas)){
             return false;

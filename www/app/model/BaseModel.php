@@ -100,6 +100,23 @@ class BaseModel{
     }
     
     /**
+     * 删除根据id
+     * @access public
+     * @param int $id id
+     * @return boolean
+     * @throws Exception
+     */
+    function deleteById($id){
+        $where = array(
+            'mark'=>'id = :id',
+            'value'=>array(
+                ':id'=> $id
+            )
+        );
+        return $this->delete($where);
+    }
+    
+    /**
      * 更新
      * @access public
      * @param string $datas 更新的数据
@@ -160,6 +177,24 @@ class BaseModel{
     }
     
     /**
+     * 更新根据id
+     * @access public
+     * @param string $datas 更新的数据
+     * @param array $where 条件 mark value
+     * @return boolean
+     * @throws Exception
+     */
+    function updateById($datas, $id){
+        $where = array(
+            'mark'=>'id = :id',
+            'value'=>array(
+                ':id'=> $id
+            )
+        );
+        return $this->update($datas, $where);
+    }
+    
+    /**
      * 得到一个字段内容
      * @access public
      * @param string $field 字段
@@ -207,6 +242,24 @@ class BaseModel{
     }
     
     /**
+     * 得到一个字段内容根据id
+     * @access public
+     * @param string $field 字段
+     * @param array $where 条件 mark value
+     * @return string
+     * @throws Exception
+     */
+    function getOneById($field, $id){
+        $where = array(
+            'mark'=>'id = :id',
+            'value'=>array(
+                ':id'=> $id
+            )
+        );
+        return $this->getOne($field, $where);
+    }
+    
+    /**
      * 得到一条记录
      * @access public
      * @param string $field 字段
@@ -251,6 +304,23 @@ class BaseModel{
         $data = DbService::getRow($pdoStatement);
         
         return $data;
+    }
+    
+    /**
+     * 得到一条记录根据id
+     * @access public
+     * @param string $field 字段
+     * @param array $where 条件 mark value
+     * @return array
+     */
+    function getRowById($field, $id){
+        $where = array(
+            'mark'=>'id = :id',
+            'value'=>array(
+                ':id'=> $id
+            )
+        );
+        return $this->getRow($field, $where);
     }
     
     /**
