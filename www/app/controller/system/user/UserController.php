@@ -139,7 +139,7 @@ class UserController extends BaseController{
             'password' => 'require|min_length:8',
             'name' => 'require|max_length:32',
             'phone' => 'require|number|min_length:11|max_length:11',
-            'department_id' => 'require|number',
+            'department_id' => 'require:^0|number',
             'role_ids' => 'require|number_array'
         );
         $validateService->message = array(

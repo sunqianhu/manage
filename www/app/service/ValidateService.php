@@ -33,21 +33,18 @@ class ValidateService{
         $message = ''; // 描述
         
         // 验证
-        if(empty($datas)){
-            return true;
-        }
         if(empty($this->rule)){
             return true;
         }
         
         // 检测
-        foreach($datas as $field => $value){
-            if(empty($this->rule[$field])){
-                continue;
+        foreach($this->rule as $field => $ruleString){
+            $value = '';
+            if(isset($datas[$field])){
+                $value = $datas[$field];
             }
             
-            $rule = $this->rule[$field];
-            $rules = explode('|', $rule);
+            $rules = explode('|', $ruleString);
             if(empty($rules)){
                 continue;
             }
@@ -67,7 +64,7 @@ class ValidateService{
                 switch($ruleName){
                     // 必填
                     case 'require':
-                        if(!$this->checkRequire($value)){
+                        if(!$this->checkRequire($value, $ruleValue)){
                             $this->setError($field, $message);
                             return false;
                         }
@@ -131,8 +128,21 @@ class ValidateService{
      * 检测必填
      * @return boolean 验证是否通过
      */
-    function checkRequire($value){
+    function checkRequire($value, $rule = ''){
+        // 字符串
         if($value === ''){
+            return false;
+        }
+        
+        // 数组
+        if(is_array($value)){
+            if(empty($value)){
+                return false;
+            }
+        }
+        
+        // 排除
+        if($rule == '^0' && strval($value) === '0'){
             return false;
         }
 
