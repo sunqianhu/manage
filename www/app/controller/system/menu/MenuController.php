@@ -51,7 +51,7 @@ class MenuController extends BaseController{
         $where['value'] = $whereValues;
         
         // 数据
-        $menus = $menuModel->getAll('id, parent_id, name, `sort`', $where, 'order by `sort` asc, id asc');
+        $menus = $menuModel->select('id, parent_id, name, `sort`', $where, 'order by `sort` asc, id asc');
         $menus = TreeService::getDataTree($menus, 'child', 'id', 'parent_id');
         $menus = TreeService::addLevel($menus, 1);
         $menus = SafeService::frontDisplay($menus, array('id', 'parent_id'));
@@ -82,7 +82,7 @@ class MenuController extends BaseController{
         $menus = array();
         $menu = ''; // 菜单json数据
         
-        $menus = $menuModel->getAll('id, name, parent_id', array(), 'order by parent_id asc, id asc');
+        $menus = $menuModel->select('id, name, parent_id', array(), 'order by parent_id asc, id asc');
         $menus = ZtreeService::setOpenByFirst($menus);
         $menu = json_encode($menus);
         
@@ -131,7 +131,7 @@ class MenuController extends BaseController{
         }
         
         // 上级菜单
-        $menuParent = $menuModel->getRow(
+        $menuParent = $menuModel->selectRow(
             'parent_ids',
             array(
                 'mark'=> 'id = :id',
@@ -194,13 +194,13 @@ class MenuController extends BaseController{
             exit;
         }
         
-        $menu = $menuModel->getRow('id, parent_id, type, name, url, `sort`', array(
+        $menu = $menuModel->selectRow('id, parent_id, type, name, url, `sort`', array(
             'mark'=>'id = :id',
             'value'=>array(
                 ':id'=>$_GET['id']
             )
         ));
-        $menu['parent_name'] = $menuModel->getOne('name', array(
+        $menu['parent_name'] = $menuModel->selectOne('name', array(
             'mark'=>'id = :id',
             'value'=>array(
                 ':id'=> $menu['parent_id']
@@ -223,7 +223,7 @@ class MenuController extends BaseController{
         $menus = array(); // 菜单数据
         $menu = ''; // 菜单json数据
         
-        $menus = $menuModel->getAll('id, name, parent_id', array(), 'order by parent_id asc, id asc');
+        $menus = $menuModel->select('id, name, parent_id', array(), 'order by parent_id asc, id asc');
         $menus = ZtreeService::setOpenByFirst($menus);
         $menu = json_encode($menus);
         
@@ -274,7 +274,7 @@ class MenuController extends BaseController{
         }
         
         // 本菜单
-        $menuCurrent = $menuModel->getRow(
+        $menuCurrent = $menuModel->selectRow(
             'id, parent_id',
             array(
                 'mark'=> 'id = :id',
@@ -290,7 +290,7 @@ class MenuController extends BaseController{
         }
         
         // 上级菜单
-        $menuParent = $menuModel->getRow(
+        $menuParent = $menuModel->selectRow(
             'parent_ids',
             array(
                 'mark'=> 'id = :id',
@@ -358,7 +358,7 @@ class MenuController extends BaseController{
             exit;
         }
         
-        $menuChild = $menuModel->getRow(
+        $menuChild = $menuModel->selectRow(
             'id',
             array(
                 'mark'=>'parent_id = :id',

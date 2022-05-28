@@ -52,14 +52,18 @@ class UserController extends BaseController{
             $where['value'] = $whereValues;
         }
         
-        $recordTotal = $userModel->getOne('count(1)', $where);
+        $recordTotal = $userModel->selectOne('count(1)', $where);
         
         $paginationService = new PaginationService($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
         $paginationNodeIntact = $paginationService->getNodeIntact();
         
-        $users = $userModel->getAll('id, username, `name`, `time_login`, time_edit, department_id, phone, status', $where, 'order by id asc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
-        foreach($users as &$user){
-            $user['department_name'] = $departmentModel->getOneById('name', $user['department_id']);
+        $users = $userModel->select('id, username, `name`, `time_login`, time_edit, phone, status, department_id', $where, 'order by id asc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
+        foreach($users as $key => $user){
+            print_r($users[$key]);
+            $user['department_name'] = $departmentModel->selectOne('name', array(
+                'mark'=>'id = :id',
+                'value'=>array(':id', $user['department_id'])
+            ));
             $user['status_name'] = DictionaryService::getValue('system_user_status', $user['status']);
             $user['status_style_class'] = $user['status'] == 2 ? 'sun_badge sun_badge_orange': 'sun_badge';
             $user['time_edit_name'] = $user['time_edit'] ? date('Y-m-d H:i:s', $user['time_edit']) : '-';
@@ -93,7 +97,7 @@ class UserController extends BaseController{
         $departments = array();
         $department = ''; // 部门json数据
         
-        $departments = $departmentModel->getAll('id, name, parent_id', array(), 'order by parent_id asc, id asc');
+        $departments = $departmentModel->select('id, name, parent_id', array(), 'order by parent_id asc, id asc');
         $departments = ZtreeService::setOpenByFirst($departments);
         $department = json_encode($departments);
         
@@ -109,7 +113,7 @@ class UserController extends BaseController{
         $departments = array();
         $department = ''; // 部门json数据
         
-        $departments = $departmentModel->getAll('id, name, parent_id', array(), 'order by parent_id asc, id asc');
+        $departments = $departmentModel->select('id, name, parent_id', array(), 'order by parent_id asc, id asc');
         $departments = ZtreeService::setOpenByFirst($departments);
         $department = json_encode($departments);
         
@@ -173,7 +177,7 @@ class UserController extends BaseController{
         
         $_POST['role_id_string'] = implode(',', $_POST['role_ids']);
         
-        $user = $userModel->getRow('id', array(
+        $user = $userModel->selectRow('id', array(
             'mark'=>'username = :username',
             'value'=>array(
                 ':username'=>$_POST['username']
@@ -236,7 +240,7 @@ class UserController extends BaseController{
             exit;
         }
         
-        $user = $userModel->getRow('id, username, `name`, `phone`, `status`, department_id, role_id_string', array(
+        $user = $userModel->selectRow('id, username, `name`, `phone`, `status`, department_id, role_id_string', array(
             'mark'=>'id = :id',
             'value'=>array(
                 ':id'=>$_GET['id']
@@ -248,11 +252,14 @@ class UserController extends BaseController{
         }
         
         $user['role_ids'] = explode(',', $user['role_id_string']);
-        $user['department_name'] = $departmentModel->getOneById('name', $user['department_id']);
+        $user['department_name'] = $departmentModel->selectOne('name', array(
+            'mark'=>'id = :id',
+            'value'=>array(':id', $user['department_id'])
+        ));
         $user = SafeService::frontDisplay($user, array('id'));
         $nodeStatus = DictionaryService::getRadio('system_user_status', 'status', $user['status']);
         
-        $roles = $roleModel->getAll('id, name', array());
+        $roles = $roleModel->select('id, name', array());
         $nodeRole = ArrayService::getSelectOption($roles, $user['role_ids'], 'id', 'name');
         
         $this->assign('user', $user);
@@ -373,7 +380,7 @@ class UserController extends BaseController{
         }
         
         // 本用户
-        $user = $userModel->getRow(
+        $user = $userModel->selectRow(
             'id',
             array(
                 'mark'=> 'id = :id',

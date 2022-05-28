@@ -47,12 +47,12 @@ class DictionaryController extends BaseController{
             $where['value'] = $whereValues;
         }
         
-        $recordTotal = $dictionaryModel->getOne('count(1)', $where);
+        $recordTotal = $dictionaryModel->selectOne('count(1)', $where);
         
         $paginationService = new PaginationService($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
         $paginationNodeIntact = $paginationService->getNodeIntact();
         
-        $dictionarys = $dictionaryModel->getAll('id, type, `key`, `value`, `sort`', $where, 'order by type asc, `sort` asc, id asc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
+        $dictionarys = $dictionaryModel->select('id, type, `key`, `value`, `sort`', $where, 'order by type asc, `sort` asc, id asc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
         
         $dictionarys = SafeService::frontDisplay($dictionarys, array('id'));
         
@@ -150,7 +150,7 @@ class DictionaryController extends BaseController{
             exit;
         }
         
-        $dictionary = $dictionaryModel->getRow('id, type, `key`, `value`, `sort`', array(
+        $dictionary = $dictionaryModel->selectRow('id, type, `key`, `value`, `sort`', array(
             'mark'=>'id = :id',
             'value'=>array(
                 ':id'=>$_GET['id']
@@ -206,7 +206,7 @@ class DictionaryController extends BaseController{
         }
         
         // 本字典
-        $dictionary = $dictionaryModel->getRow(
+        $dictionary = $dictionaryModel->selectRow(
             'id',
             array(
                 'mark'=> 'id = :id',

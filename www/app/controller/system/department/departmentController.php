@@ -57,7 +57,7 @@ class DepartmentController extends BaseController{
         $where['value'] = $whereValues;
         
         // 数据
-        $departments = $departmentModel->getAll('id, parent_id, name, `sort`, remark', $where, 'order by `sort` asc, id asc');
+        $departments = $departmentModel->select('id, parent_id, name, `sort`, remark', $where, 'order by `sort` asc, id asc');
         $departments = TreeService::getDataTree($departments, 'child', 'id', 'parent_id');
         $departments = TreeService::addLevel($departments, 1);
         $departments = SafeService::frontDisplay($departments, array('id', 'parent_id'));
@@ -85,7 +85,7 @@ class DepartmentController extends BaseController{
         $departments = array();
         $department = ''; // 部门json数据
         
-        $departments = $departmentModel->getAll('id, name, parent_id', array(), 'order by parent_id asc, id asc');
+        $departments = $departmentModel->select('id, name, parent_id', array(), 'order by parent_id asc, id asc');
         $departments = ZtreeService::setOpenByFirst($departments);
         $department = json_encode($departments);
         
@@ -132,7 +132,7 @@ class DepartmentController extends BaseController{
         }
         
         // 上级部门
-        $departmentParent = $departmentModel->getRow(
+        $departmentParent = $departmentModel->selectRow(
             'parent_ids',
             array(
                 'mark'=> 'id = :id',
@@ -198,13 +198,13 @@ class DepartmentController extends BaseController{
             exit;
         }
         
-        $department = $departmentModel->getRow('id, parent_id, name, `sort`, remark', array(
+        $department = $departmentModel->selectRow('id, parent_id, name, `sort`, remark', array(
             'mark'=>'id = :id',
             'value'=>array(
                 ':id'=>$_GET['id']
             )
         ));
-        $department['parent_name'] = $departmentModel->getOne('name', array(
+        $department['parent_name'] = $departmentModel->selectOne('name', array(
             'mark'=>'id = :id',
             'value'=>array(
                 ':id'=> $department['parent_id']
@@ -224,7 +224,7 @@ class DepartmentController extends BaseController{
         $departments = array();
         $department = ''; // 部门json数据
         
-        $departments = $departmentModel->getAll('id, name, parent_id', array(), 'order by parent_id asc, id asc');
+        $departments = $departmentModel->select('id, name, parent_id', array(), 'order by parent_id asc, id asc');
         $departments = ZtreeService::setOpenByFirst($departments);
         $department = json_encode($departments);
         
@@ -279,7 +279,7 @@ class DepartmentController extends BaseController{
         }
         
         // 本部门
-        $departmentCurrent = $departmentModel->getRow(
+        $departmentCurrent = $departmentModel->selectRow(
             'id, parent_id',
             array(
                 'mark'=> 'id = :id',
@@ -295,7 +295,7 @@ class DepartmentController extends BaseController{
         }
         
         // 上级部门
-        $departmentParent = $departmentModel->getRow(
+        $departmentParent = $departmentModel->selectRow(
             'parent_ids',
             array(
                 'mark'=> 'id = :id',
@@ -362,7 +362,7 @@ class DepartmentController extends BaseController{
             exit;
         }
         
-        $departmentChild = $departmentModel->getRow(
+        $departmentChild = $departmentModel->selectRow(
             'id',
             array(
                 'mark'=>'parent_id = :id',

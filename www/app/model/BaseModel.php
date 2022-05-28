@@ -100,23 +100,6 @@ class BaseModel{
     }
     
     /**
-     * 删除根据id
-     * @access public
-     * @param int $id id
-     * @return boolean
-     * @throws Exception
-     */
-    function deleteById($id){
-        $where = array(
-            'mark'=>'id = :id',
-            'value'=>array(
-                ':id'=> $id
-            )
-        );
-        return $this->delete($where);
-    }
-    
-    /**
      * 更新
      * @access public
      * @param string $datas 更新的数据
@@ -177,50 +160,41 @@ class BaseModel{
     }
     
     /**
-     * 更新根据id
-     * @access public
-     * @param string $datas 更新的数据
-     * @param array $where 条件 mark value
-     * @return boolean
-     * @throws Exception
-     */
-    function updateById($datas, $id){
-        $where = array(
-            'mark'=>'id = :id',
-            'value'=>array(
-                ':id'=> $id
-            )
-        );
-        return $this->update($datas, $where);
-    }
-    
-    /**
-     * 得到一个字段内容
+     * 得到查询条件的全部数据
      * @access public
      * @param string $field 字段
      * @param array $where 条件 mark value
-     * @return string
+     * @param string $order 排序
+     * @param string $limit 限制
+     * @return array
      * @throws Exception
      */
-    function getOne($field, $where = array()){
+    function select($field, $where = array(), $order = '', $limit = ''){
         $sql = '';
         $pdo = null;
         $pdoStatement = null;
         $whereValueMark = ''; // 条件值的标识
         $whereValueValue = ''; // 条件值的值
         $message = ''; // 错误描述
-        $content = ''; // 查询到的数据
+        $datas = array(); // 查询到的数据
         
         if(!isset($this->tableName) || $this->tableName == ''){
-            return $content;
+            return $datas;
         }
+        
         $pdo = DbService::getInstance();
         
-        $sql = "select ".$field." from `".$this->tableName."`";
+        $sql = "select $field from `".$this->tableName."`";
         if(!empty($where['mark'])){
             $sql .= ' where '.$where['mark'];
         }
-        $sql .= ' limit 0,1';
+        if($order != ''){
+            $sql .= ' '.$order;
+        }
+        if($limit != ''){
+            $sql .= ' '.$limit;
+        }
+        
         $pdoStatement = $pdo->prepare($sql);
         if(!empty($where['value'])){
             foreach($where['value'] as $whereValueMark => $whereValueValue){
@@ -236,27 +210,12 @@ class BaseModel{
             throw new \Exception($message);
         }
         
-        $content = DbService::getOne($pdoStatement);
+        $datas = $pdoStatement->fetch(\PDO::FETCH_ASSOC);
+        if(empty($datas)){
+            return array();
+        }
         
-        return $content;
-    }
-    
-    /**
-     * 得到一个字段内容根据id
-     * @access public
-     * @param string $field 字段
-     * @param array $where 条件 mark value
-     * @return string
-     * @throws Exception
-     */
-    function getOneById($field, $id){
-        $where = array(
-            'mark'=>'id = :id',
-            'value'=>array(
-                ':id'=> $id
-            )
-        );
-        return $this->getOne($field, $where);
+        return $datas;
     }
     
     /**
@@ -266,7 +225,7 @@ class BaseModel{
      * @param array $where 条件 mark value
      * @return array
      */
-    function getRow($field, $where = array()){
+    function selectRow($field, $where = array()){
         $sql = '';
         $pdo = null;
         $pdoStatement = null;
@@ -301,63 +260,41 @@ class BaseModel{
             throw new \Exception($message);
         }
         
-        $data = DbService::getRow($pdoStatement);
+        $data = $pdoStatement->fetch(\PDO::FETCH_ASSOC);
+        if(empty($data)){
+            return array();
+        }
         
         return $data;
     }
     
     /**
-     * 得到一条记录根据id
+     * 得到一个字段内容
      * @access public
      * @param string $field 字段
      * @param array $where 条件 mark value
-     * @return array
-     */
-    function getRowById($field, $id){
-        $where = array(
-            'mark'=>'id = :id',
-            'value'=>array(
-                ':id'=> $id
-            )
-        );
-        return $this->getRow($field, $where);
-    }
-    
-    /**
-     * 得到查询条件的全部数据
-     * @access public
-     * @param string $field 字段
-     * @param array $where 条件 mark value
-     * @param string $order 排序
-     * @param string $limit 限制
-     * @return array
+     * @return string
      * @throws Exception
      */
-    function getAll($field, $where = array(), $order = '', $limit = ''){
+    function selectOne($field, $where = array()){
         $sql = '';
         $pdo = null;
         $pdoStatement = null;
         $whereValueMark = ''; // 条件值的标识
         $whereValueValue = ''; // 条件值的值
         $message = ''; // 错误描述
-        $datas = array(); // 查询到的数据
+        $content = ''; // 查询到的数据
         
         if(!isset($this->tableName) || $this->tableName == ''){
-            return $datas;
+            return $content;
         }
         $pdo = DbService::getInstance();
         
-        $sql = "select $field from `".$this->tableName."`";
+        $sql = "select ".$field." from `".$this->tableName."`";
         if(!empty($where['mark'])){
             $sql .= ' where '.$where['mark'];
         }
-        if($order != ''){
-            $sql .= ' '.$order;
-        }
-        if($limit != ''){
-            $sql .= ' '.$limit;
-        }
-        
+        $sql .= ' limit 0,1';
         $pdoStatement = $pdo->prepare($sql);
         if(!empty($where['value'])){
             foreach($where['value'] as $whereValueMark => $whereValueValue){
@@ -369,12 +306,15 @@ class BaseModel{
             }
         }
         if(!$pdoStatement->execute()){
+            echo $sql;
+        exit;
             $message = DbService::getStatementError($pdoStatement);
             throw new \Exception($message);
         }
         
-        $datas = DbService::getAll($pdoStatement);
+        $content = $pdoStatement->fetchColumn();
         
-        return $datas;
+        return $content;
     }
+    
 }

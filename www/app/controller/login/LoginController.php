@@ -81,7 +81,7 @@ class LoginController extends BaseController{
         
         $userModel = new UserModel();
         try{
-            $user = $userModel->getRow(
+            $user = $userModel->selectRow(
                 'id, username, name', 
                 array(
                     'mark'=>'username = :username and password = :password',

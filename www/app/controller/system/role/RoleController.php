@@ -48,12 +48,12 @@ class RoleController extends BaseController{
         if(!empty($whereMarks)){
             $where['value'] = $whereValues;
         }
-        $recordTotal = $roleModel->getOne('count(1)', $where);
+        $recordTotal = $roleModel->selectOne('count(1)', $where);
         
         $paginationService = new PaginationService($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
         $paginationNodeIntact = $paginationService->getNodeIntact();
         
-        $roles = $roleModel->getAll('id, name, time_edit', $where, 'order by id desc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
+        $roles = $roleModel->select('id, name, time_edit', $where, 'order by id desc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
         foreach($roles as &$role){
             $role['time_edit_name'] = date('Y-m-d H:i:s', $role['time_edit']);
         }
@@ -77,7 +77,7 @@ class RoleController extends BaseController{
         $menus = array();
         $menu = ''; // 菜单json数据
         
-        $menus = $menuModel->getAll('id, name, parent_id', array(
+        $menus = $menuModel->select('id, name, parent_id', array(
             'mark'=>'parent_id != 0'
         ), 'order by parent_id asc, id asc');
         $menus = ZtreeService::setOpenByFirst($menus);
@@ -187,7 +187,7 @@ class RoleController extends BaseController{
             exit;
         }
         
-        $role = $roleModel->getRow('id, name, remark', array(
+        $role = $roleModel->selectRow('id, name, remark', array(
             'mark'=>'id = :id',
             'value'=>array(
                 ':id'=>$_GET['id']
@@ -198,7 +198,7 @@ class RoleController extends BaseController{
             exit;
         }
         
-        $roleMenus = $roleMenuModel->getAll('menu_id', array(
+        $roleMenus = $roleMenuModel->select('menu_id', array(
             'mark'=>'role_id = :role_id',
             'value'=>array(
                 ':role_id'=>$role['id']
@@ -208,7 +208,7 @@ class RoleController extends BaseController{
         $role['menu_ids'] = implode(',', $roleMenuIds);
         $role = SafeService::frontDisplay($role, array('id'));
         
-        $menus = $menuModel->getAll('id, name, parent_id', array(
+        $menus = $menuModel->select('id, name, parent_id', array(
             'mark'=>'parent_id != 0'
         ), 'order by parent_id asc, id asc');
         $menus = ZtreeService::setOpenByFirst($menus);
@@ -263,7 +263,7 @@ class RoleController extends BaseController{
         $menuIds = explode(',', $_POST['menu_ids']);
         
         // 本角色
-        $role = $roleModel->getRow(
+        $role = $roleModel->selectRow(
             'id',
             array(
                 'mark'=> 'id = :id',
@@ -344,7 +344,7 @@ class RoleController extends BaseController{
             exit;
         }
         
-        $role = $roleModel->getRow('id', array(
+        $role = $roleModel->selectRow('id', array(
             'mark'=>'id = :id',
             'value'=>array(
                 ':id'=>$_GET['id']
