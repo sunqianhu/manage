@@ -4,10 +4,54 @@
  */
 namespace app\model;
 
-use \app\service\DbService;
+use \app\Config;
 
 class BaseModel{
-
+    static public $pdoOnly = null; // 单例
+    public $pdo = null;
+    
+    /**
+     * 构造函数
+     */
+    function __construct(){
+        $this->getPdoInstance();
+    }
+    
+    /**
+     * 构造函数
+     */
+    function getPdoInstance(){
+        $dsn = '';    
+        $config = array();
+        
+        if(self::$pdoOnly != null){
+            $this->pdo = self::$pdoOnly;
+            return;
+        }
+    
+        $config = Config::get('db');
+        if(
+            empty($config) || 
+            empty($config['type']) ||
+            empty($config['host']) ||
+            empty($config['port']) ||
+            empty($config['database']) ||
+            empty($config['charset']) ||
+            empty($config['username']) ||
+            empty($config['password'])
+        ){
+            throw new \Exception('数据库配置错误');
+        }
+        
+        $dsn = $config['type'].
+        ':host='.$config['host'].
+        ';port='.$config['port'].
+        ';dbname='.$config['database'].
+        ';charset='.$config['charset'];
+        self::$pdoOnly = new \PDO($dsn, $config['username'], $config['password']);
+        $this->pdo = self::$pdoOnly;
+    }
+    
     /**
      * 插入
      * @access public
@@ -17,7 +61,6 @@ class BaseModel{
      */
     function insert($data){
         $sql = ''; // sql语句
-        $pdo = null; // pdo对象
         $pdoStatement = null;
         $field = ''; // 字段
         $value = ''; // 值
@@ -33,14 +76,13 @@ class BaseModel{
             return 0;
         }
         
-        $pdo = DbService::getInstance();
         foreach($data as $field => $value){
             $sqlFields[$field] = '`'.$field.'`';
             $sqlMarks[$field] = ':'.$field;
         }
         
         $sql = "insert into `".$this->tableName."`(".implode(',', $sqlFields).") values(".implode(',', $sqlMarks).")";
-        $pdoStatement = $pdo->prepare($sql);
+        $pdoStatement = $this->pdo->prepare($sql);
         foreach($sqlMarks as $filed => $fieldMark){
             if(is_array($data[$filed]) && count($data[$filed]) > 1){
                 $pdoStatement->bindValue($fieldMark, $data[$filed][0], $data[$filed][1]);
@@ -49,11 +91,11 @@ class BaseModel{
             }
         }
         if(!$pdoStatement->execute()){
-            $message = DbService::getStatementError($pdoStatement);
+            $message = $this->getStatementError($pdoStatement);
             throw new \Exception($message);
         }
         
-        return $pdo->lastInsertId();
+        return $this->pdo->lastInsertId();
     }
     
     /**
@@ -65,7 +107,6 @@ class BaseModel{
      */
     function delete($where = array()){
         $sql = ''; // sql语句
-        $pdo = null; // pdo对象
         $pdoStatement = null;
         $whereValueMark = ''; // 条件值的标识
         $whereValueValue = ''; // 条件值的值
@@ -74,14 +115,12 @@ class BaseModel{
         if(!isset($this->tableName) || $this->tableName == ''){
             return false;
         }
-        $pdo = DbService::getInstance();
-        
         $sql = "delete from `".$this->tableName."`";
         if(!empty($where['mark'])){
             $sql .= ' where '.$where['mark'];
         }
         
-        $pdoStatement = $pdo->prepare($sql);
+        $pdoStatement = $this->pdo->prepare($sql);
         if(!empty($where['value'])){
             foreach($where['value'] as $whereValueMark => $whereValueValue){
                 if(is_array($whereValueValue) && count($whereValueValue) > 1){
@@ -92,7 +131,7 @@ class BaseModel{
             }
         }
         if(!$pdoStatement->execute()){
-            $message = DbService::getStatementError($pdoStatement);
+            $message = $this->getStatementError($pdoStatement);
             throw new \Exception($message);
         }
         
@@ -123,8 +162,6 @@ class BaseModel{
         if(empty($datas)){
             return false;
         }
-        $pdo = DbService::getInstance();
-        
         $sql = "update `".$this->tableName."` set ";
         foreach($datas as $dataField => $dataValue){
             $sqlFields[] = "`".$dataField."` = :".$dataField."";
@@ -134,7 +171,7 @@ class BaseModel{
             $sql .= ' where '.$where['mark'];
         }
         
-        $pdoStatement = $pdo->prepare($sql);
+        $pdoStatement = $this->pdo->prepare($sql);
         foreach($datas as $dataField => $dataValue){
             if(is_array($dataValue) && count($dataValue) > 1){
                 $pdoStatement->bindValue(':'.$dataField, $dataValue[0], $dataValue[1]);
@@ -152,7 +189,7 @@ class BaseModel{
             }
         }
         if(!$pdoStatement->execute()){
-            $message = DbService::getStatementError($pdoStatement);
+            $message = $this->getStatementError($pdoStatement);
             throw new \Exception($message);
         }
         
@@ -182,8 +219,6 @@ class BaseModel{
             return $datas;
         }
         
-        $pdo = DbService::getInstance();
-        
         $sql = "select $field from `".$this->tableName."`";
         if(!empty($where['mark'])){
             $sql .= ' where '.$where['mark'];
@@ -195,7 +230,7 @@ class BaseModel{
             $sql .= ' '.$limit;
         }
         
-        $pdoStatement = $pdo->prepare($sql);
+        $pdoStatement = $this->pdo->prepare($sql);
         if(!empty($where['value'])){
             foreach($where['value'] as $whereValueMark => $whereValueValue){
                 if(is_array($whereValueValue) && count($whereValueValue) > 1){
@@ -206,11 +241,11 @@ class BaseModel{
             }
         }
         if(!$pdoStatement->execute()){
-            $message = DbService::getStatementError($pdoStatement);
+            $message = $this->getStatementError($pdoStatement);
             throw new \Exception($message);
         }
         
-        $datas = $pdoStatement->fetch(\PDO::FETCH_ASSOC);
+        $datas = $pdoStatement->fetchAll(\PDO::FETCH_ASSOC);
         if(empty($datas)){
             return array();
         }
@@ -237,15 +272,13 @@ class BaseModel{
         if(!isset($this->tableName) || $this->tableName == ''){
             return $data;
         }
-        $pdo = DbService::getInstance();
-        
         $sql = "select $field from `".$this->tableName."`";
         if(!empty($where['mark'])){
             $sql .= ' where '.$where['mark'];
         }
         $sql .= ' limit 0,1';
         
-        $pdoStatement = $pdo->prepare($sql);
+        $pdoStatement = $this->pdo->prepare($sql);
         if(!empty($where['value'])){
             foreach($where['value'] as $whereValueMark => $whereValueValue){
                 if(is_array($whereValueValue) && count($whereValueValue) > 1){
@@ -256,7 +289,7 @@ class BaseModel{
             }
         }
         if(!$pdoStatement->execute()){
-            $message = DbService::getStatementError($pdoStatement);
+            $message = $this->getStatementError($pdoStatement);
             throw new \Exception($message);
         }
         
@@ -288,14 +321,12 @@ class BaseModel{
         if(!isset($this->tableName) || $this->tableName == ''){
             return $content;
         }
-        $pdo = DbService::getInstance();
-        
         $sql = "select ".$field." from `".$this->tableName."`";
         if(!empty($where['mark'])){
             $sql .= ' where '.$where['mark'];
         }
         $sql .= ' limit 0,1';
-        $pdoStatement = $pdo->prepare($sql);
+        $pdoStatement = $this->pdo->prepare($sql);
         if(!empty($where['value'])){
             foreach($where['value'] as $whereValueMark => $whereValueValue){
                 if(is_array($whereValueValue) && count($whereValueValue) > 1){
@@ -306,9 +337,7 @@ class BaseModel{
             }
         }
         if(!$pdoStatement->execute()){
-            echo $sql;
-        exit;
-            $message = DbService::getStatementError($pdoStatement);
+            $message = $this->getStatementError($pdoStatement);
             throw new \Exception($message);
         }
         
@@ -317,4 +346,54 @@ class BaseModel{
         return $content;
     }
     
+    /**
+     * 得到pdo错误描述
+     * @param PDO $pdo pdo对象
+     * @return string 错误描述
+     */
+    static function getPdoError($pdo){
+        $errors = array();
+        $error = '';
+
+        $errors = $this->pdo->errorInfo();
+        if(!empty($errors[0])){
+            $error .= 'SQLSTATE['.$errors[0].']';
+        }
+        if(!empty($errors[1])){
+            $error .= '，错误码：'.$errors[1];
+        }
+        if(!empty($errors[2])){
+            $error .= '，错误信息：'.$errors[2];
+        }
+
+        return $error;
+    }
+    
+    /**
+     * 得到预处理结果对象错误描述
+     * @param PDOStatement $pdoStatement 结果集对象
+     * @return string 错误描述
+     */
+    static function getStatementError($pdoStatement){
+        $errors = array();
+        $error = '';
+
+        if(!$pdoStatement){
+            $error = 'pdostatement对象为false';
+            return $error;
+        }
+
+        $errors = $pdoStatement->errorInfo();
+        if(!empty($errors[0])){
+            $error .= 'SQLSTATE['.$errors[0].']';
+        }
+        if(!empty($errors[1])){
+            $error .= '，错误码：'.$errors[1];
+        }
+        if(!empty($errors[2])){
+            $error .= '，错误信息：'.$errors[2];
+        }
+
+        return $error;
+    }
 }

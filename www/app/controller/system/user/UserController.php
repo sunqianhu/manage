@@ -58,11 +58,12 @@ class UserController extends BaseController{
         $paginationNodeIntact = $paginationService->getNodeIntact();
         
         $users = $userModel->select('id, username, `name`, `time_login`, time_edit, phone, status, department_id', $where, 'order by id asc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
-        foreach($users as $key => $user){
-            print_r($users[$key]);
+        foreach($users as &$user){
             $user['department_name'] = $departmentModel->selectOne('name', array(
                 'mark'=>'id = :id',
-                'value'=>array(':id', $user['department_id'])
+                'value'=>array(
+                    ':id'=>$user['department_id']
+                )
             ));
             $user['status_name'] = DictionaryService::getValue('system_user_status', $user['status']);
             $user['status_style_class'] = $user['status'] == 2 ? 'sun_badge sun_badge_orange': 'sun_badge';
@@ -254,7 +255,9 @@ class UserController extends BaseController{
         $user['role_ids'] = explode(',', $user['role_id_string']);
         $user['department_name'] = $departmentModel->selectOne('name', array(
             'mark'=>'id = :id',
-            'value'=>array(':id', $user['department_id'])
+            'value'=>array(
+                ':id'=>$user['department_id']
+            )
         ));
         $user = SafeService::frontDisplay($user, array('id'));
         $nodeStatus = DictionaryService::getRadio('system_user_status', 'status', $user['status']);
@@ -316,7 +319,12 @@ class UserController extends BaseController{
         $_POST['role_id_string'] = implode(',', $_POST['role_ids']);
         
         // 本用户
-        $user = $userModel->getRowById('id', $_POST['id']);
+        $user = $userModel->selectRow('id', array(
+            'mark'=>'id = :id',
+            'value'=>array(
+                ':id'=>$_POST['id']
+            )
+        ));
         if(empty($user)){
             $return['message'] = '用户没有找到';
             echo json_encode($return);
