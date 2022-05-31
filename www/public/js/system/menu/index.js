@@ -110,13 +110,5 @@ index.treeTableChildClose = function(id){
     });
 }
 
-/**
- * 提示框
- */
-index.bootstrapTooltip = function(){
-    $('[data-toggle="tooltip"]').tooltip();
-}
-
 $(function(){
-    index.bootstrapTooltip();
 });

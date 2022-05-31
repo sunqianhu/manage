@@ -51,13 +51,6 @@ index.delete = function(id){
 }
 
 /**
- * 提示框
- */
-index.bootstrapTooltip = function(){
-    $('[data-toggle="tooltip"]').tooltip();
-}
-
-/**
  * 表格树展开关闭
  */
 index.treeTableToggle = function(th){
@@ -119,5 +112,4 @@ index.treeTableChildClose = function(id){
 }
 
 $(function(){
-    index.bootstrapTooltip();
 });
