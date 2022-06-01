@@ -35,9 +35,11 @@ class UserController extends BaseController{
         $recordTotal = 0; // 总记录
         $paginationNodeIntact = ''; // 节点
         $users = array();
+        $nodeSearchStatusOption = '';
 
         // 菜单
         $frameMainMenu = FrameMainService::getPageLeftMenu('system_user');
+        $nodeSearchStatusOption = DictionaryService::getSelectOption('system_user_status', array(@$_GET['status']));
 
         // 搜索
         if(isset($_GET['name']) && $_GET['name'] !== ''){
@@ -75,6 +77,7 @@ class UserController extends BaseController{
         // 显示
         $this->assign('frameMainMenu', $frameMainMenu);
         $this->assign('search', $search);
+        $this->assign('nodeSearchStatusOption', $nodeSearchStatusOption);
         $this->assign('users', $users);
         $this->assign('paginationNodeIntact', $paginationNodeIntact);
         $this->display('system/user/index.php');

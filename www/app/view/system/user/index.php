@@ -29,6 +29,10 @@
 <div class="search">
 <form method="get" action="" class="form">
 <ul>
+<li>状态：<select name="status">
+<option value="">不限</option>
+<?php echo $nodeSearchStatusOption;?>
+</select></li>
 <li>用户姓名：<input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
 <li>
 <input type="submit" value="搜索" class="sun_button" />

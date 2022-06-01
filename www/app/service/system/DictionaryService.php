@@ -100,51 +100,6 @@ class DictionaryService{
     }
     
     /**
-     * 得到得到下拉菜单
-     * @param string $type 类型
-     * @param string $name select的name属性
-     * @param string $id select的id属性
-     * @param string $selectKey 选中项key
-     * @param string $event 事件
-     * @return string value
-     */
-    static function getSelect($type, $name = '', $id = '', $selectKeys = array(), $event = ''){
-        $node = '<select'; // 返回值
-        $data = ''; // 字典数据
-        $datas = array(); // 字典数据数组
-        
-        $data = self::getAndSetCacheType($type);
-        
-        if($name !== ''){
-            $node .= ' name="'.$name.'"';
-        }
-        if($id !== ''){
-            $node .= ' id="'.$id.'"';
-        }
-        if($event !== ''){
-            $node .= ' '.$event;
-        }
-        $node .= '>'."\r\n";
-        
-        if(!empty($data)){
-            $datas = json_decode($data, true);
-            if(!empty($datas)){
-                foreach($datas as $data){
-                    $node .= '<option value="'.$data['key'].'"';
-                    if(in_array($data['key'], $selectKeys)){
-                        $node .= ' selected="selected"';
-                    }
-                    $node .= '>'.$data['value'].'</option>'."\r\n";
-                }
-            }
-        }
-        
-        $node .= '</select>';
-        
-        return $node;
-    }
-    
-    /**
      * 得到得到下拉菜单选项
      * @param string $type 类型
      * @return string value
@@ -222,11 +177,11 @@ class DictionaryService{
      * 得到得到复选按钮
      * @param string $type 类型
      * @param string $name 单选按钮名称
-     * @param string $checkKey 选中项的key
+     * @param string $checkKeys 选中项的key
      * @param string $event 事件
      * @return string value
      */
-    static function getCheckBox($type, $name = '', $checkKey = '', $event = ''){
+    static function getCheckBox($type, $name = '', $checkKeys = array(), $event = ''){
         $node = ''; // 返回值
         $data = ''; // 字典数据
         $datas = array(); // 字典数据数组
@@ -249,7 +204,7 @@ class DictionaryService{
             if($name !== ''){
                 $node .= ' name="'.$name.'"';
             }
-            if($checkKey == $data['key']){
+            if(in_array($data['key'], $checkKeys)){
                 $node .= ' checked="checked"';
             }
             if($event !== ''){
