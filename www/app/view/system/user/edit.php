@@ -61,7 +61,7 @@
 <input type="hidden" name="department_id" id="department_id" value="<?php echo $user['department_id'];?>" />
 <div class="sun_input_group" onClick="edit.selectDepartment();">
 <input type="text" name="department_name" id="department_name" readonly value="<?php echo $user['department_name'];?>" />
-<div class="sun_input_group_icon_right"><span class="iconfont icon-magnifier icon"></span></div>
+<div class="icon_right"><span class="iconfont icon-magnifier icon"></span></div>
 </div>
 </div>
 </div>

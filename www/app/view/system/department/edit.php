@@ -21,7 +21,7 @@
 <input type="hidden" name="parent_id" id="parent_id" value="<?php echo $department['parent_id'];?>" />
 <div class="sun_input_group" onClick="edit.selectDepartment();">
 <input type="text" name="parent_name" id="parent_name" readonly value="<?php echo $department['parent_name'];?>" />
-<div class="sun_input_group_icon_right"><span class="iconfont icon-magnifier icon"></span></div>
+<span class="addon"><span class="iconfont icon-magnifier icon"></span></span>
 </div>
 </div>
 </div>

@@ -20,7 +20,7 @@
 <input type="hidden" name="parent_id" id="parent_id" value="1" />
 <div class="sun_input_group" onClick="add.selectDepartment();">
 <input type="text" name="parent_name" id="parent_name" readonly value="顶级部门" />
-<div class="sun_input_group_icon_right"><span class="iconfont icon-magnifier icon"></span></div>
+<span class="addon"><span class="iconfont icon-magnifier icon"></span></span>
 </div>
 </div>
 </div>

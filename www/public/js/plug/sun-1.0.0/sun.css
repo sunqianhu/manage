@@ -12,6 +12,34 @@ label{ margin-bottom: inherit}
 a{ text-decoration: none; color: #326496}
 a:hover{ text-decoration: underline; color: #5284b6}
 
+/*间距外*/
+.sun_mt5{ margin-top: 5px}
+.sun_mt10{ margin-top: 10px}
+.sun_mt20{ margin-top: 20px}
+.sun_ml5{ margin-left: 5px}
+.sun_ml10{ margin-left: 10px}
+.sun_ml20{ margin-left: 20px}
+.sun_mr5{ margin-right: 5px}
+.sun_mr10{ margin-right: 10px}
+.sun_mr20{ margin-right: 20px}
+.sun_mb5{ margin-bottom: 5px}
+.sun_mb10{ margin-bottom: 10px}
+.sun_mb20{ margin-bottom: 20px}
+
+/*间距内*/
+.sun_pt5{ padding-top: 5px}
+.sun_pt10{ padding-top: 10px}
+.sun_pt20{ padding-top: 20px}
+.sun_pl5{ padding-left: 5px}
+.sun_pl10{ padding-left: 10px}
+.sun_pl20{ padding-left: 20px}
+.sun_pr5{ padding-right: 5px}
+.sun_pr10{ padding-right: 10px}
+.sun_pr20{ padding-right: 20px}
+.sun_pb5{ padding-bottom: 5px}
+.sun_pb10{ padding-bottom: 10px}
+.sun_pb20{ padding-bottom: 20px}
+
 /*表单元素*/
 textarea{ font-size: 14px; color: #191919; line-height: 150%; padding: 3px 5px; border-left: 1px solid #cccccc; border-top: 1px solid #cccccc; border-right: 1px solid #bcbcbc; border-bottom: 1px solid #bcbcbc; appearance: none; border-radius: 3px; outline: none}
 textarea:focus{ box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25)}
@@ -31,7 +59,7 @@ input[type='password']:focus,
 input[type='phone']:focus,
 input[type='email']:focus,
 input[type='date']:focus,
-input[type='datetime']:focus{ box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25)}
+input[type='datetime']:focus{ box-shadow: 0 0 0 3px rgba(0, 120, 255, 0.25)}
 
 select{  padding: 0px 5px; height: 30px; line-height: 30px; border-left: 1px solid #cccccc; border-top: 1px solid #cccccc; border-right: 1px solid #bcbcbc; border-bottom: 1px solid #bcbcbc; outline: none; border-radius: 3px; font-size: 14px}
 select:focus{ box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25)}
@@ -49,26 +77,15 @@ button{ font-size: 14px; outline: none}
 .sun_form .sun_form_item .sun_form_content{ flex: 8}
 .sun_form .sun_form_tip{ font-size: 12px; color: #919191}
 
-/*表单输入框组*/
-.sun_input_group{ position: relative; display: flex}
-.sun_input_group input{  z-index: 1; position: relative}
+/*输入框组*/
+.sun_input_group{ position: relative; display: table; border-collapse: separate}
+.sun_input_group input{ display: table-cell; position: relative; z-index: 1}
 .sun_input_group input:focus{ z-index: 3}
-.sun_input_group .sun_input_group_icon_left{ margin-right: -2px; background: #e9ecef; border: 1px solid #cccccc; padding: 0px 8px; border-radius: 3px 0px 0px 3px; line-height: 25px; position: relative; z-index: 2}
-.sun_input_group .sun_input_group_icon_right{ margin-left: -2px; background: #e9ecef; border: 1px solid #cccccc; padding: 0px 8px; border-radius: 0px 3px 3px 0px; line-height: 25px; position: relative; z-index: 2}
-
-/*间距*/
-.sun_mt5{ margin-top: 5px}
-.sun_mt10{ margin-top: 10px}
-.sun_mt20{ margin-top: 20px}
-.sun_ml5{ margin-left: 5px}
-.sun_ml10{ margin-left: 10px}
-.sun_ml20{ margin-left: 20px}
-.sun_mr5{ margin-right: 5px}
-.sun_mr10{ margin-right: 10px}
-.sun_mr20{ margin-right: 20px}
-.sun_mb5{ margin-bottom: 5px}
-.sun_mb10{ margin-bottom: 10px}
-.sun_mb20{ margin-bottom: 20px}
+.sun_input_group input:not(:first-child){ border-top-left-radius: 0px; border-bottom-left-radius: 0px}
+.sun_input_group input:not(:last-child){ border-top-right-radius: 0px; border-bottom-right-radius: 0px}
+.sun_input_group .addon{ display: table-cell; background: #e9ecef; border: 1px solid #cccccc; padding: 0px 8px; border-radius: 3px; position: relative; z-index: 2}
+.sun_input_group .addon:first-child{ border-right: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px}
+.sun_input_group .addon:last-child{ border-left: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px}
 
 /*按钮*/
 .sun_button{ appearance:none; background-color: #326496; border: none; outline: none; color:#ffffff; border-radius: 3px; cursor: pointer; display:inline-block; padding: 0px 14px; line-height: 30px; height: 30px; font-size: 14px; white-space: nowrap;
@@ -95,6 +112,12 @@ transition: all 0.5s ease;
 .sun_button_big .icon{ vertical-align: middle}
 
 .sun_button_block{ display: block; width: 100%}
+
+/*按钮组*/
+.sun_button_group{ display: table; border-collapse: separate}
+.sun_button_group .sun_button{ display: table-cell}
+.sun_button_group .sun_button:not(:first-child){ border-top-left-radius: 0px; border-bottom-left-radius: 0px}
+.sun_button_group .sun_button:not(:last-child){ border-top-right-radius: 0px; border-bottom-right-radius: 0px}
 
 /*toast*/
 .sun_toast{ display: flex; align-items: center; background: #ffffff; max-width: 300px; border: 1px solid #eeeeee; box-shadow:0px 0px 5px #888888; border-radius: 3px; padding: 15px; position: absolute; left: 0px; top: 0px; z-index: 1090}
@@ -167,8 +190,16 @@ transition: all 0.5s ease;
 .sun_tab > .title{ white-space: nowrap; border-bottom: 1px solid #eeeeee; height: 40px; line-height: 40px}
 .sun_tab > .title a{ display: inline-block; position: relative; padding: 0px 14px; min-width: 65px; text-align: center; cursor: pointer; color: #191919}
 .sun_tab > .title a:hover{ text-decoration: none}
-.sun_tab > .title .active{ height: 40px; background: #ffffff; border-radius: 3px 3px 0px 0px; border: 1px solid #eeeeee; border-bottom: none}
-.sun_tab > .content{}
+.sun_tab > .title .active{ height: 40px; background: #ffffff; border-radius: 3px 3px 0px 0px; border: 1px solid #eeeeee; border-bottom: none; color: #326496}
+.sun_tab > .content{ margin-top: 5px}
+
+/*选卡简洁*/
+.sun_tab_brief{}
+.sun_tab_brief > .title{ white-space: nowrap; border-bottom: 1px solid #eeeeee; height: 40px; line-height: 40px}
+.sun_tab_brief > .title a{ display: inline-block; position: relative; padding: 0px 14px; min-width: 65px; text-align: center; cursor: pointer; color: #191919}
+.sun_tab_brief > .title a:hover{ text-decoration: none}
+.sun_tab_brief > .title .active{ color: #326496; border-bottom: 2px solid #326496; height: 40px}
+.sun_tab_brief > .content{ margin-top: 5px}
 
 /*弹层*/
 .sun_layer{}
@@ -189,3 +220,13 @@ transition: all 0.5s ease;
 .sun_badge_blue{ background: #326496}
 .sun_badge_black{ background: #191919}
 .sun_badge_gray{ background: #dfdfdf; color: #666666}
+
+/*圆点*/
+.sun_dot{ background: #326496; color: #ffffff; min-width: 18px; line-height: 18px; font-size: 12px; border-radius: 9px; text-align: center; display: inline-block; padding: 0px 3px}
+.sun_dot_green{ background: #008800}
+.sun_dot_orange{ background: #ff6600}
+.sun_dot_cyan{ background: #008888}
+.sun_dot_blue{ background: #326496}
+.sun_dot_black{ background: #191919}
+.sun_dot_gray{ background: #dfdfdf; color: #666666}
+.sun_dot_empty{ width: 8px; height: 8px; border-radius: 50%; padding: 0px; min-width: inherit}

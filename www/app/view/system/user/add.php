@@ -68,7 +68,7 @@
 <input type="hidden" name="department_id" id="department_id" value="0" />
 <div class="sun_input_group" onClick="add.selectDepartment();">
 <input type="text" name="department_name" id="department_name" readonly value="请选择" />
-<div class="sun_input_group_icon_right"><span class="iconfont icon-magnifier icon"></span></div>
+<span class="addon"><span class="iconfont icon-magnifier icon"></span></span>
 </div>
 </div>
 </div>
