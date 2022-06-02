@@ -25,6 +25,7 @@ class UserController extends BaseController{
         $frameMainMenu = ''; // 框架菜单
         $userModel = new UserModel(); // 模型
         $departmentModel = new DepartmentModel();
+        $roleModel = new RoleModel();
         
         $whereMarks = array();
         $whereValues = array();
@@ -35,31 +36,42 @@ class UserController extends BaseController{
         $paginationNodeIntact = ''; // 节点
         
         $search = array(
-            'department_id'=>0,
+            'department_id'=>'0',
             'department_name'=>'不限',
-            'name'=>''
+            'status'=>'0',
+            'role_id'=>'0',
+            'name'=>'',
+            'phone'=>''
         ); // 搜索
-        $departments = array();
-        $department = ''; // 部门json数据
-        $statusOption = '';
         
         $users = array();
+        $departments = array();
+        $department = ''; // 部门json数据
+        $roles = array();
+        $roleOption = '';
+        $statusOption = '';
         
         $frameMainMenu = FrameMainService::getPageLeftMenu('system_user');
-        $statusOption = DictionaryService::getSelectOption('system_user_status', array(@$_GET['status']));
 
-        $departments = $departmentModel->select('id, name, parent_id', array(), 'order by parent_id asc, id asc');
-        $departments = ZtreeService::setOpenByFirst($departments);
-        $department = json_encode($departments);
-        if(isset($_GET['department_name'])){
-            $search['department_name'] = $_GET['department_name'];
-        }
-        
-        // 搜索
-        if(isset($_GET['department_id'])){
+        if(isset($_GET['department_id']) && $_GET['department_id'] != '0'){
             $whereMarks[] = 'department_id = :department_id';
             $whereValues[':department_id'] = $_GET['department_id'];
             $search['department_id'] = $_GET['department_id'];
+        }
+        if(isset($_GET['status']) && $_GET['status'] != '0'){
+            $whereMarks[] = 'status = :status';
+            $whereValues[':status'] = $_GET['status'];
+            $search['status'] = $_GET['status'];
+        }
+        if(isset($_GET['role_id']) && $_GET['role_id'] != '0'){
+            $whereMarks[] = 'find_in_set(:role_id, role_id_string)';
+            $whereValues[':role_id'] = $_GET['role_id'];
+            $search['role_id'] = $_GET['role_id'];
+        }
+        if(isset($_GET['phone']) && $_GET['phone'] !== ''){
+            $whereMarks[] = 'phone like :phone';
+            $whereValues[':phone'] = '%'.$_GET['phone'].'%';
+            $search['phone'] = $_GET['phone'];
         }
         if(isset($_GET['name']) && $_GET['name'] !== ''){
             $whereMarks[] = 'name like :name';
@@ -72,7 +84,6 @@ class UserController extends BaseController{
         if(!empty($whereMarks)){
             $where['value'] = $whereValues;
         }
-        
         $recordTotal = $userModel->selectOne('count(1)', $where);
         
         $paginationService = new PaginationService($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
@@ -91,6 +102,17 @@ class UserController extends BaseController{
             $user['time_edit_name'] = $user['time_edit'] ? date('Y-m-d H:i:s', $user['time_edit']) : '-';
             $user['time_login_name'] = $user['time_login'] ? date('Y-m-d H:i:s', $user['time_login']) : '-';
         }
+        
+        $departments = $departmentModel->select('id, name, parent_id', array(), 'order by parent_id asc, id asc');
+        $departments = ZtreeService::setOpenByFirst($departments);
+        $department = json_encode($departments);
+        if(isset($_GET['department_name'])){
+            $search['department_name'] = $_GET['department_name'];
+        }
+        $statusOption = DictionaryService::getSelectOption('system_user_status', array($search['status']));
+        $roles = $roleModel->select('id, name', array());
+        $roleOption = ArrayService::getSelectOption($roles, array($search['role_id']), 'id', 'name');
+        
         $users = SafeService::frontDisplay($users, array('id'));
         $search = SafeService::frontDisplay($search);
         
@@ -99,6 +121,7 @@ class UserController extends BaseController{
         $this->assign('search', $search);
         $this->assign('department', $department);
         $this->assign('statusOption', $statusOption);
+        $this->assign('roleOption', $roleOption);
         $this->assign('users', $users);
         $this->assign('paginationNodeIntact', $paginationNodeIntact);
         $this->display('system/user/index.php');
@@ -108,9 +131,15 @@ class UserController extends BaseController{
      * 添加
      */
     function add(){
-        $nodeStatus = DictionaryService::getRadio('system_user_status', 'status', 1);
+        $roleModel = new RoleModel();
+        $status = DictionaryService::getRadio('system_user_status', 'status', 1);
+        $roleOption = '';
         
-        $this->assign('nodeStatus', $nodeStatus);
+        $roles = $roleModel->select('id, name');
+        $roleOption = ArrayService::getSelectOption($roles);
+        
+        $this->assign('status', $status);
+        $this->assign('roleOption', $roleOption);
         $this->display('system/user/add.php');
     }
     
@@ -128,22 +157,6 @@ class UserController extends BaseController{
         
         $this->assign('department', $department);
         $this->display('system/user/add_select_department.php');
-    }
-    
-    /**
-     * 修改选择部门
-     */
-    function editSelectDepartment(){
-        $departmentModel = new DepartmentModel();
-        $departments = array();
-        $department = ''; // 部门json数据
-        
-        $departments = $departmentModel->select('id, name, parent_id', array(), 'order by parent_id asc, id asc');
-        $departments = ZtreeService::setOpenByFirst($departments);
-        $department = json_encode($departments);
-        
-        $this->assign('department', $department);
-        $this->display('system/user/edit_select_department.php');
     }
     
     /**
@@ -249,8 +262,8 @@ class UserController extends BaseController{
         $roleModel = new RoleModel();
         $user = array();
         $roles = array();
-        $nodeStatus = '';
-        $nodeRole = '';
+        $status = '';
+        $roleOption = '';
         
         // 验证
         $validateService->rule = array(
@@ -284,15 +297,31 @@ class UserController extends BaseController{
             )
         ));
         $user = SafeService::frontDisplay($user, array('id'));
-        $nodeStatus = DictionaryService::getRadio('system_user_status', 'status', $user['status']);
+        $status = DictionaryService::getRadio('system_user_status', 'status', $user['status']);
         
         $roles = $roleModel->select('id, name', array());
-        $nodeRole = ArrayService::getSelectOption($roles, $user['role_ids'], 'id', 'name');
+        $roleOption = ArrayService::getSelectOption($roles, $user['role_ids'], 'id', 'name');
         
         $this->assign('user', $user);
-        $this->assign('nodeStatus', $nodeStatus);
-        $this->assign('nodeRole', $nodeRole);
+        $this->assign('status', $status);
+        $this->assign('roleOption', $roleOption);
         $this->display('system/user/edit.php');
+    }
+    
+    /**
+     * 修改选择部门
+     */
+    function editSelectDepartment(){
+        $departmentModel = new DepartmentModel();
+        $departments = array();
+        $department = ''; // 部门json数据
+        
+        $departments = $departmentModel->select('id, name, parent_id', array(), 'order by parent_id asc, id asc');
+        $departments = ZtreeService::setOpenByFirst($departments);
+        $department = json_encode($departments);
+        
+        $this->assign('department', $department);
+        $this->display('system/user/edit_select_department.php');
     }
     
     /**

@@ -29,7 +29,7 @@
 <div class="sun_form_item">
 <div class="sun_form_label"><span class="sun_form_required">*</span> 状态</div>
 <div class="sun_form_content">
-<?php echo $nodeStatus;?>
+<?php echo $status;?>
 </div>
 </div>
 
@@ -61,7 +61,7 @@
 <input type="hidden" name="department_id" id="department_id" value="<?php echo $user['department_id'];?>" />
 <div class="sun_input_group" onClick="edit.selectDepartment();">
 <input type="text" name="department_name" id="department_name" readonly value="<?php echo $user['department_name'];?>" />
-<div class="icon_right"><span class="iconfont icon-magnifier icon"></span></div>
+<div class="addon"><span class="iconfont icon-magnifier icon"></span></div>
 </div>
 </div>
 </div>
@@ -70,7 +70,7 @@
 <div class="sun_form_label"><span class="sun_form_required">*</span> 角色</div>
 <div class="sun_form_content">
 <select name="role_ids[]" multiple="multiple" class="selectpicker role_ids" id="role_ids" data-live-search="true" title="请选择" data-width="170px">
-<?php echo $nodeRole;?>
+<?php echo $roleOption;?>
 </select>
 </div>
 </div>

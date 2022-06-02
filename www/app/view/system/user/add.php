@@ -30,7 +30,7 @@
 <div class="sun_form_item">
 <div class="sun_form_label"><span class="sun_form_required">*</span> 状态</div>
 <div class="sun_form_content">
-<?php echo $nodeStatus;?>
+<?php echo $status;?>
 </div>
 </div>
 
@@ -77,8 +77,7 @@
 <div class="sun_form_label"><span class="sun_form_required">*</span> 角色</div>
 <div class="sun_form_content">
 <select name="role_ids[]" multiple="multiple" class="selectpicker role_ids" id="role_ids" data-live-search="true" title="请选择" data-width="170px">
-<option value="1">超级管理员</option>
-<option value="2">一般管理员</option>
+<?php echo $roleOption;?>
 </select>
 </div>
 </div>
