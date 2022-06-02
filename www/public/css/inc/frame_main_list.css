@@ -22,7 +22,9 @@
 .page > .page_body > .page_right .body > .search form > ul > li select{ width: 150px}
 
 .page > .page_body > .page_right .body > .data{ background: #ffffff; border-radius: 5px; padding: 15px}
-.page > .page_body > .page_right .body > .data .toolbar{}
+.page > .page_body > .page_right .body > .data .toolbar{ display: flex; justify-content: space-between}
+.page > .page_body > .page_right .body > .data .toolbar > .left{}
+.page > .page_body > .page_right .body > .data .toolbar > .right{}
 .page > .page_body > .page_right .body > .data .table{ margin-top: 10px}
 .page > .page_body > .page_right .body > .data .sun_pagination_intact{ margin-top: 10px}
 
