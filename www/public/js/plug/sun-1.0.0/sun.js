@@ -211,18 +211,21 @@ sun.formSubmit = function(config){
 }
 
 /**
- * 下拉菜单
- * @param config.selector 选择器
+ * 下拉
+ * @param string config.selector 选择器
+ * @param array config.trigger 事件
  */
+ 
 sun.dropdown = function(config){
     var domDocument; // 文档
-    var domDropdowns; // 菜单组所有
-    var domDropdownButtons; // 按钮所有
-    var domDropdownMenus; // 菜单所有
+    var domDropdowns; // 下拉所有
+    var domDropdownTitles; // 标题所有
+    var domDropdownContents; // 内容所有
+    var contentDisplay = "none"; // 内容显示
     
     // 配置
     if(!config.selector){
-        sun.toast("error", "selector参数错误", 3000);
+        sun.toast("error", "下拉元素选择器参数错误", 3000);
         return false;
     }
     if(!config.trigger){
@@ -232,23 +235,89 @@ sun.dropdown = function(config){
     // 对象
     domDocument = $(document);
     domDropdowns = $(config.selector);
-    domDropdownButtons = $(".sun_dropdown_button", domDropdowns);
-    domDropdownMenus = $(".sun_dropdown_menu", domDropdowns);
+    domDropdownTitles = $(" > .title", domDropdowns);
+    domDropdownContents = $(" > .content", domDropdowns);
     
     // 事件
-    domDropdownButtons.on(config.trigger.join(","), function(){
-        var domDropdownButton = $(this);
-        var domDropdown = domDropdownButton.parent();
-        var domDropdownMenu = $(".sun_dropdown_menu", domDropdown);
+    domDropdownTitles.on(config.trigger.join(","), function(){
+        var domDropdownTitle = $(this);
+        var domDropdown = domDropdownTitle.parent();
+        var domDropdownContent = $(" > .content", domDropdown);
         
-        domDropdownMenus.hide();
-        domDropdownMenu.slideDown(100);
+        contentDisplay = domDropdownContent.css("display");
+        if(contentDisplay != "none"){
+            return;
+        }
+        
+        domDropdownContents.hide();
+        domDropdownContent.slideDown(200);
     });
     
     // 关闭
 	domDocument.on("click", function(e){
-		if($(e.target).closest(".sun_dropdown_button").length === 0){
-			domDropdownMenus.hide();
+		if($(e.target).closest(config.selector).length === 0){
+			domDropdownContents.slideUp(200);
+		}
+	});
+}
+
+/**
+ * 下拉菜单
+ * @param string config.selector 选择器
+ * @param array config.trigger 事件
+ */
+sun.dropdownMenu = function(config){
+    var domDocument; // 文档
+    var domDropdownMenus; // 菜单所有
+    var domDropdownMenuTitles; // 标题所有
+    var domDropdownMenuContents; // 内容所有
+    var domDropdownMenuContentLis; // 内容的选项
+    var contentDisplay = "none"; // 内容是否显示
+    
+    // 配置
+    if(!config.selector){
+        sun.toast("error", "下拉元素选择器参数错误", 3000);
+        return false;
+    }
+    if(!config.trigger){
+        config.trigger = ["click"];
+    }
+    
+    // 对象
+    domDocument = $(document);
+    domDropdownMenus = $(config.selector);
+    domDropdownMenuTitles = $(" > .title", domDropdownMenus);
+    domDropdownMenuContents = $(" > .content", domDropdownMenus);
+    domDropdownMenuContentLis = $(" > ul > li", domDropdownMenuContents);
+    
+    // 菜单
+    domDropdownMenuTitles.on(config.trigger.join(","), function(){
+        var domDropdownMenuTitle = $(this);
+        var domDropdownMenu = domDropdownMenuTitle.parent();
+        var domDropdownMenuContent = $(" > .content", domDropdownMenu);
+        
+        contentDisplay = domDropdownMenuContent.css("display");
+        if(contentDisplay != "none"){
+            return;
+        }
+        
+        domDropdownMenuContents.hide();
+        domDropdownMenuContent.slideDown(200);
+    });
+    
+    // 选项
+    domDropdownMenuContentLis.on("click", function(){
+        var domDropdownMenuContentLi = $(this);
+        var domDropdownMenu = domDropdownMenuContentLi.parents(config.selector);
+        var domDropdownMenuContent = $(" > .content", domDropdownMenu);
+        
+        domDropdownMenuContent.slideUp(200);
+    });
+    
+    // 关闭
+	domDocument.on("click", function(e){
+		if($(e.target).closest(config.selector).length === 0){
+			domDropdownMenuContents.slideUp(200);
 		}
 	});
 }
