@@ -16,8 +16,10 @@
 
 .page > .page_body > .page_right .body > .search{ background: #ffffff; border-radius: 5px; padding: 15px}
 .page > .page_body > .page_right .body > .search:after{ content: ""; clear: both; display: block}
-.page > .page_body > .page_right .body > .search ul{ margin: 0px; padding: 0px}
-.page > .page_body > .page_right .body > .search ul li{ margin: 5px 15px 5px 0px; list-style: none; float: left}
+.page > .page_body > .page_right .body > .search form > ul{ margin: 0px; padding: 0px}
+.page > .page_body > .page_right .body > .search form > ul > li{ margin: 5px 15px 5px 0px; list-style: none; float: left}
+.page > .page_body > .page_right .body > .search form > ul > li input[type=text]{ width: 150px}
+.page > .page_body > .page_right .body > .search form > ul > li select{ width: 150px}
 
 .page > .page_body > .page_right .body > .data{ background: #ffffff; border-radius: 5px; padding: 15px}
 .page > .page_body > .page_right .body > .data .toolbar{}
@@ -26,5 +28,5 @@
 
 /*手机设备*/
 @media ( max-width : 768px) {
-	.page > .page_body > .page_right .body > .search ul li{ float: none}
+	.page > .page_body > .page_right .body > .search  form > ul > li{ float: none}
 }

@@ -25,23 +25,42 @@ class UserController extends BaseController{
         $frameMainMenu = ''; // 框架菜单
         $userModel = new UserModel(); // 模型
         $departmentModel = new DepartmentModel();
-        $search = array(
-            'name'=>''
-        ); // 搜索
+        
         $whereMarks = array();
         $whereValues = array();
         $where = array();
+        
         $paginationService = null; // 分页
         $recordTotal = 0; // 总记录
         $paginationNodeIntact = ''; // 节点
+        
+        $search = array(
+            'department_id'=>0,
+            'department_name'=>'不限',
+            'name'=>''
+        ); // 搜索
+        $departments = array();
+        $department = ''; // 部门json数据
+        $statusOption = '';
+        
         $users = array();
-        $nodeSearchStatusOption = '';
-
-        // 菜单
+        
         $frameMainMenu = FrameMainService::getPageLeftMenu('system_user');
-        $nodeSearchStatusOption = DictionaryService::getSelectOption('system_user_status', array(@$_GET['status']));
+        $statusOption = DictionaryService::getSelectOption('system_user_status', array(@$_GET['status']));
 
+        $departments = $departmentModel->select('id, name, parent_id', array(), 'order by parent_id asc, id asc');
+        $departments = ZtreeService::setOpenByFirst($departments);
+        $department = json_encode($departments);
+        if(isset($_GET['department_name'])){
+            $search['department_name'] = $_GET['department_name'];
+        }
+        
         // 搜索
+        if(isset($_GET['department_id'])){
+            $whereMarks[] = 'department_id = :department_id';
+            $whereValues[':department_id'] = $_GET['department_id'];
+            $search['department_id'] = $_GET['department_id'];
+        }
         if(isset($_GET['name']) && $_GET['name'] !== ''){
             $whereMarks[] = 'name like :name';
             $whereValues[':name'] = '%'.$_GET['name'].'%';
@@ -73,11 +92,13 @@ class UserController extends BaseController{
             $user['time_login_name'] = $user['time_login'] ? date('Y-m-d H:i:s', $user['time_login']) : '-';
         }
         $users = SafeService::frontDisplay($users, array('id'));
+        $search = SafeService::frontDisplay($search);
         
         // 显示
         $this->assign('frameMainMenu', $frameMainMenu);
         $this->assign('search', $search);
-        $this->assign('nodeSearchStatusOption', $nodeSearchStatusOption);
+        $this->assign('department', $department);
+        $this->assign('statusOption', $statusOption);
         $this->assign('users', $users);
         $this->assign('paginationNodeIntact', $paginationNodeIntact);
         $this->display('system/user/index.php');

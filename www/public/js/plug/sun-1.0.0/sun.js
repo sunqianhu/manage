@@ -215,8 +215,7 @@ sun.formSubmit = function(config){
  * @param string config.selector 选择器
  * @param array config.trigger 事件
  */
- 
-sun.dropdown = function(config){
+sun.dropDown = function(config){
     var domDocument; // 文档
     var domDropdowns; // 下拉所有
     var domDropdownTitles; // 标题所有
@@ -262,11 +261,27 @@ sun.dropdown = function(config){
 }
 
 /**
+ * 下拉关闭
+ * @param string selector 选择器
+ */
+sun.dropDownClose = function(selector){
+    var domDropdownContents;
+    
+    if(!selector){
+        sun.toast("error", "下拉元素选择器参数错误", 3000);
+        return false;
+    }
+    
+    domDropdownContents = $(selector + " > .content");
+    domDropdownContents.slideUp(200);
+}
+
+/**
  * 下拉菜单
  * @param string config.selector 选择器
  * @param array config.trigger 事件
  */
-sun.dropdownMenu = function(config){
+sun.dropDownMenu = function(config){
     var domDocument; // 文档
     var domDropdownMenus; // 菜单所有
     var domDropdownMenuTitles; // 标题所有

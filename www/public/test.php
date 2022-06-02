@@ -15,7 +15,26 @@ $(function(){
 </script>
 </head>
 
-<body>
+<body style="padding: 100px">
+
+<span class="sun_dot sun_dot_empty"></span>
+
+<div class="sun_button_group">
+<a class="sun_button">按钮1</a>
+<a class="sun_button sun_button_warning">按钮2</a>
+<a class="sun_button">按钮3</a>
+</div>
+
+<div class="sun_tab_brief">
+<div class="title">
+<a href="" class="active">选卡1</a>
+<a href="">选卡2</a>
+<a href="">选卡3</a>
+</div>
+<div class="content">内容1</div>
+<div class="content">内容2</div>
+<div class="content">内容3</div>
+</div>
 <br>
 <br>
 <span class="green">启用</span>

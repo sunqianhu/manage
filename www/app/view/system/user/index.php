@@ -5,11 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>用户管理_<?php echo $config['app_name'];?></title>
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/jquery/jquery-1.12.4.min.js"></script>
+<link href="<?php echo $config['app_domain'];?>js/plug/ztree-3.5.48/css/metroStyle/metroStyle.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/ztree-3.5.48/js/jquery.ztree.core.min.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.js"></script>
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/inc/frame_main.js"></script>
 <link href="<?php echo $config['app_domain'];?>css/system/user/index.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/system/user/index.js"></script>
+<script type="text/javascript">
+index.departmentData = <?php echo $department;?>;
+</script>
 </head>
 
 <body class="page">
@@ -29,9 +34,20 @@
 <div class="search">
 <form method="get" action="" class="form">
 <ul>
+<li>部门：
+<span class="sun_dropdown department">
+<div class="title">
+<input type="hidden" name="department_id" id="department_id" value="<?php echo $search['department_id'];?>" />
+<input type="text" name="department_name" id="department_name" value="<?php echo $search['department_name'];?>" readonly />
+</div>
+<div class="content">
+<ul id="ztree" class="ztree"></ul>
+</div>
+</span></li>
+
 <li>状态：<select name="status">
 <option value="">不限</option>
-<?php echo $nodeSearchStatusOption;?>
+<?php echo $statusOption;?>
 </select></li>
 <li>用户姓名：<input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
 <li>
@@ -80,7 +96,7 @@ foreach($users as $user){
 }else{
 ?>
 <tr>
-<td colspan="5" align="center">无数据</td>
+<td colspan="9" align="center">无数据</td>
 </tr>
 <?php
 }

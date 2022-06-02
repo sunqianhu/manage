@@ -70,7 +70,7 @@ button{ font-size: 14px; outline: none}
 
 /*表单布局*/
 .sun_form{}
-.sun_form .sun_form_item{ display: flex; margin-bottom: 10px}
+.sun_form .sun_form_item{ display: flex; align-items: center; margin-bottom: 10px}
 .sun_form .sun_form_item:last-child{ margin-right: 0px}
 .sun_form .sun_form_item .sun_form_label{ flex: 4; text-align: right; margin-right: 20px}
 .sun_form .sun_form_item .sun_form_label .sun_form_required{ font-weight: bold; color: #ff0000}
@@ -172,18 +172,18 @@ transition: all 0.5s ease;
 /*下拉*/
 .sun_dropdown{ display: inline-block; position: relative}
 .sun_dropdown > .title{ cursor: pointer}
-.sun_dropdown > .content{ position: absolute; top: 100%; left: 0px; min-width: 120px; background: #ffffff; margin: 5px 0px 0px 0px; padding: 0px; border-radius: 3px; box-shadow: 0 3px 6px rgba(0,0,0,0.3); display: none; z-index: 99}
-.sun_dropdown.right > .content{ left: inherit; right: 0px}
+.sun_dropdown > .content{ position: absolute; top: 100%; left: 0px; min-width: 150px; background: #ffffff; margin: 5px 0px 0px 0px; padding: 10px; border-radius: 3px; box-shadow: 0 3px 6px rgba(0,0,0,0.3); display: none; z-index: 99}
+.sun_dropdown_align_right > .content{ left: inherit; right: 0px}
 
 /*下拉菜单*/
 .sun_dropdown_menu{ display: inline-block; position: relative}
 .sun_dropdown_menu > .title{ cursor: pointer}
-.sun_dropdown_menu > .content{ position: absolute; top: 100%; left: 0px; min-width: 120px; background: #ffffff; margin: 5px 0px 0px 0px; padding: 0px; border-radius: 3px; box-shadow: 0 3px 6px rgba(0,0,0,0.3); display: none; z-index: 99}
+.sun_dropdown_menu > .content{ position: absolute; top: 100%; left: 0px; min-width: 100px; background: #ffffff; margin: 5px 0px 0px 0px; padding: 0px; border-radius: 3px; box-shadow: 0 3px 6px rgba(0,0,0,0.3); display: none; z-index: 99}
 .sun_dropdown_menu > .content ul{ margin: 0px; padding: 5px 0px}
 .sun_dropdown_menu > .content ul li{ list-style: none}
 .sun_dropdown_menu > .content ul li a{ display: block; padding: 0px 10px; height: 30px; line-height: 30px; color: #191919; text-decoration: none}
 .sun_dropdown_menu > .content ul li a:hover{ background: #f5f5f5; color: #000000}
-.sun_dropdown_menu.right > .content{ left: inherit; right: 0px}
+.sun_dropdown_menu_align_right > .content{ left: inherit; right: 0px}
 
 /*选卡*/
 .sun_tab{}
