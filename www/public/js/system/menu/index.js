@@ -12,7 +12,7 @@ index.add = function(){
         name: "添加菜单",
         url: url,
         width: 600,
-        height: 400
+        height: 450
     });
 }
 
@@ -26,7 +26,7 @@ index.edit = function(id){
         name: "修改菜单",
         url: url,
         width: 600,
-        height: 400
+        height: 450
     });
 }
 

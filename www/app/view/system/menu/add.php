@@ -40,10 +40,10 @@
 </div>
 
 <div class="sun_form_item">
-<div class="sun_form_label">可访问URL</div>
+<div class="sun_form_label">url</div>
 <div class="sun_form_content">
 <textarea name="url" id="url" class="url"></textarea>
-<div class="sun_form_tip">菜单一行一个url，是目录时可以为空。例如：system/user/user.html</div>
+<div class="sun_form_tip">设置可访问的url，一行一个url。</div>
 </div>
 </div>
 

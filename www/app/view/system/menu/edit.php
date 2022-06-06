@@ -41,9 +41,10 @@
 </div>
 
 <div class="sun_form_item">
-<div class="sun_form_label">可访问url</div>
+<div class="sun_form_label">url</div>
 <div class="sun_form_content">
 <textarea name="url" id="url" class="url"><?php echo $menu['url'];?></textarea>
+<div class="sun_form_tip">设置可访问的url，一行一个url。</div>
 </div>
 </div>
 

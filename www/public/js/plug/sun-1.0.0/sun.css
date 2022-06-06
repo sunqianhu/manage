@@ -70,9 +70,9 @@ button{ font-size: 14px; outline: none}
 
 /*表单布局*/
 .sun_form{}
-.sun_form .sun_form_item{ display: flex; align-items: center; margin-bottom: 10px}
+.sun_form .sun_form_item{ display: flex; margin-bottom: 10px}
 .sun_form .sun_form_item:last-child{ margin-right: 0px}
-.sun_form .sun_form_item .sun_form_label{ flex: 4; text-align: right; margin-right: 20px}
+.sun_form .sun_form_item .sun_form_label{ flex: 4; text-align: right; margin-right: 20px; line-height: 30px}
 .sun_form .sun_form_item .sun_form_label .sun_form_required{ font-weight: bold; color: #ff0000}
 .sun_form .sun_form_item .sun_form_content{ flex: 8}
 .sun_form .sun_form_tip{ font-size: 12px; color: #919191}

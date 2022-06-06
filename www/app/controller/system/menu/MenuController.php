@@ -194,7 +194,7 @@ class MenuController extends BaseController{
             exit;
         }
         
-        $menu = $menuModel->selectRow('id, parent_id, type, name, url, `sort`', array(
+        $menu = $menuModel->selectRow('id, parent_id, type, name, `url`, `sort`', array(
             'mark'=>'id = :id',
             'value'=>array(
                 ':id'=>$_GET['id']

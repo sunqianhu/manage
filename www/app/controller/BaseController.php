@@ -15,20 +15,19 @@ class BaseController{
      * 构造
      */
     function __construct(){
-        $accessControllerPublics = array(
-            'LoginController'
-        ); // 公开访问控制器
         $config = Config::all();
-        /*
+        
         // 登录
         if(!AuthService::isLogin()){
-            if(!in_array(Route::$controller, $accessControllerPublics)){
-                header('location:'.$config['app_domain'].'/login/index');
-                exit;
-            }
+            header('location:'.$config['app_domain'].'/login/login.html');
+            exit;
         }
-        */
+        
         // 权限
+        if(!AuthService::isPermission()){
+            header('location:'.$config['app_domain'].'/login/login.html');
+            exit;
+        }
         
         // 配置
         $this->assign('config', $config);

@@ -116,6 +116,6 @@ class LoginController extends BaseController{
      */
     function exit(){
         AuthService::unsetToken();
-        header('location:login.html');
+        header('location:login/login.html');
     }
 }

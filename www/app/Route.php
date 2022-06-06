@@ -8,23 +8,6 @@ use \app\service\ResponseService;
 
 class Route{
     /**
-     * 得到路径
-     */
-    static function getPath(){
-        $uri = '';
-        $uris = array();
-        $path = '';
-        
-        if(isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] != '/'){
-            $uri = $_SERVER['REQUEST_URI'];
-            $uris = explode('?', $uri);
-            $path = $uris[0];
-        }
-        
-        return $path;
-    }
-    
-    /**
      * 运行找路
      * @access public
      */
