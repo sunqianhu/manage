@@ -11,6 +11,7 @@ use library\model\system\MenuModel;
 use library\service\ConfigService;
 use library\service\ValidateService;
 use library\service\AuthService;
+use library\service\system\DictionaryService;
 
 $return = array(
     'status'=>'error',
@@ -69,7 +70,7 @@ $return['data']['captcha'] = '1';
 
 // 用户
 $user = $userModel->selectRow(
-    'id, username, name, department_id, role_id_string', 
+    'id, username, name, department_id, role_id_string, status', 
     array(
         'mark'=>'username = :username and password = :password',
         'value'=>array(
@@ -80,6 +81,11 @@ $user = $userModel->selectRow(
 );
 if(empty($user)){
     $return['message'] = '用户名或密码错误';
+    echo json_encode($return);
+    exit;
+}
+if($user['status'] != 1){
+    $return['message'] = DictionaryService::getValue('system_user_status', $user['status']);
     echo json_encode($return);
     exit;
 }
