@@ -49,6 +49,20 @@ frameMain.menuToggle = function(){
     });
 }
 
+/**
+ * 修改密码
+ */
+frameMain.editPassword = function(){
+    var url = "/system/user/self_edit_password.php";
+    window.parent.sun.layer.open({
+        id: "layer_self_edit_password",
+        name: "修改密码",
+        url: url,
+        width: 500,
+        height: 300
+    });
+}
+
 $(function(){
     frameMain.menuActive();
     frameMain.menuToggle();

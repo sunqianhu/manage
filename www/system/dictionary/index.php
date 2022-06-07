@@ -82,7 +82,7 @@ $dictionarys = SafeService::frontDisplay($dictionarys, array('id'));
 <div class="header">
 <div class="location">
 <span class="iconfont icon-home icon"></span>
-<a href="../../index.html">系统首页</a> <span class="split">&gt;</span> 字典管理
+<a href="../../index.php">系统首页</a> <span class="split">&gt;</span> 字典管理
 </div>
 <a href="javascript:;" onClick="location.reload();" class="refresh"><span class="iconfont icon-refresh icon"></span>刷新</a>
 </div>
@@ -145,4 +145,3 @@ foreach($dictionarys as $dictionary){
 </div>
 </div>
 </body>
-</html>

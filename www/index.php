@@ -38,7 +38,7 @@ $frameMainMenu = FrameMainService::getPageLeftMenu('home');
 <div class="body">
 
 <div class="welcome">
-欢迎<span>运营单位孙乾户</span>登录系统，上次登录时间：2022-05-06 10:57:12，上次登录IP：218.88.23.158<div>
+欢迎<span><?php echo $_SESSION['user']['name'];?></span>登录系统<div>
 </div>
 </div>
 
