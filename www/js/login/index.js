@@ -21,6 +21,10 @@ index.formSubmit = function(selector){
     sun.formSubmit({
         selector: selector,
         success: function(ret){
+            if(ret.data.captcha == "1"){
+                index.changeCaptcha();
+            }
+            
             if(ret.status == "error"){
                 sun.toast("error", ret.message, 3000, function(){
                     if(ret.data.dom){
@@ -28,10 +32,6 @@ index.formSubmit = function(selector){
                     }
                 });
                 return;
-            }
-            
-            if(ret.data.captcha == "1"){
-                index.changeCaptcha();
             }
             
             location.href = "../index.php";
