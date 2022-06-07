@@ -5,8 +5,9 @@
 require_once '../../library/session.php';
 require_once '../../library/autoload.php';
 
-use \library\model\system\DepartmentModel;
-use \library\service\ValidateService;
+use library\model\system\DepartmentModel;
+use library\service\ValidateService;
+use library\service\AuthService;
 
 $return = array(
     'status'=>'error',
@@ -21,8 +22,18 @@ $departmentCurrent = array(); // 本部门
 $departmentParent = array(); // 上级部门
 $data = array();
 
-
 // 验证
+if(!AuthService::isLogin()){
+    $return['message'] = '登录已失效';
+    echo json_encode($return);
+    exit;
+}
+if(!AuthService::isPermission('system_department')){
+    $return['message'] = '无权限';
+    echo json_encode($return);
+    exit;
+}
+
 $validateService->rule = array(
     'id' => 'require|number',
     'parent_id' => 'number',

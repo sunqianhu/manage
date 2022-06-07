@@ -11,8 +11,8 @@ index.add = function(){
         id: "layer_menu_add",
         name: "添加菜单",
         url: url,
-        width: 600,
-        height: 450
+        width: 700,
+        height: 500
     });
 }
 
@@ -25,8 +25,8 @@ index.edit = function(id){
         id: "layer_menu_edit",
         name: "修改菜单",
         url: url,
-        width: 600,
-        height: 450
+        width: 700,
+        height: 500
     });
 }
 

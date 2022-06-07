@@ -5,14 +5,24 @@
 require_once '../../library/session.php';
 require_once '../../library/autoload.php';
 
-use \library\model\system\MenuModel;
-use \library\service\ConfigService;
-use \library\service\ZtreeService;
+use library\model\system\MenuModel;
+use library\service\ConfigService;
+use library\service\ZtreeService;
+use library\service\AuthService;
 
 $config = ConfigService::getAll();
 $menuModel = new MenuModel();
 $menus = array();
 $menu = ''; // 菜单json数据
+
+if(!AuthService::isLogin()){
+    header('location:../../login/index.php');
+    exit;
+}
+if(!AuthService::isPermission('system_role')){
+    header('location:../../error.php?message='.urlencode('无权限'));
+    exit;
+}
 
 $menus = $menuModel->select('id, name, parent_id', array(
     'mark'=>'parent_id != 0'

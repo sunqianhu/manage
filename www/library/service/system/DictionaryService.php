@@ -4,8 +4,8 @@
  */
 namespace library\service\system;
 
-use \library\model\system\DictionaryModel;
-use \library\service\CacheService;
+use library\model\system\DictionaryModel;
+use library\service\CacheService;
 
 class DictionaryService{
     /**

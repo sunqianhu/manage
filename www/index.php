@@ -5,8 +5,8 @@
 require_once 'library/session.php';
 require_once 'library/autoload.php';
 
-use \library\service\ConfigService;
-use \library\service\FrameMainService;
+use library\service\ConfigService;
+use library\service\FrameMainService;
 
 $config = ConfigService::getAll();
 $frameMainMenu = FrameMainService::getPageLeftMenu('home');

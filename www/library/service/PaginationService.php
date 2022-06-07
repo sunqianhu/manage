@@ -4,7 +4,7 @@
  */
 namespace library\service;
 
-use \library\service\ConfigService;
+use library\service\ConfigService;
 
 class PaginationService{
     public $id;

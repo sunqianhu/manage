@@ -5,9 +5,10 @@
 require_once '../../library/session.php';
 require_once '../../library/autoload.php';
 
-use \library\model\system\RoleModel;
-use \library\model\system\RoleMenuModel;
-use \library\service\ValidateService;
+use library\model\system\RoleModel;
+use library\model\system\RoleMenuModel;
+use library\service\ValidateService;
+use library\service\AuthService;
 
 $return = array(
     'status'=>'error',
@@ -19,6 +20,17 @@ $validateService = new ValidateService();
 $role = array();
 
 // 验证
+if(!AuthService::isLogin()){
+    $return['message'] = '登录已失效';
+    echo json_encode($return);
+    exit;
+}
+if(!AuthService::isPermission('system_role')){
+    $return['message'] = '无权限';
+    echo json_encode($return);
+    exit;
+}
+
 $validateService->rule = array(
     'id' => 'require:number'
 );

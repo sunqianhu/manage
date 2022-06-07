@@ -4,9 +4,9 @@
  */
 namespace library\service;
 
-use \library\service\ConfigService;
-use \library\service\AuthService;
-use \library\service\TreeService;
+use library\service\ConfigService;
+use library\service\AuthService;
+use library\service\TreeService;
 
 
 class FrameMainService{

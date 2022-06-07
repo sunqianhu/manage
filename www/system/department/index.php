@@ -5,12 +5,13 @@
 require_once '../../library/session.php';
 require_once '../../library/autoload.php';
 
-use \library\model\system\DepartmentModel;
-use \library\service\ConfigService;
-use \library\service\FrameMainService;
-use \library\service\TreeService;
-use \library\service\SafeService;
-use \library\service\system\DepartmentService;
+use library\model\system\DepartmentModel;
+use library\service\ConfigService;
+use library\service\FrameMainService;
+use library\service\TreeService;
+use library\service\SafeService;
+use library\service\system\DepartmentService;
+use library\service\AuthService;
 
 $config = ConfigService::getAll();
 $departmentModel = new DepartmentModel();
@@ -25,6 +26,15 @@ $search = array(
 $whereMarks = array();
 $whereValues = array();
 $where = array();
+
+if(!AuthService::isLogin()){
+    header('location:../../login/index.php');
+    exit;
+}
+if(!AuthService::isPermission('system_department')){
+    header('location:../../error.php?message='.urlencode('无权限'));
+    exit;
+}
 
 // 菜单
 $frameMainMenu = FrameMainService::getPageLeftMenu('system_department');

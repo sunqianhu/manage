@@ -5,16 +5,26 @@
 require_once '../../library/session.php';
 require_once '../../library/autoload.php';
 
-use \library\model\system\UserModel;
-use \library\model\system\RoleModel;
-use \library\service\ConfigService;
-use \library\service\ArrayService;
-use \library\service\system\DictionaryService;
+use library\model\system\UserModel;
+use library\model\system\RoleModel;
+use library\service\ConfigService;
+use library\service\ArrayService;
+use library\service\system\DictionaryService;
+use library\service\AuthService;
 
 $config = ConfigService::getAll();
 $roleModel = new RoleModel();
 $status = DictionaryService::getRadio('system_user_status', 'status', 1);
 $roleOption = '';
+
+if(!AuthService::isLogin()){
+    header('location:../../login/index.php');
+    exit;
+}
+if(!AuthService::isPermission('system_user')){
+    header('location:../../error.php?message='.urlencode('无权限'));
+    exit;
+}
 
 $roles = $roleModel->select('id, name');
 $roleOption = ArrayService::getSelectOption($roles);

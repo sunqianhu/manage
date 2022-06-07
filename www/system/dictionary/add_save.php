@@ -5,8 +5,9 @@
 require_once '../../library/session.php';
 require_once '../../library/autoload.php';
 
-use \library\model\system\DictionaryModel;
-use \library\service\ValidateService;
+use library\model\system\DictionaryModel;
+use library\service\ValidateService;
+use library\service\AuthService;
 
 $return = array(
     'status'=>'error',
@@ -19,6 +20,17 @@ $validateService = new ValidateService();
 $dictionaryModel = new DictionaryModel();
 
 // 验证
+if(!AuthService::isLogin()){
+    $return['message'] = '登录已失效';
+    echo json_encode($return);
+    exit;
+}
+if(!AuthService::isPermission('system_dictionary')){
+    $return['message'] = '无权限';
+    echo json_encode($return);
+    exit;
+}
+
 $validateService->rule = array(
     'type' => 'require|max_length:64',
     'key' => 'require|max_length:64',

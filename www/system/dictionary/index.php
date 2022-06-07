@@ -5,11 +5,12 @@
 require_once '../../library/session.php';
 require_once '../../library/autoload.php';
 
-use \library\model\system\DictionaryModel;
-use \library\service\ConfigService;
-use \library\service\FrameMainService;
-use \library\service\PaginationService;
-use \library\service\SafeService;
+use library\model\system\DictionaryModel;
+use library\service\ConfigService;
+use library\service\FrameMainService;
+use library\service\PaginationService;
+use library\service\SafeService;
+use library\service\AuthService;
 
 $config = ConfigService::getAll();
 $frameMainMenu = ''; // 框架菜单
@@ -24,6 +25,15 @@ $paginationService = null; // 分页
 $recordTotal = 0; // 总记录
 $paginationNodeIntact = ''; // 节点
 $dictionarys = array();
+
+if(!AuthService::isLogin()){
+    header('location:../../login/index.php');
+    exit;
+}
+if(!AuthService::isPermission('system_dictionary')){
+    header('location:../../error.php?message='.urlencode('无权限'));
+    exit;
+}
 
 // 菜单
 $frameMainMenu = FrameMainService::getPageLeftMenu('system_dictionary');

@@ -5,8 +5,8 @@
 require_once 'library/session.php';
 require_once 'library/autoload.php';
 
-use \library\service\ConfigService;
-use \library\service\SafeService;
+use library\service\ConfigService;
+use library\service\SafeService;
 
 $config = ConfigService::getAll();
 $message = '';

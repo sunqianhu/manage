@@ -4,8 +4,8 @@
  */
 namespace library\model\system;
 
-use \library\service\DbService;
-use \library\model\BaseModel;
+use library\service\DbService;
+use library\model\BaseModel;
 
 class UserModel extends BaseModel{
     public $tableName = 'user';

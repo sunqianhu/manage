@@ -4,7 +4,7 @@
  */
 require_once '../library/autoload.php';
 
-use \library\service\ConfigService;
+use library\service\ConfigService;
 
 $config = ConfigService::getAll();
 

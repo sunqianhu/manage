@@ -5,14 +5,15 @@
 require_once '../../library/session.php';
 require_once '../../library/autoload.php';
 
-use \library\model\system\UserModel;
-use \library\model\system\RoleModel;
-use \library\model\system\DepartmentModel;
-use \library\service\ConfigService;
-use \library\service\ArrayService;
-use \library\service\ValidateService;
-use \library\service\SafeService;
-use \library\service\system\DictionaryService;
+use library\model\system\UserModel;
+use library\model\system\RoleModel;
+use library\model\system\DepartmentModel;
+use library\service\ConfigService;
+use library\service\ArrayService;
+use library\service\ValidateService;
+use library\service\SafeService;
+use library\service\system\DictionaryService;
+use library\service\AuthService;
 
 $config = ConfigService::getAll();
 $validateService = new ValidateService();
@@ -25,6 +26,14 @@ $status = '';
 $roleOption = '';
 
 // 验证
+if(!AuthService::isLogin()){
+    header('location:../../login/index.php');
+    exit;
+}
+if(!AuthService::isPermission('system_user')){
+    header('location:../../error.php?message='.urlencode('无权限'));
+    exit;
+}
 $validateService->rule = array(
     'id' => 'require|number'
 );

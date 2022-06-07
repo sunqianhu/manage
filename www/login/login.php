@@ -5,12 +5,12 @@
 require_once '../library/session.php';
 require_once '../library/autoload.php';
 
-use \library\model\system\UserModel;
-use \library\model\system\DepartmentModel;
-use \library\model\system\MenuModel;
-use \library\service\ConfigService;
-use \library\service\ValidateService;
-use \library\service\AuthService;
+use library\model\system\UserModel;
+use library\model\system\DepartmentModel;
+use library\model\system\MenuModel;
+use library\service\ConfigService;
+use library\service\ValidateService;
+use library\service\AuthService;
 
 $return = array(
     'status'=>'error',

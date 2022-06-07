@@ -5,17 +5,17 @@
 require_once '../../library/session.php';
 require_once '../../library/autoload.php';
 
-use \library\model\system\UserModel;
-use \library\model\system\DepartmentModel;
-use \library\model\system\RoleModel;
-use \library\service\AuthService;
-use \library\service\ConfigService;
-use \library\service\FrameMainService;
-use \library\service\PaginationService;
-use \library\service\ZtreeService;
-use \library\service\ArrayService;
-use \library\service\SafeService;
-use \library\service\system\DictionaryService;
+use library\model\system\UserModel;
+use library\model\system\DepartmentModel;
+use library\model\system\RoleModel;
+use library\service\AuthService;
+use library\service\ConfigService;
+use library\service\FrameMainService;
+use library\service\PaginationService;
+use library\service\ZtreeService;
+use library\service\ArrayService;
+use library\service\SafeService;
+use library\service\system\DictionaryService;
 
 $config = ConfigService::getAll();
 $frameMainMenu = ''; // 框架菜单

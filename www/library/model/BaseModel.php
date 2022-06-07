@@ -4,7 +4,7 @@
  */
 namespace library\model;
 
-use \library\service\DbService;
+use library\service\DbService;
 
 class BaseModel{
 

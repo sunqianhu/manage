@@ -4,7 +4,7 @@
  */
 namespace library\model\system;
 
-use \library\model\BaseModel;
+use library\model\BaseModel;
 
 class RoleModel extends BaseModel{
     public $tableName = 'role'; // 数据表名

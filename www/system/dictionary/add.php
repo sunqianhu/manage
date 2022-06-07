@@ -5,7 +5,17 @@
 require_once '../../library/session.php';
 require_once '../../library/autoload.php';
 
-use \library\service\ConfigService;
+use library\service\ConfigService;
+use library\service\AuthService;
+
+if(!AuthService::isLogin()){
+    header('location:../../login/index.php');
+    exit;
+}
+if(!AuthService::isPermission('system_dictionary')){
+    header('location:../../error.php?message='.urlencode('无权限'));
+    exit;
+}
 
 $config = ConfigService::getAll();
 ?><!doctype html>

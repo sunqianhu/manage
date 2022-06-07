@@ -4,8 +4,8 @@
  */
 namespace library\service\system;
 
-use \library\model\system\UserMode;
-use \library\model\system\MenuMode;
+use library\model\system\UserMode;
+use library\model\system\MenuMode;
 
 class userService{
     

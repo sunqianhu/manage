@@ -5,11 +5,12 @@
 require_once '../../library/session.php';
 require_once '../../library/autoload.php';
 
-use \library\model\system\MenuModel;
-use \library\service\ConfigService;
-use \library\service\ValidateService;
-use \library\service\SafeService;
-use \library\service\system\DictionaryService;
+use library\model\system\MenuModel;
+use library\service\ConfigService;
+use library\service\ValidateService;
+use library\service\SafeService;
+use library\service\system\DictionaryService;
+use library\service\AuthService;
 
 $config = ConfigService::getAll();
 $validateService = new ValidateService();
@@ -17,6 +18,15 @@ $menuModel = new MenuModel();
 $menu = array();
 
 // 验证
+if(!AuthService::isLogin()){
+    header('location:../../login/index.php');
+    exit;
+}
+if(!AuthService::isPermission('system_menu')){
+    header('location:../../error.php?message='.urlencode('无权限'));
+    exit;
+}
+
 $validateService->rule = array(
     'id' => 'require|number'
 );

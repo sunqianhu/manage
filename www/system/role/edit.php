@@ -5,13 +5,14 @@
 require_once '../../library/session.php';
 require_once '../../library/autoload.php';
 
-use \library\model\system\RoleModel;
-use \library\model\system\MenuModel;
-use \library\model\system\RoleMenuModel;
-use \library\service\ConfigService;
-use \library\service\ZtreeService;
-use \library\service\ValidateService;
-use \library\service\SafeService;
+use library\model\system\RoleModel;
+use library\model\system\MenuModel;
+use library\model\system\RoleMenuModel;
+use library\service\ConfigService;
+use library\service\ZtreeService;
+use library\service\ValidateService;
+use library\service\SafeService;
+use library\service\AuthService;
 
 $config = ConfigService::getAll();
 $validateService = new ValidateService();
@@ -25,6 +26,15 @@ $menus = array();
 $menu = ''; // 菜单json数据
 
 // 验证
+if(!AuthService::isLogin()){
+    header('location:../../login/index.php');
+    exit;
+}
+if(!AuthService::isPermission('system_role')){
+    header('location:../../error.php?message='.urlencode('无权限'));
+    exit;
+}
+
 $validateService->rule = array(
     'id' => 'require|number'
 );
