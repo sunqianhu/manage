@@ -36,6 +36,7 @@ $search = array(
     'department_name'=>'不限',
     'status'=>'0',
     'role_id'=>'0',
+    'username'=>'',
     'name'=>'',
     'phone'=>''
 ); // 搜索
@@ -72,6 +73,11 @@ if(isset($_GET['role_id']) && $_GET['role_id'] != '0'){
     $whereMarks[] = 'find_in_set(:role_id, role_id_string)';
     $whereValues[':role_id'] = $_GET['role_id'];
     $search['role_id'] = $_GET['role_id'];
+}
+if(isset($_GET['username']) && $_GET['username'] !== ''){
+    $whereMarks[] = 'username like :username';
+    $whereValues[':username'] = '%'.$_GET['username'].'%';
+    $search['username'] = $_GET['username'];
 }
 if(isset($_GET['phone']) && $_GET['phone'] !== ''){
     $whereMarks[] = 'phone like :phone';
@@ -178,6 +184,7 @@ index.departmentData = <?php echo $department;?>;
 <option value="0">不限</option>
 <?php echo $roleOption;?>
 </select></li>
+<li>用户名：<input type="text" name="username" value="<?php echo $search['username'];?>" /></li>
 <li>用户姓名：<input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
 <li>手机号码：<input type="text" name="phone" value="<?php echo $search['phone'];?>" /></li>
 <li>
