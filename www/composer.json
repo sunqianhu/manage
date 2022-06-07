@@ -9,10 +9,11 @@
             "email": "469661426@qq.com"
         }
     ],
-    "require": {},
+    "require": {
+    },
     "autoload":{
         "psr-4": {
-            "app\\": "app"
+            "library\\": "library"
         }
     }
 }
