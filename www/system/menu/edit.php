@@ -69,12 +69,12 @@ $menuTypeRadioNode = DictionaryService::getRadio('system_menu_type', 'type', $me
 </head>
 
 <body class="page">
-<form method="post" action="edit_save.php" class="sun_form form">
+<form method="post" action="edit_save.php" class="sun_form_brief form">
 <div class="page_body">
 <input type="hidden" name="id" value="<?php echo $menu['id'];?>" />
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 上级菜单</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 上级菜单</div>
+<div class="content">
 <input type="hidden" name="parent_id" id="parent_id" value="<?php echo $menu['parent_id'];?>" />
 <div class="sun_input_group" onClick="edit.selectMenu();">
 <input type="text" name="parent_name" id="parent_name" readonly value="<?php echo $menu['parent_name'];?>" />
@@ -83,52 +83,52 @@ $menuTypeRadioNode = DictionaryService::getRadio('system_menu_type', 'type', $me
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 菜单类型</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 菜单类型</div>
+<div class="content">
 <?php echo $menuTypeRadioNode;?>
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 菜单名称</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 菜单名称</div>
+<div class="content">
 <input type="text" name="name" id="name" value="<?php echo $menu['name'];?>" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label">菜单标识</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title">菜单标识</div>
+<div class="content">
 <input type="text" name="tag" id="tag" value="<?php echo $menu['tag'];?>" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label">图标</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title">图标</div>
+<div class="content">
 <input type="text" name="icon_class" id="icon_class" value="<?php echo $menu['icon_class'];?>" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label">导航URL</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title">导航URL</div>
+<div class="content">
 <input type="text" name="url" id="url" style="width: 300px" value="<?php echo $menu['url'];?>" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label">权限标识</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title">权限标识</div>
+<div class="content">
 <input type="text" name="permission" id="permission" class="permission" value="<?php echo $menu['permission'];?>" />
-<div class="sun_form_tip">例如：“system_user_add”，从根开始写。</div>
+<div class="tip">例如：“system_user_add”，从根开始写。</div>
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 排序</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 排序</div>
+<div class="content">
 <input type="number" name="sort" id="sort" value="<?php echo $menu['sort'];?>" />
 </div>
 </div>

@@ -8,6 +8,8 @@ require_once '../../library/autoload.php';
 use library\service\ConfigService;
 use library\service\AuthService;
 
+$config = array();
+
 if(!AuthService::isLogin()){
     header('location:../../login/index.php');
     exit;
@@ -16,6 +18,7 @@ if(!AuthService::isPermission('system_department')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
+
 $config = ConfigService::getAll();
 ?><!doctype html>
 <html>
@@ -31,11 +34,11 @@ $config = ConfigService::getAll();
 </head>
 
 <body class="page">
-<form method="post" action="add_save.php" class="sun_form form">
+<form method="post" action="add_save.php" class="sun_form_brief form">
 <div class="page_body">
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 上级部门</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 上级部门</div>
+<div class="content">
 <input type="hidden" name="parent_id" id="parent_id" value="1" />
 <div class="sun_input_group" onClick="add.selectDepartment();">
 <input type="text" name="parent_name" id="parent_name" readonly value="顶级部门" />
@@ -44,23 +47,23 @@ $config = ConfigService::getAll();
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 部门名称</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 部门名称</div>
+<div class="content">
 <input type="text" name="name" id="name" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 显示排序</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 显示排序</div>
+<div class="content">
 <input type="number" name="sort" id="sort" value="1" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label">备注</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title">备注</div>
+<div class="content">
 <textarea name="remark" id="remark" class="remark"></textarea>
 </div>
 </div>

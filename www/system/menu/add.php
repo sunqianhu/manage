@@ -35,11 +35,11 @@ if(!AuthService::isPermission('system_menu')){
 </head>
 
 <body class="page">
-<form method="post" action="add_save.php" class="sun_form form">
+<form method="post" action="add_save.php" class="sun_form_brief form">
 <div class="page_body">
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 上级菜单</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 上级菜单</div>
+<div class="content">
 <input type="hidden" name="parent_id" id="parent_id" value="1" />
 <div class="sun_input_group" onClick="add.selectMenu();">
 <input type="text" name="parent_name" id="parent_name" readonly value="顶级菜单" />
@@ -48,52 +48,52 @@ if(!AuthService::isPermission('system_menu')){
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 菜单类型</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 菜单类型</div>
+<div class="content">
 <?php echo $menuTypeRadioNode;?>
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 菜单名称</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 菜单名称</div>
+<div class="content">
 <input type="text" name="name" id="name" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label">菜单标识</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title">菜单标识</div>
+<div class="content">
 <input type="text" name="tag" id="tag" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label">图标</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title">图标</div>
+<div class="content">
 <input type="text" name="icon_class" id="icon_class" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label">导航URL</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title">导航URL</div>
+<div class="content">
 <input type="text" name="url" id="url" style="width: 300px" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label">权限标识</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title">权限标识</div>
+<div class="content">
 <input type="text" name="permission" id="permission" class="permission" />
-<div class="sun_form_tip">例如：“system_user_add”，从根开始写。</div>
+<div class="tip">例如：“system_user_add”，从根开始写。</div>
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 排序</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 排序</div>
+<div class="content">
 <input type="number" name="sort" id="sort" value="1" />
 </div>
 </div>

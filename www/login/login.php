@@ -8,9 +8,11 @@ require_once '../library/autoload.php';
 use library\model\system\UserModel;
 use library\model\system\DepartmentModel;
 use library\model\system\MenuModel;
+use library\model\system\LoginLogModel;
 use library\service\ConfigService;
 use library\service\ValidateService;
 use library\service\AuthService;
+use library\service\IpService;
 use library\service\system\DictionaryService;
 
 $return = array(
@@ -24,11 +26,14 @@ $return = array(
 $userModel = new UserModel();
 $departmentModel = new DepartmentModel();
 $menuModel = new MenuModel();
+$loginLogModel = new LoginLogModel();
 $validateService = new ValidateService();
 $user = array();
 $department = array();
 $roleIdString = ''; // 角色id
 $menus = array(); // 菜单
+$data = array(); // 数据
+$ip = '';
 
 // 验证
 $validateService->rule = array(
@@ -70,7 +75,7 @@ $return['data']['captcha'] = '1';
 
 // 用户
 $user = $userModel->selectRow(
-    'id, username, name, department_id, role_id_string, status', 
+    'id, username, name, department_id, role_id_string, status, time_login, ip', 
     array(
         'mark'=>'username = :username and password = :password',
         'value'=>array(
@@ -113,6 +118,28 @@ $menus = $menuModel->select("id, parent_id, type, name, tag, permission, icon_cl
         ':role_id'=> $user['role_id_string']
     )
 ));
+
+// 记录
+$ip = IpService::getIp();
+$userModel->update(array(
+    'time_login'=>time(),
+    'ip'=>$ip
+), array(
+    'mark'=>'id = :id',
+    'value'=>array(
+        ':id'=>$user['id']
+    )
+));
+
+// 日志
+$data = array(
+    'user_id'=>$user['id'],
+    'username'=>$user['username'],
+    'name'=>$user['name'],
+    'time_login'=>time(),
+    'ip'=>$ip
+);
+$loginLogModel->insert($data);
 
 // 服务层
 $_SESSION['user'] = $user;

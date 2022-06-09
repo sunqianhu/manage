@@ -214,7 +214,6 @@ sun.formSubmit = function(config){
 /**
  * 下拉
  * @param string config.selector 选择器
- * @param array config.trigger 事件
  */
 sun.dropDown = function(config){
     var domDocument; // 文档
@@ -276,7 +275,6 @@ sun.dropDownClose = function(selector){
 /**
  * 下拉菜单
  * @param string config.selector 选择器
- * @param array config.trigger 事件
  */
 sun.dropDownMenu = function(config){
     var domDocument; // 文档

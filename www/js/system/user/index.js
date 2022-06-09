@@ -96,4 +96,8 @@ index.delete = function(id){
 
 $(function(){
     index.searchDepartmentZtreeInit();
+    
+    sun.dropDownMenu({
+        selector: ".data table .operation_more"
+    });
 });

@@ -13,7 +13,7 @@ use library\service\ConfigService;
 use library\service\FrameMainService;
 use library\service\PaginationService;
 use library\service\ZtreeService;
-use library\service\ArrayService;
+use library\service\ArrayTwoService;
 use library\service\SafeService;
 use library\service\system\DictionaryService;
 
@@ -125,7 +125,7 @@ $department = json_encode($departments);
 
 $statusOption = DictionaryService::getSelectOption('system_user_status', array($search['status']));
 $roles = $roleModel->select('id, name', array());
-$roleOption = ArrayService::getSelectOption($roles, array($search['role_id']), 'id', 'name');
+$roleOption = ArrayTwoService::getSelectOption($roles, array($search['role_id']), 'id', 'name');
 
 $users = SafeService::frontDisplay($users, array('id'));
 $search = SafeService::frontDisplay($search);
@@ -198,7 +198,7 @@ index.departmentData = <?php echo $department;?>;
 <div class="toolbar">
 <a href="javascript:;" class="sun_button" onClick="index.add();">添加</a>
 </div>
-<table class="sun_table sun_table_hover sun_mt10" width="100%">
+<table class="sun_table_list sun_table_list_hover sun_mt10" width="100%">
   <tr>
     <th>id</th>
     <th>用户名</th>
@@ -208,7 +208,7 @@ index.departmentData = <?php echo $department;?>;
     <th>最后修改时间</th>
     <th>最后登录时间</th>
     <th>状态</th>
-    <th width="100">操作</th>
+    <th width="160">操作</th>
   </tr>
 <?php
 if(!empty($users)){
@@ -224,8 +224,17 @@ foreach($users as $user){
     <td><?php echo $user['time_login_name'];?></td>
     <td><span class="<?php echo $user['status_style_class'];?>"><?php echo $user['status_name'];?></span></td>
     <td>
+<a href="detail.php?id=<?php echo $user['id'];?>" class="sun_button sun_button_secondary sun_button_small sun_mr5">详情</a>
 <a href="javascript:;" class="sun_button sun_button_secondary sun_button_small sun_mr5" onClick="index.edit(<?php echo $user['id'];?>)">修改</a>
-<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small" onClick="index.delete(<?php echo $user['id'];?>)">删除</a>
+
+<span class="sun_dropdown_menu sun_dropdown_menu_align_right operation_more">
+<div class="title"><a href="javascript:;" class="sun_button sun_button_secondary sun_button_small">更多 <span class="iconfont icon-arrow_down arrow"></span></a></div>
+<div class="content">
+<ul>
+<li><a href="javascript:;" onClick="index.delete(<?php echo $user['id'];?>)">删除</a></li>
+</ul>
+</div>
+</span>
     </td>
   </tr>
 <?php

@@ -103,7 +103,7 @@ $dictionarys = SafeService::frontDisplay($dictionarys, array('id'));
 <div class="toolbar">
 <a href="javascript:;" class="sun_button" onClick="index.add();">添加</a>
 </div>
-<table class="sun_table sun_table_hover sun_mt10" width="100%">
+<table class="sun_table_list sun_table_list_hover sun_mt10" width="100%">
   <tr>
     <th>id</th>
     <th>字典类型</th>

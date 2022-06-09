@@ -9,7 +9,7 @@ use library\model\system\UserModel;
 use library\model\system\RoleModel;
 use library\model\system\DepartmentModel;
 use library\service\ConfigService;
-use library\service\ArrayService;
+use library\service\ArrayTwoService;
 use library\service\ValidateService;
 use library\service\SafeService;
 use library\service\system\DictionaryService;
@@ -68,7 +68,7 @@ $user = SafeService::frontDisplay($user, array('id'));
 $status = DictionaryService::getRadio('system_user_status', 'status', $user['status']);
 
 $roles = $roleModel->select('id, name', array());
-$roleOption = ArrayService::getSelectOption($roles, $user['role_ids'], 'id', 'name');
+$roleOption = ArrayTwoService::getSelectOption($roles, $user['role_ids'], 'id', 'name');
 
 ?><!doctype html>
 <html>
@@ -90,46 +90,46 @@ $roleOption = ArrayService::getSelectOption($roles, $user['role_ids'], 'id', 'na
 </head>
 
 <body class="page">
-<form method="post" action="edit_save.php" class="sun_form form">
+<form method="post" action="edit_save.php" class="sun_form_brief form">
 <div class="page_body">
 <input type="hidden" name="id" value="<?php echo $user['id'];?>" />
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 用户名</div>
-<div class="sun_form_content"><?php echo $user['username'];?></div>
+<div class="row">
+<div class="title"><span class="required">*</span> 用户名</div>
+<div class="content"><?php echo $user['username'];?></div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 状态</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 状态</div>
+<div class="content">
 <?php echo $status;?>
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 密码</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 密码</div>
+<div class="content">
 <input type="password" name="password" id="password" autocomplete="off" />
-<span class="sun_form_tip">不修改请保持密码输入框为空</span>
+<span class="tip">不修改请保持密码输入框为空</span>
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 姓名</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 姓名</div>
+<div class="content">
 <input type="text" name="name" id="name" value="<?php echo $user['name'];?>" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 手机号码</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 手机号码</div>
+<div class="content">
 <input type="text" name="phone" id="phone" value="<?php echo $user['phone'];?>" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 部门</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 部门</div>
+<div class="content">
 <input type="hidden" name="department_id" id="department_id" value="<?php echo $user['department_id'];?>" />
 <div class="sun_input_group" onClick="edit.selectDepartment();">
 <input type="text" name="department_name" id="department_name" readonly value="<?php echo $user['department_name'];?>" />
@@ -138,9 +138,9 @@ $roleOption = ArrayService::getSelectOption($roles, $user['role_ids'], 'id', 'na
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 角色</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 角色</div>
+<div class="content">
 <select name="role_ids[]" multiple="multiple" class="selectpicker role_ids" id="role_ids" data-live-search="true" title="请选择" data-width="170px">
 <?php echo $roleOption;?>
 </select>

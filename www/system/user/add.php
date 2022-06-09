@@ -8,7 +8,7 @@ require_once '../../library/autoload.php';
 use library\model\system\UserModel;
 use library\model\system\RoleModel;
 use library\service\ConfigService;
-use library\service\ArrayService;
+use library\service\ArrayTwoService;
 use library\service\system\DictionaryService;
 use library\service\AuthService;
 
@@ -27,7 +27,7 @@ if(!AuthService::isPermission('system_user')){
 }
 
 $roles = $roleModel->select('id, name');
-$roleOption = ArrayService::getSelectOption($roles);
+$roleOption = ArrayTwoService::getSelectOption($roles);
 
 ?><!doctype html>
 <html>
@@ -49,53 +49,53 @@ $roleOption = ArrayService::getSelectOption($roles);
 </head>
 
 <body class="page">
-<form method="post" action="add_save.php" class="sun_form form">
+<form method="post" action="add_save.php" class="sun_form_brief form">
 <div class="page_body">
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 用户名</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 用户名</div>
+<div class="content">
 <input type="text" name="username" id="username" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 状态</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 状态</div>
+<div class="content">
 <?php echo $status;?>
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 密码</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 密码</div>
+<div class="content">
 <input type="password" name="password" id="password" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 确认密码</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 确认密码</div>
+<div class="content">
 <input type="password" name="password2" id="password2" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 姓名</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 姓名</div>
+<div class="content">
 <input type="text" name="name" id="name" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 手机号码</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 手机号码</div>
+<div class="content">
 <input type="text" name="phone" id="phone" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 部门</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 部门</div>
+<div class="content">
 <input type="hidden" name="department_id" id="department_id" value="0" />
 <div class="sun_input_group" onClick="add.selectDepartment();">
 <input type="text" name="department_name" id="department_name" readonly value="请选择" />
@@ -104,9 +104,9 @@ $roleOption = ArrayService::getSelectOption($roles);
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 角色</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 角色</div>
+<div class="content">
 <select name="role_ids[]" multiple="multiple" class="selectpicker role_ids" id="role_ids" data-live-search="true" title="请选择" data-width="170px">
 <?php echo $roleOption;?>
 </select>

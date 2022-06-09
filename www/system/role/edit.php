@@ -95,26 +95,26 @@ edit.menuData = <?php echo $menu;?>;
 </head>
 
 <body class="page">
-<form method="post" action="edit_save.php" class="sun_form form">
+<form method="post" action="edit_save.php" class="sun_form_brief form">
 <div class="page_body">
 <input type="hidden" name="id" value="<?php echo $role['id'];?>" />
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 角色名称</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 角色名称</div>
+<div class="content">
 <input type="text" name="name" id="name" value="<?php echo $role['name'];?>" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label">备注</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title">备注</div>
+<div class="content">
 <input type="text" name="remark" id="remark" value="<?php echo $role['remark'];?>" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label">菜单权限</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title">菜单权限</div>
+<div class="content">
 <input type="hidden" name="menu_ids" id="menu_ids" value="<?php echo $role['menu_ids'];?>"  />
 <div class="ztree" id="ztree_menu"></div>
 </div>

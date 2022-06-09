@@ -50,25 +50,25 @@ add.menuData = <?php echo $menu;?>;
 </head>
 
 <body class="page">
-<form method="post" action="add_save.php" class="sun_form form">
+<form method="post" action="add_save.php" class="sun_form_brief form">
 <div class="page_body">
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 角色名称</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 角色名称</div>
+<div class="content">
 <input type="text" name="name" id="name" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label">备注</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title">备注</div>
+<div class="content">
 <input type="text" name="remark" id="remark" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label">菜单权限</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title">菜单权限</div>
+<div class="content">
 <input type="hidden" name="menu_ids" id="menu_ids" />
 <div class="ztree" id="ztree_menu"></div>
 </div>

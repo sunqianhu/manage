@@ -30,19 +30,19 @@ if(!AuthService::isLogin()){
 </head>
 
 <body class="page">
-<form method="post" action="self_edit_password_save.php" class="sun_form form">
+<form method="post" action="self_edit_password_save.php" class="sun_form_brief form">
 <div class="page_body">
 <input type="hidden" name="id" value="<?php echo $user['id'];?>" />
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 新密码</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 新密码</div>
+<div class="content">
 <input type="password" name="password" id="password" autocomplete="off" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 确认新密码</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 确认新密码</div>
+<div class="content">
 <input type="password" name="password2" id="password2" autocomplete="off" />
 </div>
 </div>

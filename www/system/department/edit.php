@@ -70,12 +70,12 @@ $department = SafeService::frontDisplay($department, array('id', 'parent_id'));
 </head>
 
 <body class="page">
-<form method="post" action="edit_save.php" class="sun_form form">
+<form method="post" action="edit_save.php" class="sun_form_brief form">
 <div class="page_body">
 <input type="hidden" name="id" value="<?php echo $department['id'];?>" />
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 上级部门</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 上级部门</div>
+<div class="content">
 <input type="hidden" name="parent_id" id="parent_id" value="<?php echo $department['parent_id'];?>" />
 <div class="sun_input_group" onClick="edit.selectDepartment();">
 <input type="text" name="parent_name" id="parent_name" readonly value="<?php echo $department['parent_name'];?>" />
@@ -84,23 +84,23 @@ $department = SafeService::frontDisplay($department, array('id', 'parent_id'));
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 部门名称</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 部门名称</div>
+<div class="content">
 <input type="text" name="name" id="name" value="<?php echo $department['name'];?>" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label"><span class="sun_form_required">*</span> 显示排序</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title"><span class="required">*</span> 显示排序</div>
+<div class="content">
 <input type="number" name="sort" id="sort" value="<?php echo $department['sort'];?>" />
 </div>
 </div>
 
-<div class="sun_form_item">
-<div class="sun_form_label">备注</div>
-<div class="sun_form_content">
+<div class="row">
+<div class="title">备注</div>
+<div class="content">
 <textarea name="remark" id="remark" class="remark"><?php echo $department['remark'];?></textarea>
 </div>
 </div>

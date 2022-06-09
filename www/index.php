@@ -7,9 +7,26 @@ require_once 'library/autoload.php';
 
 use library\service\ConfigService;
 use library\service\FrameMainService;
+use library\service\AuthService;
+
+$config = array();
+$frameMainMenu = '';
+$timeLogin = '无';
+$ip = '无';
+
+if(!AuthService::isLogin()){
+    header('location:../../login/index.php');
+    exit;
+}
 
 $config = ConfigService::getAll();
 $frameMainMenu = FrameMainService::getPageLeftMenu('home');
+if($_SESSION['user']['time_login'] > 0){
+    $timeLogin = date('Y-m-d H:i:s', $_SESSION['user']['time_login']);
+}
+if($_SESSION['user']['ip']){
+    $ip = $_SESSION['user']['ip'];
+}
 
 ?><!doctype html>
 <html>
@@ -38,7 +55,11 @@ $frameMainMenu = FrameMainService::getPageLeftMenu('home');
 <div class="body">
 
 <div class="welcome">
-欢迎<span><?php echo $_SESSION['user']['name'];?></span>登录系统<div>
+欢迎<span><?php echo $_SESSION['user']['name'];?></span>登录系统，
+上次登录时间：<?php echo $timeLogin;?>，
+上次登录ip：<?php echo $ip;?>
+<div>
+
 </div>
 </div>
 
