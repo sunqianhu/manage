@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2022-06-09 16:27:55
+Date: 2022-06-10 16:04:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -27,7 +27,7 @@ CREATE TABLE `department` (
   `sort` int(255) NOT NULL DEFAULT '0' COMMENT '排序',
   `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COMMENT='部门';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COMMENT='部门';
 
 -- ----------------------------
 -- Records of department
@@ -78,7 +78,7 @@ CREATE TABLE `login_log` (
   `time_login` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',
   `ip` varchar(32) NOT NULL DEFAULT '' COMMENT '登录ip',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of login_log
@@ -86,6 +86,7 @@ CREATE TABLE `login_log` (
 INSERT INTO `login_log` VALUES ('1', '7', '15108273576', '孙乾户', '1654756998', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('2', '7', '15108273576', '孙乾户', '1654761759', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('3', '7', '15108273576', '孙乾户', '1654762537', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('4', '7', '15108273576', '孙乾户', '1654823590', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for menu
@@ -103,7 +104,7 @@ CREATE TABLE `menu` (
   `permission` varchar(64) NOT NULL DEFAULT '' COMMENT '权限标识',
   `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COMMENT='菜单';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COMMENT='菜单';
 
 -- ----------------------------
 -- Records of menu
@@ -169,7 +170,7 @@ CREATE TABLE `user` (
   `role_id_string` varchar(255) NOT NULL DEFAULT '' COMMENT '角色id串',
   `username` varchar(64) NOT NULL DEFAULT '' COMMENT '用户名',
   `password` varchar(64) NOT NULL DEFAULT '' COMMENT '密码',
-  `name` varchar(64) NOT NULL COMMENT '姓名',
+  `name` varchar(64) NOT NULL DEFAULT '' COMMENT '姓名',
   `phone` varchar(64) NOT NULL DEFAULT '' COMMENT '手机号码',
   `status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
   `time_add` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
@@ -184,7 +185,7 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('6', '1', '1,2', 'admin', 'a06f5cdb68839c63228059340f609f5e', '超级管理员', '12345678911', '1', '1653709625', '1654483741', '0', '');
-INSERT INTO `user` VALUES ('7', '1', '1', '15108273576', 'a06f5cdb68839c63228059340f609f5e', '孙乾户', '15108273576', '1', '1653783552', '1654595539', '1654762537', '127.0.0.1');
+INSERT INTO `user` VALUES ('7', '1', '1', '15108273576', 'a06f5cdb68839c63228059340f609f5e', '孙乾户', '15108273576', '1', '1653783552', '1654595539', '1654823590', '127.0.0.1');
 INSERT INTO `user` VALUES ('8', '1', '2', '18781933732', 'bfb0e640376eb36ae75a8bf1e2106e34', '唐琴梅', '18781933732', '2', '1653783812', '1654595762', '0', '');
 
 -- ----------------------------
