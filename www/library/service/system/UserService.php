@@ -4,60 +4,28 @@
  */
 namespace library\service\system;
 
-use library\model\system\UserMode;
-use library\model\system\MenuMode;
+use \library\model\system\UserModel;
 
 class userService{
     
     /**
-     * 得到用户的菜单url
+     * 得到用户姓名
      * @access public
-     * @return boolean
+     * @param int $id 用户id
+     * @return string 用户姓名
      */
-    static function getMenuUrls($userId){
-        $userMode = new UserMode();
-        $menuMode = new MenuMode();
-        $roleIdString = '';
-        $menus = array();
-        $urlRecords = array();
-        $urlRecord = '';
-        $urlLines = array();
-        $urlLine = '';
-        $urls = array();
+    static function getName($id){
+        $userModel = new UserModel();
+        $name = '';
         
-        $roleIdString = $userMode->selectOne('role_id_string', array(
+        $name = $userModel->selectOne('name', array(
             'mark'=>'id = :id',
             'value'=>array(
-                ':id'=>$userId
+                ':id'=>$id
             )
         ));
-        if(empty($roleIdString)){
-            return $urls;
-        }
         
-        $menus = $menuMode->select('url', array(
-            'mark'=>'id in (select menu_id from role_menu where role_id in (:role_id))',
-            'value'=>array(
-                ':role_id'=>$roleIdString
-            )
-        ));
-        if(empty($menus)){
-            return $urls;
-        }
-        
-        $urlRecords = array_column($menus, 'url');
-        foreach($urlRecords as $urlRecord){
-            $urlLines = explode("\r\n", $urlRecord);
-            foreach($urlLines as $urlLine){
-                if(empty($urlLine)){
-                    continue;
-                }
-                $urls[] = $urlLine;
-            }
-        }
-        
-        return $urls;
+        return $name;
     }
-    
     
 }

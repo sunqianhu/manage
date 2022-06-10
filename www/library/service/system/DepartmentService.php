@@ -4,7 +4,29 @@
  */
 namespace library\service\system;
 
+use library\model\system\DepartmentModel;
+
 class DepartmentService{
+    
+    /**
+     * 得到部门名
+     * @access public
+     * @param int $id 用户id
+     * @return string 用户姓名
+     */
+    static function getName($id){
+        $departmentModel = new DepartmentModel();
+        $name = '';
+        
+        $name = $departmentModel->selectOne('name', array(
+            'mark'=>'id = :id',
+            'value'=>array(
+                ':id'=>$id
+            )
+        ));
+        
+        return $name;
+    }
     
     /**
      * 得到首页节点树

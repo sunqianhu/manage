@@ -134,8 +134,7 @@ $userModel->update(array(
 // 日志
 $data = array(
     'user_id'=>$user['id'],
-    'username'=>$user['username'],
-    'name'=>$user['name'],
+    'department_id'=>$department['id'],
     'time_login'=>time(),
     'ip'=>$ip
 );
