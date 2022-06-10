@@ -59,6 +59,10 @@ if(isset($_GET['department_name']) && $_GET['department_name'] !== ''){
     $whereValues[':department_name'] = '%'.$_GET['department_name'].'%';
     $search['department_name'] = $_GET['department_name'];
 }
+if(isset($_GET['user_id']) && $_GET['user_id'] !== ''){
+    $whereMarks[] = 'user_id = :user_id';
+    $whereValues[':user_id'] = $_GET['user_id'];
+}
 if(isset($_GET['user_name']) && $_GET['user_name'] !== ''){
     $whereMarks[] = 'user_id in (select id from user where name like :user_name)';
     $whereValues[':user_name'] = '%'.$_GET['user_name'].'%';

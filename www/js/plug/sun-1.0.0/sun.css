@@ -126,7 +126,11 @@ transition: all 0.5s ease;
 
 /*版块*/
 .sun_section{ background: #ffffff}
-.sun_section > .title{ font-size: 16px; height: 40px; line-height: 40px; padding-left: 10px}
+.sun_section > .title{ height: 40px; line-height: 40px; padding: 0px 10px}
+.sun_section > .title:after{ content: ""; clear: both; display: block}
+.sun_section > .title .name{ font-size: 16px}
+.sun_section > .title .describe{ font-size: 12px; color: #919191; margin-left: 10px}
+.sun_section > .title .more{ float: right; font-size: 12px; color: #919191}
 .sun_section > .content{ padding: 0px 10px 10px 10px}
 
 /*toast*/

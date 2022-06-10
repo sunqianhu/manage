@@ -9,6 +9,7 @@ use library\model\system\UserModel;
 use library\model\system\RoleModel;
 use library\model\system\DepartmentModel;
 use library\model\system\LoginLogModel;
+use library\model\system\OperationLogModel;
 use library\service\ValidateService;
 use library\service\AuthService;
 use library\service\ConfigService;
@@ -21,12 +22,15 @@ $userModel = new UserModel(); // 模型
 $departmentModel = new DepartmentModel();
 $roleModel = new RoleModel();
 $loginLogModel = new LoginLogModel();
+$operationLogModel = new OperationLogModel();
 $validateService = new ValidateService();
 $config = ConfigService::getAll();
 $frameMainMenu = ''; // 框架菜单
 $roles = array(); // 角色
 $loginLogs = array();
 $loginLog = array();
+$operationLogs = array(); // 操作日志
+$operationLog = array();
 
 // 验证
 if(!AuthService::isLogin()){
@@ -88,6 +92,15 @@ $loginLogs = $loginLogModel->select("ip, time_login",  array(
     )
 ), 'order by id desc', 'limit 0,50');
 $loginLogs = ArrayTwoService::columnTimestampToTime($loginLogs, 'time_login', 'time_login_name');
+
+// 操作日志
+$operationLogs = $operationLogModel->select("ip, time_add, url",  array(
+    'mark'=>'user_id = :user_id',
+    'value'=>array(
+        ':user_id'=>$user['id']
+    )
+), 'order by id desc', 'limit 0,50');
+$operationLogs = ArrayTwoService::columnTimestampToTime($operationLogs, 'time_add', 'time_add_name');
 
 // 菜单
 $frameMainMenu = FrameMainService::getPageLeftMenu('system_user');
@@ -159,7 +172,11 @@ $frameMainMenu = FrameMainService::getPageLeftMenu('system_user');
 </div>
 
 <div class="sun_section sun_mt10">
-<div class="title">登录日志最后50条</div>
+<div class="title">
+<span class="name">登录日志</span>
+<span class="describe">显示最后50条</span>
+<a href="../login_log/index.php?user_id=<?php echo $user['id'];?>" class="more" target="_blank">更多</a>
+</div>
 <div class="content">
 
 <table width="100%" class="sun_table_view">
@@ -181,6 +198,44 @@ foreach($loginLogs as $loginLog){
 ?>
 <tr>
 <td colspan="2" align="center">无</td>
+</tr>
+<?php
+}
+?>
+</table>
+
+</div>
+</div>
+
+<div class="sun_section sun_mt10">
+<div class="title">
+<span class="name">操作日志</span>
+<span class="describe">显示最后50条</span>
+<a href="../operation_log/index.php?user_id=<?php echo $user['id'];?>" class="more" target="_blank">更多</a>
+</div>
+<div class="content">
+
+<table width="100%" class="sun_table_view">
+<tr>
+<td class="name">操作ip</td>
+<td class="name">操作时间</td>
+<td class="name">操作url</td>
+</tr>
+<?php
+if(!empty($operationLogs)){
+foreach($operationLogs as $operationLog){
+?>
+<tr>
+<td><?php echo $operationLog['ip'];?></td>
+<td><?php echo $operationLog['time_add_name'];?></td>
+<td><?php echo $operationLog['url'];?></td>
+</tr>
+<?php
+}
+}else{
+?>
+<tr>
+<td colspan="3" align="center">无</td>
 </tr>
 <?php
 }
