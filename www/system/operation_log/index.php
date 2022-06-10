@@ -11,6 +11,7 @@ use library\service\FrameMainService;
 use library\service\PaginationService;
 use library\service\SafeService;
 use library\service\AuthService;
+use library\service\StringService;
 use library\service\system\UserService;
 use library\service\system\DepartmentService;
 
@@ -86,6 +87,11 @@ foreach($operationLogs as $key => $operationLog){
     $operationLogs[$key]['time_add_name'] = date('Y-m-d H:i:s', $operationLog['time_add']);
     $operationLogs[$key]['user_name'] = UserService::getName($operationLog['user_id']);
     $operationLogs[$key]['department_name'] = DepartmentService::getName($operationLog['department_id']);
+    if(StringService::length($operationLog['url']) > 60){
+        $operationLogs[$key]['url_sub'] = StringService::sub($operationLog['url'], 0, 60).'...';
+    }else{
+        $operationLogs[$key]['url_sub'] = $operationLogs[$key]['url'];
+    }
 }
 
 $search = SafeService::frontDisplay($search);
@@ -143,8 +149,8 @@ $operationLogs = SafeService::frontDisplay($operationLogs, array('id', 'url'));
     <th>id</th>
     <th>部门</th>
     <th>用户姓名</th>
-    <th>操作url</th>
     <th>操作ip</th>
+    <th>操作url</th>
     <th>操作时间</th>
     <th width="100">操作</th>
   </tr>
@@ -156,8 +162,8 @@ foreach($operationLogs as $operationLog){
     <td><?php echo $operationLog['id'];?></td>
     <td><?php echo $operationLog['department_name'];?></td>
     <td><?php echo $operationLog['user_name'];?></td>
-    <td><a href="<?php echo $operationLog['url'];?>" target="_blank"><?php echo $operationLog['url'];?></a></td>
     <td><?php echo $operationLog['ip'];?></td>
+    <td><a href="<?php echo $operationLog['url'];?>" target="_blank"><?php echo $operationLog['url_sub'];?></a></td>
     <td><?php echo $operationLog['time_add_name'];?></td>
     <td>
 <a href="detail.php?id=<?php echo $operationLog['id'];?>" class="sun_button sun_button_secondary sun_button_small">详情</a>
