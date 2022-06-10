@@ -157,7 +157,7 @@ transition: all 0.5s ease;
 .sun_table_list_keyvalue .key{ color: #2d64b3; background-color: #F4F6F8}
 
 /*表格显示*/
-.sun_table_view{ border-collapse: collapse}
+.sun_table_view{ border-collapse: collapse; background: #ffffff}
 .sun_table_view tr td{ margin: 0px; padding: 5px; word-break: break-all; word-wrap: break-word; border: 1px solid #eeeeee}
 .sun_table_view tr td.name{ color:#2d64b3; background-color:#f5f5f5}
 

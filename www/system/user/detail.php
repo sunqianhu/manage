@@ -3,7 +3,7 @@
  * 用户详情
  */
 require_once '../../library/session.php';
-require_once '../../library/autoload.php';
+require_once '../../library/app.php';
 
 use library\model\system\UserModel;
 use library\model\system\RoleModel;
@@ -94,7 +94,7 @@ $loginLogs = $loginLogModel->select("ip, time_login",  array(
 $loginLogs = ArrayTwoService::columnTimestampToTime($loginLogs, 'time_login', 'time_login_name');
 
 // 操作日志
-$operationLogs = $operationLogModel->select("ip, time_add, url",  array(
+$operationLogs = $operationLogModel->select("id, ip, time_add, url",  array(
     'mark'=>'user_id = :user_id',
     'value'=>array(
         ':user_id'=>$user['id']
@@ -220,6 +220,7 @@ foreach($loginLogs as $loginLog){
 <td class="name">操作ip</td>
 <td class="name">操作时间</td>
 <td class="name">操作url</td>
+<td class="name" width="50">详情</td>
 </tr>
 <?php
 if(!empty($operationLogs)){
@@ -228,7 +229,8 @@ foreach($operationLogs as $operationLog){
 <tr>
 <td><?php echo $operationLog['ip'];?></td>
 <td><?php echo $operationLog['time_add_name'];?></td>
-<td><?php echo $operationLog['url'];?></td>
+<td><a href="<?php echo $operationLog['url'];?>" target="_blank"><?php echo $operationLog['url'];?></a></td>
+<td><a href="../operation_log/detail.php?id=<?php echo $operationLog['id'];?>" target="_blank">详情</a></td>
 </tr>
 <?php
 }

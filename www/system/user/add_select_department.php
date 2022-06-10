@@ -3,7 +3,7 @@
  * 选择部门
  */
 require_once '../../library/session.php';
-require_once '../../library/autoload.php';
+require_once '../../library/app.php';
 
 use library\model\system\DepartmentModel;
 use library\service\ZtreeService;

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2022-06-10 17:46:44
+Date: 2022-06-10 19:57:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -27,7 +27,7 @@ CREATE TABLE `department` (
   `sort` int(255) NOT NULL DEFAULT '0' COMMENT '排序',
   `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COMMENT='部门';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COMMENT='部门';
 
 -- ----------------------------
 -- Records of department
@@ -77,12 +77,14 @@ CREATE TABLE `login_log` (
   `time_login` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',
   `ip` varchar(32) NOT NULL DEFAULT '' COMMENT '登录ip',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
 
 -- ----------------------------
 -- Records of login_log
 -- ----------------------------
 INSERT INTO `login_log` VALUES ('5', '7', '1', '1654851609', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('6', '7', '1', '1654859949', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('7', '7', '1', '1654860208', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for menu
@@ -125,15 +127,30 @@ CREATE TABLE `operation_log` (
   `department_id` int(64) NOT NULL DEFAULT '0' COMMENT '部门id',
   `url` text NOT NULL COMMENT 'url',
   `ip` varchar(32) NOT NULL DEFAULT '' COMMENT '登录ip',
-  `request` text NOT NULL COMMENT '请求内容',
-  `response` text NOT NULL COMMENT '响应内容',
+  `user_agent` varchar(500) NOT NULL DEFAULT '' COMMENT '请求内容',
+  `request` text NOT NULL COMMENT 'post内容',
   `time_add` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of operation_log
 -- ----------------------------
+INSERT INTO `operation_log` VALUES ('1', '7', '1', '/system/user/index.php', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36', '', '1654860975');
+INSERT INTO `operation_log` VALUES ('2', '7', '1', '/system/user/index.php', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36', '', '1654861045');
+INSERT INTO `operation_log` VALUES ('3', '7', '1', '/system/user/index.php', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36', '', '1654861252');
+INSERT INTO `operation_log` VALUES ('4', '7', '1', '/system/user/index.php?id=dfdsf', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36', 'get参数：<br/>Array\n(\n    [id] => dfdsf\n)\n', '1654861256');
+INSERT INTO `operation_log` VALUES ('5', '7', '1', '/system/user/index.php', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36', '', '1654861672');
+INSERT INTO `operation_log` VALUES ('6', '7', '1', '/system/user/add.php', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36', '', '1654861675');
+INSERT INTO `operation_log` VALUES ('7', '7', '1', '/system/user/add_save.php', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36', 'post参数：Array\n(\n    [username] => \n    [status] => 1\n    [password] => \n    [password2] => \n    [name] => \n    [phone] => \n    [department_id] => 0\n    [department_name] => 请选择\n)\n', '1654861677');
+INSERT INTO `operation_log` VALUES ('8', '7', '1', '/system/role/index.php', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36', '', '1654862173');
+INSERT INTO `operation_log` VALUES ('9', '7', '1', '/system/role/index.php', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36', '', '1654862173');
+INSERT INTO `operation_log` VALUES ('10', '7', '1', '/system/operation_log/index.php', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36', '', '1654862175');
+INSERT INTO `operation_log` VALUES ('11', '7', '1', '/system/login_log/index.php', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36', '', '1654862183');
+INSERT INTO `operation_log` VALUES ('12', '7', '1', '/system/dictionary/index.php', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36', '', '1654862184');
+INSERT INTO `operation_log` VALUES ('13', '7', '1', '/system/operation_log/index.php', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36', '', '1654862186');
+INSERT INTO `operation_log` VALUES ('14', '7', '1', '/system/menu/index.php', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36', '', '1654862193');
+INSERT INTO `operation_log` VALUES ('15', '7', '1', '/system/operation_log/index.php', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36', '', '1654862196');
 
 -- ----------------------------
 -- Table structure for role
@@ -203,7 +220,7 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('6', '1', '1,2', 'admin', 'a06f5cdb68839c63228059340f609f5e', '超级管理员', '12345678911', '1', '1653709625', '1654483741', '0', '');
-INSERT INTO `user` VALUES ('7', '1', '1', '15108273576', 'a06f5cdb68839c63228059340f609f5e', '孙乾户', '15108273576', '1', '1653783552', '1654595539', '1654851609', '127.0.0.1');
+INSERT INTO `user` VALUES ('7', '1', '1', '15108273576', 'a06f5cdb68839c63228059340f609f5e', '孙乾户', '15108273576', '1', '1653783552', '1654595539', '1654860208', '127.0.0.1');
 INSERT INTO `user` VALUES ('8', '1', '2', '18781933732', 'bfb0e640376eb36ae75a8bf1e2106e34', '唐琴梅', '18781933732', '2', '1653783812', '1654595762', '0', '');
 
 -- ----------------------------

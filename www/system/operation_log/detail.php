@@ -3,7 +3,7 @@
  * 详情
  */
 require_once '../../library/session.php';
-require_once '../../library/autoload.php';
+require_once '../../library/app.php';
 
 use library\model\system\OperationLogModel;
 use library\service\ValidateService;
@@ -58,7 +58,7 @@ $operationLog['department_name'] = DepartmentService::getName($operationLog['dep
 $operationLog = SafeService::frontDisplay($operationLog, array('id', 'url'));
 
 // 菜单
-$frameMainMenu = FrameMainService::getPageLeftMenu('system_user');
+$frameMainMenu = FrameMainService::getPageLeftMenu('system_operation_log');
 
 ?><!doctype html>
 <html>
@@ -98,7 +98,7 @@ $frameMainMenu = FrameMainService::getPageLeftMenu('system_user');
 </tr>
 <tr>
 <td class="name" align="right">操作url：</td>
-<td><?php echo $operationLog['url'];?></td>
+<td><a href="<?php echo $operationLog['url'];?>" target="_blank"><?php echo $operationLog['url'];?></a></td>
 </tr>
 <tr>
 <td class="name" align="right">操作ip：</td>
@@ -109,12 +109,12 @@ $frameMainMenu = FrameMainService::getPageLeftMenu('system_user');
 <td><?php echo $operationLog['time_add_name'];?></td>
 </tr>
 <tr>
-<td class="name" align="right">post内容：</td>
-<td><?php echo $operationLog['post'];?></td>
+<td class="name" align="right">User Agent：</td>
+<td><?php echo $operationLog['user_agent'];?></td>
 </tr>
 <tr>
-<td class="name" align="right">响应内容：</td>
-<td><?php echo $operationLog['resonse'];?></td>
+<td class="name" align="right">请求内容：</td>
+<td><?php echo $operationLog['request'];?></td>
 </tr>
 </table>
 </div>

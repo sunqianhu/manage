@@ -2,7 +2,7 @@
 /**
  * 系统登录
  */
-require_once '../library/autoload.php';
+require_once '../library/app.php';
 
 use library\service\ConfigService;
 

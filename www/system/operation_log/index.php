@@ -3,7 +3,7 @@
  * 操作日志
  */
 require_once '../../library/session.php';
-require_once '../../library/autoload.php';
+require_once '../../library/app.php';
 
 use library\model\system\OperationLogModel;
 use library\service\ConfigService;
@@ -146,7 +146,7 @@ $operationLogs = SafeService::frontDisplay($operationLogs, array('id', 'url'));
     <th>操作url</th>
     <th>操作ip</th>
     <th>操作时间</th>
-    <th width="80">操作</th>
+    <th width="100">操作</th>
   </tr>
 <?php
 if(!empty($operationLogs)){
@@ -156,7 +156,7 @@ foreach($operationLogs as $operationLog){
     <td><?php echo $operationLog['id'];?></td>
     <td><?php echo $operationLog['department_name'];?></td>
     <td><?php echo $operationLog['user_name'];?></td>
-    <td><?php echo $operationLog['url'];?></td>
+    <td><a href="<?php echo $operationLog['url'];?>" target="_blank"><?php echo $operationLog['url'];?></a></td>
     <td><?php echo $operationLog['ip'];?></td>
     <td><?php echo $operationLog['time_add_name'];?></td>
     <td>

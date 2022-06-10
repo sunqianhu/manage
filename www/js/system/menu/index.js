@@ -58,4 +58,8 @@ $(function(){
         column: 1,
         expand: 3
     });
+    
+    sun.dropDownMenu({
+        selector: ".data table .operation_more"
+    });
 });

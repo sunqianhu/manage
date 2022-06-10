@@ -3,7 +3,7 @@
  * 用户管理
  */
 require_once '../../library/session.php';
-require_once '../../library/autoload.php';
+require_once '../../library/app.php';
 
 use library\model\system\UserModel;
 use library\model\system\DepartmentModel;

@@ -1,6 +1,6 @@
 <?php
 
-require_once 'library/autoload.php';
+require_once 'library/app.php';
 
 use think\facade\Db;
 use library\model\BaseModel;
