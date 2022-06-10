@@ -5,12 +5,22 @@
 require_once '../../library/session.php';
 require_once '../../library/autoload.php';
 
+use library\model\system\MenuModel;
 use library\service\ConfigService;
 use library\service\system\DictionaryService;
 use library\service\AuthService;
+use library\service\ValidateService;
+use library\service\SafeService;
 
+$menuModel = new MenuModel();
 $config = ConfigService::getAll();
+$validateService = new ValidateService();
 $menuTypeRadioNode = DictionaryService::getRadio('system_menu_type', 'type', 1);
+$menuParent = array();
+$init = array(
+    'parent_id'=>1,
+    'parent_name'=>'顶级菜单',
+);
 
 if(!AuthService::isLogin()){
     header('location:../../login/index.php');
@@ -19,6 +29,30 @@ if(!AuthService::isLogin()){
 if(!AuthService::isPermission('system_menu')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
+}
+$validateService->rule = array(
+    'parent_id' => 'number'
+);
+$validateService->message = array(
+    'parent_id.number' => 'parent_id必须是个数字'
+);
+if(!$validateService->check($_GET)){
+    header('location:../../error.php?message='.urlencode($validateService->getErrorMessage()));
+    exit;
+}
+
+if(!empty($_GET['parent_id'])){
+    $menuParent = $menuModel->selectRow('id, name', array(
+        'mark'=>'id = :id',
+        'value'=>array(
+            ':id'=> $_GET['parent_id']
+        )
+    ));
+    if(!empty($menuParent)){
+        $init['parent_id'] = $menuParent['id'];
+        $init['parent_name'] = $menuParent['name'];
+    }
+    $init = SafeService::frontDisplay($init);
 }
 
 ?><!doctype html>
@@ -40,9 +74,9 @@ if(!AuthService::isPermission('system_menu')){
 <div class="row">
 <div class="title"><span class="required">*</span> 上级菜单</div>
 <div class="content">
-<input type="hidden" name="parent_id" id="parent_id" value="1" />
+<input type="hidden" name="parent_id" id="parent_id" value="<?php echo $init['parent_id'];?>" />
 <div class="sun_input_group" onClick="add.selectMenu();">
-<input type="text" name="parent_name" id="parent_name" readonly value="顶级菜单" />
+<input type="text" name="parent_name" id="parent_name" readonly value="<?php echo $init['parent_name'];?>" />
 <span class="addon"><span class="iconfont icon-magnifier icon"></span></span>
 </div>
 </div>

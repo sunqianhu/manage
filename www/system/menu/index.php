@@ -58,7 +58,7 @@ $where['value'] = $whereValues;
 $menus = $menuModel->select('id, parent_id, name, `sort`, `permission`, icon_class, tag', $where, 'order by `sort` asc, id asc');
 $menus = TreeService::getTree($menus, 'child', 'id', 'parent_id');
 $menus = SafeService::frontDisplay($menus, array('id', 'parent_id'));
-$menuNode = MenuService::getIndexTreeNode($menus);
+$menuNode = MenuService::getIndexTreeNode($menus, 1);
 
 ?><!doctype html>
 <html>
@@ -103,7 +103,7 @@ $menuNode = MenuService::getIndexTreeNode($menus);
 
 <div class="data sun_mt10">
 <div class="toolbar">
-<a href="javascript:;" class="sun_button" data-toggle="tooltip" title="添加菜单" onClick="index.add();">添加</a>
+<a href="javascript:;" class="sun_button" data-toggle="tooltip" title="添加菜单" onClick="index.add(0);">添加</a>
 </div>
 <table class="sun_table_list sun_table_list_hover sun_mt10 sun_treetable" width="100%">
   <tr>
@@ -112,7 +112,7 @@ $menuNode = MenuService::getIndexTreeNode($menus);
     <th>菜单标识</th>
     <th>权限标识</th>
     <th>排序</th>
-    <th width="100">操作</th>
+    <th width="160">操作</th>
   </tr>
 <?php echo $menuNode;?>
 </table>

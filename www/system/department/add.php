@@ -5,10 +5,20 @@
 require_once '../../library/session.php';
 require_once '../../library/autoload.php';
 
+use library\model\system\DepartmentModel;
 use library\service\ConfigService;
 use library\service\AuthService;
+use library\service\ValidateService;
+use library\service\SafeService;
 
 $config = array();
+$validateService = new ValidateService();
+$departmentModel = new DepartmentModel();
+$departmentParent = array();
+$init = array(
+    'parent_id'=>1,
+    'parent_name'=>'顶级部门',
+);
 
 if(!AuthService::isLogin()){
     header('location:../../login/index.php');
@@ -18,7 +28,30 @@ if(!AuthService::isPermission('system_department')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
+$validateService->rule = array(
+    'parent_id' => 'number'
+);
+$validateService->message = array(
+    'parent_id.number' => 'parent_id必须是个数字'
+);
+if(!$validateService->check($_GET)){
+    header('location:../../error.php?message='.urlencode($validateService->getErrorMessage()));
+    exit;
+}
 
+if(!empty($_GET['parent_id'])){
+    $departmentParent = $departmentModel->selectRow('id, name', array(
+        'mark'=>'id = :id',
+        'value'=>array(
+            ':id'=> $_GET['parent_id']
+        )
+    ));
+    if(!empty($departmentParent)){
+        $init['parent_id'] = $departmentParent['id'];
+        $init['parent_name'] = $departmentParent['name'];
+    }
+    $init = SafeService::frontDisplay($init);
+}
 $config = ConfigService::getAll();
 ?><!doctype html>
 <html>
@@ -39,9 +72,9 @@ $config = ConfigService::getAll();
 <div class="row">
 <div class="title"><span class="required">*</span> 上级部门</div>
 <div class="content">
-<input type="hidden" name="parent_id" id="parent_id" value="1" />
+<input type="hidden" name="parent_id" id="parent_id" value="<?php echo $init['parent_id'];?>" />
 <div class="sun_input_group" onClick="add.selectDepartment();">
-<input type="text" name="parent_name" id="parent_name" readonly value="顶级部门" />
+<input type="text" name="parent_name" id="parent_name" readonly value="<?php echo $init['parent_name'];?>" />
 <span class="addon"><span class="iconfont icon-magnifier icon"></span></span>
 </div>
 </div>

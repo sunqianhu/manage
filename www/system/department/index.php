@@ -43,18 +43,20 @@ $frameMainMenu = FrameMainService::getPageLeftMenu('system_department');
 if(!empty($_GET['id'])){
     $whereMarks[] = 'id = :id';
     $whereValues[':id'] = $_GET['id'];
-    $search['id'] = SafeService::frontDisplay($_GET['id']);
+    $search['id'] = $_GET['id'];
 }
 if(isset($_GET['name']) && $_GET['name'] !== ''){
     $whereMarks[] = 'name like :name';
     $whereValues[':name'] = '%'.$_GET['name'].'%';
-    $search['name'] = SafeService::frontDisplay($_GET['name']);
+    $search['name'] = $_GET['name'];
 }
 if(isset($_GET['remark']) && $_GET['remark'] !== ''){
     $whereMarks[] = 'remark like :remark';
     $whereValues[':remark'] = '%'.$_GET['remark'].'%';
-    $search['remark'] = SafeService::frontDisplay($_GET['remark']);
+    $search['remark'] = $_GET['remark'];
 }
+$search = SafeService::frontDisplay($search);
+
 if(!empty($whereMarks)){
     $where['mark'] = implode(' and ', $whereMarks);
 }
@@ -64,7 +66,7 @@ $where['value'] = $whereValues;
 $departments = $departmentModel->select('id, parent_id, name, `sort`, remark', $where, 'order by `sort` asc, id asc');
 $departments = TreeService::getTree($departments, 'child', 'id', 'parent_id');
 $departments = SafeService::frontDisplay($departments, array('id', 'parent_id'));
-$departmentNode = DepartmentService::getIndexTreeNode($departments);
+$departmentNode = DepartmentService::getIndexTreeNode($departments, 1);
 
 ?><!doctype html>
 <html>
@@ -110,15 +112,15 @@ $departmentNode = DepartmentService::getIndexTreeNode($departments);
 
 <div class="data sun_mt10">
 <div class="toolbar">
-<a href="javascript:;" class="sun_button" data-toggle="tooltip" title="添加部门" onClick="index.add();">添加</a>
+<a href="javascript:;" class="sun_button" data-toggle="tooltip" title="添加部门" onClick="index.add(0);">添加</a>
 </div>
-<table class="sun_table_list sun_table_list_hover sun_mt10" width="100%">
+<table class="sun_table_list sun_table_list_hover sun_treetable sun_mt10" width="100%">
   <tr>
     <th width="100">部门id</th>
     <th>部门名称</th>
     <th>排序</th>
     <th>备注</th>
-    <th width="100">操作</th>
+    <th width="160">操作</th>
   </tr>
 <?php echo $departmentNode;?>
 </table>

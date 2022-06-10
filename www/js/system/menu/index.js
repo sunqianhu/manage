@@ -2,11 +2,13 @@
  * 菜单管理
  */
 var index = {};
+
 /**
  * 添加
+ * @param int parentId 上级id
  */
-index.add = function(){
-    var url = "add.php";
+index.add = function(parentId){
+    var url = "add.php?parent_id="+parentId;
     sun.layer.open({
         id: "layer_menu_add",
         name: "添加菜单",
@@ -50,6 +52,7 @@ index.delete = function(id){
 }
 
 $(function(){
+    // 表格树
     sun.treeTable.init({
         selector: ".sun_treetable",
         column: 1,

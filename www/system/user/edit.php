@@ -42,7 +42,7 @@ $validateService->message = array(
     'id.number' => 'id必须是个数字'
 );
 if(!$validateService->check($_GET)){
-    header('location:../../error.html?message='.urlencode($validateService->getErrorMessage()));
+    header('location:../../error.php?message='.urlencode($validateService->getErrorMessage()));
     exit;
 }
 
@@ -53,7 +53,7 @@ $user = $userModel->selectRow('id, username, `name`, `phone`, `status`, departme
     )
 ));
 if(empty($user)){
-    header('location:../../error.html?message='.urlencode('没有找到用户'));
+    header('location:../../error.php?message='.urlencode('没有找到用户'));
     exit;
 }
 

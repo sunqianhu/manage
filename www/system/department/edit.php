@@ -34,11 +34,11 @@ $validateService->message = array(
     'id.number' => 'id必须是个数字'
 );
 if(!$validateService->check($_GET)){
-    header('location:../../error.html?message='.urlencode($validateService->getErrorMessage()));
+    header('location:../../error.php?message='.urlencode($validateService->getErrorMessage()));
     exit;
 }
 if($_GET['id'] == '1'){
-    header('location:../../error.html?message='.urlencode('根部门不能修改'));
+    header('location:../../error.php?message='.urlencode('根部门不能修改'));
     exit;
 }
 

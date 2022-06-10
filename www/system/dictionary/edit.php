@@ -34,7 +34,7 @@ $validateService->message = array(
     'id.number' => 'id必须是个数字'
 );
 if(!$validateService->check($_GET)){
-    header('location:../../error.html?message='.urlencode($validateService->getErrorMessage()));
+    header('location:../../error.php?message='.urlencode($validateService->getErrorMessage()));
     exit;
 }
 

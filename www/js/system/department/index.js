@@ -5,9 +5,10 @@ var index = {};
 
 /**
  * 添加
+ * @param int parentId 上级id
  */
-index.add = function(){
-    var url = "add.php";
+index.add = function(parentId){
+    var url = "add.php?parent_id="+parentId;
     sun.layer.open({
         id: "layer_department_add",
         name: "添加部门",
@@ -50,66 +51,15 @@ index.delete = function(id){
     });
 }
 
-/**
- * 表格树展开关闭
- */
-index.treeTableToggle = function(th){
-    var domArrow = $(th);
-    var domTr = domArrow.parents("tr").eq(0);
-    var id = domTr.attr("tree_table_id");
-    var close = domTr.hasClass("parent_close"); // 是否关闭
-    
-    if(close){
-        domTr.removeClass("parent_close");
-        index.treeTableSonOpen(id);
-    }else{
-        domTr.addClass("parent_close");
-        // 递归关闭子项 添加 child_close
-        index.treeTableChildClose(id);
-    }
-    
-}
-
-/**
- * 表格树打开儿子层
- */
-index.treeTableSonOpen = function(id){
-    var domTrs = $(".data table tr[tree_table_parent_id='"+id+"']");
-    var domTr;
-    var trLength = domTrs.length;
-    
-    if(trLength == 0){
-        return;
-    }
-    
-    domTrs.each(function(){
-        domTr = $(this);
-        domTr.removeClass("child_close");
-    });
-}
-
-/**
- * 表格树递归关闭子项
- */
-index.treeTableChildClose = function(id){
-    var domTrs = $(".data table tr[tree_table_parent_id='"+id+"']");
-    var domTr;
-    var trLength = domTrs.length;
-    var id = 0;
-    
-    if(trLength == 0){
-        return;
-    }
-    
-    domTrs.each(function(){
-        domTr = $(this);
-        id = domTr.attr("tree_table_id");
-        
-        domTr.addClass("child_close");
-        domTr.addClass("parent_close");
-        index.treeTableChildClose(id);
-    });
-}
-
 $(function(){
+    // 表格树
+    sun.treeTable.init({
+        selector: ".sun_treetable",
+        column: 1,
+        expand: 3
+    });
+    
+    sun.dropDownMenu({
+        selector: ".data table .operation_more"
+    });
 });

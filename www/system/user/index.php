@@ -196,7 +196,7 @@ index.departmentData = <?php echo $department;?>;
 
 <div class="data sun_mt10">
 <div class="toolbar">
-<a href="javascript:;" class="sun_button" onClick="index.add();">添加</a>
+<a href="javascript:;" class="sun_button" onClick="index.add(0);">添加</a>
 </div>
 <table class="sun_table_list sun_table_list_hover sun_mt10" width="100%">
   <tr>
@@ -226,7 +226,6 @@ foreach($users as $user){
     <td>
 <a href="detail.php?id=<?php echo $user['id'];?>" class="sun_button sun_button_secondary sun_button_small sun_mr5">详情</a>
 <a href="javascript:;" class="sun_button sun_button_secondary sun_button_small sun_mr5" onClick="index.edit(<?php echo $user['id'];?>)">修改</a>
-
 <span class="sun_dropdown_menu sun_dropdown_menu_align_right operation_more">
 <div class="title"><a href="javascript:;" class="sun_button sun_button_secondary sun_button_small">更多 <span class="iconfont icon-arrow_down arrow"></span></a></div>
 <div class="content">

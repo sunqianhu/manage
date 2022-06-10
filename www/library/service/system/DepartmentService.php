@@ -11,49 +11,32 @@ class DepartmentService{
      * @param array $datas 数据
      * @return array
      */
-    static function getIndexTreeNode($departments){
+    static function getIndexTreeNode($departments, $level = 1){
         $node = '';
-        $indent = 0;
-        $i = 0;
-        $styleClass = '';
-        
         if(!empty($departments)){
         foreach($departments as $department){
-            $indent = $department['level'] - 1;
-            if($department['level'] == 1 && empty($department['child'])){
-                $styleClass .= ' parent_close'; // 一级无子项的关闭
-            }
-            if($department['level'] >= 2 && !empty($department['child'])){
-                $styleClass .= ' parent_close'; // 二级关闭以上有子项的都关闭
-            }
-            if($department['level'] > 2){
-                $styleClass .= ' child_close'; // 二级以上不显示
-            }
-
             $node .= '
-<tr tree_table_id="'.$department['id'].'" tree_table_parent_id="'.$department['parent_id'].'" class="tr tr'.$department['id'].''.$styleClass.'">
+<tr tree_table_id="'.$department['id'].'" tree_table_parent_id="'.$department['parent_id'].'" tree_table_level="'.$level.'" class="tr tr'.$department['id'].'">
 <td>'.$department['id'].'</td>
-<td class="name">';
-            for($i = 0; $i < $indent; $i ++){
-                $node .= '<span class="indent"></span>';
-            }
-            if(!empty($department['child'])){
-                $node .= '<span class="iconfont icon-arrow_down arrow" onclick="index.treeTableToggle(this)"></span>';
-            }
-            $node .= $department['name'].'
-</td>
+<td class="column">'.$department['name'].'</td>
 <td>'.$department['sort'].'</td>
 <td>'.$department['remark'].'</td>
-<td>';
-            if($department['parent_id'] != 0){
-                $node .= '<a href="javascript:;" class="sun_button sun_button_small sun_button_secondary sun_mr5" onclick="index.edit('.$department['id'].');">修改</a> ';
-                $node .= '<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small sun_mr5" onclick="index.delete('.$department['id'].');">删除</a>';
-            }
-            $node .= '</td>
+<td>
+<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small sun_mr5" onclick="index.add('.$department['id'].');" title="添加子部门">添加</a>
+<a href="javascript:;" class="sun_button sun_button_small sun_button_secondary sun_mr5" onclick="index.edit('.$department['id'].');">修改</a>
+<span class="sun_dropdown_menu sun_dropdown_menu_align_right operation_more">
+<div class="title"><a href="javascript:;" class="sun_button sun_button_secondary sun_button_small">更多 <span class="iconfont icon-arrow_down arrow"></span></a></div>
+<div class="content">
+<ul>
+<li><a href="javascript:;" onClick="index.delete('.$department['id'].')">删除</a></li>
+</ul>
+</div>
+</span>
+</td>
 </tr>
 ';
             if(!empty($department['child'])){
-                $node .= self::getIndexTreeNode($department['child']);
+                $node .= self::getIndexTreeNode($department['child'], ($level + 1));
             }
         }
         }else{

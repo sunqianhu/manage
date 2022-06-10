@@ -43,7 +43,7 @@ $validateService->message = array(
     'id.number' => 'id必须是个数字'
 );
 if(!$validateService->check($_GET)){
-    header('location:../../error.html?message='.urlencode($validateService->getErrorMessage()));
+    header('location:../../error.php?message='.urlencode($validateService->getErrorMessage()));
     exit;
 }
 
@@ -54,7 +54,7 @@ $role = $roleModel->selectRow('id, name, remark', array(
     )
 ));
 if(empty($role)){
-    header('location:../../error.html?message='.urlencode('id参数错误'));
+    header('location:../../error.php?message='.urlencode('id参数错误'));
     exit;
 }
 
