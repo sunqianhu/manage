@@ -10,7 +10,7 @@ class TreeService{
      * @param array $datas 数据
      * @return array
      */
-    static function getDataTree($datas, $child = 'child', $id = 'id', $parentId = 'parent_id'){
+    static function getTree($datas, $child = 'child', $id = 'id', $parentId = 'parent_id'){
         $middle = array(); // 中间数组
         $tree = array(); // 树形结构数组
         

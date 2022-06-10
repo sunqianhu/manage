@@ -62,8 +62,7 @@ $where['value'] = $whereValues;
 
 // 数据
 $departments = $departmentModel->select('id, parent_id, name, `sort`, remark', $where, 'order by `sort` asc, id asc');
-$departments = TreeService::getDataTree($departments, 'child', 'id', 'parent_id');
-$departments = TreeService::addLevel($departments, 1);
+$departments = TreeService::getTree($departments, 'child', 'id', 'parent_id');
 $departments = SafeService::frontDisplay($departments, array('id', 'parent_id'));
 $departmentNode = DepartmentService::getIndexTreeNode($departments);
 

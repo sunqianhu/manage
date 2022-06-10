@@ -18,8 +18,7 @@ class FrameMainService{
      */
     static function getPageLeftMenu($active = ''){
         $menus = $_SESSION['menu'];
-        $menus = TreeService::getDataTree($menus, 'child', 'id', 'parent_id');
-        $menus = TreeService::addLevel($menus, 1);
+        $menus = TreeService::getTree($menus, 'child', 'id', 'parent_id');
         $node = '';
         
         $node .= '<ul>';

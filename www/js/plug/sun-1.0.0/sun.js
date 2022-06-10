@@ -60,7 +60,7 @@ sun.toast = function(type, info, time, callback){
 			}
 		});
 	}, time);
-}
+};
 
 /**
  * 加载中
@@ -81,7 +81,7 @@ sun.loading.open = function(id, info){
 	node += '	<div class="info">'+info+'</div>';
 	node += '</div>';
 	$("body").append(node);
-}
+};
 
 /**
  * 加载中关闭
@@ -90,7 +90,7 @@ sun.loading.open = function(id, info){
 sun.loading.close = function(id){
 	$(".sun_loading_bg_"+id).remove();
 	$(".sun_loading_"+id).remove();
-}
+};
 
 /**
  * 表单提交
@@ -209,7 +209,7 @@ sun.formSubmit = function(config){
 
         return false;
     });
-}
+};
 
 /**
  * 下拉
@@ -254,7 +254,7 @@ sun.dropDown = function(config){
 			domDropdownContents.slideUp(200);
 		}
 	});
-}
+};
 
 /**
  * 下拉关闭
@@ -270,7 +270,7 @@ sun.dropDownClose = function(selector){
     
     domDropdownContents = $(selector + " > .content");
     domDropdownContents.slideUp(200);
-}
+};
 
 /**
  * 下拉菜单
@@ -327,7 +327,7 @@ sun.dropDownMenu = function(config){
 			domDropdownMenuContents.slideUp(200);
 		}
 	});
-}
+};
 
 /**
  * 弹层
@@ -428,7 +428,7 @@ sun.layer.open = function(config){
 			isMove = false;
 		});
 	});
-}
+};
 
 /**
  * 弹窗关闭
@@ -443,7 +443,7 @@ sun.layer.close = function(id){
 	domLayerLayer.animate({top:"-50px", opacity:"0"}, 500, function(){
 		domLayer.remove();
 	});
-}
+};
 
 /**
  * 找到指定id的弹层iframe
@@ -461,7 +461,7 @@ sun.layer.getIframeWindow = function(win, id){
     iframeWindow = win.frames[id];
     
     return iframeWindow;
-}
+};
 
 sun.pagination = {}; // 分页
 
@@ -490,7 +490,7 @@ sun.pagination.skip = function(url, id){
     url = url.replace("PAGE_SIZE", pageSize);
     url = url.replace("PAGE_CURRENT", pageCurrent);
     location.href = url;
-}
+};
 
 /**
  * 分页每页显示记录数
@@ -510,4 +510,137 @@ sun.pagination.limit = function(url, th){
     url = url.replace("PAGE_SIZE", pageSize);
     url = url.replace("PAGE_CURRENT", pageCurrent);
     location.href = url;
+};
+
+/**
+ * 表格树
+ */
+sun.treeTable = {};
+
+/**
+ * 表格树初始化
+ * @param string config.selector 选择器
+ * @param string config.column 那一列
+ * @param string config.expand 展开几级
+ */
+sun.treeTable.init = function(config){
+    var domTable; // 表格
+    var domTrs; // 所有tr
+    var domTr; // 一个tr
+    var domTd; // 需要处理的td
+    var domChildTrs; // 所有子tr
+    var trLength = 0; // tr数量
+    var trChildLength = 0; // 子tr长度
+    var level = 1; // 级别
+    var i = 0; // for 索引
+    var id = 0; // id
+    var parentId = 0; // 父级id
+    
+    // 配置
+    if(!config.selector || !config.column || !config.expand){
+        sun.toast("error", "表格树参数错误", 3000);
+        return false;
+    }
+    
+    // trs
+    domTable = $(config.selector);
+    domTrs = $("> tbody > tr", domTable);
+    trLength = domTrs.length;
+    if(trLength == 0){
+        domTrs = $(" > tr", domTable);
+        trLength = domTrs.length;
+    }
+    if(trLength == 0){
+        return;
+    }
+    
+    // 初始化
+    for(i = 0; i < trLength; i ++){
+        domTr = domTrs.eq(i);
+        domTd = $(" > td", domTr).eq(config.column);
+        id = domTr.attr("tree_table_id");
+        domChildTrs = $("tr[tree_table_parent_id='"+id+"']", domTable);
+        trChildLength = domChildTrs.length;
+        level = domTr.attr("tree_table_level");
+        
+        domTd.css("padding-left", (30 * (level - 1))+"px");
+        if(trChildLength > 0){
+            domTd.prepend('<span class="iconfont icon-arrow_down arrow" onclick="sun.treeTable.toggle(this)"></span>');
+        }
+        
+        // 展开级别
+        if(level >= config.expand){
+            domTr.addClass("close");
+        }
+        if(level > config.expand){
+            domTr.hide();
+        }
+    }    
+}
+
+/**
+ * 表格树切换
+ * @param obj th 箭头对象
+ */
+sun.treeTable.toggle = function(th){
+    var domArrow = $(th);
+    var domTr = domArrow.parents("tr").eq(0);
+    var id = domTr.attr("tree_table_id");
+    var close = domTr.hasClass("close"); // 是否关闭
+    
+    if(close){
+        domTr.removeClass("close");
+        sun.treeTable.childOpen(id);
+    }else{
+        domTr.addClass("close");
+        sun.treeTable.childClose(id);
+    }
+}
+
+/**
+ * 表格树子项打开
+ */
+sun.treeTable.childOpen = function(id){
+    var domTrs = $("tr[tree_table_parent_id='"+id+"']");
+    var domTr;
+    var trLength = domTrs.length;
+    var id = 0;
+    var close = false; // 是否关闭
+    
+    if(trLength == 0){
+        return;
+    }
+    
+    domTrs.each(function(){
+        domTr = $(this);
+        id = domTr.attr("tree_table_id");
+        close = domTr.hasClass("close");
+        
+        domTr.show();
+        if(!close){
+            sun.treeTable.childOpen(id);
+        }
+    });
+}
+
+/**
+ * 表格树子项关闭
+ */
+sun.treeTable.childClose = function(id){
+    var domTrs = $("tr[tree_table_parent_id='"+id+"']");
+    var domTr;
+    var trLength = domTrs.length;
+    var id = 0;
+    
+    if(trLength == 0){
+        return;
+    }
+    
+    domTrs.each(function(){
+        domTr = $(this);
+        id = domTr.attr("tree_table_id");
+        
+        domTr.hide();
+        sun.treeTable.childClose(id);
+    });
 }

@@ -56,8 +56,7 @@ $where['value'] = $whereValues;
 
 // 数据
 $menus = $menuModel->select('id, parent_id, name, `sort`, `permission`, icon_class, tag', $where, 'order by `sort` asc, id asc');
-$menus = TreeService::getDataTree($menus, 'child', 'id', 'parent_id');
-$menus = TreeService::addLevel($menus, 1);
+$menus = TreeService::getTree($menus, 'child', 'id', 'parent_id');
 $menus = SafeService::frontDisplay($menus, array('id', 'parent_id'));
 $menuNode = MenuService::getIndexTreeNode($menus);
 
@@ -106,7 +105,7 @@ $menuNode = MenuService::getIndexTreeNode($menus);
 <div class="toolbar">
 <a href="javascript:;" class="sun_button" data-toggle="tooltip" title="添加菜单" onClick="index.add();">添加</a>
 </div>
-<table class="sun_table_list sun_table_list_hover sun_mt10" width="100%">
+<table class="sun_table_list sun_table_list_hover sun_mt10 sun_treetable" width="100%">
   <tr>
     <th width="100">菜单id</th>
     <th>菜单名称</th>
