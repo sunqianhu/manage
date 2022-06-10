@@ -87,11 +87,7 @@ foreach($operationLogs as $key => $operationLog){
     $operationLogs[$key]['time_add_name'] = date('Y-m-d H:i:s', $operationLog['time_add']);
     $operationLogs[$key]['user_name'] = UserService::getName($operationLog['user_id']);
     $operationLogs[$key]['department_name'] = DepartmentService::getName($operationLog['department_id']);
-    if(StringService::length($operationLog['url']) > 60){
-        $operationLogs[$key]['url_sub'] = StringService::sub($operationLog['url'], 0, 60).'...';
-    }else{
-        $operationLogs[$key]['url_sub'] = $operationLogs[$key]['url'];
-    }
+    $operationLogs[$key]['url_sub'] = StringService::subStart($operationLog['url'], 50);
 }
 
 $search = SafeService::frontDisplay($search);
