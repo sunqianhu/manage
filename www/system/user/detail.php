@@ -17,6 +17,7 @@ use library\service\FrameMainService;
 use library\service\SafeService;
 use library\service\system\DictionaryService;
 use library\service\ArrayTwoService;
+use library\service\StringService;
 
 $userModel = new UserModel(); // 模型
 $departmentModel = new DepartmentModel();
@@ -101,6 +102,10 @@ $operationLogs = $operationLogModel->select("id, ip, time_add, url",  array(
     )
 ), 'order by id desc', 'limit 0,50');
 $operationLogs = ArrayTwoService::columnTimestampToTime($operationLogs, 'time_add', 'time_add_name');
+
+foreach($operationLogs as $key => $operationLog){
+    $operationLogs[$key]['url_sub'] = StringService::subStart($operationLog['url'], 60);
+}
 
 // 菜单
 $frameMainMenu = FrameMainService::getPageLeftMenu('system_user');
@@ -229,7 +234,7 @@ foreach($operationLogs as $operationLog){
 <tr>
 <td><?php echo $operationLog['ip'];?></td>
 <td><?php echo $operationLog['time_add_name'];?></td>
-<td><a href="<?php echo $operationLog['url'];?>" target="_blank"><?php echo $operationLog['url'];?></a></td>
+<td><a href="<?php echo $operationLog['url'];?>" target="_blank"><?php echo $operationLog['url_sub'];?></a></td>
 <td><a href="../operation_log/detail.php?id=<?php echo $operationLog['id'];?>" target="_blank">详情</a></td>
 </tr>
 <?php
