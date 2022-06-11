@@ -1,6 +1,6 @@
 <div class="page_header">
 <div class="name"><?php echo $config['app_name'];?></div>
-<div class="switch"><span class="iconfont icon-switch_left icon" onclick="frameMain.pageLeftSwitch();" title="打开或关闭左边菜单"></span></div>
+<div class="switch"><span class="iconfont icon-switch_left icon" onclick="frameMain.pageLeftToggle();" title="打开或关闭左边菜单"></span></div>
 <div class="link">
 <ul>
 <li class="user">

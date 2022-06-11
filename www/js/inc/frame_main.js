@@ -25,7 +25,7 @@ frameMain.pageLeftInit = function(){
 /**
  * 页面左边打开关闭
  */
-frameMain.pageLeftSwitch = function(){
+frameMain.pageLeftToggle = function(){
     var domBody = $("body");
     
     if(domBody.hasClass("close")){
@@ -73,10 +73,18 @@ frameMain.pageLeftSetCookie = function(value){
  * 菜单活跃
  */
 frameMain.menuActive = function(){
-    var domActiveLi = $(".page_left .menu li.active"); // 活跃的li
-    var domActiveParentLis = domActiveLi.parents(".page_left .menu li"); // 活跃的li的所有父li
-    var domActiveParentLiUls = $(" > ul", domActiveParentLis); // 活跃的li的所有父li的ul
+    var domActiveLi;
+    var domActiveParentLis;
+    var domActiveParentLiUls;
     
+    domActiveLi = $(".page_left .menu li.active"); // 活跃的li
+    if(domActiveLi.length == 0){
+        return;
+    }
+    
+    domActiveParentLis = domActiveLi.parents(".page_left .menu li"); // 活跃的li的所有父li
+    domActiveParentLiUls = $(" > ul", domActiveParentLis); // 活跃的li的所有父li的ul
+
     domActiveParentLis.addClass("open");
     domActiveParentLiUls.css({"display":"block"});
 };
