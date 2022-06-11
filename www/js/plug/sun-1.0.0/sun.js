@@ -212,10 +212,10 @@ sun.formSubmit = function(config){
 };
 
 /**
- * 下拉
+ * 下拉点击
  * @param string config.selector 选择器
  */
-sun.dropDown = function(config){
+sun.dropDownClick = function(config){
     var domDocument; // 文档
     var domDropdowns; // 下拉所有
     var domDropdownTitles; // 标题所有
@@ -227,6 +227,7 @@ sun.dropDown = function(config){
         sun.toast("error", "下拉元素选择器参数错误", 3000);
         return false;
     }
+    
     // 对象
     domDocument = $(document);
     domDropdowns = $(config.selector);
@@ -260,7 +261,7 @@ sun.dropDown = function(config){
  * 下拉关闭
  * @param string selector 选择器
  */
-sun.dropDownClose = function(selector){
+sun.dropDownClickClose = function(selector){
     var domDropdownContents;
     
     if(!selector){
@@ -273,10 +274,10 @@ sun.dropDownClose = function(selector){
 };
 
 /**
- * 下拉菜单
+ * 下拉菜单点击
  * @param string config.selector 选择器
  */
-sun.dropDownMenu = function(config){
+sun.dropDownClickMenu = function(config){
     var domDocument; // 文档
     var domDropdownMenus; // 菜单所有
     var domDropdownMenuTitles; // 标题所有
@@ -315,7 +316,7 @@ sun.dropDownMenu = function(config){
     // 选项
     domDropdownMenuContentLis.on("click", function(){
         var domDropdownMenuContentLi = $(this);
-        var domDropdownMenu = domDropdownMenuContentLi.parents(config.selector);
+        var domDropdownMenu = domDropdownMenuContentLi.parents(config.selector).eq(0);
         var domDropdownMenuContent = $(" > .content", domDropdownMenu);
         
         domDropdownMenuContent.slideUp(200);
@@ -327,6 +328,62 @@ sun.dropDownMenu = function(config){
 			domDropdownMenuContents.slideUp(200);
 		}
 	});
+};
+
+/**
+ * 下拉悬停
+ * @param string config.selector 选择器
+ */
+sun.dropDownHover = function(config){
+    var domDropdowns; // 下拉所有
+    var domDropdownContents; // 内容所有
+    var contentDisplay = "none"; // 内容显示
+    var canHide = true; // 是否可以隐藏
+    var sto;
+    
+    // 配置
+    if(!config.selector){
+        sun.toast("error", "下拉元素选择器参数错误", 3000);
+        return false;
+    }
+    
+    // 对象
+    domDropdowns = $(config.selector);
+    domDropdownContents = $(" > .content", domDropdowns);
+    
+    // 鼠标移入
+    domDropdowns.on("mouseenter", function(){
+        var domDropdown = $(this);
+        var domDropdownContent = $(" > .content", domDropdown);
+        
+        contentDisplay = domDropdownContent.css("display");
+        if(contentDisplay != "none"){
+            return;
+        }
+        
+        canHide = false;
+        domDropdownContents.hide();
+        domDropdownContent.slideDown(200);
+    });
+    
+    // 事件移除
+    domDropdowns.on("mouseleave", function(){
+        var domDropdown = $(this);
+        var domDropdownContent = $(" > .content", domDropdown);
+        
+        // 可以关闭
+        expanded = true;
+        
+        // 延时关闭
+        if(sto){
+            clearTimeout(sto);
+        }
+        sto = setTimeout(function(){
+            if(expanded){
+                domDropdownContent.slideUp(200);
+            }
+        }, 700);
+    });
 };
 
 /**

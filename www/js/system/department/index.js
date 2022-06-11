@@ -59,7 +59,7 @@ $(function(){
         expand: 3
     });
     
-    sun.dropDownMenu({
+    sun.dropDownClickMenu({
         selector: ".data table .operation_more"
     });
 });

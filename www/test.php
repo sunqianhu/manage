@@ -9,3 +9,29 @@ use library\service\ConfigService;
 $baseModel = new BaseModel();
 
 
+?><!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<script type="text/javascript" src="js/plug/jquery-1.12.4/jquery.min.js"></script>
+<link href="js/plug/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/plug/sun-1.0.0/sun.js"></script>
+<script type="text/javascript">
+$(function(){
+    sun.dropDownHover({
+        selector: ".sun_dropdown"
+    });
+});
+</script>
+</head>
+
+<body style="padding-left: 300px">
+
+<span class="sun_dropdown">
+<div class="title">标题</div>
+<div class="content">content</div>
+</span>
+
+</body>
+</html>

@@ -4,6 +4,71 @@
 
 var frameMain = {};
 
+/*
+ * 页面左边初始化
+ */
+frameMain.pageLeftInit = function(){
+	var domBody = $("body");
+    var cookie = "";
+    var windowWidth = $(window).width();
+    
+    cookie = frameMain.pageLeftGetCookie();
+	if(cookie == "close"){
+		domBody.addClass("close");
+	}
+    
+    if(windowWidth < 768 && cookie == ""){
+        domBody.addClass("close");
+    }
+}
+
+/**
+ * 页面左边打开关闭
+ */
+frameMain.pageLeftSwitch = function(){
+    var domBody = $("body");
+    
+    if(domBody.hasClass("close")){
+        domBody.removeClass("close");
+        frameMain.pageLeftSetCookie("open");
+    }else{
+        domBody.addClass("close");
+        frameMain.pageLeftSetCookie("close");
+    }
+};
+
+/*
+ * 页面左边得到cookie
+ */
+frameMain.pageLeftGetCookie = function(){
+	var cookies = document.cookie.split(";");
+	var length = cookies.length;
+    var i = 0;
+    var items = [];
+    var key = "";
+    var value = "";
+    
+    for(i=0; i < length; i++){
+        items = cookies[i].split("=");
+        key = $.trim(items[0]);
+        value = decodeURI($.trim(items[1]));
+        if(key == "frame_main_page_left"){
+            return value;
+        }
+    }
+	
+	return "";
+}
+
+/*
+ * 页面左边设置cookie
+ */
+frameMain.pageLeftSetCookie = function(value){
+	var dateMy = new Date();
+    dateMy.setDate(dateMy.getDate() + 360);
+    document.cookie="frame_main_page_left="+value+"; expires="+dateMy.toDateString()+"; path=/";
+}
+
 /**
  * 菜单活跃
  */
@@ -14,7 +79,7 @@ frameMain.menuActive = function(){
     
     domActiveParentLis.addClass("open");
     domActiveParentLiUls.css({"display":"block"});
-}
+};
 
 /**
  * 菜单切换
@@ -47,7 +112,7 @@ frameMain.menuToggle = function(){
             domSiblingLiUls.slideUp(); // 同级折叠
 		}
     });
-}
+};
 
 /**
  * 修改密码
@@ -61,9 +126,10 @@ frameMain.editPassword = function(){
         width: 500,
         height: 300
     });
-}
+};
 
 $(function(){
+    frameMain.pageLeftInit();
     frameMain.menuActive();
     frameMain.menuToggle();
 });
