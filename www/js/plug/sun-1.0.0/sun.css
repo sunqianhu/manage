@@ -125,7 +125,7 @@ transition: all 0.5s ease;
 .sun_button_group .sun_button:not(:last-child){ border-top-right-radius: 0px; border-bottom-right-radius: 0px}
 
 /*版块*/
-.sun_section{ background: #ffffff}
+.sun_section{ background: #ffffff; border-radius: 5px}
 .sun_section > .title{ height: 40px; line-height: 40px; padding: 0px 10px}
 .sun_section > .title:after{ content: ""; clear: both; display: block}
 .sun_section > .title .name{ font-size: 16px}
