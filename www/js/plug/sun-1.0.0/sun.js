@@ -382,7 +382,7 @@ sun.dropDownHover = function(config){
             if(expanded){
                 domDropdownContent.slideUp(200);
             }
-        }, 700);
+        }, 500);
     });
 };
 

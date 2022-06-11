@@ -30,7 +30,6 @@ transition: all 0.5s ease;
 .page > .page_header > .link > ul > .user .content > ul > li{ list-style: none}
 .page > .page_header > .link > ul > .user .content > ul > li a{ color: #191919; display: block; border-radius: 3px}
 .page > .page_header > .link > ul > .user .content > ul > li a:hover{ background: #e1e5e9; text-decoration: none}
-.page > .page_header > .link > ul > .user:hover > .content{ display: block}
 
 .page > .page_body{ position: absolute; left: 0px; top: 50px; right: 0px; bottom: 0px}
 .page > .page_body > .page_left{ position: absolute; left: 0px; bottom: 0px; top: 0px; width: 200px; background: #323c46; color: rgba(255,255,255,0.8); overflow-y: auto}

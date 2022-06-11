@@ -4,6 +4,15 @@
 
 var frameMain = {};
 
+/**
+ * 用户下拉菜单
+ */
+frameMain.userDropDownMenu = function(){
+    sun.dropDownHover({
+        selector: ".page .page_header .link .user"
+    });
+}
+
 /*
  * 页面左边初始化
  */
@@ -137,6 +146,7 @@ frameMain.editPassword = function(){
 };
 
 $(function(){
+    frameMain.userDropDownMenu();
     frameMain.pageLeftInit();
     frameMain.menuActive();
     frameMain.menuToggle();
