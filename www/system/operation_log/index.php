@@ -162,7 +162,7 @@ foreach($operationLogs as $operationLog){
     <td><a href="<?php echo $operationLog['url'];?>" target="_blank"><?php echo $operationLog['url_sub'];?></a></td>
     <td><?php echo $operationLog['time_add_name'];?></td>
     <td>
-<a href="detail.php?id=<?php echo $operationLog['id'];?>" class="sun_button sun_button_secondary sun_button_small">详情</a>
+<a href="detail.php?id=<?php echo $operationLog['id'];?>" class="sun_button sun_button_secondary sun_button_small sun_mr5">详情</a>
 <a href="../user/detail.php?id=<?php echo $operationLog['user_id'];?>" class="sun_button sun_button_secondary sun_button_small">用户</a>
     </td>
   </tr>
