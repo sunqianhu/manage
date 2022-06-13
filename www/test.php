@@ -28,7 +28,7 @@ $(function(){
     sun.fileUpload({
         element: ".sun_button",
         name: "file",
-        url: "test2.php",
+        url: "test_save.php",
         success: function(ret){
             alert(JSON.stringify(ret));
         }
