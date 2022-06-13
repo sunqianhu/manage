@@ -15,11 +15,10 @@ index.changeCaptcha = function(){
 
 /**
  * 表单提交
- * @param selector 表单jquery选择器
  */
-index.formSubmit = function(selector){
+index.formSubmit = function(){
     sun.formSubmit({
-        selector: selector,
+        element: ".form",
         success: function(ret){
             if(ret.data.captcha == "1"){
                 index.changeCaptcha();
@@ -40,6 +39,6 @@ index.formSubmit = function(selector){
 }
 
 $(function(){
-    index.formSubmit(".form");
+    index.formSubmit();
 });
 

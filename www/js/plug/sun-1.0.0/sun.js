@@ -94,18 +94,18 @@ sun.loading.close = function(id){
 
 /**
  * 表单提交
- * @param config.selector 选择器
+ * @param config.element 元素
  * @param config.buttonSubmitText 提交中文字描述
  * @param config.before 请求前的回调
  * @param config.success 请求成功回调
  */
 sun.formSubmit = function(config){
-    if(!config.selector){
+    if(!config.element){
         sun.toast("error", "表单选择器参数错误", 3000);
         return false;
     }
     
-    var domForm = $(config.selector);
+    var domForm = $(config.element);
     var domInputSubmits; // 所有input提交按钮
     var domInputSubmit; // 一个input提交按钮
     var domButtonSubmits; // 所有button提交按钮
@@ -213,7 +213,7 @@ sun.formSubmit = function(config){
 
 /**
  * 下拉点击
- * @param string config.selector 选择器
+ * @param string config.element 元素
  */
 sun.dropDownClick = function(config){
     var domDocument; // 文档
@@ -223,14 +223,14 @@ sun.dropDownClick = function(config){
     var contentDisplay = "none"; // 内容显示
     
     // 配置
-    if(!config.selector){
+    if(!config.element){
         sun.toast("error", "下拉元素选择器参数错误", 3000);
         return false;
     }
     
     // 对象
     domDocument = $(document);
-    domDropdowns = $(config.selector);
+    domDropdowns = $(config.element);
     domDropdownTitles = $(" > .title", domDropdowns);
     domDropdownContents = $(" > .content", domDropdowns);
     
@@ -251,7 +251,7 @@ sun.dropDownClick = function(config){
     
     // 关闭
 	domDocument.on("click", function(e){
-		if($(e.target).closest(config.selector).length === 0){
+		if($(e.target).closest(config.element).length === 0){
 			domDropdownContents.slideUp(200);
 		}
 	});
@@ -259,23 +259,23 @@ sun.dropDownClick = function(config){
 
 /**
  * 下拉关闭
- * @param string selector 选择器
+ * @param string element 选择器
  */
-sun.dropDownClickClose = function(selector){
+sun.dropDownClickClose = function(element){
     var domDropdownContents;
     
-    if(!selector){
+    if(!element){
         sun.toast("error", "下拉元素选择器参数错误", 3000);
         return false;
     }
     
-    domDropdownContents = $(selector + " > .content");
+    domDropdownContents = $(element + " > .content");
     domDropdownContents.slideUp(200);
 };
 
 /**
  * 下拉菜单点击
- * @param string config.selector 选择器
+ * @param string config.element 元素
  */
 sun.dropDownClickMenu = function(config){
     var domDocument; // 文档
@@ -286,14 +286,14 @@ sun.dropDownClickMenu = function(config){
     var contentDisplay = "none"; // 内容是否显示
     
     // 配置
-    if(!config.selector){
+    if(!config.element){
         sun.toast("error", "下拉元素选择器参数错误", 3000);
         return false;
     }
     
     // 对象
     domDocument = $(document);
-    domDropdownMenus = $(config.selector);
+    domDropdownMenus = $(config.element);
     domDropdownMenuTitles = $(" > .title", domDropdownMenus);
     domDropdownMenuContents = $(" > .content", domDropdownMenus);
     domDropdownMenuContentLis = $(" > ul > li", domDropdownMenuContents);
@@ -316,7 +316,7 @@ sun.dropDownClickMenu = function(config){
     // 选项
     domDropdownMenuContentLis.on("click", function(){
         var domDropdownMenuContentLi = $(this);
-        var domDropdownMenu = domDropdownMenuContentLi.parents(config.selector).eq(0);
+        var domDropdownMenu = domDropdownMenuContentLi.parents(config.element).eq(0);
         var domDropdownMenuContent = $(" > .content", domDropdownMenu);
         
         domDropdownMenuContent.slideUp(200);
@@ -324,7 +324,7 @@ sun.dropDownClickMenu = function(config){
     
     // 关闭
 	domDocument.on("click", function(e){
-		if($(e.target).closest(config.selector).length === 0){
+		if($(e.target).closest(config.element).length === 0){
 			domDropdownMenuContents.slideUp(200);
 		}
 	});
@@ -332,7 +332,7 @@ sun.dropDownClickMenu = function(config){
 
 /**
  * 下拉悬停
- * @param string config.selector 选择器
+ * @param string config.element 元素
  */
 sun.dropDownHover = function(config){
     var domDropdowns; // 下拉所有
@@ -342,13 +342,13 @@ sun.dropDownHover = function(config){
     var sto;
     
     // 配置
-    if(!config.selector){
+    if(!config.element){
         sun.toast("error", "下拉元素选择器参数错误", 3000);
         return false;
     }
     
     // 对象
-    domDropdowns = $(config.selector);
+    domDropdowns = $(config.element);
     domDropdownContents = $(" > .content", domDropdowns);
     
     // 鼠标移入
@@ -576,7 +576,7 @@ sun.treeTable = {};
 
 /**
  * 表格树初始化
- * @param string config.selector 选择器
+ * @param string config.element 元素
  * @param string config.column 那一列
  * @param string config.expand 展开几级
  */
@@ -594,13 +594,13 @@ sun.treeTable.init = function(config){
     var parentId = 0; // 父级id
     
     // 配置
-    if(!config.selector || !config.column || !config.expand){
+    if(!config.element || !config.column || !config.expand){
         sun.toast("error", "表格树参数错误", 3000);
         return false;
     }
     
     // trs
-    domTable = $(config.selector);
+    domTable = $(config.element);
     domTrs = $("> tbody > tr", domTable);
     trLength = domTrs.length;
     if(trLength == 0){
@@ -699,5 +699,112 @@ sun.treeTable.childClose = function(id){
         
         domTr.hide();
         sun.treeTable.childClose(id);
+    });
+}
+
+/**
+ * 文件上传
+ * @param string config.element 元素
+ * @param string config.name 文件上传表单字段名
+ * @param string config.accept 可选择的文件mime类型
+ * @param string config.url 处理url
+ * @param obj config.data 额外的参数 [{key: "", value: ""}]
+ * @param string config.success 成功回调
+ */
+sun.fileUpload = function(config){
+    var domButton; // 按钮上传
+    var domFile; // 表单控件file
+    var domProgress; // 进度条
+    var domProgressChartBg; // 进度条图形背景
+    var domProgressText; // 进度条文字
+    var node = ""; // 节点
+    var formData; // 表单对象
+    var i = 0; // 遍历索引
+        
+    // 验证
+    if(!config.element || !config.name){
+        sun.toast("error", "文件上传参数错误", 3000);
+        return false;
+    }
+    
+    domButton = $(config.element);
+    if(domButton.length === 0){
+        sun.toast("error", "文件上传element参数错误", 3000);
+        return false;
+    }
+    
+    // 节点
+    node = '<input type="file" name="'+ config.name +'"';
+    if(config.accept){
+        node += ' accept="' + config.accept +'"';
+    }
+    node += ' style=" display:none">';
+    domButton.after(node);
+    domFile = domButton.next("input[type=file]").eq(0);
+    
+    node = '<span class="sun_file_upload_progress">';
+    node += '<span class="chart"><span class="bg"></span></span>';
+    node += '<span class="text">0%</span>';
+    node += '</span>';
+    domButton.after(node);
+    
+    domProgress = domButton.next(".sun_file_upload_progress").eq(0);
+    domProgressChartBg = $(" > .chart > .bg", domProgress);
+    domProgressText = $(" > .text", domProgress);
+    
+    // 表单
+    formData = new FormData();
+    formData.append(config.name, domFile.get(0));
+    if(config.data){
+        for(data in config.data){
+            formData.append(data.key, data.value);
+        }
+    }
+    
+    // 选择文件
+    domButton.on("click", function(){
+        domFile.trigger("click");
+    });
+    
+    // 上传
+    domFile.on("change", function(){
+        if(domFile.val() == ""){
+            return;
+        }
+        
+        domProgress.css({"display":"inline-block"});
+        $.ajax({
+            url: config.url, // 上传地址
+            async: true, // 异步
+            type: 'post', // post方式
+            data: formData, // FormData数据
+            processData: false, // 不转换的信息为查询字符串
+            contentType: false, // 不设置http头
+            dataType: "json", // 预期服务器返回的数据类型
+            xhr: function(){ // 增强 XMLHttpRequest 对象
+                myXhr = $.ajaxSettings.xhr();
+                if(myXhr.upload){
+                    myXhr.upload.addEventListener("progress", function(e){ // 监听progress事件
+                        var loaded = e.loaded;// 已上传
+                        var total = e.total;// 总大小
+                        var percent = Math.floor((loaded / total) * 100);
+                        
+                        domProgressChartBg.width(percent + "%");
+                        domProgressText.html(percent + "%");
+                    });
+                }
+                return myXhr;
+            },
+            success: function(ret){
+                config.success(ret);
+            },
+            error: function(xhr, message){
+                sun.toast("error", message, 3000);
+            },
+            complete: function(XHR, TS){
+                domFile.get(0).value = "";
+                domProgress.hide();
+            }
+        });
     });
 }

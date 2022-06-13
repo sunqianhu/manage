@@ -54,7 +54,7 @@ edit.setMenuId = function(){
  */
 edit.formSubmit = function(){
     sun.formSubmit({
-        selector: ".form",
+        element: ".form",
         success: function(ret){
             if(ret.status == "error"){
                 sun.toast("error", ret.message, 3000);

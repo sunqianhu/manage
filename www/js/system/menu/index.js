@@ -54,12 +54,12 @@ index.delete = function(id){
 $(function(){
     // 表格树
     sun.treeTable.init({
-        selector: ".sun_treetable",
+        element: ".sun_treetable",
         column: 1,
         expand: 3
     });
     
     sun.dropDownClickMenu({
-        selector: ".data table .operation_more"
+        element: ".data table .operation_more"
     });
 });

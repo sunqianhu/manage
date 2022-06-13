@@ -266,3 +266,9 @@ transform:rotate(-90deg);
 -webkit-transform:rotate(-90deg);
 -o-transform:rotate(-90deg);
 }
+
+/*文件上传*/
+.sun_file_upload_progress { vertical-align: middle; margin-left: 10px; overflow: hidden; display: none; border-radius: 7px}
+.sun_file_upload_progress .chart{ display: inline-block; width: 200px; height: 14px; padding: 1px; border: 1px solid #008800; background: #f5f5f5; float: left}
+.sun_file_upload_progress .chart .bg{ display: inline-block; width: 0px; height: 14px; background: #008800}
+.sun_file_upload_progress .text{ margin-left: 5px; float: left; line-height: 18px}

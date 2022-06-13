@@ -19,19 +19,35 @@ $baseModel = new BaseModel();
 <script type="text/javascript" src="js/plug/sun-1.0.0/sun.js"></script>
 <script type="text/javascript">
 $(function(){
+    /*
     sun.dropDownHover({
-        selector: ".sun_dropdown"
+        element: ".sun_dropdown"
     });
+    */
+    
+    sun.fileUpload({
+        element: ".sun_button",
+        name: "file",
+        url: "test2.php",
+        success: function(ret){
+            alert(JSON.stringify(ret));
+        }
+    });
+    
 });
 </script>
 </head>
 
-<body style="padding-left: 300px">
+<body style="padding-left: 300px; padding-top: 100px">
 
+<!--
 <span class="sun_dropdown">
 <div class="title">标题</div>
 <div class="content">content</div>
 </span>
+-->
+
+<span class="sun_button">上传</span>
 
 </body>
 </html>
