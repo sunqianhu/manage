@@ -139,7 +139,9 @@ $frameMainMenu = FrameMainService::getPageLeftMenu('system_user');
 <div class="body">
 
 <div class="sun_section">
-<div class="title">用户信息</div>
+<div class="title">
+<span class="name">用户信息</span>
+</div>
 <div class="content">
 <table width="100%" class="sun_table_view">
 <tr>

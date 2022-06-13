@@ -112,7 +112,7 @@ $menuNode = MenuService::getIndexTreeNode($menus, 1);
     <th>菜单标识</th>
     <th>权限标识</th>
     <th>排序</th>
-    <th width="160">操作</th>
+    <th width="150">操作</th>
   </tr>
 <?php echo $menuNode;?>
 </table>

@@ -111,7 +111,7 @@ $roles = SafeService::frontDisplay($roles, array('id'));
     <th>id</th>
     <th>角色名称</th>
     <th>最后修改时间</th>
-    <th width="100">操作</th>
+    <th width="90">操作</th>
   </tr>
 <?php
 if(!empty($roles)){

@@ -49,5 +49,25 @@ $(function(){
 
 <span class="sun_button">上传</span>
 
+<span class="sun_file_upload_progress" style="display: block">
+<span class="chart"><span class="bg" style="width: 33px"></span></span>
+<span class="text">22%</span>
+</span>
+
+<div class="sun_file_upload_result">
+<div class="item">
+<a href="">新建文本文档.txt</a>
+<a href="" class="delete">删除</a>
+</div>
+<div class="item">
+<a href="">新建文本文档.txt</a>
+<a href="" class="delete">删除</a>
+</div>
+<div class="item">
+<a href="">新建文本文档.txt</a>
+<a href="" class="delete">删除</a>
+</div>
+</div>
+
 </body>
 </html>

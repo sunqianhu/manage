@@ -123,7 +123,8 @@ $loginLogs = SafeService::frontDisplay($loginLogs, array('id'));
 <div class="search">
 <form method="get" action="" class="form">
 <ul>
-<li>登录时间：<span class="time_range"><input type="text" name="time_start" id="time_start" value="<?php echo $search['time_start'];?>" autocomplete="off" />到<input type="text" name="time_end" id="time_end" value="<?php echo $search['time_end'];?>" autocomplete="off" /></span></li>
+<li>登录时间：<span class="time_range"><input type="text" name="time_start" id="time_start" value="<?php echo $search['time_start'];?>" autocomplete="off" /> 到 
+<input type="text" name="time_end" id="time_end" value="<?php echo $search['time_end'];?>" autocomplete="off" /></span></li>
 <li>部门：<input type="text" name="department_name" value="<?php echo $search['department_name'];?>" /></li>
 <li>姓名：<input type="text" name="user_name" value="<?php echo $search['user_name'];?>" /></li>
 <li>
@@ -134,17 +135,14 @@ $loginLogs = SafeService::frontDisplay($loginLogs, array('id'));
 </div>
 
 <div class="data sun_mt10">
-<div class="toolbar">
-<a href="javascript:;" class="sun_button" onClick="index.add();">添加</a>
-</div>
-<table class="sun_table_list sun_table_list_hover sun_mt10" width="100%">
+<table class="sun_table_list sun_table_list_hover" width="100%">
   <tr>
     <th>id</th>
     <th>部门</th>
     <th>用户姓名</th>
     <th>登录ip</th>
     <th>登录时间</th>
-    <th width="80">操作</th>
+    <th width="40">操作</th>
   </tr>
 <?php
 if(!empty($loginLogs)){
@@ -157,7 +155,7 @@ foreach($loginLogs as $loginLog){
     <td><?php echo $loginLog['ip'];?></td>
     <td><?php echo $loginLog['time_login_name'];?></td>
     <td>
-<a href="../user/detail.php?id=<?php echo $loginLog['user_id'];?>" class="sun_button sun_button_secondary sun_button_small">查看用户</a>
+<a href="../user/detail.php?id=<?php echo $loginLog['user_id'];?>" class="sun_button sun_button_secondary sun_button_small">用户</a>
     </td>
   </tr>
 <?php

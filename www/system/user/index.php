@@ -208,7 +208,7 @@ index.departmentData = <?php echo $department;?>;
     <th>最后修改时间</th>
     <th>最后登录时间</th>
     <th>状态</th>
-    <th width="160">操作</th>
+    <th width="150">操作</th>
   </tr>
 <?php
 if(!empty($users)){

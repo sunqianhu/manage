@@ -120,7 +120,7 @@ $departmentNode = DepartmentService::getIndexTreeNode($departments, 1);
     <th>部门名称</th>
     <th>排序</th>
     <th>备注</th>
-    <th width="160">操作</th>
+    <th width="150">操作</th>
   </tr>
 <?php echo $departmentNode;?>
 </table>

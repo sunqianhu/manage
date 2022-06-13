@@ -110,7 +110,7 @@ $dictionarys = SafeService::frontDisplay($dictionarys, array('id'));
     <th>字典键</th>
     <th>字典值</th>
     <th>排序</th>
-    <th width="100">操作</th>
+    <th width="90">操作</th>
   </tr>
 <?php
 if(!empty($dictionarys)){

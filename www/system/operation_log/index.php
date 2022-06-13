@@ -137,10 +137,7 @@ $operationLogs = SafeService::frontDisplay($operationLogs, array('id', 'url'));
 </div>
 
 <div class="data sun_mt10">
-<div class="toolbar">
-<a href="javascript:;" class="sun_button" onClick="index.add();">添加</a>
-</div>
-<table class="sun_table_list sun_table_list_hover sun_mt10" width="100%">
+<table class="sun_table_list sun_table_list_hover" width="100%">
   <tr>
     <th>id</th>
     <th>部门</th>
@@ -148,7 +145,7 @@ $operationLogs = SafeService::frontDisplay($operationLogs, array('id', 'url'));
     <th>操作ip</th>
     <th>操作url</th>
     <th>操作时间</th>
-    <th width="100">操作</th>
+    <th width="90">操作</th>
   </tr>
 <?php
 if(!empty($operationLogs)){
