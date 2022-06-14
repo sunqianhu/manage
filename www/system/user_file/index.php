@@ -87,11 +87,11 @@ foreach($userFiles as $key => $userFile){
     $userFiles[$key]['size_name'] = FileService::getByteReadable($userFile['size']);
     $userFiles[$key]['user_name'] = UserService::getName($userFile['user_id']);
     $userFiles[$key]['module_name'] = DictionaryService::getValue('system_user_file_module', $userFile['module_id']);
-    $userFiles[$key]['name_sub'] = StringService::getSubFrontDisplayFromZero($userFile['name'], 25);
+    $userFiles[$key]['name_sub'] = StringService::getSubFromZero($userFile['name'], 25);
 }
 
 $search = SafeService::frontDisplay($search);
-$userFiles = SafeService::frontDisplay($userFiles, 'id, user_id, module_id, name_sub');
+$userFiles = SafeService::frontDisplay($userFiles, 'id, user_id, module_id');
 
 ?><!doctype html>
 <html>
@@ -158,7 +158,7 @@ foreach($userFiles as $userFile){
     <td><?php echo $userFile['department_name'];?></td>
     <td><?php echo $userFile['user_name'];?></td>
     <td><?php echo $userFile['module_name'];?></td>
-    <td><?php echo $userFile['name_sub'];?></td>
+    <td><span title="<?php echo $userFile['name'];?>"><?php echo $userFile['name_sub'];?></span></td>
     <td><?php echo $userFile['size_name'];?></td>
     <td><?php echo $userFile['ip'];?></td>
     <td><?php echo $userFile['time_add_name'];?></td>

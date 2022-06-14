@@ -93,6 +93,7 @@ $loginLogs = $loginLogModel->select("ip, time_login",  array(
     )
 ), 'order by id desc', 'limit 0,50');
 $loginLogs = ArrayTwoService::columnTimestampToTime($loginLogs, 'time_login', 'time_login_name');
+$loginLogs = SafeService::frontDisplay($loginLogs);
 
 // 操作日志
 $operationLogs = $operationLogModel->select("id, ip, time_add, url",  array(
@@ -104,8 +105,9 @@ $operationLogs = $operationLogModel->select("id, ip, time_add, url",  array(
 $operationLogs = ArrayTwoService::columnTimestampToTime($operationLogs, 'time_add', 'time_add_name');
 
 foreach($operationLogs as $key => $operationLog){
-    $operationLogs[$key]['url_sub'] = StringService::getSubFrontDisplayFromZero($operationLog['url'], 60);
+    $operationLogs[$key]['url_sub'] = StringService::getSubFromZero($operationLog['url'], 60);
 }
+$operationLogs = SafeService::frontDisplay($operationLogs, 'url, url_sub');
 
 // 菜单
 $frameMainMenu = FrameMainService::getPageLeftMenu('system_user');

@@ -87,11 +87,11 @@ foreach($operationLogs as $key => $operationLog){
     $operationLogs[$key]['time_add_name'] = date('Y-m-d H:i:s', $operationLog['time_add']);
     $operationLogs[$key]['user_name'] = UserService::getName($operationLog['user_id']);
     $operationLogs[$key]['department_name'] = DepartmentService::getName($operationLog['department_id']);
-    $operationLogs[$key]['url_sub'] = StringService::getSubFrontDisplayFromZero($operationLog['url'], 50);
+    $operationLogs[$key]['url_sub'] = StringService::getSubFromZero($operationLog['url'], 60);
 }
 
 $search = SafeService::frontDisplay($search);
-$operationLogs = SafeService::frontDisplay($operationLogs, 'id,url');
+$operationLogs = SafeService::frontDisplay($operationLogs, 'id,url,url_sub');
 
 ?><!doctype html>
 <html>
@@ -156,7 +156,7 @@ foreach($operationLogs as $operationLog){
     <td><?php echo $operationLog['department_name'];?></td>
     <td><?php echo $operationLog['user_name'];?></td>
     <td><?php echo $operationLog['ip'];?></td>
-    <td><a href="<?php echo $operationLog['url'];?>" target="_blank"><?php echo $operationLog['url_sub'];?></a></td>
+    <td><a href="<?php echo $operationLog['url'];?>" target="_blank" title="<?php echo $operationLog['url'];?>"><?php echo $operationLog['url_sub'];?></a></td>
     <td><?php echo $operationLog['time_add_name'];?></td>
     <td>
 <a href="javascript:;" class="sun_button sun_button_secondary sun_button_small sun_mr5" onClick="sun.layer.open({id: 'layer_detail', name: '操作日志详情', url: 'detail.php?id=<?php echo $operationLog['id'];?>', width: 700, height: 500})">详情</a>

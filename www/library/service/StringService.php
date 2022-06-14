@@ -62,7 +62,7 @@ class StringService{
      * @param int $length 截取长度
      * @return string 截取后的字符串
      */
-    static function getSubFrontDisplayFromZero($string, $length){
+    static function getSubFromZero($string, $length){
         $stringNew = '';
         $total = 0; // 字符串总长度
         
@@ -75,7 +75,7 @@ class StringService{
             return $string;
         }
         
-        $stringNew = '<span title="'.SafeService::frontDisplay($string).'">'.SafeService::frontDisplay(self::getSub($string, 0, $length)).'...</span>';
+        $stringNew = self::getSub($string, 0, $length).'...';
         return $stringNew;
     }
 }
