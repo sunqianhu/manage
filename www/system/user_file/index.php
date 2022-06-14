@@ -154,7 +154,7 @@ $userFiles = SafeService::frontDisplay($userFiles, 'id, user_id, module_id');
     <th>文件大小</th>
     <th>上传ip</th>
     <th>上传时间</th>
-    <th width="80">操作</th>
+    <th width="90">操作</th>
   </tr>
 <?php
 if(!empty($userFiles)){
@@ -170,7 +170,7 @@ foreach($userFiles as $userFile){
     <td><?php echo $userFile['ip'];?></td>
     <td><?php echo $userFile['time_add_name'];?></td>
     <td>
-<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small" onClick="sun.layer.open({id: 'layer_detail', name: '文件详情', url: 'detail.php?id=<?php echo $userFile['id'];?>', width: 700, height: 500})">详情</a>
+<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small sun_mr5" onClick="sun.layer.open({id: 'layer_detail', name: '文件详情', url: 'detail.php?id=<?php echo $userFile['id'];?>', width: 700, height: 500})">详情</a>
 <a href="../user/detail.php?id=<?php echo $userFile['user_id'];?>" class="sun_button sun_button_secondary sun_button_small">用户</a>
     </td>
   </tr>
