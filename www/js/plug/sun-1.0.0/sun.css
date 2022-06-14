@@ -57,7 +57,7 @@ input[type='email']:focus,
 input[type='date']:focus,
 input[type='datetime']:focus{ box-shadow: 0 0 0 3px rgba(0, 120, 255, 0.25)}
 
-select{  padding: 0px 5px; height: 30px; line-height: 30px; border-left: 1px solid #cccccc; border-top: 1px solid #cccccc; border-right: 1px solid #bcbcbc; border-bottom: 1px solid #bcbcbc; outline: none; border-radius: 3px; font-size: 14px}
+select{  padding: 0px; height: 30px; line-height: 30px; border-left: 1px solid #cccccc; border-top: 1px solid #cccccc; border-right: 1px solid #bcbcbc; border-bottom: 1px solid #bcbcbc; outline: none; border-radius: 3px; font-size: 14px}
 select:focus{ box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25)}
 
 input[type='submit'],
@@ -66,11 +66,11 @@ button{ font-size: 14px; outline: none}
 
 /*表单简洁*/
 .sun_form_brief{}
-.sun_form_brief .row{ display: flex; margin-bottom: 10px; margin-right: 0px; margin-left: 0px}
-.sun_form_brief .row:last-child{ margin-right: 0px}
+.sun_form_brief .row{ display: table; width: 100%; margin: 0px; margin-bottom: 10px}
+.sun_form_brief .row:last-child{ margin-bottom: 0px}
 .sun_form_brief .row .required{ font-weight: bold; color: #ff0000}
-.sun_form_brief .row .title{ flex: 4; text-align: right; margin-right: 20px}
-.sun_form_brief .row .content{ flex: 8}
+.sun_form_brief .row > .title{ display: table-cell; vertical-align: middle; width: 34%; text-align: right}
+.sun_form_brief .row > .content{ display: table-cell; vertical-align: middle; width: 66%; padding-left: 10px}
 .sun_form_brief .tip{ font-size: 12px; color: #919191}
 
 /*表单表格*/
@@ -80,11 +80,11 @@ button{ font-size: 14px; outline: none}
 
 /*输入框组*/
 .sun_input_group{ position: relative; display: table; border-collapse: separate}
-.sun_input_group input{ display: table-cell; position: relative; z-index: 1}
+.sun_input_group input{ display: table-cell; vertical-align: middle; position: relative; z-index: 1}
 .sun_input_group input:focus{ z-index: 3}
 .sun_input_group input:not(:first-child){ border-top-left-radius: 0px; border-bottom-left-radius: 0px}
 .sun_input_group input:not(:last-child){ border-top-right-radius: 0px; border-bottom-right-radius: 0px}
-.sun_input_group .addon{ display: table-cell; background: #e9ecef; border: 1px solid #cccccc; padding: 0px 8px; border-radius: 3px; position: relative; z-index: 2}
+.sun_input_group .addon{ display: table-cell; vertical-align: middle; background: #e9ecef; border: 1px solid #cccccc; padding: 0px 8px; border-radius: 3px; position: relative; z-index: 2}
 .sun_input_group .addon:first-child{ border-right: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px}
 .sun_input_group .addon:last-child{ border-left: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px}
 
@@ -131,9 +131,9 @@ transition: all 0.5s ease;
 .sun_section > .content{ padding: 0px 10px 10px 10px}
 
 /*toast*/
-.sun_toast{ display: flex; align-items: center; background: #ffffff; max-width: 300px; border: 1px solid #eeeeee; box-shadow:0px 0px 5px #888888; border-radius: 3px; padding: 15px; position: absolute; left: 0px; top: 0px; z-index: 1090}
-.sun_toast .icon{ font-size: 36px; line-height: 100%; display: inline-block}
-.sun_toast .info{ flex: auto; margin-left: 10px; word-break:break-all}
+.sun_toast{ display: table-row; background: #ffffff; max-width: 300px; border: 1px solid #eeeeee; box-shadow:0px 0px 5px #888888; border-radius: 3px; padding: 10px; position: absolute; left: 0px; top: 0px; z-index: 1090}
+.sun_toast .icon{ display: table-cell; vertical-align: middle; font-size: 36px; line-height: 100%}
+.sun_toast .info{ display: table-cell; vertical-align: middle; padding-left: 10px; word-break: break-all}
 
 .sun_toast.success{ color: #008800; border-color: #eeeeee}
 .sun_toast.error{ color: #ff6600; border-color: #eeeeee}

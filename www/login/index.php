@@ -46,6 +46,9 @@ $config = ConfigService::getAll();
 </form>
 </div>
 
-<div class="copyright">copyright © 2022 sun all rights reserved.</div>
+<div class="explain">
+推荐浏览器：Google Chrome 45+，Mozilla　Firefox 40+，Internet Explorer 10+<br>
+copyright © 2022 sun all rights reserved.
+</div>
 </body>
 </html>
