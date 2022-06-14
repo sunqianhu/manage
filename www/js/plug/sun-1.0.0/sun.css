@@ -230,7 +230,7 @@ transition: all 0.5s ease;
 .sun_layer > .layer > .loading{ background-image: url(image/loading.gif); background-repeat: no-repeat; background-size: 30px 30px; background-position: 50% 0px; text-align: center; position: absolute; left: 0px; top: 40%; z-index: 2; width: 100%; padding-top: 35px}
 
 /*微章*/
-.sun_badge{ background: #326496; color: #ffffff; border-radius: 2px; display: inline-block; padding: 0px 5px; font-size: 12px; text-align: center; position: relative; height: 20px; line-height: 20px}
+.sun_badge{ background: #326496; color: #ffffff; border-radius: 2px; display: inline-block; padding: 0px 5px; font-size: 12px; text-align: center; position: relative; height: 20px; line-height: 20px; white-space:nowrap}
 .sun_badge_green{ background: #008800}
 .sun_badge_orange{ background: #ff6600}
 .sun_badge_cyan{ background: #008888}
