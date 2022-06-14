@@ -4,13 +4,15 @@
  */
 namespace library\service;
 
+use library\service\SafeService;
+
 class StringService{
     /**
-     * 获取字符串长度
+     * 得到字符串长度
      * @param string $string 字符串
      * @return int 字符串长度
      */
-    static function length($string){
+    static function getLength($string){
         $matchs = array();
         $length = 0;
         
@@ -29,13 +31,13 @@ class StringService{
     }
 
     /**
-     * 截取
+     * 获取字符串的一部分（截取）
      * @param string $string 字符串
      * @param int $start 开始位置
      * @param int $end 结束位置
      * @return string 截取后的字符串
      */
-    static function sub($string, $start, $end){
+    static function getSub($string, $start, $end){
         $stringNew = '';
         $matchs = array();
         $length = 0;
@@ -55,12 +57,12 @@ class StringService{
     }
     
     /**
-     * 从开始截取超出出现省略号
+     * 得到字符串的一部分显示
      * @param string $string 字符串
      * @param int $length 截取长度
      * @return string 截取后的字符串
      */
-    static function subStart($string, $length){
+    static function getSubFrontDisplayFromZero($string, $length){
         $stringNew = '';
         $total = 0; // 字符串总长度
         
@@ -68,12 +70,12 @@ class StringService{
             return $stringNew;
         }
         
-        $total = self::length($string);
+        $total = self::getLength($string);
         if($total <= $length){
             return $string;
         }
         
-        $stringNew = self::sub($string, 0, $length).'...';
+        $stringNew = '<span title="'.SafeService::frontDisplay($string).'">'.SafeService::frontDisplay(self::getSub($string, 0, $length)).'...</span>';
         return $stringNew;
     }
 }

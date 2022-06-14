@@ -55,7 +55,7 @@ $operationLog['time_add_name'] = date('Y-m-d H:i:s', $operationLog['time_add']);
 $operationLog['user_name'] = UserService::getName($operationLog['user_id']);
 $operationLog['department_name'] = DepartmentService::getName($operationLog['department_id']);
 
-$operationLog = SafeService::frontDisplay($operationLog, array('id', 'url'));
+$operationLog = SafeService::frontDisplay($operationLog, 'url');
 
 // 菜单
 $frameMainMenu = FrameMainService::getPageLeftMenu('system_operation_log');
@@ -65,28 +65,14 @@ $frameMainMenu = FrameMainService::getPageLeftMenu('system_operation_log');
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>日志详情_<?php echo $config['app_name'];?></title>
+<title>详情</title>
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/jquery-1.12.4/jquery.min.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.js"></script>
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/inc/frame_main.js"></script>
 <link href="<?php echo $config['app_domain'];?>css/system/operation_log/detail.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body class="page">
-<?php require_once __DIR__.'/../../inc/frame_main_header.php';?>
-<div class="page_body">
-<?php require_once __DIR__.'/../../inc/frame_main_left.php';?>
-<div class="page_right">
-<div class="header">
-<div class="location">
-<span class="iconfont icon-home icon"></span>
-<a href="../../index.php">系统首页</a> <span class="split">&gt;</span>
-<a href="index.php">操作日志</a> <span class="split">&gt;</span>
-日志详情
-</div>
-</div>
-<div class="body">
 <table width="100%" class="sun_table_view">
 <tr>
 <td class="name" align="right" width="130">部门：</td>
@@ -117,8 +103,5 @@ $frameMainMenu = FrameMainService::getPageLeftMenu('system_operation_log');
 <td><?php echo $operationLog['request'];?></td>
 </tr>
 </table>
-</div>
-</div>
-</div>
 </body>
 </html>

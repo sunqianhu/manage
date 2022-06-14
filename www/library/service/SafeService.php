@@ -12,20 +12,24 @@ class SafeService{
      * @param array $excludeField 排除字段
      * @return string 处理后可以被前台显示的字符串
      */
-    static function frontDisplay($datas, $excludeFields = array()){
+    static function frontDisplay($datas, $excludeField = ''){
+        $excludeFields = array();
+    
         if(empty($datas)){
             return $datas;
         }
 
         if(is_array($datas)){
             foreach ($datas as $field => $data){
-                if(!empty($excludeField)){
-                    if(in_array($field, $excludeFields, true)){
+                if($excludeField !== ''){
+                    $excludeFields = explode(',', $excludeField);
+                    array_walk($excludeFields, 'trim');
+                    if(in_array($field, $excludeFields)){
                         continue;
                     }
                 }
-
-                $datas[$field] = self::frontDisplay($data, $excludeFields);
+                
+                $datas[$field] = self::frontDisplay($data, $excludeField);
             }
         }else{
             $datas = htmlspecialchars($datas);

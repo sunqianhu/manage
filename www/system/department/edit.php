@@ -54,7 +54,7 @@ $department['parent_name'] = $departmentModel->selectOne('name', array(
         ':id'=> $department['parent_id']
     )
 ));
-$department = SafeService::frontDisplay($department, array('id', 'parent_id'));
+$department = SafeService::frontDisplay($department);
 
 ?><!doctype html>
 <html>

@@ -51,7 +51,7 @@ $menu['parent_name'] = $menuModel->selectOne('name', array(
         ':id'=> $menu['parent_id']
     )
 ));
-$menu = SafeService::frontDisplay($menu, array('id', 'type'));
+$menu = SafeService::frontDisplay($menu);
 
 $menuTypeRadioNode = DictionaryService::getRadio('system_menu_type', 'type', $menu['type']);
 

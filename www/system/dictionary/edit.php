@@ -44,7 +44,7 @@ $dictionary = $dictionaryModel->selectRow('id, type, `key`, `value`, `sort`', ar
         ':id'=>$_GET['id']
     )
 ));
-$dictionary = SafeService::frontDisplay($dictionary, array('id'));
+$dictionary = SafeService::frontDisplay($dictionary);
 
 ?><!doctype html>
 <html>

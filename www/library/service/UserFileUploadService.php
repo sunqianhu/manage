@@ -4,8 +4,10 @@
  */
 namespace library\service;
 
+use library\model\system\UserFileModel;
 use library\service\ConfigService;
 use library\service\UserFileService;
+use library\service\IpService;
 
 class UserFileUploadService{
     static $path = ''; // 文件全路径
@@ -50,6 +52,8 @@ class UserFileUploadService{
             'mp3' => 'audio/mpeg'
         ); // 允许的文件类型
         $sizeMax = 1024 * 1024 * 200; // 文件上传大小限制
+        $userFileModel = new UserFileModel();
+        $data = array();
         
         $configUserFilePath = ConfigService::getOne('user_file_path');
         if(empty($configUserFilePath)){
@@ -96,6 +100,21 @@ class UserFileUploadService{
             return false;
         }
         
+        // 记录
+        $data = array(
+            'department_id'=>$_SESSION['department']['id'],
+            'user_id'=>$_SESSION['user']['id'],
+            'module_id'=>$dirModule,
+            'name'=>$file['name'],
+            'path'=>$path,
+            'size'=>$file['size'],
+            'type'=>$file['type'],
+            'ip'=>IpService::getIp(),
+            'time_add'=>time()
+        );
+        $userFileModel->insert($data);
+        
+        // 赋值
         self::$path = $path;
         self::$name = $name;
         self::$extension = $extension;

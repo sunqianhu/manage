@@ -119,7 +119,7 @@ $menus = $menuModel->select("id, parent_id, type, name, tag, permission, icon_cl
     'value'=>array(
         ':role_id'=> $user['role_id_string']
     )
-));
+), 'order by `sort` asc');
 
 // 记录
 $ip = IpService::getIp();

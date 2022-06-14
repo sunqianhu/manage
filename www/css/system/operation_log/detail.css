@@ -1,8 +1,4 @@
 /**
  * 详情
  */
-@import url(../../iconfont/iconfont.css);
-@import url(../../inc/frame_main.css);
-@import url(../../inc/frame_main_detail.css);
-
-.page{}
+.page{ padding: 10px}

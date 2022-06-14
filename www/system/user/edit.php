@@ -64,7 +64,7 @@ $user['department_name'] = $departmentModel->selectOne('name', array(
         ':id'=>$user['department_id']
     )
 ));
-$user = SafeService::frontDisplay($user, array('id'));
+$user = SafeService::frontDisplay($user);
 $status = DictionaryService::getRadio('system_user_status', 'status', $user['status']);
 
 $roles = $roleModel->select('id, name', array());

@@ -57,7 +57,7 @@ $where['value'] = $whereValues;
 // 数据
 $menus = $menuModel->select('id, parent_id, name, `sort`, `permission`, icon_class, tag', $where, 'order by `sort` asc, id asc');
 $menus = TreeService::getTree($menus, 'child', 'id', 'parent_id');
-$menus = SafeService::frontDisplay($menus, array('id', 'parent_id'));
+$menus = SafeService::frontDisplay($menus, );
 $menuNode = MenuService::getIndexTreeNode($menus, 1);
 
 ?><!doctype html>

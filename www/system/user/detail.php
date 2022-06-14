@@ -83,7 +83,7 @@ $roles = $roleModel->select('name', array(
     )
 ));
 $user['role_name'] = ArrayTwoService::getColumnString($roles, 'name', '，');
-$user = SafeService::frontDisplay($user, array('id'));
+$user = SafeService::frontDisplay($user);
 
 // 登录日志
 $loginLogs = $loginLogModel->select("ip, time_login",  array(
@@ -104,7 +104,7 @@ $operationLogs = $operationLogModel->select("id, ip, time_add, url",  array(
 $operationLogs = ArrayTwoService::columnTimestampToTime($operationLogs, 'time_add', 'time_add_name');
 
 foreach($operationLogs as $key => $operationLog){
-    $operationLogs[$key]['url_sub'] = StringService::subStart($operationLog['url'], 60);
+    $operationLogs[$key]['url_sub'] = StringService::getSubFrontDisplayFromZero($operationLog['url'], 60);
 }
 
 // 菜单

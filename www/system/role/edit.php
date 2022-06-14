@@ -66,7 +66,7 @@ $roleMenus = $roleMenuModel->select('menu_id', array(
 ));
 $roleMenuIds = array_column($roleMenus, 'menu_id');
 $role['menu_ids'] = implode(',', $roleMenuIds);
-$role = SafeService::frontDisplay($role, array('id'));
+$role = SafeService::frontDisplay($role);
 
 $menus = $menuModel->select('id, name, parent_id', array(
     'mark'=>'parent_id != 0'

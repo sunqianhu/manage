@@ -127,7 +127,7 @@ $statusOption = DictionaryService::getSelectOption('system_user_status', array($
 $roles = $roleModel->select('id, name', array());
 $roleOption = ArrayTwoService::getSelectOption($roles, array($search['role_id']), 'id', 'name');
 
-$users = SafeService::frontDisplay($users, array('id'));
+$users = SafeService::frontDisplay($users);
 $search = SafeService::frontDisplay($search);
 
 ?><!doctype html>

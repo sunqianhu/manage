@@ -89,7 +89,7 @@ foreach($loginLogs as $key => $loginLog){
 }
 
 $search = SafeService::frontDisplay($search);
-$loginLogs = SafeService::frontDisplay($loginLogs, array('id'));
+$loginLogs = SafeService::frontDisplay($loginLogs);
 
 ?><!doctype html>
 <html>

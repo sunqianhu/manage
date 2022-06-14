@@ -58,7 +58,7 @@ $paginationNodeIntact = $paginationService->getNodeIntact();
 
 $dictionarys = $dictionaryModel->select('id, type, `key`, `value`, `sort`', $where, 'order by type asc, `sort` asc, id asc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
 
-$dictionarys = SafeService::frontDisplay($dictionarys, array('id'));
+$dictionarys = SafeService::frontDisplay($dictionarys);
 
 ?><!doctype html>
 <html>

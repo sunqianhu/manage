@@ -61,7 +61,7 @@ foreach($roles as $key => $role){
 }
 
 $search = SafeService::frontDisplay($search);
-$roles = SafeService::frontDisplay($roles, array('id'));
+$roles = SafeService::frontDisplay($roles);
 
 ?><!doctype html>
 <html>
