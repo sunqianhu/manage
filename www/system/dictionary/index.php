@@ -16,7 +16,10 @@ $config = ConfigService::getAll();
 $frameMainMenu = ''; // 框架菜单
 $dictionaryModel = new DictionaryModel(); // 模型
 $search = array(
-    'type'=>''
+    'type'=>'',
+    'key'=>'',
+    'value'=>''
+    
 ); // 搜索
 $whereMarks = array();
 $whereValues = array();
@@ -42,8 +45,20 @@ $frameMainMenu = FrameMainService::getPageLeftMenu('system_dictionary');
 if(isset($_GET['type']) && $_GET['type'] !== ''){
     $whereMarks[] = 'type = :type';
     $whereValues[':type'] = $_GET['type'];
-    $search['type'] = SafeService::frontDisplay($_GET['type']);
+    $search['type'] = $_GET['type'];
 }
+if(isset($_GET['key']) && $_GET['key'] !== ''){
+    $whereMarks[] = '`key` = :key';
+    $whereValues[':key'] = $_GET['key'];
+    $search['key'] = $_GET['key'];
+}
+if(isset($_GET['value']) && $_GET['value'] !== ''){
+    $whereMarks[] = '`value` = :value';
+    $whereValues[':value'] = $_GET['value'];
+    $search['value'] = $_GET['value'];
+}
+$search = SafeService::frontDisplay($search);
+
 if(!empty($whereMarks)){
     $where['mark'] = implode(' and ', $whereMarks);
 }
@@ -92,6 +107,9 @@ $dictionarys = SafeService::frontDisplay($dictionarys);
 <form method="get" action="" class="form">
 <ul>
 <li>字典类型：<input type="text" name="type" value="<?php echo $search['type'];?>" /></li>
+<li>字典键：<input type="text" name="key" value="<?php echo $search['key'];?>" /></li>
+<li>
+<li>字典值：<input type="text" name="value" value="<?php echo $search['value'];?>" /></li>
 <li>
 <input type="submit" value="搜索" class="sun_button" />
 </li>

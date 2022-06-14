@@ -16,6 +16,7 @@ use library\service\ZtreeService;
 use library\service\ArrayTwoService;
 use library\service\SafeService;
 use library\service\system\DictionaryService;
+use library\service\system\UserService;
 
 $config = ConfigService::getAll();
 $frameMainMenu = ''; // 框架菜单
@@ -32,6 +33,7 @@ $recordTotal = 0; // 总记录
 $paginationNodeIntact = ''; // 节点
 
 $search = array(
+    'id'=>'',
     'department_id'=>'0',
     'department_name'=>'不限',
     'status'=>'0',
@@ -59,6 +61,11 @@ if(!AuthService::isPermission('system_user')){
 
 $frameMainMenu = FrameMainService::getPageLeftMenu('system_user');
 
+if(!empty($_GET['id'])){
+    $whereMarks[] = 'id = :id';
+    $whereValues[':id'] = $_GET['id'];
+    $search['id'] = $_GET['id'];
+}
 if(isset($_GET['department_id']) && $_GET['department_id'] != '0'){
     $whereMarks[] = 'department_id = :department_id';
     $whereValues[':department_id'] = $_GET['department_id'];
@@ -105,7 +112,7 @@ $recordTotal = $userModel->selectOne('count(1)', $where);
 $paginationService = new PaginationService($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
 $paginationNodeIntact = $paginationService->getNodeIntact();
 
-$users = $userModel->select('id, username, `name`, `time_login`, time_edit, phone, status, department_id', $where, 'order by id asc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
+$users = $userModel->select('id, username, head, `name`, `time_login`, time_edit, phone, status, department_id', $where, 'order by id asc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
 foreach($users as $key => $user){
     $users[$key]['department_name'] = $departmentModel->selectOne('name', array(
         'mark'=>'id = :id',
@@ -117,6 +124,7 @@ foreach($users as $key => $user){
     $users[$key]['status_style_class'] = $user['status'] == 2 ? 'sun_badge sun_badge_orange': 'sun_badge';
     $users[$key]['time_edit_name'] = $user['time_edit'] ? date('Y-m-d H:i:s', $user['time_edit']) : '-';
     $users[$key]['time_login_name'] = $user['time_login'] ? date('Y-m-d H:i:s', $user['time_login']) : '-';
+    $users[$key]['head_url'] = UserService::getHeadUrl($user['head']);
 }
 
 $departments = $departmentModel->select('id, name, parent_id', array(), 'order by parent_id asc, id asc');
@@ -184,6 +192,7 @@ index.departmentData = <?php echo $department;?>;
 <option value="0">不限</option>
 <?php echo $roleOption;?>
 </select></li>
+<li>用户id：<input type="text" name="id" value="<?php echo $search['id'];?>" /></li>
 <li>用户名：<input type="text" name="username" value="<?php echo $search['username'];?>" /></li>
 <li>用户姓名：<input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
 <li>手机号码：<input type="text" name="phone" value="<?php echo $search['phone'];?>" /></li>
@@ -216,7 +225,10 @@ foreach($users as $user){
 ?>
   <tr>
     <td><?php echo $user['id'];?></td>
-    <td><?php echo $user['username'];?></td>
+    <td>
+<img src="<?php echo $user['head_url'];?>" class="head" />
+<?php echo $user['username'];?>
+    </td>
     <td><?php echo $user['name'];?></td>
     <td><?php echo $user['phone'];?></td>
     <td><?php echo $user['department_name'];?></td>

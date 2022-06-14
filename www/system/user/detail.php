@@ -137,6 +137,7 @@ $frameMainMenu = FrameMainService::getPageLeftMenu('system_user');
 <a href="index.php">用户管理</a> <span class="split">&gt;</span>
 用户详情
 </div>
+<a href="javascript:;" class="back" onClick="history.back();">返回</a>
 </div>
 <div class="body">
 
@@ -246,7 +247,7 @@ foreach($operationLogs as $operationLog){
 }else{
 ?>
 <tr>
-<td colspan="3" align="center">无</td>
+<td colspan="4" align="center">无</td>
 </tr>
 <?php
 }

@@ -24,7 +24,8 @@ $search = array(
     'time_start'=>'',
     'time_end'=>'',
     'department_name'=>'',
-    'user_name'=>''
+    'user_name'=>'',
+    'name'=>''
 ); // 搜索
 $whereMarks = array();
 $whereValues = array();
@@ -66,6 +67,11 @@ if(isset($_GET['user_name']) && $_GET['user_name'] !== ''){
     $whereMarks[] = 'user_id in (select id from user where name like :user_name)';
     $whereValues[':user_name'] = '%'.$_GET['user_name'].'%';
     $search['user_name'] = $_GET['user_name'];
+}
+if(isset($_GET['name']) && $_GET['name'] !== ''){
+    $whereMarks[] = 'name like :name';
+    $whereValues[':name'] = '%'.$_GET['name'].'%';
+    $search['name'] = $_GET['name'];
 }
 if(!empty($whereMarks)){
     $where['mark'] = implode(' and ', $whereMarks);
@@ -129,6 +135,7 @@ $userFiles = SafeService::frontDisplay($userFiles, 'id, user_id, module_id');
 <input type="text" name="time_end" id="time_end" value="<?php echo $search['time_end'];?>" autocomplete="off" /></span></li>
 <li>部门：<input type="text" name="department_name" value="<?php echo $search['department_name'];?>" /></li>
 <li>姓名：<input type="text" name="user_name" value="<?php echo $search['user_name'];?>" /></li>
+<li>文件名：<input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
 <li>
 <input type="submit" value="搜索" class="sun_button" />
 </li>

@@ -6,3 +6,4 @@
 @import url(../../inc/frame_main_list.css);
 
 .page{}
+.page .data .head{ width: 30px; height: 30px; border-radius: 50%; vertical-align: middle}

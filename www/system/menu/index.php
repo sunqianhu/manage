@@ -20,7 +20,8 @@ $menuNode = ''; // 菜单表格节点
 $frameMainMenu = '';
 $search = array(
     'id'=>'',
-    'name'=>''
+    'name'=>'',
+    'permission'=>''
 );
 $whereMarks = array();
 $whereValues = array();
@@ -42,13 +43,19 @@ $frameMainMenu = FrameMainService::getPageLeftMenu('system_menu');
 if(!empty($_GET['id'])){
     $whereMarks[] = 'id = :id';
     $whereValues[':id'] = $_GET['id'];
-    $search['id'] = SafeService::frontDisplay($_GET['id']);
+    $search['id'] = $_GET['id'];
 }
 if(isset($_GET['name']) && $_GET['name'] !== ''){
     $whereMarks[] = 'name like :name';
     $whereValues[':name'] = '%'.$_GET['name'].'%';
-    $search['name'] = SafeService::frontDisplay($_GET['name']);
+    $search['name'] = $_GET['name'];
 }
+if(isset($_GET['permission']) && $_GET['permission'] !== ''){
+    $whereMarks[] = 'permission like :permission';
+    $whereValues[':permission'] = $_GET['permission'];
+    $search['permission'] = $_GET['permission'];
+}
+$search = SafeService::frontDisplay($search);
 if(!empty($whereMarks)){
     $where['mark'] = implode(' and ', $whereMarks);
 }
@@ -57,7 +64,7 @@ $where['value'] = $whereValues;
 // 数据
 $menus = $menuModel->select('id, parent_id, name, `sort`, `permission`, icon_class, tag', $where, 'order by `sort` asc, id asc');
 $menus = TreeService::getTree($menus, 'child', 'id', 'parent_id');
-$menus = SafeService::frontDisplay($menus, );
+$menus = SafeService::frontDisplay($menus, 'id,parent_id');
 $menuNode = MenuService::getIndexTreeNode($menus, 1);
 
 ?><!doctype html>
@@ -93,6 +100,7 @@ $menuNode = MenuService::getIndexTreeNode($menus, 1);
 <ul>
 <li>菜单id：<input type="text" name="id" value="<?php echo $search['id'];?>" /></li>
 <li>菜单名称：<input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
+<li>权限标识：<input type="text" name="permission" value="<?php echo $search['permission'];?>" /></li>
 <li>
 <input type="submit" value="搜索" class="sun_button" />
 <input type="reset" class="sun_button sun_button_secondary sun_ml5" value="重置" />

@@ -39,7 +39,7 @@ class userService{
         $config = ConfigService::getAll();
         $url = '';
         
-        if($path === ''){
+        if(empty($path)){
             $url = $config['app_domain'].'image/user_head.png';
         }else{
             $url = $config['user_file_domain'].$path;

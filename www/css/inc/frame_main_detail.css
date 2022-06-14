@@ -8,5 +8,6 @@
 .page > .page_body > .page_right .header .location{ float: left}
 .page > .page_body > .page_right .header .location .split{ color: #919191}
 .page > .page_body > .page_right .header .location a{}
+.page > .page_body > .page_right .header .back{ margin-left: 40px}
 
 .page > .page_body > .page_right .body{ padding: 10px}

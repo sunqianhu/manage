@@ -16,6 +16,7 @@ $config = ConfigService::getAll();
 $frameMainMenu = ''; // 框架菜单
 $roleModel = new RoleModel(); // 模型
 $search = array(
+    'id'=>'',
     'name'=>''
 ); // 搜索
 $whereMarks = array();
@@ -39,6 +40,11 @@ if(!AuthService::isPermission('system_role')){
 $frameMainMenu = FrameMainService::getPageLeftMenu('system_role');
 
 // 搜索
+if(!empty($_GET['id'])){
+    $whereMarks[] = 'id = :id';
+    $whereValues[':id'] = $_GET['id'];
+    $search['id'] = $_GET['id'];
+}
 if(isset($_GET['name']) && $_GET['name'] !== ''){
     $whereMarks[] = 'name = :name';
     $whereValues[':name'] = '%'.$_GET['name'].'%';
@@ -94,6 +100,7 @@ $roles = SafeService::frontDisplay($roles);
 <div class="search">
 <form method="get" action="" class="form">
 <ul>
+<li>角色id：<input type="text" name="id" value="<?php echo $search['id'];?>" /></li>
 <li>角色名称：<input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
 <li>
 <input type="submit" value="搜索" class="sun_button" />
