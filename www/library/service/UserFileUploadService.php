@@ -16,19 +16,39 @@ class UserFileUploadService{
     static $message = ''; // 上传描述
     
     /**
-     * 上传
+     * 文件
+     * @param string $dirModule 目录模块 
      * @param string $fieldName 文件表单字段名称 
      * @return boolean 上传结果
      */
-    static function upload($fieldName){
+    static function file($dirModule, $fieldName){
         $file = array(); // 上传file数据
         $configUserFilePath = ''; // 配置文件路径
         $path = ''; // 文件全路径
         $dir = date('Y/m/d/'); // 文件目录
         $name = ''; // 文件名
         $extension = ''; // 文件扩展名
-        $extensionTemps = array(); // 扩展名的临时数组
-        $extensionAllows = array('gif', 'png', 'jpg', 'jpeg', 'txt', 'zip', 'tar', 'gz', 'xls', 'xlsx', 'doc', 'docx', 'ppt', 'pptx', 'vsdx', 'pdf', 'mp4', 'rmvb', 'avi', 'flv', 'mp3');
+        $typeAllows = array(
+            'jpeg' => 'image/jpeg', 
+            'jpg' => 'image/jpg', 
+            'pjpeg' => 'image/pjpeg', 
+            'png' => 'image/png', 
+            'gif' => 'image/gif', 
+            'rar' => 'application/x-rar-compressed',
+            'zip' => 'application/zip',
+            'doc' => 'application/msword',
+            'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'xls' => 'application/vnd.ms-excel',
+            'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'txt' => 'text/plain',
+            'ppt' => 'application/vnd.ms-powerpoint',
+            'pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+            'pdf' => 'application/pdf',
+            'mp4' => 'video/mp4',
+            'flv' => 'video/x-flv',
+            '3gp' => 'video/3gpp',
+            'mp3' => 'audio/mpeg'
+        ); // 允许的文件类型
         $sizeMax = 1024 * 1024 * 200; // 文件上传大小限制
         
         $configUserFilePath = ConfigService::getOne('user_file_path');
@@ -48,22 +68,20 @@ class UserFileUploadService{
             return false;
         }
         
-        $extensionTemps = explode('.', $file['name']);
-        $extension = strtolower(trim(array_pop($extensionTemps)));
-        if($extension == ''){
-            self::$message = '文件扩展名错误';
+        if(!in_array($file['type'], array_values($typeAllows))){
+            self::$message = '此mime类型的文件不允许上传';
             return false;
         }
-        if(!in_array($extension, $extensionAllows)){
-            self::$message = '文件类型不允许上传';
-            return false;
-        }
+        $extension = array_search($file['type'], $typeAllows);
         
         if($file['size'] > $sizeMax){
             self::$message = '文件超过200Mb';
             return false;
         }
 
+        if($dirModule !== ''){
+            $dir = $dirModule.'/'.$dir;
+        }
         if(!file_exists($configUserFilePath.$dir)){
             if(!@mkdir($configUserFilePath.$dir, 0755, true)){
                 self::$message = '文件夹创建失败';

@@ -4,7 +4,8 @@
  */
 namespace library\service\system;
 
-use \library\model\system\UserModel;
+use library\model\system\UserModel;
+use library\service\ConfigService;
 
 class userService{
     
@@ -28,4 +29,22 @@ class userService{
         return $name;
     }
     
+    /**
+     * 得到用户头像url
+     * @access public
+     * @param string $path 头像路径
+     * @return string 头像url
+     */
+    static function getHeadUrl($path){
+        $config = ConfigService::getAll();
+        $url = '';
+        
+        if($path === ''){
+            $url = $config['app_domain'].'image/user_head.png';
+        }else{
+            $url = $config['user_file_domain'].$path;
+        }
+        
+        return $url;
+    }
 }

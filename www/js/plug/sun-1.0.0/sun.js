@@ -714,7 +714,7 @@ sun.treeTable.childClose = function(id){
 sun.fileUpload = function(config){
     var domButton; // 按钮上传
     var domFile; // 表单控件file
-    var domFileNative; // 表单控件file原生
+    var domNativeFile; // 表单控件file原生
     var domProgress; // 进度条
     var domProgressChartBg; // 进度条图形背景
     var domProgressText; // 进度条文字
@@ -742,7 +742,7 @@ sun.fileUpload = function(config){
     node += ' style=" display:none">';
     domButton.after(node);
     domFile = domButton.next("input[type=file]").eq(0);
-    domFileNative = domFile.get(0);
+    domNativeFile = domFile.get(0);
     
     node = '<span class="sun_file_upload_progress">';
     node += '<span class="chart"><span class="bg"></span></span>';
@@ -766,7 +766,7 @@ sun.fileUpload = function(config){
         
         // 数据
         formData = new FormData();
-        formData.append(config.name, domFileNative.files[0]);
+        formData.append(config.name, domNativeFile.files[0]);
         if(config.data){
             for(data in config.data){
                 formData.append(data.key, data.value);

@@ -13,6 +13,7 @@ use library\service\ConfigService;
 use library\service\ValidateService;
 use library\service\AuthService;
 use library\service\IpService;
+use library\service\system\UserService;
 use library\service\system\DictionaryService;
 
 $return = array(
@@ -75,7 +76,7 @@ $return['data']['captcha'] = '1';
 
 // 用户
 $user = $userModel->selectRow(
-    'id, username, name, department_id, role_id_string, status, time_login, ip', 
+    'id, username, name, department_id, role_id_string, head, status, time_login, ip', 
     array(
         'mark'=>'username = :username and password = :password',
         'value'=>array(
@@ -94,6 +95,7 @@ if($user['status'] != 1){
     echo json_encode($return);
     exit;
 }
+$user['head_url'] = UserService::getHeadUrl($user['head']);
 
 // 部门
 $department = $departmentModel->selectRow(

@@ -25,6 +25,7 @@ transition: all 0.5s ease;
 .page > .page_header > .link > ul > li > a .icon{ font-size: 14px; margin-right: 2px}
 .page > .page_header > .link > ul > .user{ position: relative}
 .page > .page_header > .link > ul > .user .title{}
+.page > .page_header > .link > ul > .user .title img{ width: 30px; border-radius: 50%; vertical-align: middle}
 .page > .page_header > .link > ul > .user .content{ position: absolute; right: 0px; top: 50px; width: 130px; box-shadow: 0px 0px 3px #919191; line-height: 35px; z-index: 99; display: none; background: #ffffff; border-radius: 0px 0px 3px 3px}
 .page > .page_header > .link > ul > .user .content > ul{ margin: 0px; padding: 5px; text-align: center}
 .page > .page_header > .link > ul > .user .content > ul > li{ list-style: none}

@@ -4,10 +4,14 @@
 <div class="link">
 <ul>
 <li class="user">
-<a href="javascript:;" class="title"><span class="iconfont icon-user icon"></span><?php echo $_SESSION['user']['name'];?></a>
+<a href="javascript:;" class="title">
+<img src="<?php echo $_SESSION['user']['head_url'];?>" />
+<?php echo $_SESSION['user']['name'];?>
+</a>
 <div class="content">
 <ul>
-<li><a href="javascript:;" onClick="frameMain.editPassword();">修改密码</a></li>
+<li><a href="javascript:;" onClick="frameMain.editUserHead();">修改头像</a></li>
+<li><a href="javascript:;" onClick="frameMain.editUserPassword();">修改密码</a></li>
 <li><a href="<?php echo $config['app_domain'];?>login/exit.php">退出登录</a></li>
 </ul>
 </div>

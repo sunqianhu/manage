@@ -1,13 +1,13 @@
 /**
- * 修改
+ * 修改密码
  */
 
-var edit = {};
+var editPassword = {};
 
 /**
  * 提交表单
  */
-edit.formSubmit = function(){
+editPassword.formSubmit = function(){
     sun.formSubmit({
         element: ".form",
         success: function(ret){
@@ -19,12 +19,12 @@ edit.formSubmit = function(){
                 return;
             }
             sun.toast("success", ret.message, 1000, function(){
-                parent.sun.layer.close("layer_self_edit_password");
+                parent.sun.layer.close("layer_edit_password");
             });
         }
     });
 }
 
 $(function(){
-    edit.formSubmit();
+    editPassword.formSubmit();
 });
