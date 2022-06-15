@@ -145,6 +145,7 @@ $search = SafeService::frontDisplay($search);
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>用户管理_<?php echo $config['app_name'];?></title>
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/jquery-1.12.4/jquery.min.js"></script>
+<link href="<?php echo $config['app_domain'];?>js/plug/animate-4.1.1/animate.min.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $config['app_domain'];?>js/plug/ztree-3.5.48/css/metroStyle/metroStyle.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/ztree-3.5.48/js/jquery.ztree.core.min.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
@@ -169,7 +170,7 @@ index.departmentData = <?php echo $department;?>;
 </div>
 <a href="javascript:;" onClick="location.reload();" class="refresh"><span class="iconfont icon-refresh icon"></span>刷新</a>
 </div>
-<div class="body">
+<div class="animate__animated animate__fadeIn body">
 
 <div class="search">
 <form method="get" action="" class="form">
