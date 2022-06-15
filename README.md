@@ -1,7 +1,6 @@
 # sun后台管理系统框架
 ## 概述
-sun后台管理系统框架是一个使用mvc思想写的，拥有管理系统基础功能的php后台管理系统框架，为快速开发系统做准备。sun后台管理系统框架包含系统登录、系统首页、用户管理、部门管理、角色管理、菜单管理、用户文件管理、登录日志和操作日志功能模块。sun后台管理系统框架的模型使用php pdo操作数据库。sun后台管理系统框架的服务有各种搭建系统的基础服务类，包含不限于数组服务、鉴权服务、缓存服务、验证码服务、配置服务、数据库服务、文件服务、主框架服务、图片处理服务、ip服务、分页服务和安全处理服务。sun后台管理系统的控制器是一个一个的请求文件，没有采用单一入库路由导航调用类的方法的方式。没有采用单一入口的好处一是可以自定义请求url，一个控制器方法就是一个php脚本文件，使开发不用去配置繁琐的路由规则。没有采用单一入口的好处二是使代码基于了文件管理，不会出现一个控制器文件上千行的代码量，不易维护的问题。sun后台管理系统框架开发系统就像搭积木一样的简单，每个控制器文件只需要包含应用app.php公共文件，就可以自动加载各种模型类和各种服务类，轻松处理用户请求。sun后台管理系统前端使用了自带的sun ui简单前端框架，基本上页面不用写重复的css。前端js公共插件放在/js/plus文件夹中，我们开发时可以需要什么js插件，加载什么插件，这就和搭积木是一样的原理。  
-
+sun后台管理系统框架是一个使用mvc思想写的，拥有管理系统基础功能的php后台管理系统框架，为快速开发系统做准备。sun后台管理系统框架包含系统登录、系统首页、用户管理、部门管理、角色管理、菜单管理、用户文件管理、登录日志和操作日志功能模块。sun后台管理系统框架的模型使用php pdo操作数据库。sun后台管理系统框架的服务有各种搭建系统的基础服务类，包含不限于数组服务、鉴权服务、缓存服务、验证码服务、配置服务、数据库服务、文件服务、主框架服务、图片处理服务、ip服务、分页服务和安全处理服务。sun后台管理系统框架开发系统就像搭积木一样的简单，自动加载各种模型类和服务类，轻松处理用户请求。sun后台管理系统前端使用了sun ui简单前端框架，基本上页面不用写重复的css。前端js公共插件放在/js/plus文件夹中，我们开发时可以需要什么插件，就加载什么插件，这就和搭积木是一样的简单。   
 ## 入手
 ### 使用模型
 ```Php
@@ -22,6 +21,7 @@ $userModel->insert(array(
 ### 使用服务
 ```Php
 use library\service\ZtreeService;
+
 $departments = ZtreeService::setOpenByFirst($departments);
 ```
   
@@ -65,6 +65,7 @@ if(!$validateService->check($_POST)){
 ### 鉴权
 ```Php
 use library\service\AuthService;
+
 AuthService::isPermission('system_user')
 ```
   
@@ -81,8 +82,40 @@ $paginationNodeIntact = $paginationService->getNodeIntact();
 ### 调用字典
 ```Php
 use library\service\system\DictionaryService;
+
 $status = DictionaryService::getRadio('system_user_status', 'status', 1);
 DictionaryService::getValue('system_user_status', 1) // 字典值
+```
+  
+### 调用js表单提交插件
+```javascript
+sun.formSubmit({
+    element: ".form",
+    success: function(ret){
+        if(ret.status == "error"){
+            sun.toast("error", ret.message, 3000);
+            if(ret.data && ret.data.dom){
+                $(ret.data.dom).focus();
+            }
+            return;
+        }
+        sun.toast("success", ret.message, 1000, function(){
+            window.parent.location.reload();
+        });
+    }
+});
+```
+  
+### 调用js文件上传插件
+```javascript
+sun.fileUpload({
+    element: ".sun_button",
+    name: "file",
+    url: "test_save.php",
+    success: function(ret){
+        alert(JSON.stringify(ret));
+    }
+});
 ```
   
 ### 调用js表格树插件
@@ -118,6 +151,8 @@ sun.layer.open({
 <div class="animate__animated animate__bounceInDown">
 </div>
 ```
+  
+还有很多服务和插件，打开代码一看就懂，做系统就像搭积木一样，欢迎体验。
   
 ## 截图
 登录  
