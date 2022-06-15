@@ -26,7 +26,7 @@ use library\service\ZtreeService;
 $departments = ZtreeService::setOpenByFirst($departments);
 ```
   
-### 表单验证
+### 使用表单验证
 ```Php
 use library\service\ValidateService;
 
@@ -80,15 +80,14 @@ $paginationNodeIntact = $paginationService->getNodeIntact();
 <?php echo $paginationNodeIntact;?>
 ```
   
-### 调用字典
+### 使用字典
 ```Php
 use library\service\system\DictionaryService;
 
-$status = DictionaryService::getRadio('system_user_status', 'status', 1);
 DictionaryService::getValue('system_user_status', 1) // 字典值
 ```
   
-### 调用js表单提交插件
+### 使用js表单提交插件
 ```javascript
 sun.formSubmit({
     element: ".form",
@@ -107,7 +106,7 @@ sun.formSubmit({
 });
 ```
   
-### 调用js文件上传插件
+### 使用js文件上传插件
 ```javascript
 sun.fileUpload({
     element: ".sun_button",
@@ -119,7 +118,7 @@ sun.fileUpload({
 });
 ```
   
-### 调用js表格树插件
+### 使用js表格树插件
 ```javascript
 sun.treeTable.init({
     element: ".sun_treetable",
@@ -128,14 +127,14 @@ sun.treeTable.init({
 });
 ```
   
-### 调用js下拉插件
+### 使用js下拉插件
 ```javascript
 sun.dropDownClickMenu({
     element: ".data table .operation_more"
 });
 ```
   
-### 调用js弹层插件
+### 使用js弹层插件
 ```javascript
 sun.layer.open({
     id: "layer_department_edit",
@@ -146,7 +145,7 @@ sun.layer.open({
 });
 ```
   
-### 调用css动画插件
+### 使用css动画插件
 ```html
 <link href="js/plug/animate-4.1.1/animate.min.css" rel="stylesheet" type="text/css" />
 <div class="animate__animated animate__bounceInDown">
