@@ -2,8 +2,8 @@
  * 用户管理
  */
 @import url(../../iconfont/iconfont.css);
-@import url(../../inc/frame_main.css);
-@import url(../../inc/frame_main_list.css);
+@import url(../../public/frame_main.css);
+@import url(../../public/frame_main_list.css);
 
 .page{}
 .page .data .head{ width: 30px; height: 30px; border-radius: 50%; vertical-align: middle}
