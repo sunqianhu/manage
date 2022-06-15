@@ -5,6 +5,16 @@
 var index = {};
 
 /**
+ * 粒子背景
+ */
+index.bg = function(){
+    $(".page > .bg").particleground({
+        dotColor: "rgba(50,100,150,0.05)",
+        lineColor: "rgba(50,100,150,0.05)",
+    });
+}
+
+/**
  * 修改验证码
  */
 index.changeCaptcha = function(){
@@ -39,6 +49,7 @@ index.formSubmit = function(){
 }
 
 $(function(){
+    index.bg();
     index.formSubmit();
 });
 
