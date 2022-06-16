@@ -11,26 +11,48 @@ class CaptchaService{
      * @param json json字符串
      */
     static function create($name){
-        $code = '';
-        $colorBg = null;
-        $colorFront = null;
-        $rand = 0;
+        $chars = array();
+        $width = 100;
+        $height = 35;
+        $img = null;
+        $color = null;
+        $font = ''; // 字体路径
+        $i = 0;
         
-        $image = imagecreate(60, 25);
-        $colorBg = ImageColorAllocate($image, rand(200, 255), rand(200, 255), rand(200, 255));
-        imagefill($image, 0, 0, $colorBg);
+        $img = imagecreate($width, $height);
+        imagecolorallocate($img, 255, 255, 255);
 
-        for($i=0; $i < 4; $i++){
-            $colorFront = imagecolorallocate($image, rand(0, 150), rand(0, 150), rand(0, 150));
-            $rand = rand(0, 9);
-            $code .= $rand;
-            imagestring($image, rand(1, 5), (($i * 14) + rand(2, 10)), rand(0, 10), $rand, $colorFront);
+        // 干扰点
+        $color = imagecolorallocate($img, rand(0,255), rand(0,255), rand(0,255));
+        for($i = 0; $i < 200; $i ++){
+            imagesetpixel($img, rand(0, $width), rand(0, $height), $color);
         }
 
-        $_SESSION[$name] = strtolower($code);
+        // 验证码文字
+        $chars = array('a','b','c','d','e','f','g','h','k','m','n','p','q','r','s','t','u','v','w','x','y','A','B','C','D','E','F','G','H','K','M','N','P','R','S','T','U','V','W','X','Y','3','4','5','6','7','8','9');
+        shuffle($chars);
+        
+        $font = dirname(dirname(__DIR__)).'/image/heiti.ttf';
+        $color = imagecolorallocate($img, rand(0,150), rand(0,150), rand(0,150));
+        imagettftext($img, rand(15, 25), rand(-10, 10), rand(0, 5), rand(15, 30), $color, $font, $chars[0]);
+        
+        $color = imagecolorallocate($img, rand(0,150), rand(0,150), rand(0,150));
+        imagettftext($img, rand(15, 25), rand(-10, 10), rand(25, 30), rand(15, 30), $color, $font, $chars[1]);
+        
+        $color = imagecolorallocate($img, rand(0,150), rand(0,150), rand(0,150));
+        imagettftext($img, rand(15, 25), rand(-10, 10), rand(50, 55), rand(15, 30), $color, $font, $chars[2]);
+        
+        $color = imagecolorallocate($img, rand(0,150), rand(0,150), rand(0,150));
+        imagettftext($img, rand(15, 25), rand(-10, 10), rand(75, 80), rand(15, 30), $color, $font, $chars[3]);
 
-        header("Content-type: image/png");
-        imagepng($image);
-        imagedestroy($image);
+        // 干扰线
+        for($i = 0; $i < 6; $i++) {
+            imageline($img, rand(0, $width), rand(0, $height), rand(0, $width), rand(0, $height), $color);
+        }
+        
+        imagepng($img);
+        imagedestroy($img);
+        
+        $_SESSION[$name] = strtolower($chars[0].$chars[1].$chars[2].$chars[3]);
     }
 }
