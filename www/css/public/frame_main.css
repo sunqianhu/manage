@@ -77,3 +77,9 @@ transform:rotate(-180deg);
 }
 .page.close > .page_body > .page_left{ width: 0px}
 .page.close > .page_body > .page_right{ left: 0px}
+
+/*手机*/
+@media ( max-width : 768px) {
+    .page > .page_body{ overflow-x: auto}
+	.page > .page_body > .page_right{ right: inherit; min-width: 1080px}
+}

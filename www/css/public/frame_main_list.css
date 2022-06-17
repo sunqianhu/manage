@@ -14,21 +14,16 @@
 
 .page > .page_body > .page_right .body{ padding: 10px}
 
-.page > .page_body > .page_right .body > .search{ background: #ffffff; border-radius: 5px; padding: 15px}
+.page > .page_body > .page_right .body > .search{ background: #ffffff; border-radius: 5px; padding: 10px}
 .page > .page_body > .page_right .body > .search:after{ content: ""; clear: both; display: block}
 .page > .page_body > .page_right .body > .search form > ul{ margin: 0px; padding: 0px}
 .page > .page_body > .page_right .body > .search form > ul > li{ margin: 5px 15px 5px 0px; list-style: none; float: left}
 .page > .page_body > .page_right .body > .search form > ul > li input[type=text]{ width: 150px}
 .page > .page_body > .page_right .body > .search form > ul > li select{ width: 150px}
 
-.page > .page_body > .page_right .body > .data{ background: #ffffff; border-radius: 5px; padding: 15px}
+.page > .page_body > .page_right .body > .data{ background: #ffffff; border-radius: 5px; padding: 10px}
 .page > .page_body > .page_right .body > .data .toolbar{ display: flex; justify-content: space-between}
 .page > .page_body > .page_right .body > .data .toolbar > .left{}
 .page > .page_body > .page_right .body > .data .toolbar > .right{}
 .page > .page_body > .page_right .body > .data .table{ margin-top: 10px}
 .page > .page_body > .page_right .body > .data .sun_pagination_intact{ margin-top: 10px}
-
-/*手机设备*/
-@media ( max-width : 768px) {
-	.page > .page_body > .page_right .body > .search  form > ul > li{ float: none}
-}
