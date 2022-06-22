@@ -21,26 +21,26 @@ class DbService extends \PDO{
             return self::$pdo;
         }
     
-        $config = ConfigService::getOne('db');
+        $config = ConfigService::getAll('db');
         if(
             empty($config) || 
-            empty($config['type']) ||
-            empty($config['host']) ||
-            empty($config['port']) ||
-            empty($config['database']) ||
-            empty($config['charset']) ||
-            empty($config['username']) ||
-            empty($config['password'])
+            empty($config['db_type']) ||
+            empty($config['db_host']) ||
+            empty($config['db_port']) ||
+            empty($config['db_database']) ||
+            empty($config['db_charset']) ||
+            empty($config['db_username']) ||
+            empty($config['db_password'])
         ){
             throw new \Exception('数据库配置错误');
         }
         
-        $dsn = $config['type'].
-        ':host='.$config['host'].
-        ';port='.$config['port'].
-        ';dbname='.$config['database'].
-        ';charset='.$config['charset'];
-        self::$pdo = new \PDO($dsn, $config['username'], $config['password']);
+        $dsn = $config['db_type'].
+        ':host='.$config['db_host'].
+        ';port='.$config['db_port'].
+        ';dbname='.$config['db_database'].
+        ';charset='.$config['db_charset'];
+        self::$pdo = new \PDO($dsn, $config['db_username'], $config['db_password']);
         
         return self::$pdo;
     }
