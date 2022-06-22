@@ -13,10 +13,15 @@ class CacheService{
      * @access public
      * @param String $key 缓存key
      * @param String $value 缓存value
+     * @param int $timeOut 超时时间
      * @return boolean 布尔
      */
-    static function set($key, $value){
+    static function set($key, $value, $timeOut = 0){
         $path = '';
+        
+        if($timeOut === 0){
+            $timeOut = time() + 600;
+        }
         
         // 配置
         if(empty(self::$dir)){
@@ -26,6 +31,7 @@ class CacheService{
         // 保存
         $path = self::$dir.$key.'.txt';
         file_put_contents($path, $value);
+        touch($path, $timeOut);
         
         return true;
     }
@@ -34,12 +40,12 @@ class CacheService{
      * 获取缓存
      * @access public
      * @param String $key 缓存key
-     * @param String $return 默认返回
      * @return string 缓存内容
      */
-    static function get($key, $return = ''){
+    static function get($key){
         $path = '';
         $fileTimeLast = 0; // 文件最后修改时间
+        $return = '';
         
         // 配置
         if(empty(self::$dir)){
@@ -52,14 +58,12 @@ class CacheService{
             return $return;
         }
         
-        // 缓存过期
+        // 过期
         $fileTimeLast = filemtime($path);
-        if(time() - $fileTimeLast > 600){
+        if($fileTimeLast - time() < 0){
             return $return;
         }
         
         return file_get_contents($path);
     }
-    
-    
 }
