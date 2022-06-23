@@ -21,7 +21,7 @@ $rolePermissionModel = new RolePermissionModel();
 $permissionModel = new PermissionModel();
 $role = array();
 $rolePermissions = array();
-$rolePermissionIds = array();
+$permissionIds = array();
 $permissions = array();
 $permission = ''; // 权限json数据
 
@@ -54,7 +54,7 @@ $role = $roleModel->selectRow('id, name, remark', array(
     )
 ));
 if(empty($role)){
-    header('location:../../error.php?message='.urlencode('id参数错误'));
+    header('location:../../error.php?message='.urlencode('角色没有找到'));
     exit;
 }
 
@@ -64,15 +64,15 @@ $rolePermissions = $rolePermissionModel->select('permission_id', array(
         ':role_id'=>$role['id']
     )
 ));
-$rolePermissionIds = array_column($rolePermissions, 'permission_id');
-$role['permission_ids'] = implode(',', $rolePermissionIds);
+$permissionIds = array_column($rolePermissions, 'permission_id');
+$role['permission_ids'] = implode(',', $permissionIds);
 $role = SafeService::frontDisplay($role);
 
 $permissions = $permissionModel->select('id, name, parent_id', array(
     'mark'=>'parent_id != 0'
 ), 'order by parent_id asc, id asc');
 $permissions = ZtreeService::setOpenByFirst($permissions);
-$permissions = ZtreeService::setChecked($permissions, $rolePermissionIds);
+$permissions = ZtreeService::setChecked($permissions, $permissionIds);
 $permission = json_encode($permissions);
 
 ?><!doctype html>
