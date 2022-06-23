@@ -6,8 +6,8 @@ require_once '../../library/session.php';
 require_once '../../library/app.php';
 
 use library\model\system\RoleModel;
-use library\model\system\MenuModel;
-use library\model\system\RoleMenuModel;
+use library\model\system\PermissionModel;
+use library\model\system\RolePermissionModel;
 use library\service\ConfigService;
 use library\service\ZtreeService;
 use library\service\ValidateService;
@@ -17,13 +17,13 @@ use library\service\AuthService;
 $config = ConfigService::getAll();
 $validateService = new ValidateService();
 $roleModel = new RoleModel();
-$roleMenuModel = new RoleMenuModel();
-$menuModel = new MenuModel();
+$rolePermissionModel = new RolePermissionModel();
+$permissionModel = new PermissionModel();
 $role = array();
-$roleMenus = array();
-$roleMenuIds = array();
-$menus = array();
-$menu = ''; // 菜单json数据
+$rolePermissions = array();
+$rolePermissionIds = array();
+$permissions = array();
+$permission = ''; // 权限json数据
 
 // 验证
 if(!AuthService::isLogin()){
@@ -58,22 +58,22 @@ if(empty($role)){
     exit;
 }
 
-$roleMenus = $roleMenuModel->select('menu_id', array(
+$rolePermissions = $rolePermissionModel->select('permission_id', array(
     'mark'=>'role_id = :role_id',
     'value'=>array(
         ':role_id'=>$role['id']
     )
 ));
-$roleMenuIds = array_column($roleMenus, 'menu_id');
-$role['menu_ids'] = implode(',', $roleMenuIds);
+$rolePermissionIds = array_column($rolePermissions, 'permission_id');
+$role['permission_ids'] = implode(',', $rolePermissionIds);
 $role = SafeService::frontDisplay($role);
 
-$menus = $menuModel->select('id, name, parent_id', array(
+$permissions = $permissionModel->select('id, name, parent_id', array(
     'mark'=>'parent_id != 0'
 ), 'order by parent_id asc, id asc');
-$menus = ZtreeService::setOpenByFirst($menus);
-$menus = ZtreeService::setChecked($menus, $roleMenuIds);
-$menu = json_encode($menus);
+$permissions = ZtreeService::setOpenByFirst($permissions);
+$permissions = ZtreeService::setChecked($permissions, $rolePermissionIds);
+$permission = json_encode($permissions);
 
 ?><!doctype html>
 <html>
@@ -90,7 +90,7 @@ $menu = json_encode($menus);
 <link href="<?php echo $config['app_domain'];?>css/system/role/edit.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/system/role/edit.js"></script>
 <script type="text/javascript">
-edit.menuData = <?php echo $menu;?>;
+edit.permissionData = <?php echo $permission;?>;
 </script>
 </head>
 
@@ -113,10 +113,10 @@ edit.menuData = <?php echo $menu;?>;
 </div>
 
 <div class="row">
-<div class="title">菜单权限</div>
+<div class="title">权限</div>
 <div class="content">
-<input type="hidden" name="menu_ids" id="menu_ids" value="<?php echo $role['menu_ids'];?>"  />
-<div class="ztree" id="ztree_menu"></div>
+<input type="hidden" name="permission_ids" id="permission_ids" value="<?php echo $role['permission_ids'];?>"  />
+<div class="ztree" id="ztree_permission"></div>
 </div>
 </div>
 

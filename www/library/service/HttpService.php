@@ -44,17 +44,17 @@ class HttpService{
     /**
      * post请求
      * @param string $url 网址
-     * @param array $post 请求内容
+     * @param array $content 请求内容
      * @param array $options 选项参数
      * @return string 响应内容
      */
-    static function post($url, $post = array(), $options = array()){
+    static function post($url, $content = array(), $options = array()){
         $ch = null;
         $defaults = array(
             CURLOPT_URL => $url,
             CURLOPT_HEADER => false,
             CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => $post,
+            CURLOPT_POSTFIELDS => $content,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT => 20,
             CURLOPT_SSL_VERIFYPEER => false, // 禁止 cURL 验证对等证书

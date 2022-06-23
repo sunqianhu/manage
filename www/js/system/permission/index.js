@@ -1,5 +1,5 @@
 /**
- * 菜单管理
+ * 权限管理
  */
 var index = {};
 
@@ -10,11 +10,11 @@ var index = {};
 index.add = function(parentId){
     var url = "add.php?parent_id="+parentId;
     sun.layer.open({
-        id: "layer_menu_add",
-        name: "添加菜单",
+        id: "layer_permission_add",
+        name: "添加权限",
         url: url,
-        width: 700,
-        height: 500
+        width: 600,
+        height: 400
     });
 }
 
@@ -24,11 +24,11 @@ index.add = function(parentId){
 index.edit = function(id){
     var url = "edit.php?id="+id;
     sun.layer.open({
-        id: "layer_menu_edit",
-        name: "修改菜单",
+        id: "layer_permission_edit",
+        name: "修改权限",
         url: url,
-        width: 700,
-        height: 500
+        width: 600,
+        height: 400
     });
 }
 
@@ -47,7 +47,9 @@ index.delete = function(id){
             sun.toast("error", ret.message, 3000);
             return;
         }
-        domTr.remove();
+        sun.toast("success", ret.message, 1000, function(){
+            domTr.remove();
+        });
     });
 }
 

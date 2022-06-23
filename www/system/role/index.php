@@ -13,7 +13,7 @@ use library\service\PaginationService;
 use library\service\AuthService;
 
 $config = ConfigService::getAll();
-$frameMainMenu = ''; // 框架菜单
+$frameMainMenu = ''; // 框架权限
 $roleModel = new RoleModel(); // 模型
 $search = array(
     'id'=>'',
@@ -36,7 +36,7 @@ if(!AuthService::isPermission('system_role')){
     exit;
 }
 
-// 菜单
+// 权限
 $frameMainMenu = FrameMainService::getPageLeftMenu('system_role');
 
 // 搜索
@@ -61,7 +61,7 @@ $recordTotal = $roleModel->selectOne('count(1)', $where);
 $paginationService = new PaginationService($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
 $paginationNodeIntact = $paginationService->getNodeIntact();
 
-$roles = $roleModel->select('id, name, time_edit', $where, 'order by id desc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
+$roles = $roleModel->select('id, name, time_edit', $where, 'order by id asc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
 foreach($roles as $key => $role){
     $roles[$key]['time_edit_name'] = date('Y-m-d H:i:s', $role['time_edit']);
 }

@@ -242,7 +242,8 @@ foreach($users as $user){
 <div class="title"><a href="javascript:;" class="sun_button sun_button_secondary sun_button_small">更多 <span class="iconfont icon-arrow_down arrow"></span></a></div>
 <div class="content">
 <ul>
-<li><a href="javascript:;" onClick="index.delete(<?php echo $user['id'];?>)">删除</a></li>
+<li><a href="javascript:;" onClick="index.enable(<?php echo $user['id'];?>)">启用</a></li>
+<li><a href="javascript:;" onClick="index.disable(<?php echo $user['id'];?>)">停用</a></li>
 </ul>
 </div>
 </span>

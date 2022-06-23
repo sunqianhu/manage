@@ -17,73 +17,61 @@ class FrameMainService{
      * @return string 节点
      */
     static function getPageLeftMenu($active = ''){
-        $menus = $_SESSION['menu'];
-        $menus = TreeService::getTree($menus, 'child', 'id', 'parent_id');
         $node = '';
-        
-        $node .= '<ul>';
-        $node .= self::getPageLeftMenuTree($menus, $active);
-        $node .= '</ul>';
-        
-        return $node;
-    }
-    
-    /**
-     * 得到页面左边菜单树
-     * @param array $menus 数据
-     * @param string $active 活跃项
-     * @return string
-     */
-    static function getPageLeftMenuTree($menus, $active){
-        $node = '';
-        $url = '';
         $liActive = '';
         $appDomain = ConfigService::getOne('app_domain');
         
-        if(!empty($menus)){
-            foreach($menus as $menu){
-                if(!in_array($menu['type'], array(1,2))){
-                    continue;
-                }
-                
-                $url = $menu['url'];
-                if(!empty($url)){
-                    if(strpos($url, 'http') === false){
-                        $url = $appDomain.$url;
-                    }
-                }else{
-                    $url = 'javascript:;';
-                }
-                $liActive = '';
-                if($menu['tag'] == $active){
-                    $liActive = ' class="active"';
-                }
-            
-                $node .= '
-<li'.$liActive.'>
-<a href="'.$url.'">';
-                if($menu['icon_class']){
-                    $node .= '
-<span class="'.$menu['icon_class'].' icon"></span>';
-                }
-                $node .= '
-<span class="text">'.$menu['name'].'</span>';
-                if(!empty($menu['child'])){
-                    $node .= '
-<span class="iconfont icon-arrow_left arrow"></span>';
-                }
-                $node .= '
-</a>';
-                if(!empty($menu['child'])){
-                    $node .= '
+        $node .= '<ul>';
+        // 系统管理
+        if(AuthService::isPermission('system')){
+            $node .= '<li>
+<a href="javascript:;"><span class="iconfont icon-setup icon"></span><span class="text">系统管理</span><span class="iconfont icon-arrow_left arrow"></span></a>
 <ul>';
-                    $node .= self::getPageLeftMenuTree($menu['child'], $active);
-                    $node .= '
-</ul>';
-                }
+            // 用户管理
+            if(AuthService::isPermission('system_user')){
+                $node .= '<li'.($active == 'system_user' ? ' class="active"' : '').'><a href="'.$appDomain.'system/user/index.php"><span class="text">用户管理</span></a></li>';
             }
+            
+            // 部门管理
+            if(AuthService::isPermission('system_department')){
+                $node .= '<li'.($active == 'system_department' ? ' class="active"' : '').'><a href="'.$appDomain.'system/department/index.php"><span class="text">部门管理</span></a></li>';
+            }
+            
+            // 角色管理
+            if(AuthService::isPermission('system_role')){
+                $node .= '<li'.($active == 'system_role' ? ' class="active"' : '').'><a href="'.$appDomain.'system/role/index.php"><span class="text">角色管理</span></a></li>';
+            }
+            
+            // 权限管理
+            if(AuthService::isPermission('system_permission')){
+                $node .= '<li'.($active == 'system_permission' ? ' class="active"' : '').'><a href="'.$appDomain.'system/permission/index.php"><span class="text">权限管理</span></a></li>';
+            }
+            
+            // 字典管理
+            if(AuthService::isPermission('system_dictionary')){
+                $node .= '<li'.($active == 'system_dictionary' ? ' class="active"' : '').'><a href="'.$appDomain.'system/dictionary/index.php"><span class="text">字典管理</span></a></li>';
+            }
+            
+            // 用户文件
+            if(AuthService::isPermission('system_user_file')){
+                $node .= '<li'.($active == 'system_user_file' ? ' class="active"' : '').'><a href="'.$appDomain.'system/user_file/index.php"><span class="text">用户文件</span></a></li>';
+            }
+            
+            // 登录日志
+            if(AuthService::isPermission('system_login_log')){
+                $node .= '<li'.($active == 'system_login_log' ? ' class="active"' : '').'><a href="'.$appDomain.'system/login_log/index.php"><span class="text">登录日志</span></a></li>';
+            }
+            
+            // 操作日志
+            if(AuthService::isPermission('system_operation_log')){
+                $node .= '<li'.($active == 'system_operation_log' ? ' class="active"' : '').'><a href="'.$appDomain.'system/operation_log/index.php"><span class="text">操作日志</span></a></li>';
+            }
+            
+            $node .= '</ul>
+</li>';
+            
         }
-        
+        $node .= '</ul>';
         return $node;
     }
 }

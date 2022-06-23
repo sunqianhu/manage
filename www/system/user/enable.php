@@ -1,11 +1,11 @@
 <?php
 /**
- * 删除
+ * 启用
  */
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\system\MenuModel;
+use library\model\system\UserModel;
 use library\service\ValidateService;
 use library\service\AuthService;
 
@@ -13,9 +13,9 @@ $return = array(
     'status'=>'error',
     'message'=>''
 );
-$menuChild = array();
-$menuModel = new MenuModel();
+$userModel = new UserModel();
 $validateService = new ValidateService();
+$user = array();
 
 // 验证
 if(!AuthService::isLogin()){
@@ -23,12 +23,11 @@ if(!AuthService::isLogin()){
     echo json_encode($return);
     exit;
 }
-if(!AuthService::isPermission('system_menu')){
+if(!AuthService::isPermission('system_user')){
     $return['message'] = '无权限';
     echo json_encode($return);
     exit;
 }
-
 $validateService->rule = array(
     'id' => 'require:number'
 );
@@ -41,33 +40,37 @@ if(!$validateService->check($_GET)){
     echo json_encode($return);
     exit;
 }
-if($_GET['id'] == '1'){
-    $return['message'] = '不能删除根菜单';
-    echo json_encode($return);
-    exit;
-}
 
-$menuChild = $menuModel->selectRow(
-    'id',
+// 本用户
+$user = $userModel->selectRow(
+    'id,status',
     array(
-        'mark'=>'parent_id = :id',
+        'mark'=> 'id = :id',
         'value'=> array(
             ':id'=>$_GET['id']
         )
     )
 );
-if(!empty($menuChild)){
-    $return['message'] = '该菜单存在下级菜单';
+if(empty($user)){
+    $return['message'] = '用户没有找到';
+    echo json_encode($return);
+    exit;
+}
+if($user['status'] == 1){
+    $return['message'] = '用户已经是启用状态';
     echo json_encode($return);
     exit;
 }
 
 try{
-    $menuModel->delete(
+    $userModel->update(
+        array(
+            'status'=>1
+        ),
         array(
             'mark'=>'id = :id',
             'value'=> array(
-                ':id'=>$_GET['id']
+                ':id'=>$user['id']
             )
         )
     );
@@ -78,6 +81,6 @@ try{
 }
 
 $return['status'] = 'success';
-$return['message'] = '删除成功';
+$return['message'] = '启用成功';
 echo json_encode($return);
 ?>

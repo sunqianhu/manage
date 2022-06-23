@@ -47,7 +47,9 @@ index.delete = function(id){
             sun.toast("error", ret.message, 3000);
             return;
         }
-        domTr.remove();
+        sun.toast("success", ret.message, 1000, function(){
+            domTr.remove();
+        });
     });
 }
 

@@ -6,7 +6,7 @@ require_once '../../library/session.php';
 require_once '../../library/app.php';
 
 use library\model\system\RoleModel;
-use library\model\system\RoleMenuModel;
+use library\model\system\RolePermissionModel;
 use library\service\ValidateService;
 use library\service\AuthService;
 
@@ -19,10 +19,10 @@ $return = array(
 ); // 返回数据
 $validateService = new ValidateService();
 $roleModel = new RoleModel();
-$roleMenuModel = new RoleMenuModel();
+$rolePermissionModel = new RolePermissionModel();
 $role = array();
 $data = array();
-$menuIds = array();
+$permissionIds = array();
 
 // 验证
 if(!AuthService::isLogin()){
@@ -40,7 +40,7 @@ $validateService->rule = array(
     'id' => 'require|number',
     'name' => 'require|max_length:64',
     'remark' => 'max_length:255',
-    'menu_ids' => 'require|number_string:,'
+    'permission_ids' => 'require|number_string:,'
 );
 $validateService->message = array(
     'id.require' => 'id参数错误',
@@ -48,8 +48,8 @@ $validateService->message = array(
     'name.require' => '请输入角色名称',
     'name.max_length' => '角色名称不能大于64个字',
     'remark.max_length' => '角色名称不能大于255个字',
-    'menu_ids.require' => '请选择菜单权限',
-    'menu_ids.number_string' => '菜单权限参数错误'
+    'permission_ids.require' => '请选择权限',
+    'permission_ids.number_string' => '权限参数错误'
 );
 if(!$validateService->check($_POST)){
     $return['message'] = $validateService->getErrorMessage();
@@ -57,7 +57,7 @@ if(!$validateService->check($_POST)){
     echo json_encode($return);
     exit;
 }
-$menuIds = explode(',', $_POST['menu_ids']);
+$permissionIds = explode(',', $_POST['permission_ids']);
 
 // 本角色
 $role = $roleModel->selectRow(
@@ -95,18 +95,18 @@ try{
 }
 
 // 关联
-$roleMenuModel->delete(array(
+$rolePermissionModel->delete(array(
     'mark'=>'role_id = :role_id',
     'value'=>array(
         ':role_id'=>$role['id']
     )
 ));
-foreach($menuIds as $menuId){
+foreach($permissionIds as $permissionId){
     $data = array(
         'role_id'=>$role['id'],
-        'menu_id'=>$menuId
+        'permission_id'=>$permissionId
     );
-    $roleMenuModel->insert($data);
+    $rolePermissionModel->insert($data);
 }
 
 $return['status'] = 'success';

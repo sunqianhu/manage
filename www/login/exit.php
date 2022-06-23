@@ -9,7 +9,7 @@ use library\service\AuthService;
 
 unset($_SESSION['user']);
 unset($_SESSION['department']);
-unset($_SESSION['menu']);
+unset($_SESSION['permission']);
 
 header('location:index.php');
 ?>

@@ -24,29 +24,29 @@ edit.ztreeInit = function(){
             }
         },
         callback: {
-            onCheck: edit.setMenuId
+            onCheck: edit.setPermissionId
         }
     };
-    var nodes = edit.menuData;
-    edit.ztree = $.fn.zTree.init($("#ztree_menu"), setting, nodes);
+    var nodes = edit.permissionData;
+    edit.ztree = $.fn.zTree.init($("#ztree_permission"), setting, nodes);
 }
 
 /**
- * 设置选中的菜单
+ * 设置选中的权限
  */
-edit.setMenuId = function(){
-    var domMenuIds = $("#menu_ids");
+edit.setPermissionId = function(){
+    var domPermissionIds = $("#permission_ids");
     var nodes = edit.ztree.getCheckedNodes(true);
     var nodeLength = nodes.length;
     var i = 0;
-    var menuIds = [];
+    var permissionIds = [];
     
     for(i; i < nodeLength; i++){
         node = nodes[i];
-        menuIds.push(node.id);
+        permissionIds.push(node.id);
     }
     
-    domMenuIds.val(menuIds.join(","));
+    domPermissionIds.val(permissionIds.join(","));
 }
 
 /**

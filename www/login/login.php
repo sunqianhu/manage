@@ -7,7 +7,7 @@ require_once '../library/app.php';
 
 use library\model\system\UserModel;
 use library\model\system\DepartmentModel;
-use library\model\system\MenuModel;
+use library\model\system\PermissionModel;
 use library\model\system\LoginLogModel;
 use library\service\ConfigService;
 use library\service\ValidateService;
@@ -26,13 +26,13 @@ $return = array(
 );
 $userModel = new UserModel();
 $departmentModel = new DepartmentModel();
-$menuModel = new MenuModel();
+$permissionModel = new PermissionModel();
 $loginLogModel = new LoginLogModel();
 $validateService = new ValidateService();
 $user = array();
 $department = array();
 $roleIdString = ''; // 角色id
-$menus = array(); // 菜单
+$permissions = array(); // 权限
 $data = array(); // 数据
 $ip = '';
 
@@ -113,9 +113,9 @@ if(empty($department)){
     exit;
 }
 
-// 菜单
-$menus = $menuModel->select("id, parent_id, type, name, tag, permission, icon_class, url", array(
-    'mark'=>'id in (select menu_id from role_menu where role_id in (:role_id))',
+// 权限
+$permissions = $permissionModel->select("id, parent_id, type, name, tag", array(
+    'mark'=>'id in (select permission_id from role_permission where role_id in (:role_id))',
     'value'=>array(
         ':role_id'=> $user['role_id_string']
     )
@@ -142,10 +142,10 @@ $data = array(
 );
 $loginLogModel->insert($data);
 
-// 服务层
+// 会话
 $_SESSION['user'] = $user;
 $_SESSION['department'] = $department;
-$_SESSION['menu'] = $menus;
+$_SESSION['permission'] = $permissions;
 
 $return['status'] = 'success';
 $return['message'] = '登录成功';

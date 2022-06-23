@@ -5,8 +5,7 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\system\RoleModel;
-use library\model\system\RolePermissionModel;
+use library\model\system\PermissionModel;
 use library\service\ValidateService;
 use library\service\AuthService;
 
@@ -14,10 +13,9 @@ $return = array(
     'status'=>'error',
     'message'=>''
 );
-$roleModel = new RoleModel();
-$rolePermissionModel = new RolePermissionModel();
+$permissionChild = array();
+$permissionModel = new PermissionModel();
 $validateService = new ValidateService();
-$role = array();
 
 // 验证
 if(!AuthService::isLogin()){
@@ -25,7 +23,7 @@ if(!AuthService::isLogin()){
     echo json_encode($return);
     exit;
 }
-if(!AuthService::isPermission('system_role')){
+if(!AuthService::isPermission('system_permission')){
     $return['message'] = '无权限';
     echo json_encode($return);
     exit;
@@ -43,25 +41,33 @@ if(!$validateService->check($_GET)){
     echo json_encode($return);
     exit;
 }
+if($_GET['id'] == '1'){
+    $return['message'] = '不能删除根权限';
+    echo json_encode($return);
+    exit;
+}
 
-$role = $roleModel->selectRow('id', array(
-    'mark'=>'id = :id',
-    'value'=>array(
-        ':id'=>$_GET['id']
+$permissionChild = $permissionModel->selectRow(
+    'id',
+    array(
+        'mark'=>'parent_id = :id',
+        'value'=> array(
+            ':id'=>$_GET['id']
+        )
     )
-));
-if(empty($role)){
-    $return['message'] = '角色没有找到';
+);
+if(!empty($permissionChild)){
+    $return['message'] = '该权限存在下级权限';
     echo json_encode($return);
     exit;
 }
 
 try{
-    $roleModel->delete(
+    $permissionModel->delete(
         array(
             'mark'=>'id = :id',
             'value'=> array(
-                ':id'=>$role['id']
+                ':id'=>$_GET['id']
             )
         )
     );
@@ -70,15 +76,6 @@ try{
     echo json_encode($return);
     exit;
 }
-
-$rolePermissionModel->delete(
-    array(
-        'mark'=>'role_id = :role_id',
-        'value'=> array(
-            ':role_id'=>$role['id']
-        )
-    )
-);
 
 $return['status'] = 'success';
 $return['message'] = '删除成功';

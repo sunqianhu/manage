@@ -75,11 +75,28 @@ index.edit = function(id){
 }
 
 /**
- * 删除
+ * 启用
  */
-index.delete = function(id){
-    var url = "delete.php?id="+id;
-    if(!confirm("确定删除吗？")){
+index.enable = function(id){
+    var url = "enable.php?id="+id;
+    
+    $.getJSON(url, function(ret){
+        if(ret.status == "error"){
+            sun.toast("error", ret.message, 3000);
+            return;
+        }
+        sun.toast("success", ret.message, 1000, function(){
+            location.reload();
+        });
+    });
+}
+
+/**
+ * 停用
+ */
+index.disable = function(id){
+    var url = "disable.php?id="+id;
+    if(!confirm("确定停用吗？")){
         return;
     }
     

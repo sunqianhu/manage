@@ -5,15 +5,15 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\system\MenuModel;
+use library\model\system\PermissionModel;
 use library\service\ConfigService;
 use library\service\ZtreeService;
 use library\service\AuthService;
 
 $config = ConfigService::getAll();
-$menuModel = new MenuModel();
-$menus = array();
-$menu = ''; // 菜单json数据
+$permissionModel = new PermissionModel();
+$permissions = array();
+$permission = ''; // 权限json数据
 
 if(!AuthService::isLogin()){
     header('location:../../login/index.php');
@@ -24,11 +24,11 @@ if(!AuthService::isPermission('system_role')){
     exit;
 }
 
-$menus = $menuModel->select('id, name, parent_id', array(
+$permissions = $permissionModel->select('id, name, parent_id', array(
     'mark'=>'parent_id != 0'
-), 'order by parent_id asc, id asc');
-$menus = ZtreeService::setOpenByFirst($menus);
-$menu = json_encode($menus);
+), 'order by parent_id asc, sort asc');
+$permissions = ZtreeService::setOpenByFirst($permissions);
+$permission = json_encode($permissions);
 
 ?><!doctype html>
 <html>
@@ -45,7 +45,7 @@ $menu = json_encode($menus);
 <link href="<?php echo $config['app_domain'];?>css/system/role/add.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/system/role/add.js"></script>
 <script type="text/javascript">
-add.menuData = <?php echo $menu;?>;
+add.permissionData = <?php echo $permission;?>;
 </script>
 </head>
 
@@ -55,22 +55,22 @@ add.menuData = <?php echo $menu;?>;
 <div class="row">
 <div class="title"><span class="required">*</span> 角色名称</div>
 <div class="content">
-<input type="text" name="name" id="name" />
+<input type="text" name="name" id="name" maxlength="64" />
 </div>
 </div>
 
 <div class="row">
 <div class="title">备注</div>
 <div class="content">
-<input type="text" name="remark" id="remark" />
+<input type="text" name="remark" id="remark" maxlength="255" />
 </div>
 </div>
 
 <div class="row">
-<div class="title">菜单权限</div>
+<div class="title">权限</div>
 <div class="content">
-<input type="hidden" name="menu_ids" id="menu_ids" />
-<div class="ztree" id="ztree_menu"></div>
+<input type="hidden" name="permission_ids" id="permission_ids" />
+<div class="ztree" id="ztree_permission"></div>
 </div>
 </div>
 

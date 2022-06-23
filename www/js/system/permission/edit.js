@@ -1,17 +1,17 @@
 /**
- * 修改菜单
+ * 修改权限
  */
 
 var edit = {};
 
 /**
- * 选择菜单
+ * 选择权限
  */
-edit.selectMenu = function(){
-    var url = "edit_select_menu.php";
+edit.selectPermission = function(){
+    var url = "edit_select_permission.php";
     window.parent.sun.layer.open({
-        id: "layer_edit_select_menu",
-        name: "选择上级菜单",
+        id: "layer_edit_select_permission",
+        name: "选择上级权限",
         url: url,
         width: 500,
         height: 300
@@ -19,10 +19,10 @@ edit.selectMenu = function(){
 }
 
 /**
- * 选择菜单回调
+ * 选择权限回调
  * @param json node 节点数据
  */
-edit.selectMenuCallback = function(node){
+edit.selectPermissionCallback = function(node){
     var domParentId = $("#parent_id");
     var domParentName = $("#parent_name");
     

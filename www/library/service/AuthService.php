@@ -21,23 +21,23 @@ class AuthService{
     /**
      * 是否有权限
      * @access public
-     * @param string $key 权限key
+     * @param string $tag 权限标识
      * @return boolean
      */
-    static function isPermission($key){
-        $menus = $_SESSION['menu'];
-        $permissions = array();
+    static function isPermission($tag){
+        $permissions = $_SESSION['permission'];
+        $tags = array();
         
-        if(empty($menus)){
-            return false;
-        }
-        
-        $permissions = array_column($menus, 'permission');
-        $permissions = array_filter($permissions);
         if(empty($permissions)){
             return false;
         }
-        if(!in_array($key, $permissions)){
+        
+        $tags = array_column($permissions, 'tag');
+        $tags = array_filter($tags);
+        if(empty($tags)){
+            return false;
+        }
+        if(!in_array($tag, $tags)){
             return false;
         }
         

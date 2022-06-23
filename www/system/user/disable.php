@@ -1,6 +1,6 @@
 <?php
 /**
- * 删除
+ * 停用
  */
 require_once '../../library/session.php';
 require_once '../../library/app.php';
@@ -43,7 +43,7 @@ if(!$validateService->check($_GET)){
 
 // 本用户
 $user = $userModel->selectRow(
-    'id',
+    'id,status',
     array(
         'mark'=> 'id = :id',
         'value'=> array(
@@ -56,9 +56,17 @@ if(empty($user)){
     echo json_encode($return);
     exit;
 }
+if($user['status'] == 2){
+    $return['message'] = '用户已经是停用状态';
+    echo json_encode($return);
+    exit;
+}
 
 try{
-    $userModel->delete(
+    $userModel->update(
+        array(
+            'status'=>2
+        ),
         array(
             'mark'=>'id = :id',
             'value'=> array(
@@ -73,8 +81,6 @@ try{
 }
 
 $return['status'] = 'success';
-$return['message'] = '删除成功';
+$return['message'] = '停用成功';
 echo json_encode($return);
-
-
 ?>

@@ -3,6 +3,7 @@
  */
 html{ margin: 0px; padding: 0px}
 body{ margin: 0px; padding: 0px; font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"; font-size: 14px; color: #191919; line-height: 150%}
+label{ margin: inherit}
 
 /*超级链接*/
 a{ text-decoration: none; color: #326496}
