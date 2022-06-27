@@ -23,7 +23,7 @@ $init = array(
 );
 
 if(!AuthService::isLogin()){
-    header('location:../../login/index.php');
+    header('location:../../my/login.php');
     exit;
 }
 if(!AuthService::isPermission('system_permission')){

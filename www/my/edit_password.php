@@ -12,7 +12,7 @@ $config = ConfigService::getAll();
 
 // 验证
 if(!AuthService::isLogin()){
-    header('location:../login/index.php');
+    header('location:../my/login.php');
     exit;
 }
 
@@ -25,8 +25,8 @@ if(!AuthService::isLogin()){
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/jquery-1.12.4/jquery.min.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.js"></script>
-<link href="<?php echo $config['app_domain'];?>css/user_home/edit_password.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/user_home/edit_password.js"></script>
+<link href="<?php echo $config['app_domain'];?>css/my/edit_password.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/my/edit_password.js"></script>
 </head>
 
 <body class="page">

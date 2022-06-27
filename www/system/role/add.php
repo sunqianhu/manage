@@ -16,7 +16,7 @@ $permissions = array();
 $permission = ''; // 权限json数据
 
 if(!AuthService::isLogin()){
-    header('location:../../login/index.php');
+    header('location:../../my/login.php');
     exit;
 }
 if(!AuthService::isPermission('system_role')){

@@ -12,7 +12,7 @@ $config = ConfigService::getAll();
 
 // 验证
 if(!AuthService::isLogin()){
-    header('location:../login/index.php');
+    header('location:../my/login.php');
     exit;
 }
 
@@ -27,8 +27,8 @@ if(!AuthService::isLogin()){
 <script src="<?php echo $config['app_domain'];?>js/plug/cropperjs-1.5.12/cropper.min.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.js"></script>
-<link href="<?php echo $config['app_domain'];?>css/user_home/edit_head.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/user_home/edit_head.js"></script>
+<link href="<?php echo $config['app_domain'];?>css/my/edit_head.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/my/edit_head.js"></script>
 </head>
 
 <body class="page">

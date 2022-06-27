@@ -18,7 +18,7 @@ $status = DictionaryService::getRadio('system_user_status', 'status', 1);
 $roleOption = '';
 
 if(!AuthService::isLogin()){
-    header('location:../../login/index.php');
+    header('location:../../my/login.php');
     exit;
 }
 if(!AuthService::isPermission('system_user')){

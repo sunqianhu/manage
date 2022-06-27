@@ -12,7 +12,7 @@
 <ul>
 <li><a href="javascript:;" onClick="frameMain.editUserHead();">修改头像</a></li>
 <li><a href="javascript:;" onClick="frameMain.editUserPassword();">修改密码</a></li>
-<li><a href="<?php echo $config['app_domain'];?>login/exit.php">退出登录</a></li>
+<li><a href="<?php echo $config['app_domain'];?>my/exit.php">退出登录</a></li>
 </ul>
 </div>
 </li>

@@ -11,5 +11,5 @@ unset($_SESSION['user']);
 unset($_SESSION['department']);
 unset($_SESSION['permission']);
 
-header('location:index.php');
+header('location:login.php');
 ?>

@@ -1,6 +1,8 @@
 /**
  * sun ui
  */
+@import url(iconfont/iconfont.css);
+
 html{ margin: 0px; padding: 0px}
 body{ margin: 0px; padding: 0px; font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"; font-size: 14px; color: #191919; line-height: 150%}
 label{ margin: inherit}
@@ -104,7 +106,6 @@ transition: all 0.5s ease;
 .sun_button[disabled] { background: #aaaaaa; color: #919191}
 .sun_button .icon{ font-size: 12px; vertical-align: middle}
 
-.sun_button.disabled{ background: #aaaaaa; color: #919191}
 .sun_button_secondary{ background: #f5f7f9; color: #191919; border: 1px solid #cccccc}
 .sun_button_secondary:hover{ background: #e5e7e9; color: #191919; border-color: #acacac}
 .sun_button_warning{ background: #FF5722}
@@ -145,7 +146,7 @@ transition: all 0.5s ease;
 /*加载中*/
 .sun_loading_bg { background: rgba(0,0,0,0.3); position: fixed; left: 0px; top: 0px; z-index: 1020; width: 100%; height: 100%}
 .sun_loading { background-color: #4C5A65; position: fixed; left: 50%; top: 50%; z-index: 1021; padding: 20px; width: 120px; margin-left: -80px; margin-top: -40px; border-radius: 3px}
-.sun_loading .img{ width:16px; height:11px; background-image: url(loading.gif); background-repeat: no-repeat; background-position: center; margin:0px auto 0px auto}
+.sun_loading .img{ width:16px; height:11px; background-image: url(image/load_rectangle.gif); background-repeat: no-repeat; background-position: center; margin:0px auto 0px auto}
 .sun_loading .info{ text-align:center; color:#ffffff}
 
 /*表格列表*/
@@ -213,14 +214,6 @@ transition: all 0.5s ease;
 .sun_tab > .title .active{ height: 40px; background: #ffffff; border-radius: 3px 3px 0px 0px; border: 1px solid #eeeeee; border-bottom: none; color: #326496}
 .sun_tab > .content{ margin-top: 5px}
 
-/*选卡简洁*/
-.sun_tab_brief{}
-.sun_tab_brief > .title{ white-space: nowrap; border-bottom: 1px solid #eeeeee; height: 40px; line-height: 40px}
-.sun_tab_brief > .title a{ display: inline-block; position: relative; padding: 0px 14px; min-width: 65px; text-align: center; cursor: pointer; color: #191919}
-.sun_tab_brief > .title a:hover{ text-decoration: none}
-.sun_tab_brief > .title .active{ color: #326496; border-bottom: 2px solid #326496; height: 40px}
-.sun_tab_brief > .content{ margin-top: 5px}
-
 /*弹层*/
 .sun_layer{}
 .sun_layer > .bg{ background: rgba(0,0,0,0.3); position: fixed; left: 0px; top: 0px; z-index: 1000; width: 100%; height: 100%}
@@ -234,6 +227,7 @@ transition: all 0.5s ease;
 
 /*微章*/
 .sun_badge{ background: #326496; color: #ffffff; border-radius: 2px; display: inline-block; padding: 0px 5px; font-size: 12px; text-align: center; position: relative; height: 20px; line-height: 20px; white-space:nowrap}
+.sun_badge_red{ background: #ff0000}
 .sun_badge_green{ background: #008800}
 .sun_badge_orange{ background: #ff6600}
 .sun_badge_cyan{ background: #008888}
@@ -242,7 +236,8 @@ transition: all 0.5s ease;
 .sun_badge_gray{ background: #dfdfdf; color: #666666}
 
 /*圆点*/
-.sun_dot{ background: #326496; color: #ffffff; min-width: 18px; line-height: 18px; font-size: 12px; border-radius: 9px; text-align: center; display: inline-block; padding: 0px 3px}
+.sun_dot{ background: #326496; color: #ffffff; min-width: 18px; line-height: 18px; font-size: 12px; border-radius: 9px; text-align: center; display: inline-block; padding: 0px}
+.sun_dot_red{ background: #ff0000}
 .sun_dot_green{ background: #008800}
 .sun_dot_orange{ background: #ff6600}
 .sun_dot_cyan{ background: #008888}

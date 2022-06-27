@@ -19,15 +19,15 @@ $config = ConfigService::getAll();
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/particleground/jquery.particleground.min.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.js"></script>
-<link href="<?php echo $config['app_domain'];?>css/login/index.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/login/index.js"></script>
+<link href="<?php echo $config['app_domain'];?>css/my/login.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/my/login.js"></script>
 </head>
 
 <body class="page">
 <div class="bg"></div>
 <div class="wrap animate__animated animate__bounceInDown">
 <div class="title"><h1><?php echo $config['app_name'];?></h1></div>
-<form action="login.php" method="post" class="form">
+<form action="login_handle.php" method="post" class="form">
 <div class="row">
 <span class="iconfont icon-user icon"></span>
 <input type="text" id="username" name="username" placeholder="请输入用户名" required />
