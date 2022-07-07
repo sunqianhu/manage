@@ -15,7 +15,7 @@ $timeLogin = '无';
 $ip = '无';
 
 if(!AuthService::isLogin()){
-    header('location:../../my/login.php');
+    header('location:my/login.php');
     exit;
 }
 
