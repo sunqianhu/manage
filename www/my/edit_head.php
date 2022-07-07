@@ -37,17 +37,17 @@ if(!AuthService::isLogin()){
 <div class="img"><img src="../image/user_head.png" /></div>
 <div class="tools">
 <div class="left">
-<label class="sun_button" for="input_image">上传图片</label>
+<label class="sun-button" for="input_image">上传图片</label>
 <input type="file" name="avatar" id="input_image" accept="image/*"/>
 </div>
 <div class="right">
-<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small button_cropper_control" method="reset">重置</a>
-<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small button_cropper_control" method="scaleY" parameter="-1">上下翻转</a>
-<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small button_cropper_control" method="scaleX" parameter="-1">左右翻转</a>
-<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small button_cropper_control" method="rotate" parameter="5">顺时针旋转</a>
-<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small button_cropper_control" method="rotate" parameter="-5">逆时针旋转</a>
-<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small button_cropper_control" method="zoom" parameter="0.1">放大</a>
-<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small button_cropper_control" method="zoom" parameter="-0.1">缩小</a>
+<a href="javascript:;" class="sun-button sun-button-secondary sun-button-small button_cropper_control" method="reset">重置</a>
+<a href="javascript:;" class="sun-button sun-button-secondary sun-button-small button_cropper_control" method="scaleY" parameter="-1">上下翻转</a>
+<a href="javascript:;" class="sun-button sun-button-secondary sun-button-small button_cropper_control" method="scaleX" parameter="-1">左右翻转</a>
+<a href="javascript:;" class="sun-button sun-button-secondary sun-button-small button_cropper_control" method="rotate" parameter="5">顺时针旋转</a>
+<a href="javascript:;" class="sun-button sun-button-secondary sun-button-small button_cropper_control" method="rotate" parameter="-5">逆时针旋转</a>
+<a href="javascript:;" class="sun-button sun-button-secondary sun-button-small button_cropper_control" method="zoom" parameter="0.1">放大</a>
+<a href="javascript:;" class="sun-button sun-button-secondary sun-button-small button_cropper_control" method="zoom" parameter="-0.1">缩小</a>
 </div>
 </div>
 </div>
@@ -56,8 +56,8 @@ if(!AuthService::isLogin()){
 </div>
 </div>
 <div class="page_button">
-<a href="javascript:;" class="sun_button sun_button_secondary" onClick="window.parent.sun.layer.close('layer_edit_head');">关闭</a>
-<input type="submit" class="sun_button" value="提交" onClick="editHead.submit();" />
+<a href="javascript:;" class="sun-button sun-button-secondary" onClick="window.parent.sun.layer.close('layer_edit_head');">关闭</a>
+<input type="submit" class="sun-button" value="提交" onClick="editHead.submit();" />
 </div>
 </body>
 </html>

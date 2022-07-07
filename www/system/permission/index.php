@@ -102,18 +102,18 @@ $permissionNode = PermissionService::getIndexTreeNode($permissions, 1);
 <li>权限名称：<input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
 <li>权限标识：<input type="text" name="permission" value="<?php echo $search['permission'];?>" /></li>
 <li>
-<input type="submit" value="搜索" class="sun_button" />
-<input type="reset" class="sun_button sun_button_secondary sun_ml5" value="重置" />
+<input type="submit" value="搜索" class="sun-button" />
+<input type="reset" class="sun-button sun-button-secondary sun-ml5" value="重置" />
 </li>
 </ul>
 </form>
 </div>
 
-<div class="data sun_mt10">
+<div class="data sun-mt10">
 <div class="toolbar">
-<a href="javascript:;" class="sun_button" data-toggle="tooltip" title="添加权限" onClick="index.add(0);">添加</a>
+<a href="javascript:;" class="sun-button" data-toggle="tooltip" title="添加权限" onClick="index.add(0);">添加</a>
 </div>
-<table class="sun_table_list sun_table_list_hover sun_mt10 sun_treetable" width="100%">
+<table class="sun-table-list sun-table-list-hover sun-mt10 sun-treetable" width="100%">
   <tr>
     <th width="100">权限id</th>
     <th>权限名称</th>

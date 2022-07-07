@@ -42,7 +42,7 @@ $config = ConfigService::getAll();
 <img src="captcha.php?mo=<?php echo time();?>" title="点击更新验证码" onClick="index.changeCaptcha();" />
 </div>
 <div class="button_box">
-<input type="submit" class="sun_button sun_button_big sun_button_block" value="登录" />
+<input type="submit" class="sun-button sun-button-big sun-button-block" value="登录" />
 </div>
 </form>
 </div>

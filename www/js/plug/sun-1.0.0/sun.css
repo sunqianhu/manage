@@ -12,32 +12,32 @@ a{ text-decoration: none; color: #326496}
 a:hover{ text-decoration: underline; color: #5284b6}
 
 /*间距外*/
-.sun_mt5{ margin-top: 5px}
-.sun_mt10{ margin-top: 10px}
-.sun_mt20{ margin-top: 20px}
-.sun_ml5{ margin-left: 5px}
-.sun_ml10{ margin-left: 10px}
-.sun_ml20{ margin-left: 20px}
-.sun_mr5{ margin-right: 5px}
-.sun_mr10{ margin-right: 10px}
-.sun_mr20{ margin-right: 20px}
-.sun_mb5{ margin-bottom: 5px}
-.sun_mb10{ margin-bottom: 10px}
-.sun_mb20{ margin-bottom: 20px}
+.sun-mt5{ margin-top: 5px}
+.sun-mt10{ margin-top: 10px}
+.sun-mt20{ margin-top: 20px}
+.sun-ml5{ margin-left: 5px}
+.sun-ml10{ margin-left: 10px}
+.sun-ml20{ margin-left: 20px}
+.sun-mr5{ margin-right: 5px}
+.sun-mr10{ margin-right: 10px}
+.sun-mr20{ margin-right: 20px}
+.sun-mb5{ margin-bottom: 5px}
+.sun-mb10{ margin-bottom: 10px}
+.sun-mb20{ margin-bottom: 20px}
 
 /*间距内*/
-.sun_pt5{ padding-top: 5px}
-.sun_pt10{ padding-top: 10px}
-.sun_pt20{ padding-top: 20px}
-.sun_pl5{ padding-left: 5px}
-.sun_pl10{ padding-left: 10px}
-.sun_pl20{ padding-left: 20px}
-.sun_pr5{ padding-right: 5px}
-.sun_pr10{ padding-right: 10px}
-.sun_pr20{ padding-right: 20px}
-.sun_pb5{ padding-bottom: 5px}
-.sun_pb10{ padding-bottom: 10px}
-.sun_pb20{ padding-bottom: 20px}
+.sun-pt5{ padding-top: 5px}
+.sun-pt10{ padding-top: 10px}
+.sun-pt20{ padding-top: 20px}
+.sun-pl5{ padding-left: 5px}
+.sun-pl10{ padding-left: 10px}
+.sun-pl20{ padding-left: 20px}
+.sun-pr5{ padding-right: 5px}
+.sun-pr10{ padding-right: 10px}
+.sun-pr20{ padding-right: 20px}
+.sun-pb5{ padding-bottom: 5px}
+.sun-pb10{ padding-bottom: 10px}
+.sun-pb20{ padding-bottom: 20px}
 
 /*表单元素*/
 textarea{ font-size: 14px; color: #191919; line-height: 150%; padding: 3px 5px; border-left: 1px solid #cccccc; border-top: 1px solid #cccccc; border-right: 1px solid #bcbcbc; border-bottom: 1px solid #bcbcbc; appearance: none; border-radius: 3px; outline: none}
@@ -68,193 +68,193 @@ input[type='button'],
 button{ font-size: 14px; outline: none}
 
 /*表单简洁*/
-.sun_form_brief{}
-.sun_form_brief .row{ display: table; width: 100%; margin: 0px; margin-bottom: 10px}
-.sun_form_brief .row:last-child{ margin-bottom: 0px}
-.sun_form_brief .row .required{ font-weight: bold; color: #ff0000}
-.sun_form_brief .row > .title{ display: table-cell; vertical-align: middle; width: 34%; text-align: right}
-.sun_form_brief .row > .content{ display: table-cell; vertical-align: middle; width: 66%; padding-left: 10px}
-.sun_form_brief .tip{ font-size: 12px; color: #919191}
+.sun-form-brief{}
+.sun-form-brief .row{ display: table; width: 100%; margin: 0px; margin-bottom: 10px}
+.sun-form-brief .row:last-child{ margin-bottom: 0px}
+.sun-form-brief .row .required{ font-weight: bold; color: #ff0000}
+.sun-form-brief .row > .title{ display: table-cell; vertical-align: middle; width: 34%; text-align: right}
+.sun-form-brief .row > .content{ display: table-cell; vertical-align: middle; width: 66%; padding-left: 10px}
+.sun-form-brief .tip{ font-size: 12px; color: #919191}
 
 /*表单表格*/
-.sun_form_table .table{ border-collapse: collapse; background: #ffffff}
-.sun_form_table .table > tbody > tr > td{ margin: 0px; padding: 5px; word-break: break-all; word-wrap: break-word; border: 1px solid #eeeeee}
-.sun_form_table .table > tbody > tr > td.name{ color:#2d64b3; background-color:#f5f5f5}
-.sun_form_table .buttons{ margin-top: 10px; text-align: center}
-.sun_form_table .buttons .sun_button{ margin: 0px 10px}
+.sun-form-table .table{ border-collapse: collapse; background: #ffffff}
+.sun-form-table .table > tbody > tr > td{ margin: 0px; padding: 5px; word-break: break-all; word-wrap: break-word; border: 1px solid #eeeeee}
+.sun-form-table .table > tbody > tr > td.name{ color:#2d64b3; background-color:#f5f5f5}
+.sun-form-table .buttons{ margin-top: 10px; text-align: center}
+.sun-form-table .buttons .sun-button{ margin: 0px 10px}
 
 /*输入框组*/
-.sun_input_group{ position: relative; display: table; border-collapse: separate}
-.sun_input_group input{ display: table-cell; vertical-align: middle; position: relative; z-index: 1}
-.sun_input_group input:focus{ z-index: 3}
-.sun_input_group input:not(:first-child){ border-top-left-radius: 0px; border-bottom-left-radius: 0px}
-.sun_input_group input:not(:last-child){ border-top-right-radius: 0px; border-bottom-right-radius: 0px}
-.sun_input_group .addon{ display: table-cell; vertical-align: middle; background: #e9ecef; border: 1px solid #cccccc; padding: 0px 8px; border-radius: 3px; position: relative; z-index: 2}
-.sun_input_group .addon:first-child{ border-right: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px}
-.sun_input_group .addon:last-child{ border-left: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px}
+.sun-input-group{ position: relative; display: table; border-collapse: separate}
+.sun-input-group input{ display: table-cell; vertical-align: middle; position: relative; z-index: 1}
+.sun-input-group input:focus{ z-index: 3}
+.sun-input-group input:not(:first-child){ border-top-left-radius: 0px; border-bottom-left-radius: 0px}
+.sun-input-group input:not(:last-child){ border-top-right-radius: 0px; border-bottom-right-radius: 0px}
+.sun-input-group .addon{ display: table-cell; vertical-align: middle; background: #e9ecef; border: 1px solid #cccccc; padding: 0px 8px; border-radius: 3px; position: relative; z-index: 2}
+.sun-input-group .addon:first-child{ border-right: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px}
+.sun-input-group .addon:last-child{ border-left: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px}
 
 /*按钮*/
-.sun_button{ appearance:none; background-color: #326496; border: none; outline: none; color:#ffffff; border-radius: 3px; cursor: pointer; display:inline-block; padding: 0px 14px; line-height: 30px; height: 30px; font-size: 14px; white-space: nowrap;
+.sun-button{ appearance:none; background-color: #326496; border: none; outline: none; color:#ffffff; border-radius: 3px; cursor: pointer; display:inline-block; padding: 0px 14px; line-height: 30px; height: 30px; font-size: 14px; white-space: nowrap;
 transition: all 0.5s ease;
 -ms-transition: all 0.5s ease;
 -moz-transition: all 0.5s ease;
 -webkit-transition: all 0.5s ease;
 -o-transition: all 0.5s ease;
 }
-.sun_button:hover{ background: #5284b6; text-decoration: none; color: #ffffff}
-.sun_button:active{ background: #5284b6}
-.sun_button[disabled] { background: #aaaaaa; color: #919191}
-.sun_button .icon{ font-size: 12px; vertical-align: middle}
+.sun-button:hover{ background: #5284b6; text-decoration: none; color: #ffffff}
+.sun-button:active{ background: #5284b6}
+.sun-button[disabled] { background: #aaaaaa; color: #919191}
+.sun-button .icon{ font-size: 12px; vertical-align: middle}
 
-.sun_button_secondary{ background: #f5f7f9; color: #191919; border: 1px solid #cccccc}
-.sun_button_secondary:hover{ background: #e5e7e9; color: #191919; border-color: #acacac}
-.sun_button_warning{ background: #FF5722}
-.sun_button_warning:hover{ background: #FF7742}
+.sun-button-secondary{ background: #f5f7f9; color: #191919; border: 1px solid #cccccc}
+.sun-button-secondary:hover{ background: #e5e7e9; color: #191919; border-color: #acacac}
+.sun-button-warning{ background: #FF5722}
+.sun-button-warning:hover{ background: #FF7742}
 
-.sun_button_small{ height: 22px; line-height: 22px; padding: 0px 5px; font-size: 12px}
-.sun_button_small .icon{ font-size: 10px; vertical-align: middle}
-.sun_button_big{ height: 40px; line-height: 40px; padding: 0px 18px}
-.sun_button_big .icon{ vertical-align: middle}
+.sun-button-small{ height: 22px; line-height: 22px; padding: 0px 5px; font-size: 12px}
+.sun-button-small .icon{ font-size: 10px; vertical-align: middle}
+.sun-button-big{ height: 40px; line-height: 40px; padding: 0px 18px}
+.sun-button-big .icon{ vertical-align: middle}
 
-.sun_button_block{ display: block; width: 100%}
+.sun-button-block{ display: block; width: 100%}
 
 /*按钮组*/
-.sun_button_group{ display: table; border-collapse: separate}
-.sun_button_group .sun_button{ display: table-cell}
-.sun_button_group .sun_button:not(:first-child){ border-top-left-radius: 0px; border-bottom-left-radius: 0px}
-.sun_button_group .sun_button:not(:last-child){ border-top-right-radius: 0px; border-bottom-right-radius: 0px}
+.sun-button-group{ display: table; border-collapse: separate}
+.sun-button-group .sun-button{ display: table-cell}
+.sun-button-group .sun-button:not(:first-child){ border-top-left-radius: 0px; border-bottom-left-radius: 0px}
+.sun-button-group .sun-button:not(:last-child){ border-top-right-radius: 0px; border-bottom-right-radius: 0px}
 
 /*版块*/
-.sun_section{ background: #ffffff; border-radius: 5px}
-.sun_section > .title{ height: 40px; line-height: 40px; padding: 0px 10px}
-.sun_section > .title:after{ content: ""; clear: both; display: block}
-.sun_section > .title .name{ font-size: 16px}
-.sun_section > .title .name:before{ content: ""; display: inline-block; width: 3px; height: 14px; background: #326496; margin-right: 5px}
-.sun_section > .title .describe{ font-size: 12px; color: #919191; margin-left: 10px}
-.sun_section > .title .more{ float: right; font-size: 12px; color: #919191}
-.sun_section > .content{ padding: 0px 10px 10px 10px}
+.sun-section{ background: #ffffff; border-radius: 5px}
+.sun-section > .title{ height: 40px; line-height: 40px; padding: 0px 10px}
+.sun-section > .title:after{ content: ""; clear: both; display: block}
+.sun-section > .title .name{ font-size: 16px}
+.sun-section > .title .name:before{ content: ""; display: inline-block; width: 3px; height: 14px; background: #326496; margin-right: 5px}
+.sun-section > .title .describe{ font-size: 12px; color: #919191; margin-left: 10px}
+.sun-section > .title .more{ float: right; font-size: 12px; color: #919191}
+.sun-section > .content{ padding: 0px 10px 10px 10px}
 
 /*toast*/
-.sun_toast{ display: table-row; background: #ffffff; max-width: 300px; border: 1px solid #eeeeee; box-shadow:0px 0px 5px #888888; border-radius: 3px; padding: 10px; position: absolute; left: 0px; top: 0px; z-index: 1090}
-.sun_toast .icon{ display: table-cell; vertical-align: middle; font-size: 36px; line-height: 100%}
-.sun_toast .info{ display: table-cell; vertical-align: middle; padding-left: 10px; word-break: break-all}
+.sun-toast{ display: table-row; background: #ffffff; max-width: 300px; border: 1px solid #eeeeee; box-shadow:0px 0px 5px #888888; border-radius: 3px; padding: 10px; position: absolute; left: 0px; top: 0px; z-index: 1090}
+.sun-toast .icon{ display: table-cell; vertical-align: middle; font-size: 36px; line-height: 100%}
+.sun-toast .info{ display: table-cell; vertical-align: middle; padding-left: 10px; word-break: break-all}
 
-.sun_toast.success{ color: #008800; border-color: #eeeeee}
-.sun_toast.error{ color: #ff6600; border-color: #eeeeee}
-.sun_toast.prompt{ color: #2d64b3; border-color: #eeeeee}
+.sun-toast.success{ color: #008800; border-color: #eeeeee}
+.sun-toast.error{ color: #ff6600; border-color: #eeeeee}
+.sun-toast.prompt{ color: #2d64b3; border-color: #eeeeee}
 
 /*加载中*/
-.sun_loading_bg { background: rgba(0,0,0,0.3); position: fixed; left: 0px; top: 0px; z-index: 1020; width: 100%; height: 100%}
-.sun_loading { background-color: #4C5A65; position: fixed; left: 50%; top: 50%; z-index: 1021; padding: 20px; width: 120px; margin-left: -80px; margin-top: -40px; border-radius: 3px}
-.sun_loading .img{ width:16px; height:11px; background-image: url(image/load_rectangle.gif); background-repeat: no-repeat; background-position: center; margin:0px auto 0px auto}
-.sun_loading .info{ text-align:center; color:#ffffff}
+.sun-loading-bg { background: rgba(0,0,0,0.3); position: fixed; left: 0px; top: 0px; z-index: 1020; width: 100%; height: 100%}
+.sun-loading { background-color: #4C5A65; position: fixed; left: 50%; top: 50%; z-index: 1021; padding: 20px; width: 120px; margin-left: -80px; margin-top: -40px; border-radius: 3px}
+.sun-loading .img{ width:16px; height:11px; background-image: url(image/load_rectangle.gif); background-repeat: no-repeat; background-position: center; margin:0px auto 0px auto}
+.sun-loading .info{ text-align:center; color:#ffffff}
 
 /*表格列表*/
-.sun_table_list{ border-collapse: collapse}
-.sun_table_list tr th{ padding: 5px; word-break: break-all; background: #EFF3F8; text-align: left; border-bottom: 1px solid #cccccc}
-.sun_table_list tr td{ border-bottom: 1px solid #cccccc; padding: 5px; word-break: break-all}
-.sun_table_list_striped tr:nth-child(even){ background: #f5f5f5}
-.sun_table_list_hover tr:hover{ background: #EFF3F8}
-.sun_table_list_keyvalue .key{ color: #2d64b3; background-color: #F4F6F8}
+.sun-table-list{ border-collapse: collapse}
+.sun-table-list tr th{ padding: 5px; word-break: break-all; background: #EFF3F8; text-align: left; border-bottom: 1px solid #cccccc}
+.sun-table-list tr td{ border-bottom: 1px solid #cccccc; padding: 5px; word-break: break-all}
+.sun-table-list-striped tr:nth-child(even){ background: #f5f5f5}
+.sun-table-list-hover tr:hover{ background: #EFF3F8}
+.sun-table-list-keyvalue .key{ color: #2d64b3; background-color: #F4F6F8}
 
 /*表格显示*/
-.sun_table_view{ border-collapse: collapse; background: #ffffff}
-.sun_table_view tr td{ margin: 0px; padding: 5px; word-break: break-all; word-wrap: break-word; border: 1px solid #eeeeee}
-.sun_table_view tr td.name{ color:#2d64b3; background-color:#f5f5f5}
+.sun-table-view{ border-collapse: collapse; background: #ffffff}
+.sun-table-view tr td{ margin: 0px; padding: 5px; word-break: break-all; word-wrap: break-word; border: 1px solid #eeeeee}
+.sun-table-view tr td.name{ color:#2d64b3; background-color:#f5f5f5}
 
 /*分页完整*/
-.sun_pagination_intact{}
-.sun_pagination_intact:after{ content: ""; clear: both; display: block}
-.sun_pagination_intact .left{ float: left}
-.sun_pagination_intact .left .count{ display: inline-block}
-.sun_pagination_intact .left .count span{ color: #326496; margin: 0px 3px}
-.sun_pagination_intact .left .record_range{ margin-left: 20px; display: inline-block}
-.sun_pagination_intact .left .record_range span{ color: #326496; margin: 0px 3px}
+.sun-pagination-intact{}
+.sun-pagination-intact:after{ content: ""; clear: both; display: block}
+.sun-pagination-intact .left{ float: left}
+.sun-pagination-intact .left .count{ display: inline-block}
+.sun-pagination-intact .left .count span{ color: #326496; margin: 0px 3px}
+.sun-pagination-intact .left .record_range{ margin-left: 20px; display: inline-block}
+.sun-pagination-intact .left .record_range span{ color: #326496; margin: 0px 3px}
 
-.sun_pagination_intact .right{ float: right}
-.sun_pagination_intact .right:after{ content: ""; clear: both; display: block}
-.sun_pagination_intact .right .limit{ float: left; margin-left: 20px}
-.sun_pagination_intact .right .limit select{ height: 22px}
+.sun-pagination-intact .right{ float: right}
+.sun-pagination-intact .right:after{ content: ""; clear: both; display: block}
+.sun-pagination-intact .right .limit{ float: left; margin-left: 20px}
+.sun-pagination-intact .right .limit select{ height: 22px}
 
-.sun_pagination_intact .right .skip{ float: left; margin-left: 20px}
-.sun_pagination_intact .right .skip .number{ width: 30px; height: 22px; text-align: center}
+.sun-pagination-intact .right .skip{ float: left; margin-left: 20px}
+.sun-pagination-intact .right .skip .number{ width: 30px; height: 22px; text-align: center}
 
-.sun_pagination_intact .right .link{ float: left; margin-left: 20px}
-.sun_pagination_intact .right .link a{ float: left; border:1px solid #cccccc; display: block; padding: 0px 8px; background-color:#ffffff; color: #191919; margin-left: 3px; border-radius: 3px}
-.sun_pagination_intact .right .link a:hover{ background:#f5f5f5; text-decoration: none}
-.sun_pagination_intact .right .link span{ float: left; border:1px solid #cccccc; display:block; padding: 0px 10px; background-color:#ffffff; color: #919191; margin-left: 3px; border-radius: 3px}
+.sun-pagination-intact .right .link{ float: left; margin-left: 20px}
+.sun-pagination-intact .right .link a{ float: left; border:1px solid #cccccc; display: block; padding: 0px 8px; background-color:#ffffff; color: #191919; margin-left: 3px; border-radius: 3px}
+.sun-pagination-intact .right .link a:hover{ background:#f5f5f5; text-decoration: none}
+.sun-pagination-intact .right .link span{ float: left; border:1px solid #cccccc; display:block; padding: 0px 10px; background-color:#ffffff; color: #919191; margin-left: 3px; border-radius: 3px}
 
-.sun_pagination_intact .right .link .disabled{ cursor: not-allowed; color:#aaaaaa}
-.sun_pagination_intact .right .link .disabled:hover{ background: #ffffff}
-.sun_pagination_intact .right .link .active{ color:#ffffff; background:#326496; border: 1px solid #326496}
-.sun_pagination_intact .right .link .active:hover{ background:#326496; cursor:default}
+.sun-pagination-intact .right .link .disabled{ cursor: not-allowed; color:#aaaaaa}
+.sun-pagination-intact .right .link .disabled:hover{ background: #ffffff}
+.sun-pagination-intact .right .link .active{ color:#ffffff; background:#326496; border: 1px solid #326496}
+.sun-pagination-intact .right .link .active:hover{ background:#326496; cursor:default}
 
 /*下拉*/
-.sun_dropdown{ display: inline-block; position: relative}
-.sun_dropdown > .title{ cursor: pointer}
-.sun_dropdown > .content{ position: absolute; top: 100%; left: 0px; min-width: 150px; background: #ffffff; margin: 5px 0px 0px 0px; padding: 10px; border-radius: 3px; box-shadow: 0 3px 6px rgba(0,0,0,0.3); display: none; z-index: 99}
-.sun_dropdown_align_right > .content{ left: inherit; right: 0px}
+.sun-dropdown{ display: inline-block; position: relative}
+.sun-dropdown > .title{ cursor: pointer}
+.sun-dropdown > .content{ position: absolute; top: 100%; left: 0px; min-width: 150px; background: #ffffff; margin: 5px 0px 0px 0px; padding: 10px; border-radius: 3px; box-shadow: 0 3px 6px rgba(0,0,0,0.3); display: none; z-index: 99}
+.sun-dropdown-align-right > .content{ left: inherit; right: 0px}
 
 /*下拉菜单*/
-.sun_dropdown_menu{ display: inline-block; position: relative}
-.sun_dropdown_menu > .title{ cursor: pointer}
-.sun_dropdown_menu > .title .arrow{ font-size: 12px !important}
-.sun_dropdown_menu > .content{ position: absolute; top: 100%; left: 0px; min-width: 100px; background: #ffffff; margin: 5px 0px 0px 0px; padding: 0px; border-radius: 3px; box-shadow: 0 3px 6px rgba(0,0,0,0.3); display: none; z-index: 99}
-.sun_dropdown_menu > .content ul{ margin: 0px; padding: 5px 0px}
-.sun_dropdown_menu > .content ul li{ list-style: none}
-.sun_dropdown_menu > .content ul li a{ display: block; padding: 0px 10px; height: 30px; line-height: 30px; color: #191919; text-decoration: none}
-.sun_dropdown_menu > .content ul li a:hover{ background: #f5f5f5; color: #000000}
-.sun_dropdown_menu_align_right > .content{ left: inherit; right: 0px}
+.sun-dropdown-menu{ display: inline-block; position: relative}
+.sun-dropdown-menu > .title{ cursor: pointer}
+.sun-dropdown-menu > .title .arrow{ font-size: 12px !important}
+.sun-dropdown-menu > .content{ position: absolute; top: 100%; left: 0px; min-width: 100px; background: #ffffff; margin: 5px 0px 0px 0px; padding: 0px; border-radius: 3px; box-shadow: 0 3px 6px rgba(0,0,0,0.3); display: none; z-index: 99}
+.sun-dropdown-menu > .content ul{ margin: 0px; padding: 5px 0px}
+.sun-dropdown-menu > .content ul li{ list-style: none}
+.sun-dropdown-menu > .content ul li a{ display: block; padding: 0px 10px; height: 30px; line-height: 30px; color: #191919; text-decoration: none}
+.sun-dropdown-menu > .content ul li a:hover{ background: #f5f5f5; color: #000000}
+.sun-dropdown-menu-align-right > .content{ left: inherit; right: 0px}
 
 /*选卡*/
-.sun_tab{}
-.sun_tab > .title{ white-space: nowrap; border-bottom: 1px solid #eeeeee; height: 40px; line-height: 40px}
-.sun_tab > .title a{ display: inline-block; position: relative; padding: 0px 14px; min-width: 65px; text-align: center; cursor: pointer; color: #191919}
-.sun_tab > .title a:hover{ text-decoration: none}
-.sun_tab > .title .active{ height: 40px; background: #ffffff; border-radius: 3px 3px 0px 0px; border: 1px solid #eeeeee; border-bottom: none; color: #326496}
-.sun_tab > .content{ margin-top: 5px}
+.sun-tab{}
+.sun-tab > .title{ white-space: nowrap; border-bottom: 1px solid #eeeeee; height: 40px; line-height: 40px}
+.sun-tab > .title a{ display: inline-block; position: relative; padding: 0px 14px; min-width: 65px; text-align: center; cursor: pointer; color: #191919}
+.sun-tab > .title a:hover{ text-decoration: none}
+.sun-tab > .title .active{ height: 40px; background: #ffffff; border-radius: 3px 3px 0px 0px; border: 1px solid #eeeeee; border-bottom: none; color: #326496}
+.sun-tab > .content{ margin-top: 5px}
 
 /*弹层*/
-.sun_layer{}
-.sun_layer > .bg{ background: rgba(0,0,0,0.3); position: fixed; left: 0px; top: 0px; z-index: 1000; width: 100%; height: 100%}
-.sun_layer > .layer{ background-color: #ffffff; position: fixed; left: 0px; top:-50px; z-index: 1000; box-shadow:0px 0px 10px #919191; border-radius: 3px; overflow: hidden}
-.sun_layer > .layer > .title{ height: 50px; line-height: 50px; overflow: hidden; cursor: move; border-bottom: 1px solid #cccccc; padding: 0px 10px}
-.sun_layer > .layer > .title .name{ float: left}
-.sun_layer > .layer > .title .close{ float: right; display: block; width: 30px; height: 30px; line-height: 30px; text-align: center; margin-top: 10px; font-size: 20px; font-weight: bold; color: #191919}
-.sun_layer > .layer > .title .close:hover{ text-decoration: none; color: #393939}
-.sun_layer > .layer > iframe{ margin: 0px; padding: 0px; background-color: #ffffff}
-.sun_layer > .layer > .loading{ background-image: url(image/loading.gif); background-repeat: no-repeat; background-size: 30px 30px; background-position: 50% 0px; text-align: center; position: absolute; left: 0px; top: 40%; z-index: 2; width: 100%; padding-top: 35px}
+.sun-layer{}
+.sun-layer > .bg{ background: rgba(0,0,0,0.3); position: fixed; left: 0px; top: 0px; z-index: 1000; width: 100%; height: 100%}
+.sun-layer > .layer{ background-color: #ffffff; position: fixed; left: 0px; top:-50px; z-index: 1000; box-shadow:0px 0px 10px #919191; border-radius: 3px; overflow: hidden}
+.sun-layer > .layer > .title{ height: 50px; line-height: 50px; overflow: hidden; cursor: move; border-bottom: 1px solid #cccccc; padding: 0px 10px}
+.sun-layer > .layer > .title .name{ float: left}
+.sun-layer > .layer > .title .close{ float: right; display: block; width: 30px; height: 30px; line-height: 30px; text-align: center; margin-top: 10px; font-size: 20px; font-weight: bold; color: #191919}
+.sun-layer > .layer > .title .close:hover{ text-decoration: none; color: #393939}
+.sun-layer > .layer > iframe{ margin: 0px; padding: 0px; background-color: #ffffff}
+.sun-layer > .layer > .loading{ background-image: url(image/loading.gif); background-repeat: no-repeat; background-size: 30px 30px; background-position: 50% 0px; text-align: center; position: absolute; left: 0px; top: 40%; z-index: 2; width: 100%; padding-top: 35px}
 
 /*微章*/
-.sun_badge{ background: #326496; color: #ffffff; border-radius: 2px; display: inline-block; padding: 0px 5px; font-size: 12px; text-align: center; position: relative; height: 20px; line-height: 20px; white-space:nowrap}
-.sun_badge_red{ background: #ff0000}
-.sun_badge_green{ background: #008800}
-.sun_badge_orange{ background: #ff6600}
-.sun_badge_cyan{ background: #008888}
-.sun_badge_blue{ background: #326496}
-.sun_badge_black{ background: #191919}
-.sun_badge_gray{ background: #dfdfdf; color: #666666}
+.sun-badge{ background: #326496; color: #ffffff; border-radius: 2px; display: inline-block; padding: 0px 5px; font-size: 12px; text-align: center; position: relative; height: 20px; line-height: 20px; white-space:nowrap}
+.sun-badge-red{ background: #ff0000}
+.sun-badge-green{ background: #008800}
+.sun-badge-orange{ background: #ff6600}
+.sun-badge-cyan{ background: #008888}
+.sun-badge-blue{ background: #326496}
+.sun-badge-black{ background: #191919}
+.sun-badge-gray{ background: #dfdfdf; color: #666666}
 
 /*圆点*/
-.sun_dot{ background: #326496; color: #ffffff; min-width: 18px; line-height: 18px; font-size: 12px; border-radius: 9px; text-align: center; display: inline-block; padding: 0px}
-.sun_dot_red{ background: #ff0000}
-.sun_dot_green{ background: #008800}
-.sun_dot_orange{ background: #ff6600}
-.sun_dot_cyan{ background: #008888}
-.sun_dot_blue{ background: #326496}
-.sun_dot_black{ background: #191919}
-.sun_dot_gray{ background: #dfdfdf; color: #666666}
-.sun_dot_empty{ width: 8px; height: 8px; border-radius: 50%; padding: 0px; min-width: inherit}
+.sun-dot{ background: #326496; color: #ffffff; min-width: 18px; line-height: 18px; font-size: 12px; border-radius: 9px; text-align: center; display: inline-block; padding: 0px}
+.sun-dot-red{ background: #ff0000}
+.sun-dot-green{ background: #008800}
+.sun-dot-orange{ background: #ff6600}
+.sun-dot-cyan{ background: #008888}
+.sun-dot-blue{ background: #326496}
+.sun-dot-black{ background: #191919}
+.sun-dot-gray{ background: #dfdfdf; color: #666666}
+.sun-dot-empty{ width: 8px; height: 8px; border-radius: 50%; padding: 0px; min-width: inherit}
 
 /*表格树*/
-.sun_treetable .column .arrow{ display: inline-block; width: 20px; height: 20px; line-height: 20px; vertical-align: middle; text-align: center; font-size: 12px !important; cursor: pointer;
+.sun-treetable .column .arrow{ display: inline-block; width: 20px; height: 20px; line-height: 20px; vertical-align: middle; text-align: center; font-size: 12px !important; cursor: pointer;
 transition: all 0.5s ease;
 -ms-transition: all 0.5s ease;
 -moz-transition: all 0.5s ease;
 -webkit-transition: all 0.5s ease;
 -o-transition: all 0.5s ease;
 }
-.sun_treetable .close .column .arrow{
+.sun-treetable .close .column .arrow{
 transform:rotate(-90deg);
 -ms-transform:rotate(-90deg);
 -moz-transform:rotate(-90deg);
@@ -263,13 +263,13 @@ transform:rotate(-90deg);
 }
 
 /*文件上传进度条*/
-.sun_file_upload_progress { vertical-align: middle; margin-left: 10px; overflow: hidden; display: none; line-height: 100%}
-.sun_file_upload_progress .chart{ display: inline-block; width: 150px; height: 10px; padding: 1px; border: 1px solid #326496; background: #ffffff; float: left; border-radius: 7px; line-height: 1px}
-.sun_file_upload_progress .chart .bg{ display: inline-block; width: 0px; height: 10px; background: #326496; border-radius: 7px}
-.sun_file_upload_progress .text{ margin-left: 5px; float: left}
+.sun-file-upload-progress { vertical-align: middle; margin-left: 10px; overflow: hidden; display: none; line-height: 100%}
+.sun-file-upload-progress .chart{ display: inline-block; width: 150px; height: 10px; padding: 1px; border: 1px solid #326496; background: #ffffff; float: left; border-radius: 7px; line-height: 1px}
+.sun-file-upload-progress .chart .bg{ display: inline-block; width: 0px; height: 10px; background: #326496; border-radius: 7px}
+.sun-file-upload-progress .text{ margin-left: 5px; float: left}
 
 /*文件上传结果*/
-.sun_file_upload_result {}
-.sun_file_upload_result .item{}
-.sun_file_upload_result .item .delete{ margin-left: 10px; display: none}
-.sun_file_upload_result .item:hover .delete{ display: inline-block}
+.sun-file-upload-result {}
+.sun-file-upload-result .item{}
+.sun-file-upload-result .item .delete{ margin-left: 10px; display: none}
+.sun-file-upload-result .item:hover .delete{ display: inline-block}

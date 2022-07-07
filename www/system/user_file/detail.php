@@ -73,7 +73,7 @@ $userFile = SafeService::frontDisplay($userFile, 'id,url');
 </head>
 
 <body class="page">
-<table width="100%" class="sun_table_view">
+<table width="100%" class="sun-table-view">
 <tr>
 <td class="name" align="right" width="130">id：</td>
 <td><?php echo $userFile['id'];?></td>

@@ -103,18 +103,18 @@ $departmentNode = DepartmentService::getIndexTreeNode($departments, 1);
 <li>部门名称：<input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
 <li>备注：<input type="text" name="remark" value="<?php echo $search['remark'];?>" /></li>
 <li>
-<input type="submit" value="搜索" class="sun_button" />
-<input type="reset" class="sun_button sun_button_secondary sun_ml5" value="重置" />
+<input type="submit" value="搜索" class="sun-button" />
+<input type="reset" class="sun-button sun-button-secondary sun-ml5" value="重置" />
 </li>
 </ul>
 </form>
 </div>
 
-<div class="data sun_mt10">
+<div class="data sun-mt10">
 <div class="toolbar">
-<a href="javascript:;" class="sun_button" data-toggle="tooltip" title="添加部门" onClick="index.add(0);">添加</a>
+<a href="javascript:;" class="sun-button" data-toggle="tooltip" title="添加部门" onClick="index.add(0);">添加</a>
 </div>
-<table class="sun_table_list sun_table_list_hover sun_treetable sun_mt10" width="100%">
+<table class="sun-table-list sun-table-list-hover sun-treetable sun-mt10" width="100%">
   <tr>
     <th width="100">部门id</th>
     <th>部门名称</th>

@@ -50,8 +50,8 @@ editSelectDepartment.departmentData = <?php echo $department;?>;
 <ul id="ztree" class="ztree"></ul>
 </div>
 <div class="page_button">
-<a href="javascript:;" class="sun_button sun_button_secondary" onClick="window.parent.sun.layer.close('layer_edit_select_department');">关闭</a>
-<input type="button" class="sun_button" value="确定" onClick="editSelectDepartment.submit();" />
+<a href="javascript:;" class="sun-button sun-button-secondary" onClick="window.parent.sun.layer.close('layer_edit_select_department');">关闭</a>
+<input type="button" class="sun-button" value="确定" onClick="editSelectDepartment.submit();" />
 </div>
 </body>
 </html>

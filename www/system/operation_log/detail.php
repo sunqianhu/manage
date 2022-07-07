@@ -73,7 +73,7 @@ $frameMainMenu = FrameMainService::getPageLeftMenu('system_operation_log');
 </head>
 
 <body class="page">
-<table width="100%" class="sun_table_view">
+<table width="100%" class="sun-table-view">
 <tr>
 <td class="name" align="right" width="130">部门：</td>
 <td><?php echo $operationLog['department_name'];?></td>

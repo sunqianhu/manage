@@ -111,17 +111,17 @@ $dictionarys = SafeService::frontDisplay($dictionarys);
 <li>
 <li>字典值：<input type="text" name="value" value="<?php echo $search['value'];?>" /></li>
 <li>
-<input type="submit" value="搜索" class="sun_button" />
+<input type="submit" value="搜索" class="sun-button" />
 </li>
 </ul>
 </form>
 </div>
 
-<div class="data sun_mt10">
+<div class="data sun-mt10">
 <div class="toolbar">
-<a href="javascript:;" class="sun_button" onClick="index.add();">添加</a>
+<a href="javascript:;" class="sun-button" onClick="index.add();">添加</a>
 </div>
-<table class="sun_table_list sun_table_list_hover sun_mt10" width="100%">
+<table class="sun-table-list sun-table-list-hover sun-mt10" width="100%">
   <tr>
     <th>id</th>
     <th>字典类型</th>
@@ -141,8 +141,8 @@ foreach($dictionarys as $dictionary){
     <td><?php echo $dictionary['value'];?></td>
     <td><?php echo $dictionary['sort'];?></td>
     <td>
-<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small sun_mr5" onClick="index.edit(<?php echo $dictionary['id'];?>)">修改</a>
-<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small" onClick="index.delete(<?php echo $dictionary['id'];?>)">删除</a>
+<a href="javascript:;" class="sun-button sun-button-secondary sun-button-small sun-mr5" onClick="index.edit(<?php echo $dictionary['id'];?>)">修改</a>
+<a href="javascript:;" class="sun-button sun-button-secondary sun-button-small" onClick="index.delete(<?php echo $dictionary['id'];?>)">删除</a>
     </td>
   </tr>
 <?php

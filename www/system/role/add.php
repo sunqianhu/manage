@@ -50,7 +50,7 @@ add.permissionData = <?php echo $permission;?>;
 </head>
 
 <body class="page">
-<form method="post" action="add_save.php" class="sun_form_brief form">
+<form method="post" action="add_save.php" class="sun-form-brief form">
 <div class="page_body">
 <div class="row">
 <div class="title"><span class="required">*</span> 角色名称</div>
@@ -76,8 +76,8 @@ add.permissionData = <?php echo $permission;?>;
 
 </div>
 <div class="page_button">
-<a href="javascript:;" class="sun_button sun_button_secondary" onClick="window.parent.sun.layer.close('layer_role_add');">关闭</a>
-<input type="submit" class="sun_button" value="提交" />
+<a href="javascript:;" class="sun-button sun-button-secondary" onClick="window.parent.sun.layer.close('layer_role_add');">关闭</a>
+<input type="submit" class="sun-button" value="提交" />
 </div>
 </form>
 </body>

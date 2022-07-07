@@ -24,30 +24,30 @@ sun.toast = function(type, info, time, callback){
 		return;
 	}
     
-    domToast = $(".sun_toast");
+    domToast = $(".sun-toast");
     if(domToast.length > 0){
         domToast.remove();
     }
     
 	if(type == "success"){
-		node += '<div class="sun_toast success">';
+		node += '<div class="sun-toast success">';
 		node += '	<div class="iconfont icon-success icon"></div>';
 		node += '	<div class="info">'+info+'</div>';
 		node += '</div>';
 	}else if(type == "error"){
-		node += '<div class="sun_toast error">';
+		node += '<div class="sun-toast error">';
 		node += '	<div class="iconfont icon-error icon"></div>';
 		node += '	<div class="info">'+info+'</div>';
 		node += '</div>';
 	}else{
-		node += '<div class="sun_toast prompt">';
+		node += '<div class="sun-toast prompt">';
 		node += '	<div class="iconfont icon-prompt icon"></div>';
 		node += '	<div class="info">'+info+'</div>';
 		node += '</div>';
 	}
 	
 	domBody.append(node);
-    domToast = $(".sun_toast");
+    domToast = $(".sun-toast");
     toastWidth = domToast.outerWidth();
     toastHegiht = domToast.outerHeight();
 	domToast.css({"left":"50%", "top":((windowHeight - toastHegiht) / 2 + scrollHeight)+"px", "margin-left":"-"+(toastWidth / 2)+"px"});
@@ -75,8 +75,8 @@ sun.loading = {};
 sun.loading.open = function(id, info){
     var node = "";
     
-	node = '<div class="sun_loading_bg sun_loading_bg_'+id+'"></div>';
-	node += '<div class="sun_loading sun_loading_'+id+'">';
+	node = '<div class="sun-loading-bg sun-loading-bg_'+id+'"></div>';
+	node += '<div class="sun-loading sun-loading_'+id+'">';
 	node += '	<div class="img"></div>';
 	node += '	<div class="info">'+info+'</div>';
 	node += '</div>';
@@ -88,8 +88,8 @@ sun.loading.open = function(id, info){
  * @param id id
  */
 sun.loading.close = function(id){
-	$(".sun_loading_bg_"+id).remove();
-	$(".sun_loading_"+id).remove();
+	$(".sun-loading-bg_"+id).remove();
+	$(".sun-loading_"+id).remove();
 };
 
 /**
@@ -428,7 +428,7 @@ sun.layer.open = function(config){
 		left = (windowWidth - config.width) / 2;
 	}
 
-    node = '<div class="sun_layer" id="'+config.id+'">';
+    node = '<div class="sun-layer" id="'+config.id+'">';
     node += '   <div class="bg"></div>';
     node += '   <div class="layer" style=" width:'+config.width+'px; height:'+config.height+'px; left:'+left+'px; top:0px">';
     node += '       <div class="title">';
@@ -744,12 +744,12 @@ sun.fileUpload = function(config){
     domFile = domButton.next("input[type=file]").eq(0);
     domNativeFile = domFile.get(0);
     
-    node = '<span class="sun_file_upload_progress">';
+    node = '<span class="sun-file-upload-progress">';
     node += '<span class="chart"><span class="bg"></span></span>';
     node += '<span class="text">0%</span>';
     node += '</span>';
     domButton.after(node);
-    domProgress = domButton.next(".sun_file_upload_progress").eq(0);
+    domProgress = domButton.next(".sun-file-upload-progress").eq(0);
     domProgressChartBg = $(" > .chart > .bg", domProgress);
     domProgressText = $(" > .text", domProgress);
     

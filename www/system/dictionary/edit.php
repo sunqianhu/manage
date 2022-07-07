@@ -60,7 +60,7 @@ $dictionary = SafeService::frontDisplay($dictionary);
 </head>
 
 <body class="page">
-<form method="post" action="edit_save.php" class="sun_form_brief form">
+<form method="post" action="edit_save.php" class="sun-form-brief form">
 <div class="page_body">
 <input type="hidden" name="id" value="<?php echo $dictionary['id'];?>" />
 <div class="row">
@@ -93,8 +93,8 @@ $dictionary = SafeService::frontDisplay($dictionary);
 
 </div>
 <div class="page_button">
-<a href="javascript:;" class="sun_button sun_button_secondary" onClick="window.parent.sun.layer.close('layer_dictionary_edit');">关闭</a>
-<input type="submit" class="sun_button" value="提交" />
+<a href="javascript:;" class="sun-button sun-button-secondary" onClick="window.parent.sun.layer.close('layer_dictionary_edit');">关闭</a>
+<input type="submit" class="sun-button" value="提交" />
 </div>
 </form>
 </body>

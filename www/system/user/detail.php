@@ -141,12 +141,12 @@ $frameMainMenu = FrameMainService::getPageLeftMenu('system_user');
 </div>
 <div class="body">
 
-<div class="sun_section">
+<div class="sun-section">
 <div class="title">
 <span class="name">用户信息</span>
 </div>
 <div class="content">
-<table width="100%" class="sun_table_view">
+<table width="100%" class="sun-table-view">
 <tr>
 <td class="name" align="right" width="130">用户id：</td>
 <td><?php echo $user['id'];?></td>
@@ -181,7 +181,7 @@ $frameMainMenu = FrameMainService::getPageLeftMenu('system_user');
 </div>
 </div>
 
-<div class="sun_section sun_mt10">
+<div class="sun-section sun-mt10">
 <div class="title">
 <span class="name">登录日志</span>
 <span class="describe">显示最后50条</span>
@@ -189,7 +189,7 @@ $frameMainMenu = FrameMainService::getPageLeftMenu('system_user');
 </div>
 <div class="content">
 
-<table width="100%" class="sun_table_view">
+<table width="100%" class="sun-table-view">
 <tr>
 <td class="name">登录ip</td>
 <td class="name">登录时间</td>
@@ -217,7 +217,7 @@ foreach($loginLogs as $loginLog){
 </div>
 </div>
 
-<div class="sun_section sun_mt10">
+<div class="sun-section sun-mt10">
 <div class="title">
 <span class="name">操作日志</span>
 <span class="describe">显示最后50条</span>
@@ -225,7 +225,7 @@ foreach($loginLogs as $loginLog){
 </div>
 <div class="content">
 
-<table width="100%" class="sun_table_view">
+<table width="100%" class="sun-table-view">
 <tr>
 <td class="name">操作ip</td>
 <td class="name">操作时间</td>

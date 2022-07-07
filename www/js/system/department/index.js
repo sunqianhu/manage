@@ -56,7 +56,7 @@ index.delete = function(id){
 $(function(){
     // 表格树
     sun.treeTable.init({
-        element: ".sun_treetable",
+        element: ".sun-treetable",
         column: 1,
         expand: 3
     });

@@ -128,14 +128,14 @@ $loginLogs = SafeService::frontDisplay($loginLogs);
 <li>部门：<input type="text" name="department_name" value="<?php echo $search['department_name'];?>" /></li>
 <li>姓名：<input type="text" name="user_name" value="<?php echo $search['user_name'];?>" /></li>
 <li>
-<input type="submit" value="搜索" class="sun_button" />
+<input type="submit" value="搜索" class="sun-button" />
 </li>
 </ul>
 </form>
 </div>
 
-<div class="data sun_mt10">
-<table class="sun_table_list sun_table_list_hover" width="100%">
+<div class="data sun-mt10">
+<table class="sun-table-list sun-table-list-hover" width="100%">
   <tr>
     <th>id</th>
     <th>部门</th>
@@ -155,7 +155,7 @@ foreach($loginLogs as $loginLog){
     <td><?php echo $loginLog['ip'];?></td>
     <td><?php echo $loginLog['time_login_name'];?></td>
     <td>
-<a href="../user/detail.php?id=<?php echo $loginLog['user_id'];?>" class="sun_button sun_button_secondary sun_button_small">用户</a>
+<a href="../user/detail.php?id=<?php echo $loginLog['user_id'];?>" class="sun-button sun-button-secondary sun-button-small">用户</a>
     </td>
   </tr>
 <?php

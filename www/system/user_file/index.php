@@ -137,14 +137,14 @@ $userFiles = SafeService::frontDisplay($userFiles, 'id, user_id, module_id');
 <li>姓名：<input type="text" name="user_name" value="<?php echo $search['user_name'];?>" /></li>
 <li>文件名：<input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
 <li>
-<input type="submit" value="搜索" class="sun_button" />
+<input type="submit" value="搜索" class="sun-button" />
 </li>
 </ul>
 </form>
 </div>
 
-<div class="data sun_mt10">
-<table class="sun_table_list sun_table_list_hover" width="100%">
+<div class="data sun-mt10">
+<table class="sun-table-list sun-table-list-hover" width="100%">
   <tr>
     <th>id</th>
     <th>部门</th>
@@ -170,8 +170,8 @@ foreach($userFiles as $userFile){
     <td><?php echo $userFile['ip'];?></td>
     <td><?php echo $userFile['time_add_name'];?></td>
     <td>
-<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small sun_mr5" onClick="sun.layer.open({id: 'layer_detail', name: '文件详情', url: 'detail.php?id=<?php echo $userFile['id'];?>', width: 700, height: 500})">详情</a>
-<a href="../user/detail.php?id=<?php echo $userFile['user_id'];?>" class="sun_button sun_button_secondary sun_button_small">用户</a>
+<a href="javascript:;" class="sun-button sun-button-secondary sun-button-small sun-mr5" onClick="sun.layer.open({id: 'layer_detail', name: '文件详情', url: 'detail.php?id=<?php echo $userFile['id'];?>', width: 700, height: 500})">详情</a>
+<a href="../user/detail.php?id=<?php echo $userFile['user_id'];?>" class="sun-button sun-button-secondary sun-button-small">用户</a>
     </td>
   </tr>
 <?php

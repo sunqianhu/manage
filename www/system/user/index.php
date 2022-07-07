@@ -121,7 +121,7 @@ foreach($users as $key => $user){
         )
     ));
     $users[$key]['status_name'] = DictionaryService::getValue('system_user_status', $user['status']);
-    $users[$key]['status_style_class'] = $user['status'] == 2 ? 'sun_badge sun_badge_orange': 'sun_badge';
+    $users[$key]['status_style_class'] = $user['status'] == 2 ? 'sun-badge sun-badge-orange': 'sun-badge';
     $users[$key]['time_edit_name'] = $user['time_edit'] ? date('Y-m-d H:i:s', $user['time_edit']) : '-';
     $users[$key]['time_login_name'] = $user['time_login'] ? date('Y-m-d H:i:s', $user['time_login']) : '-';
     $users[$key]['head_url'] = UserService::getHeadUrl($user['head']);
@@ -175,7 +175,7 @@ index.departmentData = <?php echo $department;?>;
 <form method="get" action="" class="form">
 <ul>
 <li>部门：
-<span class="sun_dropdown department">
+<span class="sun-dropdown department">
 <div class="title">
 <input type="hidden" name="department_id" id="department_id" value="<?php echo $search['department_id'];?>" />
 <input type="text" name="department_name" id="department_name" value="<?php echo $search['department_name'];?>" readonly />
@@ -197,17 +197,17 @@ index.departmentData = <?php echo $department;?>;
 <li>用户姓名：<input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
 <li>手机号码：<input type="text" name="phone" value="<?php echo $search['phone'];?>" /></li>
 <li>
-<input type="submit" value="搜索" class="sun_button" />
+<input type="submit" value="搜索" class="sun-button" />
 </li>
 </ul>
 </form>
 </div>
 
-<div class="data sun_mt10">
+<div class="data sun-mt10">
 <div class="toolbar">
-<a href="javascript:;" class="sun_button" onClick="index.add(0);">添加</a>
+<a href="javascript:;" class="sun-button" onClick="index.add(0);">添加</a>
 </div>
-<table class="sun_table_list sun_table_list_hover sun_mt10" width="100%">
+<table class="sun-table-list sun-table-list-hover sun-mt10" width="100%">
   <tr>
     <th>id</th>
     <th>用户名</th>
@@ -236,10 +236,10 @@ foreach($users as $user){
     <td><?php echo $user['time_login_name'];?></td>
     <td><span class="<?php echo $user['status_style_class'];?>"><?php echo $user['status_name'];?></span></td>
     <td>
-<a href="detail.php?id=<?php echo $user['id'];?>" class="sun_button sun_button_secondary sun_button_small sun_mr5">详情</a>
-<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small sun_mr5" onClick="index.edit(<?php echo $user['id'];?>)">修改</a>
-<span class="sun_dropdown_menu sun_dropdown_menu_align_right operation_more">
-<div class="title"><a href="javascript:;" class="sun_button sun_button_secondary sun_button_small">更多 <span class="iconfont icon-arrow_down arrow"></span></a></div>
+<a href="detail.php?id=<?php echo $user['id'];?>" class="sun-button sun-button-secondary sun-button-small sun-mr5">详情</a>
+<a href="javascript:;" class="sun-button sun-button-secondary sun-button-small sun-mr5" onClick="index.edit(<?php echo $user['id'];?>)">修改</a>
+<span class="sun-dropdown-menu sun-dropdown-menu-align-right operation_more">
+<div class="title"><a href="javascript:;" class="sun-button sun-button-secondary sun-button-small">更多 <span class="iconfont icon-arrow_down arrow"></span></a></div>
 <div class="content">
 <ul>
 <li><a href="javascript:;" onClick="index.enable(<?php echo $user['id'];?>)">启用</a></li>

@@ -4,4 +4,4 @@
 .page{ overflow: hidden}
 .page .page_body{ position: absolute; bottom: 51px; left: 0px; right: 0px; top: 0px; padding: 10px; overflow-y: auto}
 .page .page_button{ position: absolute; bottom: 0px; left: 0px; right: 0px; border-top: 1px solid #cccccc; height: 50px; line-height: 50px; padding: 0px 10px; text-align: right}
-.page .page_button .sun_button{ margin-left: 5px}
+.page .page_button .sun-button{ margin-left: 5px}

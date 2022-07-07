@@ -44,10 +44,10 @@ class DepartmentService{
 <td>'.$department['sort'].'</td>
 <td>'.$department['remark'].'</td>
 <td>
-<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small sun_mr5" onclick="index.add('.$department['id'].');" title="添加子部门">添加</a>
-<a href="javascript:;" class="sun_button sun_button_small sun_button_secondary sun_mr5" onclick="index.edit('.$department['id'].');">修改</a>
-<span class="sun_dropdown_menu sun_dropdown_menu_align_right operation_more">
-<div class="title"><a href="javascript:;" class="sun_button sun_button_secondary sun_button_small">更多 <span class="iconfont icon-arrow_down arrow"></span></a></div>
+<a href="javascript:;" class="sun-button sun-button-secondary sun-button-small sun-mr5" onclick="index.add('.$department['id'].');" title="添加子部门">添加</a>
+<a href="javascript:;" class="sun-button sun-button-small sun-button-secondary sun-mr5" onclick="index.edit('.$department['id'].');">修改</a>
+<span class="sun-dropdown-menu sun-dropdown-menu-align-right operation_more">
+<div class="title"><a href="javascript:;" class="sun-button sun-button-secondary sun-button-small">更多 <span class="iconfont icon-arrow_down arrow"></span></a></div>
 <div class="content">
 <ul>
 <li><a href="javascript:;" onClick="index.delete('.$department['id'].')">删除</a></li>

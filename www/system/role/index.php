@@ -103,17 +103,17 @@ $roles = SafeService::frontDisplay($roles);
 <li>角色id：<input type="text" name="id" value="<?php echo $search['id'];?>" /></li>
 <li>角色名称：<input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
 <li>
-<input type="submit" value="搜索" class="sun_button" />
+<input type="submit" value="搜索" class="sun-button" />
 </li>
 </ul>
 </form>
 </div>
 
-<div class="data sun_mt10">
+<div class="data sun-mt10">
 <div class="toolbar">
-<a href="javascript:;" class="sun_button" onClick="index.add();">添加</a>
+<a href="javascript:;" class="sun-button" onClick="index.add();">添加</a>
 </div>
-<table class="sun_table_list sun_table_list_hover sun_mt10" width="100%">
+<table class="sun-table-list sun-table-list-hover sun-mt10" width="100%">
   <tr>
     <th>id</th>
     <th>角色名称</th>
@@ -129,8 +129,8 @@ foreach($roles as $role){
     <td><?php echo $role['name'];?></td>
     <td><?php echo $role['time_edit_name'];?></td>
     <td>
-<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small sun_mr5" onClick="index.edit(<?php echo $role['id'];?>)">修改</a>
-<a href="javascript:;" class="sun_button sun_button_secondary sun_button_small" onClick="index.delete(<?php echo $role['id'];?>)">删除</a>
+<a href="javascript:;" class="sun-button sun-button-secondary sun-button-small sun-mr5" onClick="index.edit(<?php echo $role['id'];?>)">修改</a>
+<a href="javascript:;" class="sun-button sun-button-secondary sun-button-small" onClick="index.delete(<?php echo $role['id'];?>)">删除</a>
     </td>
   </tr>
 <?php
