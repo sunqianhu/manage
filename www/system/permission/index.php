@@ -62,7 +62,7 @@ if(!empty($whereMarks)){
 $where['value'] = $whereValues;
 
 // 数据
-$permissions = $permissionModel->selectAll('id, parent_id, name, `sort`, tag', $where, 'order by `sort` asc, id asc');
+$permissions = $permissionModel->selectAll('id, parent_id, name, `sort`, tag', $where, '`sort` asc, id asc');
 $permissions = TreeService::getTree($permissions, 'child', 'id', 'parent_id');
 $permissions = SafeService::frontDisplay($permissions, 'id,parent_id');
 $permissionNode = PermissionService::getIndexTreeNode($permissions, 1);

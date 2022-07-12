@@ -23,7 +23,7 @@ if(!AuthService::isPermission('system_user')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
-$departments = $departmentModel->selectAll('id, name, parent_id', array(), 'order by parent_id asc, id asc');
+$departments = $departmentModel->selectAll('id, name, parent_id', array(), 'parent_id asc, id asc');
 $departments = ZtreeService::setOpenByFirst($departments);
 $department = json_encode($departments);
 

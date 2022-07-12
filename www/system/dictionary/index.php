@@ -71,7 +71,7 @@ $recordTotal = $dictionaryModel->selectOne('count(1)', $where);
 $paginationService = new PaginationService($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
 $paginationNodeIntact = $paginationService->getNodeIntact();
 
-$dictionarys = $dictionaryModel->selectAll('id, type, `key`, `value`, `sort`', $where, 'order by type asc, `sort` asc, id asc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
+$dictionarys = $dictionaryModel->selectAll('id, type, `key`, `value`, `sort`', $where, 'type asc, `sort` asc, id asc', ''.$paginationService->limitStart.','.$paginationService->pageSize);
 
 $dictionarys = SafeService::frontDisplay($dictionarys);
 

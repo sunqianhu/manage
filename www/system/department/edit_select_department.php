@@ -24,7 +24,7 @@ if(!AuthService::isPermission('system_department')){
     exit;
 }
 
-$departments = $departmentModel->selectAll('id, name, parent_id', array(), 'order by parent_id asc, id asc');
+$departments = $departmentModel->selectAll('id, name, parent_id', array(), 'parent_id asc, id asc');
 $departments = ZtreeService::setOpenByFirst($departments);
 $department = json_encode($departments);
 

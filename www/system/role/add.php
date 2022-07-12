@@ -26,7 +26,7 @@ if(!AuthService::isPermission('system_role')){
 
 $permissions = $permissionModel->selectAll('id, name, parent_id', array(
     'mark'=>'parent_id != 0'
-), 'order by parent_id asc, sort asc');
+), 'parent_id asc, sort asc');
 $permissions = ZtreeService::setOpenByFirst($permissions);
 $permission = json_encode($permissions);
 

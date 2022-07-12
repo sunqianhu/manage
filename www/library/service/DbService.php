@@ -148,12 +148,12 @@ class DbService{
      * 更新
      * @access public
      * @param string $tableName 表
-     * @param string $datas 更新的数据
+     * @param string $data 更新的数据
      * @param array $where 条件 mark value
      * @return boolean
      * @throws Exception
      */
-    static function update($tableName, $datas, $where = array()){
+    static function update($tableName, $data, $where = array()){
         $sql = '';
         $pdo = null;
         $pdoStatement = null;
@@ -166,13 +166,13 @@ class DbService{
         if(!isset($tableName) || $tableName == ''){
             return false;
         }
-        if(empty($datas)){
+        if(empty($data)){
             return false;
         }
         $pdo = self::getDbInstance();
         
         $sql = "update `".$tableName."` set ";
-        foreach($datas as $dataField => $dataValue){
+        foreach($data as $dataField => $dataValue){
             $sqlFields[] = "`".$dataField."` = :".$dataField."";
         }
         $sql .= implode(', ', $sqlFields);
@@ -186,7 +186,7 @@ class DbService{
             throw new \Exception($message);
         }
         
-        foreach($datas as $dataField => $dataValue){
+        foreach($data as $dataField => $dataValue){
             if(is_array($dataValue) && count($dataValue) > 1){
                 $pdoStatement->bindValue(':'.$dataField, $dataValue[0], $dataValue[1]);
             }else{
@@ -241,10 +241,10 @@ class DbService{
             $sql .= ' where '.$where['mark'];
         }
         if($order != ''){
-            $sql .= ' '.$order;
+            $sql .= ' order by '.$order;
         }
         if($limit != ''){
-            $sql .= ' '.$limit;
+            $sql .= ' limit '.$limit;
         }
         
         $pdoStatement = $pdo->prepare($sql);

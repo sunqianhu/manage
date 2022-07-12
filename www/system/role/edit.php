@@ -70,7 +70,7 @@ $role = SafeService::frontDisplay($role);
 
 $permissions = $permissionModel->selectAll('id, name, parent_id', array(
     'mark'=>'parent_id != 0'
-), 'order by parent_id asc, id asc');
+), 'parent_id asc, id asc');
 $permissions = ZtreeService::setOpenByFirst($permissions);
 $permissions = ZtreeService::setChecked($permissions, $permissionIds);
 $permission = json_encode($permissions);

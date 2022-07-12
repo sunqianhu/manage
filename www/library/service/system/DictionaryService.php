@@ -33,7 +33,7 @@ class DictionaryService{
                     ':type'=>$type
                 )
             ), 
-            'order by `sort` asc'
+            '`sort` asc'
         );
         if(empty($datas)){
             return $data;

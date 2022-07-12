@@ -91,7 +91,7 @@ $loginLogs = $loginLogModel->selectAll("ip, time_login",  array(
     'value'=>array(
         ':user_id'=>$user['id']
     )
-), 'order by id desc', 'limit 0,50');
+), 'id desc', '0,50');
 $loginLogs = ArrayTwoService::columnTimestampToTime($loginLogs, 'time_login', 'time_login_name');
 $loginLogs = SafeService::frontDisplay($loginLogs);
 
@@ -101,7 +101,7 @@ $operationLogs = $operationLogModel->selectAll("id, ip, time_add, url",  array(
     'value'=>array(
         ':user_id'=>$user['id']
     )
-), 'order by id desc', 'limit 0,50');
+), 'id desc', '0,50');
 $operationLogs = ArrayTwoService::columnTimestampToTime($operationLogs, 'time_add', 'time_add_name');
 
 foreach($operationLogs as $key => $operationLog){

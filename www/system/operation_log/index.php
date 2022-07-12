@@ -81,7 +81,7 @@ $recordTotal = $operationLogModel->selectOne('count(1)', $where);
 $paginationService = new PaginationService($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
 $paginationNodeIntact = $paginationService->getNodeIntact();
 
-$operationLogs = $operationLogModel->selectAll('id, user_id, department_id, ip, time_add, url', $where, 'order by id desc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
+$operationLogs = $operationLogModel->selectAll('id, user_id, department_id, ip, time_add, url', $where, 'id desc', ''.$paginationService->limitStart.','.$paginationService->pageSize);
 
 foreach($operationLogs as $key => $operationLog){
     $operationLogs[$key]['time_add_name'] = date('Y-m-d H:i:s', $operationLog['time_add']);

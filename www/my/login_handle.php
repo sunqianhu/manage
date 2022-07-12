@@ -119,7 +119,7 @@ $permissions = $permissionModel->selectAll("id, parent_id, type, name, tag", arr
     'value'=>array(
         ':role_id'=> $user['role_id_string']
     )
-), 'order by `sort` asc');
+), '`sort` asc');
 
 // 记录
 $ip = IpService::getIp();
