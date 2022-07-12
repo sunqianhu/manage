@@ -26,7 +26,7 @@ if(!AuthService::isPermission('system_user')){
     exit;
 }
 
-$roles = $roleModel->select('id, name');
+$roles = $roleModel->selectAll('id, name');
 $roleOption = ArrayTwoService::getSelectOption($roles);
 
 ?><!doctype html>

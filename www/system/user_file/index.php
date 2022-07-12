@@ -85,7 +85,7 @@ $recordTotal = $userFileModel->selectOne('count(1)', $where);
 $paginationService = new PaginationService($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
 $paginationNodeIntact = $paginationService->getNodeIntact();
 
-$userFiles = $userFileModel->select('id, department_id, user_id, module_id, name, path, size, type, ip, time_add', $where, 'order by id desc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
+$userFiles = $userFileModel->selectAll('id, department_id, user_id, module_id, name, path, size, type, ip, time_add', $where, 'order by id desc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
 
 foreach($userFiles as $key => $userFile){
     $userFiles[$key]['time_add_name'] = date('Y-m-d H:i:s', $userFile['time_add']);

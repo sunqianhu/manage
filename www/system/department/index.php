@@ -63,7 +63,7 @@ if(!empty($whereMarks)){
 $where['value'] = $whereValues;
 
 // 数据
-$departments = $departmentModel->select('id, parent_id, name, `sort`, remark', $where, 'order by `sort` asc, id asc');
+$departments = $departmentModel->selectAll('id, parent_id, name, `sort`, remark', $where, 'order by `sort` asc, id asc');
 $departments = TreeService::getTree($departments, 'child', 'id', 'parent_id');
 $departments = SafeService::frontDisplay($departments);
 $departmentNode = DepartmentService::getIndexTreeNode($departments, 1);

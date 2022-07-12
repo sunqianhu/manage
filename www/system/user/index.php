@@ -112,7 +112,7 @@ $recordTotal = $userModel->selectOne('count(1)', $where);
 $paginationService = new PaginationService($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
 $paginationNodeIntact = $paginationService->getNodeIntact();
 
-$users = $userModel->select('id, username, head, `name`, `time_login`, time_edit, phone, status, department_id', $where, 'order by id asc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
+$users = $userModel->selectAll('id, username, head, `name`, `time_login`, time_edit, phone, status, department_id', $where, 'order by id asc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
 foreach($users as $key => $user){
     $users[$key]['department_name'] = $departmentModel->selectOne('name', array(
         'mark'=>'id = :id',
@@ -127,12 +127,12 @@ foreach($users as $key => $user){
     $users[$key]['head_url'] = UserService::getHeadUrl($user['head']);
 }
 
-$departments = $departmentModel->select('id, name, parent_id', array(), 'order by parent_id asc, id asc');
+$departments = $departmentModel->selectAll('id, name, parent_id', array(), 'order by parent_id asc, id asc');
 $departments = ZtreeService::setOpenByFirst($departments);
 $department = json_encode($departments);
 
 $statusOption = DictionaryService::getSelectOption('system_user_status', array($search['status']));
-$roles = $roleModel->select('id, name', array());
+$roles = $roleModel->selectAll('id, name', array());
 $roleOption = ArrayTwoService::getSelectOption($roles, array($search['role_id']), 'id', 'name');
 
 $users = SafeService::frontDisplay($users);

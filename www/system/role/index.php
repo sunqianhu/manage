@@ -61,7 +61,7 @@ $recordTotal = $roleModel->selectOne('count(1)', $where);
 $paginationService = new PaginationService($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
 $paginationNodeIntact = $paginationService->getNodeIntact();
 
-$roles = $roleModel->select('id, name, time_edit', $where, 'order by id asc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
+$roles = $roleModel->selectAll('id, name, time_edit', $where, 'order by id asc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
 foreach($roles as $key => $role){
     $roles[$key]['time_edit_name'] = date('Y-m-d H:i:s', $role['time_edit']);
 }

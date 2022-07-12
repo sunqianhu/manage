@@ -114,7 +114,7 @@ if(empty($department)){
 }
 
 // 权限
-$permissions = $permissionModel->select("id, parent_id, type, name, tag", array(
+$permissions = $permissionModel->selectAll("id, parent_id, type, name, tag", array(
     'mark'=>'id in (select permission_id from role_permission where role_id in (:role_id))',
     'value'=>array(
         ':role_id'=> $user['role_id_string']

@@ -80,7 +80,7 @@ $recordTotal = $loginLogModel->selectOne('count(1)', $where);
 $paginationService = new PaginationService($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
 $paginationNodeIntact = $paginationService->getNodeIntact();
 
-$loginLogs = $loginLogModel->select('id, user_id, department_id, ip, time_login', $where, 'order by id desc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
+$loginLogs = $loginLogModel->selectAll('id, user_id, department_id, ip, time_login', $where, 'order by id desc', 'limit '.$paginationService->limitStart.','.$paginationService->pageSize);
 
 foreach($loginLogs as $key => $loginLog){
     $loginLogs[$key]['time_login_name'] = date('Y-m-d H:i:s', $loginLog['time_login']);

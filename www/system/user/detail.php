@@ -76,7 +76,7 @@ $user['department_name'] = $departmentModel->selectOne('name', array(
     )
 ));
 
-$roles = $roleModel->select('name', array(
+$roles = $roleModel->selectAll('name', array(
     'mark'=>'id in (:id)',
     'value'=>array(
         ':id'=>$user['role_id_string']
@@ -86,7 +86,7 @@ $user['role_name'] = ArrayTwoService::getColumnString($roles, 'name', '，');
 $user = SafeService::frontDisplay($user);
 
 // 登录日志
-$loginLogs = $loginLogModel->select("ip, time_login",  array(
+$loginLogs = $loginLogModel->selectAll("ip, time_login",  array(
     'mark'=>'user_id = :user_id',
     'value'=>array(
         ':user_id'=>$user['id']
@@ -96,7 +96,7 @@ $loginLogs = ArrayTwoService::columnTimestampToTime($loginLogs, 'time_login', 't
 $loginLogs = SafeService::frontDisplay($loginLogs);
 
 // 操作日志
-$operationLogs = $operationLogModel->select("id, ip, time_add, url",  array(
+$operationLogs = $operationLogModel->selectAll("id, ip, time_add, url",  array(
     'mark'=>'user_id = :user_id',
     'value'=>array(
         ':user_id'=>$user['id']

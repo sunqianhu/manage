@@ -25,7 +25,7 @@ class DictionaryService{
         }
         
         $dictionaryModel = new DictionaryModel();
-        $datas = $dictionaryModel->select(
+        $datas = $dictionaryModel->selectAll(
             '`key`, `value`',
             array(
                 'mark'=>'type = :type',

@@ -67,7 +67,7 @@ $user['department_name'] = $departmentModel->selectOne('name', array(
 $user = SafeService::frontDisplay($user);
 $status = DictionaryService::getRadio('system_user_status', 'status', $user['status']);
 
-$roles = $roleModel->select('id, name', array());
+$roles = $roleModel->selectAll('id, name', array());
 $roleOption = ArrayTwoService::getSelectOption($roles, $user['role_ids'], 'id', 'name');
 
 ?><!doctype html>

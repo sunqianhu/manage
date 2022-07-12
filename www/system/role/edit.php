@@ -58,7 +58,7 @@ if(empty($role)){
     exit;
 }
 
-$rolePermissions = $rolePermissionModel->select('permission_id', array(
+$rolePermissions = $rolePermissionModel->selectAll('permission_id', array(
     'mark'=>'role_id = :role_id',
     'value'=>array(
         ':role_id'=>$role['id']
@@ -68,7 +68,7 @@ $permissionIds = array_column($rolePermissions, 'permission_id');
 $role['permission_ids'] = implode(',', $permissionIds);
 $role = SafeService::frontDisplay($role);
 
-$permissions = $permissionModel->select('id, name, parent_id', array(
+$permissions = $permissionModel->selectAll('id, name, parent_id', array(
     'mark'=>'parent_id != 0'
 ), 'order by parent_id asc, id asc');
 $permissions = ZtreeService::setOpenByFirst($permissions);
