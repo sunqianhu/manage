@@ -45,7 +45,7 @@ class DepartmentService{
 <td>'.$department['remark'].'</td>
 <td>
 <a href="javascript:;" class="sun-button sun-button-secondary sun-button-small sun-mr5" onclick="index.add('.$department['id'].');" title="添加子部门">添加</a>
-<a href="javascript:;" class="sun-button sun-button-small secondary sun-mr5" onclick="index.edit('.$department['id'].');">修改</a>
+<a href="javascript:;" class="sun-button sun-button-small sun-button-secondary sun-mr5" onclick="index.edit('.$department['id'].');">修改</a>
 <span class="sun-dropdown-menu sun-dropdown-menu-align-right operation_more">
 <div class="title"><a href="javascript:;" class="sun-button sun-button-secondary sun-button-small">更多 <span class="iconfont icon-arrow-down arrow"></span></a></div>
 <div class="content">
