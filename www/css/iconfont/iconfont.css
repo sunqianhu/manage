@@ -21,7 +21,7 @@
   content: "\e60f";
 }
 
-.icon-arrow_right:before {
+.icon-arrow-right:before {
   content: "\e63e";
 }
 
@@ -29,7 +29,7 @@
   content: "\e60e";
 }
 
-.icon-arrow_down:before {
+.icon-arrow-down:before {
   content: "\e602";
 }
 
@@ -37,7 +37,7 @@
   content: "\e65e";
 }
 
-.icon-arrow_left:before {
+.icon-arrow-left:before {
   content: "\e64f";
 }
 

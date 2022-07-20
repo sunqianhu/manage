@@ -22,7 +22,7 @@
     {
       "icon_id": "12175552",
       "name": "右箭头",
-      "font_class": "arrow_right",
+      "font_class": "arrow-right",
       "unicode": "e63e",
       "unicode_decimal": 58942
     },
@@ -36,7 +36,7 @@
     {
       "icon_id": "1285539",
       "name": "下拉箭头",
-      "font_class": "arrow_down",
+      "font_class": "arrow-down",
       "unicode": "e602",
       "unicode_decimal": 58882
     },
@@ -50,7 +50,7 @@
     {
       "icon_id": "566774",
       "name": "左箭头",
-      "font_class": "arrow_left",
+      "font_class": "arrow-left",
       "unicode": "e64f",
       "unicode_decimal": 58959
     },

@@ -622,7 +622,7 @@ sun.treeTable.init = function(config){
         
         domTd.css("padding-left", (30 * (level - 1))+"px");
         if(trChildLength > 0){
-            domTd.prepend('<span class="iconfont icon-arrow_down arrow" onclick="sun.treeTable.toggle(this)"></span>');
+            domTd.prepend('<span class="iconfont icon-arrow-down arrow" onclick="sun.treeTable.toggle(this)"></span>');
         }
         
         // 展开级别

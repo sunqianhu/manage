@@ -239,7 +239,7 @@ foreach($users as $user){
 <a href="detail.php?id=<?php echo $user['id'];?>" class="sun-button sun-button-secondary sun-button-small sun-mr5">详情</a>
 <a href="javascript:;" class="sun-button sun-button-secondary sun-button-small sun-mr5" onClick="index.edit(<?php echo $user['id'];?>)">修改</a>
 <span class="sun-dropdown-menu sun-dropdown-menu-align-right operation_more">
-<div class="title"><a href="javascript:;" class="sun-button sun-button-secondary sun-button-small">更多 <span class="iconfont icon-arrow_down arrow"></span></a></div>
+<div class="title"><a href="javascript:;" class="sun-button sun-button-secondary sun-button-small">更多 <span class="iconfont icon-arrow-down arrow"></span></a></div>
 <div class="content">
 <ul>
 <li><a href="javascript:;" onClick="index.enable(<?php echo $user['id'];?>)">启用</a></li>

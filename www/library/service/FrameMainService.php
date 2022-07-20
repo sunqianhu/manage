@@ -25,7 +25,7 @@ class FrameMainService{
         // 系统管理
         if(AuthService::isPermission('system')){
             $node .= '<li>
-<a href="javascript:;"><span class="iconfont icon-setup icon"></span><span class="text">系统管理</span><span class="iconfont icon-arrow_left arrow"></span></a>
+<a href="javascript:;"><span class="iconfont icon-setup icon"></span><span class="text">系统管理</span><span class="iconfont icon-arrow-left arrow"></span></a>
 <ul>';
             // 用户管理
             if(AuthService::isPermission('system_user')){
