@@ -15,12 +15,6 @@ class PaginationService{
     public $urlTemplate = ''; // url模板
     public $limitStart = 0; // 开始记录
     
-    public $nodeTotal = ''; // 节点总记录
-    public $nodeRecordRange = ''; // 节点记录范围
-    public $nodeLink = ''; // 节点链接
-    public $nodeLimit = ''; // 节点每页显示
-    public $nodeSkip = ''; // 节点跳转
-
     /**
      * 分页
      * @param int $recordNumber 总记录数
@@ -50,20 +44,13 @@ class PaginationService{
             $this->urlTemplate = $this->getUrlTemplate();
         }
         $this->limitStart = ($this->pageCurrent - 1) * $this->pageSize;
-        
-        $this->nodeTotal = $this->getNodeTotal();
-        $this->nodeRecordRange = $this->getNodeRecordRange();
-        $this->nodeLink = $this->getNodeLink();
-        $this->nodeLimit = $this->getNodeLimit();
-        $this->nodeSkip = $this->getNodeSkip();
     }
     
     /**
      * 得到url模板
      */
     function getUrlTemplate(){
-        $appDomain = ConfigService::getOne('app_domain');
-        $url = $appDomain.substr($_SERVER['SCRIPT_NAME'], 1);
+        $url = $_SERVER['SCRIPT_NAME'];
         
         $_GET['page_size'] = 'PAGE_SIZE';
         $_GET['page_current'] = 'PAGE_CURRENT';
@@ -116,7 +103,22 @@ class PaginationService{
     }
     
     /**
-     * 获取节点link
+     * 得到节点页码范围
+     * @return string node
+     */
+    function getNodePageRange(){
+        $node = '';
+        
+        if($this->pageTotal == 0){
+            return $node;
+        }
+        
+        $node = '<div class="page_range"><span>'.$this->pageCurrent.'/'.$this->pageTotal.'</span></div>';
+        return $node;
+    }
+    
+    /**
+     * 得到节点链接
      * @return string node
      */
     function getNodeLink(){
@@ -223,15 +225,39 @@ class PaginationService{
         
         $node = '<div class="sun-pagination-intact">
 <div class="left">
-'.$this->nodeTotal.'
-'.$this->nodeRecordRange.'
+'.$this->getNodeTotal().'
+'.$this->getNodeRecordRange().'
 </div>
 <div class="right">
-'.$this->nodeLimit.'
-'.$this->nodeSkip.'
-'.$this->nodeLink.'
+'.$this->getNodeLimit().'
+'.$this->getNodeSkip().'
+'.$this->getNodeLink().'
 </div>
 </div>';
+
+        return $node;
+    }
+    
+    /**
+     * 得到节点简单分页
+     * @return string node
+     */
+    function getNodeSimple(){
+        $node = '';
+        
+        $node = '<div class="sun-pagination-simple">';
+        if($this->pageCurrent > 1){
+            $node .= '<a href="'.$this->getUrl($this->pageSize, $this->pageCurrent - 1).'">上一页</a>';
+        }else{
+            $node .= '<a href="javascript:;" class="disabled">上一页</a>';
+        }
+        $node .= $this->getNodePageRange();
+        if($this->pageCurrent < $this->pageTotal){
+            $node .= '<a href="'.$this->getUrl($this->pageSize, $this->pageCurrent + 1).'">下一页</a>';
+        }else{
+            $node .= '<a href="javascript:;" class="disabled">下一页</a>';
+        }
+        $node .= '</div>';
 
         return $node;
     }
