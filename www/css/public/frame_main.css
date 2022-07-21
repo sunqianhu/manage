@@ -42,7 +42,7 @@ transition: all 0.5s ease;
 .page > .page_body > .page_left .menu ul li{ list-style: none}
 .page > .page_body > .page_left .menu ul li > a{ display: block; height: 40px; line-height: 40px; padding:0px 10px 0px 20px; overflow: hidden}
 .page > .page_body > .page_left .menu ul li > a:hover{ background: rgba(0,0,0,0.2); color: #ffffff; text-decoration: none}
-.page > .page_body > .page_left .menu ul li > a .icon{ display: inline-block; width: 20px}
+.page > .page_body > .page_left .menu ul li > a .icon{ display: inline-block; width: 25px}
 .page > .page_body > .page_left .menu ul li > a .arrow{ float: right; font-size: 12px;
 transition: all 0.5s ease;
 -ms-transition: all 0.5s ease;

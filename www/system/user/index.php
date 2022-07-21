@@ -127,7 +127,7 @@ foreach($users as $key => $user){
     $users[$key]['head_url'] = UserService::getHeadUrl($user['head']);
 }
 
-$departments = $departmentModel->selectAll('id, name, parent_id', array(), 'parent_id asc, id asc');
+$departments = $departmentModel->selectAll('id, name, parent_id', array(), 'parent_id asc, sort asc');
 $departments = ZtreeService::setOpenByFirst($departments);
 $department = json_encode($departments);
 

@@ -50,7 +50,7 @@
     {
       "icon_id": "3568832",
       "name": "加号",
-      "font_class": "and",
+      "font_class": "add",
       "unicode": "e605",
       "unicode_decimal": 58885
     },

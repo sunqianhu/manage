@@ -61,7 +61,7 @@ $(function(){
         expand: 3
     });
     
-    sun.dropDownClickMenu({
+    sun.dropDownMenuClick({
         element: ".data table .operation_more"
     });
 });

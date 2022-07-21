@@ -80,6 +80,7 @@ button{ font-size: 14px; outline: none}
 .sun-form-table .table{ border-collapse: collapse; background: #ffffff}
 .sun-form-table .table > tbody > tr > td{ margin: 0px; padding: 5px; word-break: break-all; word-wrap: break-word; border: 1px solid #eeeeee}
 .sun-form-table .table > tbody > tr > td.name{ color:#2d64b3; background-color:#f5f5f5}
+.sun-form-table .required{ font-weight: bold; color: #ff0000}
 .sun-form-table .buttons{ margin-top: 10px; text-align: center}
 .sun-form-table .buttons .sun-button{ margin: 0px 10px}
 
@@ -134,7 +135,7 @@ transition: all 0.5s ease;
 .sun-section > .title .more{ float: right; font-size: 12px; color: #919191}
 .sun-section > .content{ padding: 0px 10px 10px 10px}
 
-/*toast*/
+/*轻提示*/
 .sun-toast{ display: table-row; background: #ffffff; max-width: 300px; border: 1px solid #eeeeee; box-shadow:0px 0px 5px #888888; border-radius: 3px; padding: 10px; position: absolute; left: 0px; top: 0px; z-index: 1090}
 .sun-toast .icon{ display: table-cell; vertical-align: middle; font-size: 36px; line-height: 100%}
 .sun-toast .info{ display: table-cell; vertical-align: middle; padding-left: 10px; word-break: break-all}
@@ -161,6 +162,16 @@ transition: all 0.5s ease;
 .sun-table-view{ border-collapse: collapse; background: #ffffff}
 .sun-table-view tr td{ margin: 0px; padding: 5px; word-break: break-all; word-wrap: break-word; border: 1px solid #eeeeee}
 .sun-table-view tr td.name{ color:#2d64b3; background-color:#f5f5f5}
+
+/*字段显示*/
+.sun-field-view{}
+.sun-field-view .field.single{ display: flex}
+.sun-field-view .field.single .label{ color: #326496; white-space: nowrap}
+.sun-field-view .field.single .value{ flex: 1}
+.sun-field-view .field.multi{ margin-top: 10px}
+.sun-field-view .field.multi:first-child{ margin-top: 0px}
+.sun-field-view .field.multi .label{}
+.sun-field-view .field.multi .value{ font-size: 14px; color: #919191}
 
 /*分页完整*/
 .sun-pagination-intact{}
@@ -262,6 +273,13 @@ transform:rotate(-90deg);
 -o-transform:rotate(-90deg);
 }
 
+/*文件上传按钮*/
+.sun-file-upload-button{ display: inline-block; width: 80px; height: 80px; border-radius: 3px; background: #f5f5f5; border: 1px solid #eeeeee; text-align: center; color: #919191; cursor: pointer}
+.sun-file-upload-button .icon{ font-size: 20px; line-height: 30px; margin-top: 15px; display: block}
+.sun-file-upload-button .text{ display: block}
+.sun-file-upload-button:hover{ color: #717171}
+.sun-file-upload-button:active{ background: #d5d5d5; color: #515151}
+
 /*文件上传进度条*/
 .sun-file-upload-progress { vertical-align: middle; margin-left: 10px; overflow: hidden; display: none; line-height: 100%}
 .sun-file-upload-progress .chart{ display: inline-block; width: 150px; height: 10px; padding: 1px; border: 1px solid #326496; background: #ffffff; float: left; border-radius: 7px; line-height: 1px}
@@ -273,3 +291,15 @@ transform:rotate(-90deg);
 .sun-file-upload-result .item{}
 .sun-file-upload-result .item .delete{ margin-left: 10px; display: none}
 .sun-file-upload-result .item:hover .delete{ display: inline-block}
+
+/*时间线*/
+.sun-timeline{}
+.sun-timeline .item{ position: relative; padding-left: 15px}
+.sun-timeline .item .line{ position: absolute; left: 0px; top: 0px; bottom: 0px; width: 1px; background: #eeeeee}
+.sun-timeline .item .line .spot_out{ position: absolute; left: -7.5px; top: 2px; width: 16px; height: 14px; padding-top: 2px; background: #ffffff; text-align: center; line-height: 0px}
+.sun-timeline .item .line .spot_out .spot_in{ width: 6px; height: 6px; background: #0faeb5; border: 3px solid #cfeff0; border-radius: 50%; display: inline-block}
+.sun-timeline .item .time{ font-size: 12px; color: #919191}
+.sun-timeline .item .content{ background: #f5f6f7; border-radius: 3px; padding: 5px 10px; margin-top: 5px}
+.sun-timeline .item:after{ content: ""; display: block; height: 10px}
+.sun-timeline .item:first-child .line{ top: 2px}
+.sun-timeline .item:first-child .line .spot_out{ top: 0px}

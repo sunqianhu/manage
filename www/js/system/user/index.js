@@ -114,7 +114,7 @@ index.disable = function(id){
 $(function(){
     index.searchDepartmentZtreeInit();
     
-    sun.dropDownClickMenu({
+    sun.dropDownMenuClick({
         element: ".data table .operation_more"
     });
 });

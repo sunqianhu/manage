@@ -63,16 +63,11 @@ sun.toast = function(type, info, time, callback){
 };
 
 /**
- * 加载中
- */
-sun.loading = {};
-
-/**
  * 加载中打开
  * @param id id
  * @param info 描述
  */
-sun.loading.open = function(id, info){
+sun.loadingOpen = function(id, info){
     var node = "";
     
 	node = '<div class="sun-loading-bg sun-loading-bg_'+id+'"></div>';
@@ -87,7 +82,7 @@ sun.loading.open = function(id, info){
  * 加载中关闭
  * @param id id
  */
-sun.loading.close = function(id){
+sun.loadingClose = function(id){
 	$(".sun-loading-bg_"+id).remove();
 	$(".sun-loading_"+id).remove();
 };
@@ -277,7 +272,7 @@ sun.dropDownClickClose = function(element){
  * 下拉菜单点击
  * @param string config.element 元素
  */
-sun.dropDownClickMenu = function(config){
+sun.dropDownMenuClick = function(config){
     var domDocument; // 文档
     var domDropdownMenus; // 菜单所有
     var domDropdownMenuTitles; // 标题所有
@@ -798,14 +793,24 @@ sun.fileUpload = function(config){
                 return myXhr;
             },
             success: function(ret){
-                config.success(ret);
+                if(config.success){
+                    config.success(ret);
+                }
             },
             error: function(xhr, message){
-                sun.toast("error", message, 3000);
+                if(config.error){
+                    config.success(message);
+                }else{
+                    sun.toast("error", message, 3000);
+                }
             },
             complete: function(XHR, TS){
                 domFile.get(0).value = "";
                 domProgress.hide();
+                
+                if(config.complete){
+                    config.complete();
+                }
             }
         });
     });
