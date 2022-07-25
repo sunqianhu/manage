@@ -24,7 +24,7 @@ index.searchDepartmentZtreeInit = function(){
     var nodes = index.departmentData;
     index.searchDepartmentZtree = $.fn.zTree.init($(".search #ztree"), setting, nodes);
     
-    sun.dropDownClick({
+    sun.dropDownClick.init({
         element: ".search .department"
     });
 }
@@ -43,7 +43,7 @@ index.searchDepartmentSelected = function(event, id, node){
     
     domDepartmentId.val(node.id);
     domDepartmentName.val(node.name);
-    sun.dropDownClickClose(".search .department");
+    sun.dropDownClick.close(".search .department");
 }
 
 /**
@@ -114,7 +114,7 @@ index.disable = function(id){
 $(function(){
     index.searchDepartmentZtreeInit();
     
-    sun.dropDownMenuClick({
+    sun.dropDownMenuClick.init({
         element: ".data table .operation_more"
     });
 });

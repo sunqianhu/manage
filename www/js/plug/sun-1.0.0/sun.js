@@ -63,11 +63,16 @@ sun.toast = function(type, info, time, callback){
 };
 
 /**
+ * 加载中
+ */
+sun.loading = {};
+
+/**
  * 加载中打开
  * @param id id
  * @param info 描述
  */
-sun.loadingOpen = function(id, info){
+sun.loading.open = function(id, info){
     var node = "";
     
 	node = '<div class="sun-loading-bg sun-loading-bg_'+id+'"></div>';
@@ -82,7 +87,7 @@ sun.loadingOpen = function(id, info){
  * 加载中关闭
  * @param id id
  */
-sun.loadingClose = function(id){
+sun.loading.close = function(id){
 	$(".sun-loading-bg_"+id).remove();
 	$(".sun-loading_"+id).remove();
 };
@@ -208,9 +213,14 @@ sun.formSubmit = function(config){
 
 /**
  * 下拉点击
+ */
+sun.dropDownClick = {};
+
+/**
+ * 下拉点击
  * @param string config.element 元素
  */
-sun.dropDownClick = function(config){
+sun.dropDownClick.init = function(config){
     var domDocument; // 文档
     var domDropdowns; // 下拉所有
     var domDropdownTitles; // 标题所有
@@ -256,7 +266,7 @@ sun.dropDownClick = function(config){
  * 下拉关闭
  * @param string element 选择器
  */
-sun.dropDownClickClose = function(element){
+sun.dropDownClick.close = function(element){
     var domDropdownContents;
     
     if(!element){
@@ -270,9 +280,14 @@ sun.dropDownClickClose = function(element){
 
 /**
  * 下拉菜单点击
+ */
+sun.dropDownMenuClick = {};
+
+/**
+ * 下拉菜单点击
  * @param string config.element 元素
  */
-sun.dropDownMenuClick = function(config){
+sun.dropDownMenuClick.init = function(config){
     var domDocument; // 文档
     var domDropdownMenus; // 菜单所有
     var domDropdownMenuTitles; // 标题所有
@@ -326,7 +341,23 @@ sun.dropDownMenuClick = function(config){
 };
 
 /**
- * 下拉悬停
+ * 下拉菜单点击关闭
+ * @param string element 选择器
+ */
+sun.dropDownMenuClick.close = function(element){
+    var domDropdownContents;
+    
+    if(!element){
+        sun.toast("error", "下拉元素选择器参数错误", 3000);
+        return false;
+    }
+    
+    domDropdownContents = $(element + " > .content");
+    domDropdownContents.slideUp(200);
+};
+
+/**
+ * 下拉悬停初始化
  * @param string config.element 元素
  */
 sun.dropDownHover = function(config){
@@ -515,7 +546,10 @@ sun.layer.getIframeWindow = function(win, id){
     return iframeWindow;
 };
 
-sun.pagination = {}; // 分页
+/**
+ * 分页
+ */
+sun.pagination = {};
 
 /**
  * 分页跳转到指定页
