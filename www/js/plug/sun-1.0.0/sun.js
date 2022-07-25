@@ -345,15 +345,15 @@ sun.dropDownMenuClick.init = function(config){
  * @param string element 选择器
  */
 sun.dropDownMenuClick.close = function(element){
-    var domDropdownContents;
+    var domDropdownMenuContents;
     
     if(!element){
         sun.toast("error", "下拉元素选择器参数错误", 3000);
         return false;
     }
     
-    domDropdownContents = $(element + " > .content");
-    domDropdownContents.slideUp(200);
+    domDropdownMenuContents = $(element + " > .content");
+    domDropdownMenuContents.slideUp(200);
 };
 
 /**
