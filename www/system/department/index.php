@@ -104,7 +104,7 @@ $departmentNode = DepartmentService::getIndexTreeNode($departments, 1);
 <li>备注：<input type="text" name="remark" value="<?php echo $search['remark'];?>" /></li>
 <li>
 <input type="submit" value="搜索" class="sun-button" />
-<input type="reset" class="sun-button secondary sun-ml5" value="重置" />
+<input type="reset" class="sun-button plain sun-ml5" value="重置" />
 </li>
 </ul>
 </form>

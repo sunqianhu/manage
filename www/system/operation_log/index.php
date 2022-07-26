@@ -159,8 +159,8 @@ foreach($operationLogs as $operationLog){
     <td><a href="<?php echo $operationLog['url'];?>" target="_blank" title="<?php echo $operationLog['url'];?>"><?php echo $operationLog['url_sub'];?></a></td>
     <td><?php echo $operationLog['time_add_name'];?></td>
     <td>
-<a href="javascript:;" class="sun-button secondary small sun-mr5" onClick="sun.layer.open({id: 'layer_detail', name: '操作日志详情', url: 'detail.php?id=<?php echo $operationLog['id'];?>', width: 700, height: 500})">详情</a>
-<a href="../user/detail.php?id=<?php echo $operationLog['user_id'];?>" class="sun-button secondary small">用户</a>
+<a href="javascript:;" class="sun-button plain small sun-mr5" onClick="sun.layer.open({id: 'layer_detail', name: '操作日志详情', url: 'detail.php?id=<?php echo $operationLog['id'];?>', width: 700, height: 500})">详情</a>
+<a href="../user/detail.php?id=<?php echo $operationLog['user_id'];?>" class="sun-button plain small">用户</a>
     </td>
   </tr>
 <?php

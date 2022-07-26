@@ -44,10 +44,10 @@ class DepartmentService{
 <td>'.$department['sort'].'</td>
 <td>'.$department['remark'].'</td>
 <td>
-<a href="javascript:;" class="sun-button secondary small sun-mr5" onclick="index.add('.$department['id'].');" title="添加子部门">添加</a>
-<a href="javascript:;" class="sun-button small secondary sun-mr5" onclick="index.edit('.$department['id'].');">修改</a>
+<a href="javascript:;" class="sun-button plain small sun-mr5" onclick="index.add('.$department['id'].');" title="添加子部门">添加</a>
+<a href="javascript:;" class="sun-button small plain sun-mr5" onclick="index.edit('.$department['id'].');">修改</a>
 <span class="sun-dropdown-menu align-right operation_more">
-<div class="title"><a href="javascript:;" class="sun-button secondary small">更多 <span class="iconfont icon-arrow-down arrow"></span></a></div>
+<div class="title"><a href="javascript:;" class="sun-button plain small">更多 <span class="iconfont icon-arrow-down arrow"></span></a></div>
 <div class="content">
 <ul>
 <li><a href="javascript:;" onClick="index.delete('.$department['id'].')">删除</a></li>

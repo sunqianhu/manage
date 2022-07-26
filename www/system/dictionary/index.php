@@ -141,8 +141,8 @@ foreach($dictionarys as $dictionary){
     <td><?php echo $dictionary['value'];?></td>
     <td><?php echo $dictionary['sort'];?></td>
     <td>
-<a href="javascript:;" class="sun-button secondary small sun-mr5" onClick="index.edit(<?php echo $dictionary['id'];?>)">修改</a>
-<a href="javascript:;" class="sun-button secondary small" onClick="index.delete(<?php echo $dictionary['id'];?>)">删除</a>
+<a href="javascript:;" class="sun-button plain small sun-mr5" onClick="index.edit(<?php echo $dictionary['id'];?>)">修改</a>
+<a href="javascript:;" class="sun-button plain small" onClick="index.delete(<?php echo $dictionary['id'];?>)">删除</a>
     </td>
   </tr>
 <?php

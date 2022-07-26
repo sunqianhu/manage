@@ -129,8 +129,8 @@ foreach($roles as $role){
     <td><?php echo $role['name'];?></td>
     <td><?php echo $role['time_edit_name'];?></td>
     <td>
-<a href="javascript:;" class="sun-button secondary small sun-mr5" onClick="index.edit(<?php echo $role['id'];?>)">修改</a>
-<a href="javascript:;" class="sun-button secondary small" onClick="index.delete(<?php echo $role['id'];?>)">删除</a>
+<a href="javascript:;" class="sun-button plain small sun-mr5" onClick="index.edit(<?php echo $role['id'];?>)">修改</a>
+<a href="javascript:;" class="sun-button plain small" onClick="index.delete(<?php echo $role['id'];?>)">删除</a>
     </td>
   </tr>
 <?php

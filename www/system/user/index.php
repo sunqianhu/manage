@@ -236,10 +236,10 @@ foreach($users as $user){
     <td><?php echo $user['time_login_name'];?></td>
     <td><span class="<?php echo $user['status_style_class'];?>"><?php echo $user['status_name'];?></span></td>
     <td>
-<a href="detail.php?id=<?php echo $user['id'];?>" class="sun-button secondary small sun-mr5">详情</a>
-<a href="javascript:;" class="sun-button secondary small sun-mr5" onClick="index.edit(<?php echo $user['id'];?>)">修改</a>
+<a href="detail.php?id=<?php echo $user['id'];?>" class="sun-button plain small sun-mr5">详情</a>
+<a href="javascript:;" class="sun-button plain small sun-mr5" onClick="index.edit(<?php echo $user['id'];?>)">修改</a>
 <span class="sun-dropdown-menu align-right operation_more">
-<div class="title"><a href="javascript:;" class="sun-button secondary small">更多 <span class="iconfont icon-arrow-down arrow"></span></a></div>
+<div class="title"><a href="javascript:;" class="sun-button plain small">更多 <span class="iconfont icon-arrow-down arrow"></span></a></div>
 <div class="content">
 <ul>
 <li><a href="javascript:;" onClick="index.enable(<?php echo $user['id'];?>)">启用</a></li>

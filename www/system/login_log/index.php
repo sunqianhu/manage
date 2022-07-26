@@ -155,7 +155,7 @@ foreach($loginLogs as $loginLog){
     <td><?php echo $loginLog['ip'];?></td>
     <td><?php echo $loginLog['time_login_name'];?></td>
     <td>
-<a href="../user/detail.php?id=<?php echo $loginLog['user_id'];?>" class="sun-button secondary small">用户</a>
+<a href="../user/detail.php?id=<?php echo $loginLog['user_id'];?>" class="sun-button plain small">用户</a>
     </td>
   </tr>
 <?php

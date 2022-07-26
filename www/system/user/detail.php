@@ -137,7 +137,7 @@ $frameMainMenu = FrameMainService::getPageLeftMenu('system_user');
 <a href="index.php">用户管理</a> <span class="split">&gt;</span>
 用户详情
 </div>
-<a href="javascript:;" class="sun-button small secondary back" onClick="history.back();">返回</a>
+<a href="javascript:;" class="sun-button small plain back" onClick="history.back();">返回</a>
 </div>
 <div class="body">
 

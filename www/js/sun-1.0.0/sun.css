@@ -99,8 +99,8 @@ transition: all 0.5s ease;
 .sun-button[disabled] { background: #aaaaaa; color: #919191}
 .sun-button .icon{ font-size: 12px; vertical-align: middle}
 
-.sun-button.secondary{ background: #f5f7f9; color: #191919; border: 1px solid #cccccc}
-.sun-button.secondary:hover{ background: #e5e7e9; color: #191919; border-color: #acacac}
+.sun-button.plain{ background: #f5f7f9; color: #191919; border: 1px solid #cccccc}
+.sun-button.plain:hover{ background: #e5e7e9; color: #191919; border-color: #acacac}
 .sun-button.warning{ background: #FF5722}
 .sun-button.warning:hover{ background: #FF7742}
 
