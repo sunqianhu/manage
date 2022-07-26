@@ -109,7 +109,7 @@ transition: all 0.5s ease;
 .sun-button.big{ height: 40px; line-height: 40px; padding: 0px 18px}
 .sun-button.big .icon{ vertical-align: middle}
 
-.sun-button.block{ display: block; width: 100%}
+.sun-button.block{ display: block; width: 100%; text-align: center}
 
 /*按钮组*/
 .sun-button-group{ display: table; border-collapse: separate}
@@ -122,13 +122,13 @@ transition: all 0.5s ease;
 .sun-section > .title{ height: 40px; line-height: 40px; padding: 0px 10px}
 .sun-section > .title:after{ content: ""; clear: both; display: block}
 .sun-section > .title .name{ font-size: 16px}
-.sun-section > .title .name:before{ content: ""; display: inline-block; width: 3px; height: 14px; background: #326496; margin-right: 5px}
+.sun-section > .title .name:before{ content: ""; display: inline-block; width: 3px; height: 14px; background: #326496; margin-right: 5px; border-radius: 2px}
 .sun-section > .title .describe{ font-size: 12px; color: #919191; margin-left: 10px}
 .sun-section > .title .more{ float: right; font-size: 12px; color: #919191}
 .sun-section > .content{ padding: 0px 10px 10px 10px}
 
 /*轻提示*/
-.sun-toast{ display: table-row; background: #ffffff; max-width: 300px; border: 1px solid #eeeeee; box-shadow:0px 0px 5px #888888; border-radius: 3px; padding: 10px; position: absolute; left: 0px; top: 0px; z-index: 1090}
+.sun-toast{ display: table-row; background: #ffffff; max-width: 300px; border: 1px solid #eeeeee; box-shadow: 0px 0px 5px #888888; border-radius: 3px; padding: 10px; position: absolute; left: 0px; top: 0px; z-index: 1090}
 .sun-toast .icon{ display: table-cell; vertical-align: middle; font-size: 36px; line-height: 100%}
 .sun-toast .info{ display: table-cell; vertical-align: middle; padding-left: 10px; word-break: break-all}
 
@@ -139,9 +139,9 @@ transition: all 0.5s ease;
 /*加载中*/
 .sun-loading{ position: fixed; left: 0px; top: 0px; right: 0px; bottom: 0px; z-index: 1099}
 .sun-loading > .bg { background-color: rgba(0,0,0,0.3); background-image: none !important; position: absolute; left: 0px !important; top: 0px !important; bottom: 0px !important; right: 0px !important; z-index: 1}
-.sun-loading > .container { background-color: #4C5A65; position: absolute; left: 50%; top: 50%; z-index: 2; padding: 20px; width: 120px; margin-left: -80px; margin-top: -40px; border-radius: 3px}
-.sun-loading > .container .img{ width: 16px; height: 11px; background-image: url(image/load_rectangle.gif); background-repeat: no-repeat; background-position: center; margin:0px auto 0px auto}
-.sun-loading > .container .info{ text-align:center; color:#ffffff}
+.sun-loading > .loading { background-color: #4C5A65; position: absolute; left: 50%; top: 50%; z-index: 2; padding: 20px; width: 120px; margin-left: -80px; margin-top: -40px; border-radius: 3px}
+.sun-loading > .loading .img{ width: 16px; height: 11px; background-image: url(image/load_rectangle.gif); background-repeat: no-repeat; background-position: center; margin:0px auto 0px auto}
+.sun-loading > .loading .info{ text-align:center; color:#ffffff}
 
 /*表格列表*/
 .sun-table-list{ border-collapse: collapse}

@@ -77,7 +77,7 @@ sun.loading.open = function(id, info){
     
     node = '<div class="sun-loading sun-loading-'+id+'">';
 	node += '<div class="bg"></div>';
-	node += '<div class="container">';
+	node += '<div class="loading">';
 	node += '	<div class="img"></div>';
 	node += '	<div class="info">'+info+'</div>';
 	node += '</div>';
