@@ -22,11 +22,11 @@ if(!AuthService::isLogin()){
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>修改头像</title>
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/jquery-1.12.4/jquery.min.js"></script>
-<link  href="<?php echo $config['app_domain'];?>js/plug/cropperjs-1.5.12/cropper.min.css" rel="stylesheet">
-<script src="<?php echo $config['app_domain'];?>js/plug/cropperjs-1.5.12/cropper.min.js"></script>
-<link href="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/plug/sun-1.0.0/sun.js"></script>
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/jquery-1.12.4/jquery.min.js"></script>
+<link  href="<?php echo $config['app_domain'];?>js/cropperjs-1.5.12/cropper.min.css" rel="stylesheet">
+<script src="<?php echo $config['app_domain'];?>js/cropperjs-1.5.12/cropper.min.js"></script>
+<link href="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.js"></script>
 <link href="<?php echo $config['app_domain'];?>css/my/edit_head.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/my/edit_head.js"></script>
 </head>
