@@ -24,10 +24,10 @@ class PermissionService{
 <td>'.$permission['sort'].'</td>';
                 $node .= '
 <td>
-<a href="javascript:;" class="sun-button sun-button-secondary sun-button-small sun-mr5" onclick="index.add('.$permission['id'].');" title="添加子权限">添加</a>
-<a href="javascript:;" class="sun-button sun-button-small sun-button-secondary sun-mr5" onclick="index.edit('.$permission['id'].');">修改</a>
-<span class="sun-dropdown-menu sun-dropdown-menu-align-right operation_more">
-<div class="title"><a href="javascript:;" class="sun-button sun-button-secondary sun-button-small">更多 <span class="iconfont icon-arrow-down arrow"></span></a></div>
+<a href="javascript:;" class="sun-button secondary small sun-mr5" onclick="index.add('.$permission['id'].');" title="添加子权限">添加</a>
+<a href="javascript:;" class="sun-button small secondary sun-mr5" onclick="index.edit('.$permission['id'].');">修改</a>
+<span class="sun-dropdown-menu align-right operation_more">
+<div class="title"><a href="javascript:;" class="sun-button secondary small">更多 <span class="iconfont icon-arrow-down arrow"></span></a></div>
 <div class="content">
 <ul>
 <li><a href="javascript:;" onClick="index.delete('.$permission['id'].')">删除</a></li>

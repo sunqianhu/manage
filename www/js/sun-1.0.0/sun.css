@@ -14,30 +14,22 @@ a:hover{ text-decoration: underline; color: #5284b6}
 /*间距外*/
 .sun-mt5{ margin-top: 5px}
 .sun-mt10{ margin-top: 10px}
-.sun-mt20{ margin-top: 20px}
 .sun-ml5{ margin-left: 5px}
 .sun-ml10{ margin-left: 10px}
-.sun-ml20{ margin-left: 20px}
 .sun-mr5{ margin-right: 5px}
 .sun-mr10{ margin-right: 10px}
-.sun-mr20{ margin-right: 20px}
 .sun-mb5{ margin-bottom: 5px}
 .sun-mb10{ margin-bottom: 10px}
-.sun-mb20{ margin-bottom: 20px}
 
 /*间距内*/
 .sun-pt5{ padding-top: 5px}
 .sun-pt10{ padding-top: 10px}
-.sun-pt20{ padding-top: 20px}
 .sun-pl5{ padding-left: 5px}
 .sun-pl10{ padding-left: 10px}
-.sun-pl20{ padding-left: 20px}
 .sun-pr5{ padding-right: 5px}
 .sun-pr10{ padding-right: 10px}
-.sun-pr20{ padding-right: 20px}
 .sun-pb5{ padding-bottom: 5px}
 .sun-pb10{ padding-bottom: 10px}
-.sun-pb20{ padding-bottom: 20px}
 
 /*表单元素*/
 textarea{ font-size: 14px; color: #191919; line-height: 150%; padding: 3px 5px; border-left: 1px solid #cccccc; border-top: 1px solid #cccccc; border-right: 1px solid #bcbcbc; border-bottom: 1px solid #bcbcbc; appearance: none; border-radius: 3px; outline: none}
@@ -107,17 +99,17 @@ transition: all 0.5s ease;
 .sun-button[disabled] { background: #aaaaaa; color: #919191}
 .sun-button .icon{ font-size: 12px; vertical-align: middle}
 
-.sun-button-secondary{ background: #f5f7f9; color: #191919; border: 1px solid #cccccc}
-.sun-button-secondary:hover{ background: #e5e7e9; color: #191919; border-color: #acacac}
-.sun-button-warning{ background: #FF5722}
-.sun-button-warning:hover{ background: #FF7742}
+.sun-button.secondary{ background: #f5f7f9; color: #191919; border: 1px solid #cccccc}
+.sun-button.secondary:hover{ background: #e5e7e9; color: #191919; border-color: #acacac}
+.sun-button.warning{ background: #FF5722}
+.sun-button.warning:hover{ background: #FF7742}
 
-.sun-button-small{ height: 22px; line-height: 22px; padding: 0px 5px; font-size: 12px}
-.sun-button-small .icon{ font-size: 10px; vertical-align: middle}
-.sun-button-big{ height: 40px; line-height: 40px; padding: 0px 18px}
-.sun-button-big .icon{ vertical-align: middle}
+.sun-button.small{ height: 22px; line-height: 22px; padding: 0px 5px; font-size: 12px}
+.sun-button.small .icon{ font-size: 10px; vertical-align: middle}
+.sun-button.big{ height: 40px; line-height: 40px; padding: 0px 18px}
+.sun-button.big .icon{ vertical-align: middle}
 
-.sun-button-block{ display: block; width: 100%}
+.sun-button.block{ display: block; width: 100%}
 
 /*按钮组*/
 .sun-button-group{ display: table; border-collapse: separate}
@@ -145,18 +137,18 @@ transition: all 0.5s ease;
 .sun-toast.prompt{ color: #2d64b3; border-color: #eeeeee}
 
 /*加载中*/
-.sun-loading-bg { background: rgba(0,0,0,0.3); position: fixed; left: 0px; top: 0px; z-index: 1020; width: 100%; height: 100%}
-.sun-loading { background-color: #4C5A65; position: fixed; left: 50%; top: 50%; z-index: 1021; padding: 20px; width: 120px; margin-left: -80px; margin-top: -40px; border-radius: 3px}
-.sun-loading .img{ width:16px; height:11px; background-image: url(image/load_rectangle.gif); background-repeat: no-repeat; background-position: center; margin:0px auto 0px auto}
-.sun-loading .info{ text-align:center; color:#ffffff}
+.sun-loading{ position: fixed; left: 0px; top: 0px; right: 0px; bottom: 0px; z-index: 1099}
+.sun-loading > .bg { background-color: rgba(0,0,0,0.3); background-image: none !important; position: absolute; left: 0px !important; top: 0px !important; bottom: 0px !important; right: 0px !important; z-index: 1}
+.sun-loading > .container { background-color: #4C5A65; position: absolute; left: 50%; top: 50%; z-index: 2; padding: 20px; width: 120px; margin-left: -80px; margin-top: -40px; border-radius: 3px}
+.sun-loading > .container .img{ width: 16px; height: 11px; background-image: url(image/load_rectangle.gif); background-repeat: no-repeat; background-position: center; margin:0px auto 0px auto}
+.sun-loading > .container .info{ text-align:center; color:#ffffff}
 
 /*表格列表*/
 .sun-table-list{ border-collapse: collapse}
 .sun-table-list tr th{ padding: 5px; word-break: break-all; background: #EFF3F8; text-align: left; border-bottom: 1px solid #cccccc}
 .sun-table-list tr td{ border-bottom: 1px solid #cccccc; padding: 5px; word-break: break-all}
-.sun-table-list-striped tr:nth-child(even){ background: #f5f5f5}
-.sun-table-list-hover tr:hover{ background: #EFF3F8}
-.sun-table-list-keyvalue .key{ color: #2d64b3; background-color: #F4F6F8}
+.sun-table-list.striped tr:nth-child(even){ background: #f5f5f5}
+.sun-table-list.hover tr:hover{ background: #EFF3F8}
 
 /*表格显示*/
 .sun-table-view{ border-collapse: collapse; background: #ffffff}
@@ -168,10 +160,10 @@ transition: all 0.5s ease;
 .sun-field-view .field.single{ display: flex}
 .sun-field-view .field.single .label{ color: #326496; white-space: nowrap}
 .sun-field-view .field.single .value{ flex: 1}
-.sun-field-view .field.multi{ margin-top: 10px}
-.sun-field-view .field.multi:first-child{ margin-top: 0px}
-.sun-field-view .field.multi .label{}
-.sun-field-view .field.multi .value{ font-size: 14px; color: #919191}
+.sun-field-view .field.multiple{ margin-top: 10px}
+.sun-field-view .field.multiple:first-child{ margin-top: 0px}
+.sun-field-view .field.multiple .label{}
+.sun-field-view .field.multiple .value{ font-size: 14px; color: #919191}
 
 /*分页完整*/
 .sun-pagination-intact{}
@@ -204,7 +196,7 @@ transition: all 0.5s ease;
 .sun-dropdown{ display: inline-block; position: relative}
 .sun-dropdown > .title{ cursor: pointer}
 .sun-dropdown > .content{ position: absolute; top: 100%; left: 0px; min-width: 150px; background: #ffffff; margin: 5px 0px 0px 0px; padding: 10px; border-radius: 3px; box-shadow: 0 3px 6px rgba(0,0,0,0.3); display: none; z-index: 99}
-.sun-dropdown-align-right > .content{ left: inherit; right: 0px}
+.sun-dropdown.align-right > .content{ left: inherit; right: 0px}
 
 /*下拉菜单*/
 .sun-dropdown-menu{ display: inline-block; position: relative}
@@ -215,7 +207,7 @@ transition: all 0.5s ease;
 .sun-dropdown-menu > .content ul li{ list-style: none}
 .sun-dropdown-menu > .content ul li a{ display: block; padding: 0px 10px; height: 30px; line-height: 30px; color: #191919; text-decoration: none}
 .sun-dropdown-menu > .content ul li a:hover{ background: #f5f5f5; color: #000000}
-.sun-dropdown-menu-align-right > .content{ left: inherit; right: 0px}
+.sun-dropdown-menu.align-right > .content{ left: inherit; right: 0px}
 
 /*选卡*/
 .sun-tab{}
@@ -226,9 +218,9 @@ transition: all 0.5s ease;
 .sun-tab > .content{ margin-top: 5px}
 
 /*弹层*/
-.sun-layer{}
-.sun-layer > .bg{ background: rgba(0,0,0,0.3); position: fixed; left: 0px; top: 0px; z-index: 1000; width: 100%; height: 100%}
-.sun-layer > .layer{ background-color: #ffffff; position: fixed; left: 0px; top:-50px; z-index: 1000; box-shadow:0px 0px 10px #919191; border-radius: 3px; overflow: hidden}
+.sun-layer{ position: fixed; left: 0px; top: 0px; right: 0px; bottom: 0px; z-index: 1099}
+.sun-layer > .bg{ background-color: rgba(0,0,0,0.3) !important; background-image: none; position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; z-index: 1}
+.sun-layer > .layer{ background-color: #ffffff; position: absolute; left: 0px; top:-50px; z-index: 2; box-shadow: 0px 0px 10px #919191; border-radius: 3px; overflow: hidden}
 .sun-layer > .layer > .title{ height: 50px; line-height: 50px; overflow: hidden; cursor: move; border-bottom: 1px solid #cccccc; padding: 0px 10px}
 .sun-layer > .layer > .title .name{ float: left}
 .sun-layer > .layer > .title .close{ float: right; display: block; width: 30px; height: 30px; line-height: 30px; text-align: center; margin-top: 10px; font-size: 20px; font-weight: bold; color: #191919}
@@ -238,24 +230,24 @@ transition: all 0.5s ease;
 
 /*微章*/
 .sun-badge{ background: #326496; color: #ffffff; border-radius: 2px; display: inline-block; padding: 0px 5px; font-size: 12px; text-align: center; position: relative; height: 20px; line-height: 20px; white-space:nowrap}
-.sun-badge-red{ background: #ff0000}
-.sun-badge-green{ background: #008800}
-.sun-badge-orange{ background: #ff6600}
-.sun-badge-cyan{ background: #008888}
-.sun-badge-blue{ background: #326496}
-.sun-badge-black{ background: #191919}
-.sun-badge-gray{ background: #dfdfdf; color: #666666}
+.sun-badge.red{ background: #ff0000}
+.sun-badge.green{ background: #008800}
+.sun-badge.orange{ background: #ff6600}
+.sun-badge.cyan{ background: #008888}
+.sun-badge.blue{ background: #326496}
+.sun-badge.black{ background: #191919}
+.sun-badge.gray{ background: #dfdfdf; color: #666666}
 
 /*圆点*/
 .sun-dot{ background: #326496; color: #ffffff; min-width: 18px; line-height: 18px; font-size: 12px; border-radius: 9px; text-align: center; display: inline-block; padding: 0px}
-.sun-dot-red{ background: #ff0000}
-.sun-dot-green{ background: #008800}
-.sun-dot-orange{ background: #ff6600}
-.sun-dot-cyan{ background: #008888}
-.sun-dot-blue{ background: #326496}
-.sun-dot-black{ background: #191919}
-.sun-dot-gray{ background: #dfdfdf; color: #666666}
-.sun-dot-empty{ width: 8px; height: 8px; border-radius: 50%; padding: 0px; min-width: inherit}
+.sun-dot.red{ background: #ff0000}
+.sun-dot.green{ background: #008800}
+.sun-dot.orange{ background: #ff6600}
+.sun-dot.cyan{ background: #008888}
+.sun-dot.blue{ background: #326496}
+.sun-dot.black{ background: #191919}
+.sun-dot.gray{ background: #dfdfdf; color: #666666}
+.sun-dot.empty{ width: 8px; height: 8px; border-radius: 50%; padding: 0px; min-width: inherit}
 
 /*表格树*/
 .sun-treetable .column .arrow{ display: inline-block; width: 20px; height: 20px; line-height: 20px; vertical-align: middle; text-align: center; font-size: 12px !important; cursor: pointer;

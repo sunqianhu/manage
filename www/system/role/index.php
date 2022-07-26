@@ -113,7 +113,7 @@ $roles = SafeService::frontDisplay($roles);
 <div class="toolbar">
 <a href="javascript:;" class="sun-button" onClick="index.add();">添加</a>
 </div>
-<table class="sun-table-list sun-table-list-hover sun-mt10" width="100%">
+<table class="sun-table-list hover sun-mt10" width="100%">
   <tr>
     <th>id</th>
     <th>角色名称</th>
@@ -129,8 +129,8 @@ foreach($roles as $role){
     <td><?php echo $role['name'];?></td>
     <td><?php echo $role['time_edit_name'];?></td>
     <td>
-<a href="javascript:;" class="sun-button sun-button-secondary sun-button-small sun-mr5" onClick="index.edit(<?php echo $role['id'];?>)">修改</a>
-<a href="javascript:;" class="sun-button sun-button-secondary sun-button-small" onClick="index.delete(<?php echo $role['id'];?>)">删除</a>
+<a href="javascript:;" class="sun-button secondary small sun-mr5" onClick="index.edit(<?php echo $role['id'];?>)">修改</a>
+<a href="javascript:;" class="sun-button secondary small" onClick="index.delete(<?php echo $role['id'];?>)">删除</a>
     </td>
   </tr>
 <?php

@@ -144,7 +144,7 @@ $userFiles = SafeService::frontDisplay($userFiles, 'id, user_id, module_id');
 </div>
 
 <div class="data sun-mt10">
-<table class="sun-table-list sun-table-list-hover" width="100%">
+<table class="sun-table-list hover" width="100%">
   <tr>
     <th>id</th>
     <th>部门</th>
@@ -170,8 +170,8 @@ foreach($userFiles as $userFile){
     <td><?php echo $userFile['ip'];?></td>
     <td><?php echo $userFile['time_add_name'];?></td>
     <td>
-<a href="javascript:;" class="sun-button sun-button-secondary sun-button-small sun-mr5" onClick="sun.layer.open({id: 'layer_detail', name: '文件详情', url: 'detail.php?id=<?php echo $userFile['id'];?>', width: 700, height: 500})">详情</a>
-<a href="../user/detail.php?id=<?php echo $userFile['user_id'];?>" class="sun-button sun-button-secondary sun-button-small">用户</a>
+<a href="javascript:;" class="sun-button secondary small sun-mr5" onClick="sun.layer.open({id: 'layer_detail', name: '文件详情', url: 'detail.php?id=<?php echo $userFile['id'];?>', width: 700, height: 500})">详情</a>
+<a href="../user/detail.php?id=<?php echo $userFile['user_id'];?>" class="sun-button secondary small">用户</a>
     </td>
   </tr>
 <?php

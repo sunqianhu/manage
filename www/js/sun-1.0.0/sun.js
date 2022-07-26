@@ -75,11 +75,13 @@ sun.loading = {};
 sun.loading.open = function(id, info){
     var node = "";
     
-	node = '<div class="sun-loading-bg sun-loading-bg_'+id+'"></div>';
-	node += '<div class="sun-loading sun-loading_'+id+'">';
+    node = '<div class="sun-loading sun-loading-'+id+'">';
+	node += '<div class="bg"></div>';
+	node += '<div class="container">';
 	node += '	<div class="img"></div>';
 	node += '	<div class="info">'+info+'</div>';
 	node += '</div>';
+    node += '</div>';
 	$("body").append(node);
 };
 
@@ -88,8 +90,8 @@ sun.loading.open = function(id, info){
  * @param id id
  */
 sun.loading.close = function(id){
-	$(".sun-loading-bg_"+id).remove();
-	$(".sun-loading_"+id).remove();
+    var domLoading = $(".sun-loading-"+id);
+	domLoading.remove();
 };
 
 /**

@@ -135,7 +135,7 @@ $loginLogs = SafeService::frontDisplay($loginLogs);
 </div>
 
 <div class="data sun-mt10">
-<table class="sun-table-list sun-table-list-hover" width="100%">
+<table class="sun-table-list hover" width="100%">
   <tr>
     <th>id</th>
     <th>部门</th>
@@ -155,7 +155,7 @@ foreach($loginLogs as $loginLog){
     <td><?php echo $loginLog['ip'];?></td>
     <td><?php echo $loginLog['time_login_name'];?></td>
     <td>
-<a href="../user/detail.php?id=<?php echo $loginLog['user_id'];?>" class="sun-button sun-button-secondary sun-button-small">用户</a>
+<a href="../user/detail.php?id=<?php echo $loginLog['user_id'];?>" class="sun-button secondary small">用户</a>
     </td>
   </tr>
 <?php
