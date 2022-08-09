@@ -5,14 +5,14 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\system\OperationLogModel;
+use library\model\OperationLogModel;
 use library\service\ValidateService;
 use library\service\AuthService;
 use library\service\ConfigService;
 use library\service\FrameMainService;
 use library\service\SafeService;
-use library\service\system\UserService;
-use library\service\system\DepartmentService;
+use library\service\UserService;
+use library\service\DepartmentService;
 
 $operationLogModel = new OperationLogModel(); // 模型
 $validateService = new ValidateService();
@@ -75,31 +75,31 @@ $frameMainMenu = FrameMainService::getPageLeftMenu('system_operation_log');
 <body class="page">
 <table width="100%" class="sun-table-view">
 <tr>
-<td class="name" align="right" width="130">部门：</td>
+<td class="name" align="right" width="130">部门</td>
 <td><?php echo $operationLog['department_name'];?></td>
 </tr>
 <tr>
-<td class="name" align="right">用户姓名：</td>
+<td class="name" align="right">用户姓名</td>
 <td><?php echo $operationLog['user_name'];?></td>
 </tr>
 <tr>
-<td class="name" align="right">操作url：</td>
+<td class="name" align="right">操作url</td>
 <td><a href="<?php echo $operationLog['url'];?>" target="_blank"><?php echo $operationLog['url'];?></a></td>
 </tr>
 <tr>
-<td class="name" align="right">操作ip：</td>
+<td class="name" align="right">操作ip</td>
 <td><?php echo $operationLog['ip'];?></td>
 </tr>
 <tr>
-<td class="name" align="right">操作时间：</td>
+<td class="name" align="right">操作时间</td>
 <td><?php echo $operationLog['time_add_name'];?></td>
 </tr>
 <tr>
-<td class="name" align="right">User Agent：</td>
+<td class="name" align="right">User Agent</td>
 <td><?php echo $operationLog['user_agent'];?></td>
 </tr>
 <tr>
-<td class="name" align="right">请求内容：</td>
+<td class="name" align="right">请求内容</td>
 <td><?php echo $operationLog['request'];?></td>
 </tr>
 </table>

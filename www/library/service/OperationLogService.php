@@ -2,9 +2,9 @@
 /**
  * 操作日志服务
  */
-namespace library\service\system;
+namespace library\service;
 
-use \library\model\system\OperationLogModel;
+use \library\model\OperationLogModel;
 use \library\service\IpService;
 
 class OperationLogService{

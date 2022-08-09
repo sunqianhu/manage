@@ -5,12 +5,12 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\system\PermissionModel;
+use library\model\PermissionModel;
 use library\service\ConfigService;
 use library\service\FrameMainService;
 use library\service\TreeService;
 use library\service\SafeService;
-use library\service\system\PermissionService;
+use library\service\PermissionService;
 use library\service\AuthService;
 
 $config = ConfigService::getAll();
@@ -82,9 +82,9 @@ $permissionNode = PermissionService::getIndexTreeNode($permissions, 1);
 </head>
 
 <body class="page">
-<?php require_once __DIR__.'/../../public/frame_main_header.php';?>
+<?php require_once '../../public/frame_main_header.php';?>
 <div class="page_body">
-<?php require_once __DIR__.'/../../public/frame_main_left.php';?>
+<?php require_once '../../public/frame_main_left.php';?>
 <div class="page_right">
 <div class="header">
 <div class="location">

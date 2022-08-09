@@ -5,16 +5,16 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\system\UserFileModel;
+use library\model\UserFileModel;
 use library\service\ValidateService;
 use library\service\AuthService;
 use library\service\ConfigService;
 use library\service\SafeService;
 use library\service\FileService;
 use library\service\UserFileService;
-use library\service\system\UserService;
-use library\service\system\DepartmentService;
-use library\service\system\DictionaryService;
+use library\service\UserService;
+use library\service\DepartmentService;
+use library\service\DictionaryService;
 
 $userFileModel = new UserFileModel(); // 模型
 $validateService = new ValidateService();
@@ -75,43 +75,43 @@ $userFile = SafeService::frontDisplay($userFile, 'id,url');
 <body class="page">
 <table width="100%" class="sun-table-view">
 <tr>
-<td class="name" align="right" width="130">id：</td>
+<td class="name" align="right" width="130">id</td>
 <td><?php echo $userFile['id'];?></td>
 </tr>
 <tr>
-<td class="name" align="right">部门：</td>
+<td class="name" align="right">部门</td>
 <td><?php echo $userFile['department_name'];?></td>
 </tr>
 <tr>
-<td class="name" align="right">用户姓名：</td>
+<td class="name" align="right">用户姓名</td>
 <td><?php echo $userFile['user_name'];?></td>
 </tr>
 <tr>
-<td class="name" align="right">模块：</td>
+<td class="name" align="right">模块</td>
 <td><?php echo $userFile['module_name'];?></td>
 </tr>
 <tr>
-<td class="name" align="right">文件名：</td>
+<td class="name" align="right">文件名</td>
 <td><?php echo $userFile['name'];?></td>
 </tr>
 <tr>
-<td class="name" align="right">文件大小：</td>
+<td class="name" align="right">文件大小</td>
 <td><?php echo $userFile['size_name'];?></td>
 </tr>
 <tr>
-<td class="name" align="right">文件类型：</td>
+<td class="name" align="right">文件类型</td>
 <td><?php echo $userFile['type'];?></td>
 </tr>
 <tr>
-<td class="name" align="right">文件路径：</td>
+<td class="name" align="right">文件路径</td>
 <td><?php echo $userFile['path'];?> &nbsp; <a href="<?php echo $userFile['path_url'];?>" target="_blank">查看</a></td>
 </tr>
 <tr>
-<td class="name" align="right">上传ip：</td>
+<td class="name" align="right">上传ip</td>
 <td><?php echo $userFile['ip'];?></td>
 </tr>
 <tr>
-<td class="name" align="right">上传时间：</td>
+<td class="name" align="right">上传时间</td>
 <td><?php echo $userFile['time_add_name'];?></td>
 </tr>
 </table>

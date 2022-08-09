@@ -4,7 +4,7 @@
  */
 namespace library\service;
 
-use library\model\system\UserFileModel;
+use library\model\UserFileModel;
 use library\service\ConfigService;
 use library\service\UserFileService;
 use library\service\IpService;
@@ -18,12 +18,12 @@ class UserFileUploadService{
     static $message = ''; // 上传描述
     
     /**
-     * 文件
+     * 上传
      * @param string $dirModule 目录模块 
      * @param string $fieldName 文件表单字段名称 
      * @return boolean 上传结果
      */
-    static function file($dirModule, $fieldName){
+    static function upload($dirModule, $fieldName){
         $file = array(); // 上传file数据
         $configUserFilePath = ''; // 配置文件路径
         $path = ''; // 文件全路径

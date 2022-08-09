@@ -5,14 +5,14 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\system\LoginLogModel;
+use library\model\LoginLogModel;
 use library\service\ConfigService;
 use library\service\FrameMainService;
 use library\service\PaginationService;
 use library\service\SafeService;
 use library\service\AuthService;
-use library\service\system\UserService;
-use library\service\system\DepartmentService;
+use library\service\UserService;
+use library\service\DepartmentService;
 
 $config = ConfigService::getAll();
 $frameMainMenu = ''; // 框架菜单
@@ -107,9 +107,9 @@ $loginLogs = SafeService::frontDisplay($loginLogs);
 </head>
 
 <body class="page">
-<?php require_once __DIR__.'/../../public/frame_main_header.php';?>
+<?php require_once '../../public/frame_main_header.php';?>
 <div class="page_body">
-<?php require_once __DIR__.'/../../public/frame_main_left.php';?>
+<?php require_once '../../public/frame_main_left.php';?>
 <div class="page_right">
 <div class="header">
 <div class="location">

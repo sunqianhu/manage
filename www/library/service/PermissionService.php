@@ -2,7 +2,7 @@
 /**
  * 权限服务
  */
-namespace library\service\system;
+namespace library\service;
 
 class PermissionService{
     

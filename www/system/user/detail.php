@@ -5,17 +5,17 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\system\UserModel;
-use library\model\system\RoleModel;
-use library\model\system\DepartmentModel;
-use library\model\system\LoginLogModel;
-use library\model\system\OperationLogModel;
+use library\model\UserModel;
+use library\model\RoleModel;
+use library\model\DepartmentModel;
+use library\model\LoginLogModel;
+use library\model\OperationLogModel;
 use library\service\ValidateService;
 use library\service\AuthService;
 use library\service\ConfigService;
 use library\service\FrameMainService;
 use library\service\SafeService;
-use library\service\system\DictionaryService;
+use library\service\DictionaryService;
 use library\service\ArrayTwoService;
 use library\service\StringService;
 
@@ -126,9 +126,9 @@ $frameMainMenu = FrameMainService::getPageLeftMenu('system_user');
 </head>
 
 <body class="page">
-<?php require_once __DIR__.'/../../public/frame_main_header.php';?>
+<?php require_once '../../public/frame_main_header.php';?>
 <div class="page_body">
-<?php require_once __DIR__.'/../../public/frame_main_left.php';?>
+<?php require_once '../../public/frame_main_left.php';?>
 <div class="page_right">
 <div class="header">
 <div class="location">
@@ -148,33 +148,33 @@ $frameMainMenu = FrameMainService::getPageLeftMenu('system_user');
 <div class="content">
 <table width="100%" class="sun-table-view">
 <tr>
-<td class="name" align="right" width="130">用户id：</td>
+<td class="name" align="right" width="130">用户id</td>
 <td><?php echo $user['id'];?></td>
-<td class="name" align="right" width="130">部门：</td>
+<td class="name" align="right" width="130">部门</td>
 <td><?php echo $user['department_name'];?></td>
-<td class="name" align="right" width="130">状态：</td>
+<td class="name" align="right" width="130">状态</td>
 <td><?php echo $user['status_name'];?></td>
 </tr>
 <tr>
-<td class="name" align="right">用户名：</td>
+<td class="name" align="right">用户名</td>
 <td><?php echo $user['username'];?></td>
-<td class="name" align="right">姓名：</td>
+<td class="name" align="right">姓名</td>
 <td><?php echo $user['name'];?></td>
-<td class="name" align="right">手机号码：</td>
+<td class="name" align="right">手机号码</td>
 <td><?php echo $user['phone'];?></td>
 </tr>
 <tr>
-<td class="name" align="right">添加时间：</td>
+<td class="name" align="right">添加时间</td>
 <td><?php echo $user['time_add_name'];?></td>
-<td class="name" align="right">最后修改时间：</td>
+<td class="name" align="right">最后修改时间</td>
 <td><?php echo $user['time_edit_name'];?></td>
-<td class="name" align="right">最后登录时间：</td>
+<td class="name" align="right">最后登录时间</td>
 <td><?php echo $user['time_login_name'];?></td>
 </tr>
 <tr>
-<td class="name" align="right">登录ip：</td>
+<td class="name" align="right">登录ip</td>
 <td><?php echo $user['ip'];?></td>
-<td class="name" align="right">角色：</td>
+<td class="name" align="right">角色</td>
 <td colspan="3"><?php echo $user['role_name'];?></td>
 </tr>
 </table>

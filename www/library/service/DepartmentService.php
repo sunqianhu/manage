@@ -2,9 +2,9 @@
 /**
  * 部门服务
  */
-namespace library\service\system;
+namespace library\service;
 
-use library\model\system\DepartmentModel;
+use library\model\DepartmentModel;
 
 class DepartmentService{
     

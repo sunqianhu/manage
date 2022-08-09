@@ -5,9 +5,9 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\system\UserModel;
-use library\model\system\DepartmentModel;
-use library\model\system\RoleModel;
+use library\model\UserModel;
+use library\model\DepartmentModel;
+use library\model\RoleModel;
 use library\service\AuthService;
 use library\service\ConfigService;
 use library\service\FrameMainService;
@@ -15,8 +15,8 @@ use library\service\PaginationService;
 use library\service\ZtreeService;
 use library\service\ArrayTwoService;
 use library\service\SafeService;
-use library\service\system\DictionaryService;
-use library\service\system\UserService;
+use library\service\DictionaryService;
+use library\service\UserService;
 
 $config = ConfigService::getAll();
 $frameMainMenu = ''; // 框架菜单
@@ -158,9 +158,9 @@ index.departmentData = <?php echo $department;?>;
 </head>
 
 <body class="page">
-<?php require_once __DIR__.'/../../public/frame_main_header.php';?>
+<?php require_once '../../public/frame_main_header.php';?>
 <div class="page_body">
-<?php require_once __DIR__.'/../../public/frame_main_left.php';?>
+<?php require_once '../../public/frame_main_left.php';?>
 <div class="page_right">
 <div class="header">
 <div class="location">

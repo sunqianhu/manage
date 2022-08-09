@@ -2,7 +2,7 @@
 /**
  * 登录日志
  */
-namespace library\model\system;
+namespace library\model;
 
 use library\model\BaseModel;
 

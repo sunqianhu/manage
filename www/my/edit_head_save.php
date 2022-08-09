@@ -5,9 +5,9 @@
 require_once '../library/session.php';
 require_once '../library/app.php';
 
-use library\model\system\UserModel;
+use library\model\UserModel;
 use library\service\UserFileUploadService;
-use library\service\system\UserService;
+use library\service\UserService;
 use library\service\AuthService;
 
 $return = array(
@@ -40,7 +40,7 @@ if(empty($user)){
 }
 
 // 上传文件
-if(!UserFileUploadService::file('user_head', 'head')){
+if(!UserFileUploadService::upload('user_head', 'head')){
     $return['message'] = UserFileUploadService::$message;
     echo json_encode($return);
     exit;

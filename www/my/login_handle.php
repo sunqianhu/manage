@@ -5,16 +5,16 @@
 require_once '../library/session.php';
 require_once '../library/app.php';
 
-use library\model\system\UserModel;
-use library\model\system\DepartmentModel;
-use library\model\system\PermissionModel;
-use library\model\system\LoginLogModel;
+use library\model\UserModel;
+use library\model\DepartmentModel;
+use library\model\PermissionModel;
+use library\model\LoginLogModel;
 use library\service\ConfigService;
 use library\service\ValidateService;
 use library\service\AuthService;
 use library\service\IpService;
-use library\service\system\UserService;
-use library\service\system\DictionaryService;
+use library\service\UserService;
+use library\service\DictionaryService;
 
 $return = array(
     'status'=>'error',

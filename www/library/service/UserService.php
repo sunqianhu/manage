@@ -2,9 +2,9 @@
 /**
  * 用户服务
  */
-namespace library\service\system;
+namespace library\service;
 
-use library\model\system\UserModel;
+use library\model\UserModel;
 use library\service\ConfigService;
 
 class userService{

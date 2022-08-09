@@ -5,7 +5,7 @@
 require_once '../library/session.php';
 require_once '../library/app.php';
 
-use library\model\system\UserModel;
+use library\model\UserModel;
 use library\service\ValidateService;
 use library\service\AuthService;
 

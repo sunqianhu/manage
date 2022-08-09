@@ -2,7 +2,7 @@
 /**
  * 用户文件模型
  */
-namespace library\model\system;
+namespace library\model;
 
 use library\model\BaseModel;
 

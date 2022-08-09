@@ -5,11 +5,11 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\system\UserModel;
-use library\model\system\RoleModel;
+use library\model\UserModel;
+use library\model\RoleModel;
 use library\service\ConfigService;
 use library\service\ArrayTwoService;
-use library\service\system\DictionaryService;
+use library\service\DictionaryService;
 use library\service\AuthService;
 
 $config = ConfigService::getAll();

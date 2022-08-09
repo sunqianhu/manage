@@ -5,12 +5,12 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\system\DepartmentModel;
+use library\model\DepartmentModel;
 use library\service\ConfigService;
 use library\service\FrameMainService;
 use library\service\TreeService;
 use library\service\SafeService;
-use library\service\system\DepartmentService;
+use library\service\DepartmentService;
 use library\service\AuthService;
 
 $config = ConfigService::getAll();
@@ -83,9 +83,9 @@ $departmentNode = DepartmentService::getIndexTreeNode($departments, 1);
 </head>
 
 <body class="page">
-<?php require_once __DIR__.'/../../public/frame_main_header.php';?>
+<?php require_once '../../public/frame_main_header.php';?>
 <div class="page_body">
-<?php require_once __DIR__.'/../../public/frame_main_left.php';?>
+<?php require_once '../../public/frame_main_left.php';?>
 <div class="page_right">
 <div class="header">
 <div class="location">

@@ -5,9 +5,9 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\system\RoleModel;
-use library\model\system\PermissionModel;
-use library\model\system\RolePermissionModel;
+use library\model\RoleModel;
+use library\model\PermissionModel;
+use library\model\RolePermissionModel;
 use library\service\ConfigService;
 use library\service\ZtreeService;
 use library\service\ValidateService;

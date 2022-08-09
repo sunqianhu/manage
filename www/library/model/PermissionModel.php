@@ -2,7 +2,7 @@
 /**
  * 权限模型
  */
-namespace library\model\system;
+namespace library\model;
 
 use library\model\BaseModel;
 

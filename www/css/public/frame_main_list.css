@@ -3,14 +3,14 @@
  */
 
 .page{}
-.page > .page_body > .page_right .header{ height: 40px; background: #ffffff; border-bottom: 1px solid #cccccc; line-height: 40px; box-shadow: 0px 0px 5px #cccccc; padding: 0px 10px}
-.page > .page_body > .page_right .header:after{ content: ""; clear: both}
-.page > .page_body > .page_right .header .location{ float: left}
-.page > .page_body > .page_right .header .location .split{ color: #919191}
-.page > .page_body > .page_right .header .location a{}
-.page > .page_body > .page_right .header .refresh{ float: right; display: inline-block; padding: 0px 5px; color: #919191}
-.page > .page_body > .page_right .header .refresh .icon{ margin-right: 2px}
-.page > .page_body > .page_right .header .refresh:hover{ color: #717171; text-decoration: none}
+.page > .page_body > .page_right > .header{ height: 40px; background: #ffffff; border-bottom: 1px solid #cccccc; line-height: 40px; box-shadow: 0px 0px 5px #cccccc; padding: 0px 10px}
+.page > .page_body > .page_right > .header:after{ content: ""; clear: both}
+.page > .page_body > .page_right > .header .location{ float: left}
+.page > .page_body > .page_right > .header .location .split{ color: #919191}
+.page > .page_body > .page_right > .header .location a{}
+.page > .page_body > .page_right > .header .refresh{ float: right; display: inline-block; padding: 0px 5px; color: #919191}
+.page > .page_body > .page_right > .header .refresh .icon{ margin-right: 2px}
+.page > .page_body > .page_right > .header .refresh:hover{ color: #717171; text-decoration: none}
 
 .page > .page_body > .page_right .body{ padding: 10px}
 

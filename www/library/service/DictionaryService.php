@@ -2,9 +2,9 @@
 /**
  * 字典服务
  */
-namespace library\service\system;
+namespace library\service;
 
-use library\model\system\DictionaryModel;
+use library\model\DictionaryModel;
 use library\service\CacheService;
 
 class DictionaryService{
