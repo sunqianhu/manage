@@ -2,6 +2,7 @@
 /*
  * 应用入口
  */
+session_start();
 
 // 设置
 ini_set('display_errors', 'On');
@@ -14,5 +15,5 @@ require_once dirname(__DIR__).'/vendor/autoload.php';
 
 // 日志
 use library\OperationLog;
-//OperationLog::add();
+OperationLog::add();
 ?>
