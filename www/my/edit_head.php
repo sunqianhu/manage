@@ -5,13 +5,13 @@
 require_once '../library/session.php';
 require_once '../library/app.php';
 
-use library\service\ConfigService;
-use library\service\AuthService;
+use library\Config;
+use library\Auth;
 
-$config = ConfigService::getAll();
+$config = Config::getAll();
 
 // 验证
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:../my/login.php');
     exit;
 }

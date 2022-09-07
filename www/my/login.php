@@ -4,9 +4,9 @@
  */
 require_once '../library/app.php';
 
-use library\service\ConfigService;
+use library\Config;
 
-$config = ConfigService::getAll();
+$config = Config::getAll();
 
 ?><!doctype html>
 <html>

@@ -2,9 +2,9 @@
 /**
  * 验证码
  */
-namespace library\service;
+namespace library;
 
-class CaptchaService{
+class Captcha{
     /**
      * 创建验证码
      * @param string $name session名称
@@ -32,7 +32,7 @@ class CaptchaService{
         $chars = array('a','b','c','d','e','f','g','h','k','m','n','p','q','r','s','t','u','v','w','x','y','A','B','C','D','E','F','G','H','K','M','N','P','R','S','T','U','V','W','X','Y','3','4','5','6','7','8','9');
         shuffle($chars);
         
-        $font = dirname(dirname(__DIR__)).'/image/heiti.ttf';
+        $font = dirname(__DIR__).'/resource/heiti.ttf';
         $color = imagecolorallocate($img, rand(0,150), rand(0,150), rand(0,150));
         imagettftext($img, rand(15, 25), rand(-10, 10), rand(0, 5), rand(15, 30), $color, $font, $chars[0]);
         

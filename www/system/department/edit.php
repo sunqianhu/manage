@@ -5,36 +5,35 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\DepartmentModel;
-use library\service\ConfigService;
-use library\service\ValidateService;
-use library\service\SafeService;
-use library\service\AuthService;
+use library\Db;
+use library\Config;
+use library\Validate;
+use library\Safe;
+use library\Auth;
 
-$config = ConfigService::getAll();
-$validateService = new ValidateService();
+$config = Config::getAll();
 $departmentModel = new DepartmentModel();
 $department = array();
 
 // 验证
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
 }
-if(!AuthService::isPermission('system_department')){
+if(!Auth::isPermission('system_department')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
 
-$validateService->rule = array(
+Validate::setRule(array(
     'id' => 'require|number'
 );
-$validateService->message = array(
+Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
 );
-if(!$validateService->check($_GET)){
-    header('location:../../error.php?message='.urlencode($validateService->getErrorMessage()));
+if(!Validate::check($_GET)){
+    header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
     exit;
 }
 if($_GET['id'] == '1'){
@@ -42,19 +41,19 @@ if($_GET['id'] == '1'){
     exit;
 }
 
-$department = $departmentModel->selectRow('id, parent_id, name, `sort`, remark', array(
+$department = Db::selectRow('id, parent_id, name, `sort`, remark', array(
     'mark'=>'id = :id',
     'value'=>array(
         ':id'=>$_GET['id']
     )
 ));
-$department['parent_name'] = $departmentModel->selectOne('name', array(
+$department['parent_name'] = Db::selectOne('name', array(
     'mark'=>'id = :id',
     'value'=>array(
         ':id'=> $department['parent_id']
     )
 ));
-$department = SafeService::frontDisplay($department);
+$department = Safe::frontDisplay($department);
 
 ?><!doctype html>
 <html>

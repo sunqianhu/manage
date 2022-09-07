@@ -2,12 +2,12 @@
 /**
  * 字典服务
  */
-namespace library\service;
+namespace library;
 
-use library\model\DictionaryModel;
-use library\service\CacheService;
+use library\Db;
+use library\Cache;
 
-class DictionaryService{
+class Dictionary{
     /**
      * 得到和设置缓存字典的某一类型
      * @param string $type 类型
@@ -19,13 +19,13 @@ class DictionaryService{
         $data = '';
         $datas = array();
         
-        $data = CacheService::get($cacheKey);
+        $data = Cache::get($cacheKey);
         if($data !== ''){
             return $data;
         }
         
         $dictionaryModel = new DictionaryModel();
-        $datas = $dictionaryModel->selectAll(
+        $datas = Db::selectAll(
             '`key`, `value`',
             array(
                 'mark'=>'type = :type',
@@ -40,7 +40,7 @@ class DictionaryService{
         }
         
         $data = json_encode($datas);
-        CacheService::set($cacheKey, $data);
+        Cache::set($cacheKey, $data);
         
         return $data;
     }

@@ -5,29 +5,29 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\UserModel;
+use library\Db;
 use library\model\RoleModel;
-use library\service\ConfigService;
-use library\service\ArrayTwoService;
-use library\service\DictionaryService;
-use library\service\AuthService;
+use library\Config;
+use library\ArrayTwo;
+use library\Dictionary;
+use library\Auth;
 
-$config = ConfigService::getAll();
+$config = Config::getAll();
 $roleModel = new RoleModel();
-$status = DictionaryService::getRadio('system_user_status', 'status', 1);
+$status = Dictionary::getRadio('system_user_status', 'status', 1);
 $roleOption = '';
 
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
 }
-if(!AuthService::isPermission('system_user')){
+if(!Auth::isPermission('system_user')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
 
-$roles = $roleModel->selectAll('id, name');
-$roleOption = ArrayTwoService::getSelectOption($roles);
+$roles = Db::selectAll('id, name');
+$roleOption = ArrayTwo::getSelectOption($roles);
 
 ?><!doctype html>
 <html>

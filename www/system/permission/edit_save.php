@@ -5,9 +5,9 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\PermissionModel;
-use library\service\ValidateService;
-use library\service\AuthService;
+use library\Db;
+use library\Validate;
+use library\Auth;
 
 $return = array(
     'status'=>'error',
@@ -16,25 +16,24 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$validateService = new ValidateService();
 $permissionModel = new PermissionModel();
 $permissionCurrent = array(); // 本权限
 $permissionParent = array(); // 上级权限
 $data = array();
 
 // 验证
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     $return['message'] = '登录已失效';
     echo json_encode($return);
     exit;
 }
-if(!AuthService::isPermission('system_permission')){
+if(!Auth::isPermission('system_permission')){
     $return['message'] = '无权限';
     echo json_encode($return);
     exit;
 }
 
-$validateService->rule = array(
+Validate::setRule(array(
     'id' => 'require|number',
     'parent_id' => 'number',
     'type' => 'require',
@@ -42,7 +41,7 @@ $validateService->rule = array(
     'tag' => 'require|max_length:64',
     'sort' => 'number|max_length:10'
 );
-$validateService->message = array(
+Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字',
     'parent_id.number' => '请选择上级权限',
@@ -54,15 +53,15 @@ $validateService->message = array(
     'sort.number' => '排序必须是个数字',
     'sort.max_length' => '排序不能大于10个字'
 );
-if(!$validateService->check($_POST)){
-    $return['message'] = $validateService->getErrorMessage();
-    $return['data']['dom'] = '#'.$validateService->getErrorField();
+if(!Validate::check($_POST)){
+    $return['message'] = Validate::getErrorMessage();
+    $return['data']['dom'] = '#'.Validate::getErrorField();
     echo json_encode($return);
     exit;
 }
 
 // 本权限
-$permissionCurrent = $permissionModel->selectRow(
+$permissionCurrent = Db::selectRow(
     'id, parent_id',
     array(
         'mark'=> 'id = :id',
@@ -78,7 +77,7 @@ if(empty($permissionCurrent)){
 }
 
 // 上级权限
-$permissionParent = $permissionModel->selectRow(
+$permissionParent = Db::selectRow(
     'parent_ids',
     array(
         'mark'=> 'id = :id',
@@ -98,7 +97,7 @@ $data = array(
     'sort'=>$_POST['sort']
 );
 try{
-    $id = $permissionModel->update($data, array(
+    $id = Db::update($data, array(
         'mark'=>'id = :id',
         'value'=> array(
             ':id'=>$permissionCurrent['id']

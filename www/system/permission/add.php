@@ -5,44 +5,43 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\PermissionModel;
-use library\service\ConfigService;
-use library\service\DictionaryService;
-use library\service\AuthService;
-use library\service\ValidateService;
-use library\service\SafeService;
+use library\Db;
+use library\Config;
+use library\Dictionary;
+use library\Auth;
+use library\Validate;
+use library\Safe;
 
 $permissionModel = new PermissionModel();
-$config = ConfigService::getAll();
-$validateService = new ValidateService();
-$permissionTypeRadioNode = DictionaryService::getRadio('system_permission_type', 'type', 1);
+$config = Config::getAll();
+$permissionTypeRadioNode = Dictionary::getRadio('system_permission_type', 'type', 1);
 $permissionParent = array();
 $init = array(
     'parent_id'=>1,
     'parent_name'=>'顶级权限',
 );
 
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
 }
-if(!AuthService::isPermission('system_permission')){
+if(!Auth::isPermission('system_permission')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
-$validateService->rule = array(
+Validate::setRule(array(
     'parent_id' => 'number'
 );
-$validateService->message = array(
+Validate::setMessage(array(
     'parent_id.number' => 'parent_id必须是个数字'
 );
-if(!$validateService->check($_GET)){
-    header('location:../../error.php?message='.urlencode($validateService->getErrorMessage()));
+if(!Validate::check($_GET)){
+    header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
     exit;
 }
 
 if(!empty($_GET['parent_id'])){
-    $permissionParent = $permissionModel->selectRow('id, name', array(
+    $permissionParent = Db::selectRow('id, name', array(
         'mark'=>'id = :id',
         'value'=>array(
             ':id'=> $_GET['parent_id']
@@ -52,7 +51,7 @@ if(!empty($_GET['parent_id'])){
         $init['parent_id'] = $permissionParent['id'];
         $init['parent_name'] = $permissionParent['name'];
     }
-    $init = SafeService::frontDisplay($init);
+    $init = Safe::frontDisplay($init);
 }
 
 ?><!doctype html>

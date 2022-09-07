@@ -5,18 +5,17 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\UserModel;
+use library\Db;
 use library\model\RoleModel;
-use library\model\DepartmentModel;
-use library\service\ConfigService;
-use library\service\ArrayTwoService;
-use library\service\ValidateService;
-use library\service\SafeService;
-use library\service\DictionaryService;
-use library\service\AuthService;
+use library\Db;
+use library\Config;
+use library\ArrayTwo;
+use library\Validate;
+use library\Safe;
+use library\Dictionary;
+use library\Auth;
 
-$config = ConfigService::getAll();
-$validateService = new ValidateService();
+$config = Config::getAll();
 $userModel = new UserModel();
 $departmentModel = new DepartmentModel();
 $roleModel = new RoleModel();
@@ -26,27 +25,27 @@ $status = '';
 $roleOption = '';
 
 // 验证
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
 }
-if(!AuthService::isPermission('system_user')){
+if(!Auth::isPermission('system_user')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
-$validateService->rule = array(
+Validate::setRule(array(
     'id' => 'require|number'
 );
-$validateService->message = array(
+Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
 );
-if(!$validateService->check($_GET)){
-    header('location:../../error.php?message='.urlencode($validateService->getErrorMessage()));
+if(!Validate::check($_GET)){
+    header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
     exit;
 }
 
-$user = $userModel->selectRow('id, username, `name`, `phone`, `status`, department_id, role_id_string', array(
+$user = Db::selectRow('id, username, `name`, `phone`, `status`, department_id, role_id_string', array(
     'mark'=>'id = :id',
     'value'=>array(
         ':id'=>$_GET['id']
@@ -58,17 +57,17 @@ if(empty($user)){
 }
 
 $user['role_ids'] = explode(',', $user['role_id_string']);
-$user['department_name'] = $departmentModel->selectOne('name', array(
+$user['department_name'] = Db::selectOne('name', array(
     'mark'=>'id = :id',
     'value'=>array(
         ':id'=>$user['department_id']
     )
 ));
-$user = SafeService::frontDisplay($user);
-$status = DictionaryService::getRadio('system_user_status', 'status', $user['status']);
+$user = Safe::frontDisplay($user);
+$status = Dictionary::getRadio('system_user_status', 'status', $user['status']);
 
-$roles = $roleModel->selectAll('id, name', array());
-$roleOption = ArrayTwoService::getSelectOption($roles, $user['role_ids'], 'id', 'name');
+$roles = Db::selectAll('id, name', array());
+$roleOption = ArrayTwo::getSelectOption($roles, $user['role_ids'], 'id', 'name');
 
 ?><!doctype html>
 <html>

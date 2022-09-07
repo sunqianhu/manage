@@ -5,44 +5,43 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\DictionaryModel;
-use library\service\ValidateService;
-use library\service\AuthService;
+use library\Db;
+use library\Validate;
+use library\Auth;
 
 $return = array(
     'status'=>'error',
     'message'=>''
 );
 $dictionaryModel = new DictionaryModel();
-$validateService = new ValidateService();
 
 // 验证
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     $return['message'] = '登录已失效';
     echo json_encode($return);
     exit;
 }
-if(!AuthService::isPermission('system_dictionary')){
+if(!Auth::isPermission('system_dictionary')){
     $return['message'] = '无权限';
     echo json_encode($return);
     exit;
 }
 
-$validateService->rule = array(
+Validate::setRule(array(
     'id' => 'require:number'
 );
-$validateService->message = array(
+Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
 );
-if(!$validateService->check($_GET)){
-    $return['message'] = $validateService->getErrorMessage();
+if(!Validate::check($_GET)){
+    $return['message'] = Validate::getErrorMessage();
     echo json_encode($return);
     exit;
 }
 
 try{
-    $dictionaryModel->delete(
+    Db::delete(
         array(
             'mark'=>'id = :id',
             'value'=> array(

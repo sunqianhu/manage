@@ -5,9 +5,9 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\UserModel;
-use library\service\ValidateService;
-use library\service\AuthService;
+use library\Db;
+use library\Validate;
+use library\Auth;
 
 $return = array(
     'status'=>'error',
@@ -16,23 +16,22 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$validateService = new ValidateService();
 $userModel = new UserModel();
 $user = array();
 $data = array();
 
 // 验证
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     $return['message'] = '登录已失效';
     echo json_encode($return);
     exit;
 }
-if(!AuthService::isPermission('system_user')){
+if(!Auth::isPermission('system_user')){
     $return['message'] = '无权限';
     echo json_encode($return);
     exit;
 }
-$validateService->rule = array(
+Validate::setRule(array(
     'id' => 'require|number',
     'status' => 'require|number',
     'name' => 'require|max_length:32',
@@ -40,7 +39,7 @@ $validateService->rule = array(
     'department_id' => 'require|number',
     'role_ids' => 'require|number_array'
 );
-$validateService->message = array(
+Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字',
     'name.require' => '请输入姓名',
@@ -54,16 +53,16 @@ $validateService->message = array(
     'role_ids.require' => '请选择角色',
     'role_ids.number_array' => '角色参数错误'
 );
-if(!$validateService->check($_POST)){
-    $return['message'] = $validateService->getErrorMessage();
-    $return['data']['dom'] = '#'.$validateService->getErrorField();
+if(!Validate::check($_POST)){
+    $return['message'] = Validate::getErrorMessage();
+    $return['data']['dom'] = '#'.Validate::getErrorField();
     echo json_encode($return);
     exit;
 }
 $_POST['role_id_string'] = implode(',', $_POST['role_ids']);
 
 // 本用户
-$user = $userModel->selectRow('id', array(
+$user = Db::selectRow('id', array(
     'mark'=>'id = :id',
     'value'=>array(
         ':id'=>$_POST['id']
@@ -88,7 +87,7 @@ if($_POST['password'] !== ''){
     $data['password'] = md5($_POST['password']);
 }
 try{
-    $userModel->update($data, array(
+    Db::update($data, array(
         'mark'=>'id = :id',
         'value'=> array(
             ':id'=>$user['id']

@@ -1,10 +1,10 @@
 <?php
 /**
- * 二维数组服务
+ * 二维数组
  */
-namespace library\service;
+namespace library;
 
-class ArrayTwoService{
+class ArrayTwo{
     /**
      * 得到下拉选项
      * @param array $datas 二维数组

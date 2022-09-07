@@ -5,16 +5,16 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\LoginLogModel;
-use library\service\ConfigService;
-use library\service\FrameMainService;
-use library\service\PaginationService;
-use library\service\SafeService;
-use library\service\AuthService;
-use library\service\UserService;
-use library\service\DepartmentService;
+use library\Db;
+use library\Config;
+use library\FrameMain;
+use library\Pagination;
+use library\Safe;
+use library\Auth;
+use library\User;
+use library\Department;
 
-$config = ConfigService::getAll();
+$config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
 $loginLogModel = new LoginLogModel(); // 模型
 $search = array(
@@ -31,17 +31,17 @@ $recordTotal = 0; // 总记录
 $paginationNodeIntact = ''; // 节点
 $loginLogs = array();
 
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
 }
-if(!AuthService::isPermission('system_login_log')){
+if(!Auth::isPermission('system_login_log')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
 
 // 菜单
-$frameMainMenu = FrameMainService::getPageLeftMenu('system_login_log');
+$frameMainMenu = FrameMain::getPageLeftMenu('system_login_log');
 
 // 搜索
 if(isset($_GET['time_start']) && $_GET['time_start'] !== ''){
@@ -75,21 +75,21 @@ if(!empty($whereMarks)){
     $where['value'] = $whereValues;
 }
 
-$recordTotal = $loginLogModel->selectOne('count(1)', $where);
+$recordTotal = Db::selectOne('count(1)', $where);
 
-$paginationService = new PaginationService($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
+$paginationService = new Pagination($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
 $paginationNodeIntact = $paginationService->getNodeIntact();
 
-$loginLogs = $loginLogModel->selectAll('id, user_id, department_id, ip, time_login', $where, 'id desc', ''.$paginationService->limitStart.','.$paginationService->pageSize);
+$loginLogs = Db::selectAll('id, user_id, department_id, ip, time_login', $where, 'id desc', ''.$paginationService->limitStart.','.$paginationService->pageSize);
 
 foreach($loginLogs as $key => $loginLog){
     $loginLogs[$key]['time_login_name'] = date('Y-m-d H:i:s', $loginLog['time_login']);
-    $loginLogs[$key]['user_name'] = UserService::getName($loginLog['user_id']);
-    $loginLogs[$key]['department_name'] = DepartmentService::getName($loginLog['department_id']);
+    $loginLogs[$key]['user_name'] = User::getName($loginLog['user_id']);
+    $loginLogs[$key]['department_name'] = Department::getName($loginLog['department_id']);
 }
 
-$search = SafeService::frontDisplay($search);
-$loginLogs = SafeService::frontDisplay($loginLogs);
+$search = Safe::frontDisplay($search);
+$loginLogs = Safe::frontDisplay($loginLogs);
 
 ?><!doctype html>
 <html>

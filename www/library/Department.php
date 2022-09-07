@@ -2,11 +2,11 @@
 /**
  * 部门服务
  */
-namespace library\service;
+namespace library;
 
-use library\model\DepartmentModel;
+use library\Db;
 
-class DepartmentService{
+class Department{
     
     /**
      * 得到部门名
@@ -18,7 +18,7 @@ class DepartmentService{
         $departmentModel = new DepartmentModel();
         $name = '';
         
-        $name = $departmentModel->selectOne('name', array(
+        $name = Db::selectOne('name', array(
             'mark'=>'id = :id',
             'value'=>array(
                 ':id'=>$id

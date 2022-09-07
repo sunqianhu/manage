@@ -5,15 +5,15 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\DepartmentModel;
-use library\service\ConfigService;
-use library\service\FrameMainService;
-use library\service\TreeService;
-use library\service\SafeService;
-use library\service\DepartmentService;
-use library\service\AuthService;
+use library\Db;
+use library\Config;
+use library\FrameMain;
+use library\Tree;
+use library\Safe;
+use library\Department;
+use library\Auth;
 
-$config = ConfigService::getAll();
+$config = Config::getAll();
 $departmentModel = new DepartmentModel();
 $departments = array(); // 部门数据
 $departmentNode = ''; // 部门表格节点
@@ -27,17 +27,17 @@ $whereMarks = array();
 $whereValues = array();
 $where = array();
 
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
 }
-if(!AuthService::isPermission('system_department')){
+if(!Auth::isPermission('system_department')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
 
 // 菜单
-$frameMainMenu = FrameMainService::getPageLeftMenu('system_department');
+$frameMainMenu = FrameMain::getPageLeftMenu('system_department');
 
 // 搜索
 if(!empty($_GET['id'])){
@@ -55,7 +55,7 @@ if(isset($_GET['remark']) && $_GET['remark'] !== ''){
     $whereValues[':remark'] = '%'.$_GET['remark'].'%';
     $search['remark'] = $_GET['remark'];
 }
-$search = SafeService::frontDisplay($search);
+$search = Safe::frontDisplay($search);
 
 if(!empty($whereMarks)){
     $where['mark'] = implode(' and ', $whereMarks);
@@ -63,10 +63,10 @@ if(!empty($whereMarks)){
 $where['value'] = $whereValues;
 
 // 数据
-$departments = $departmentModel->selectAll('id, parent_id, name, `sort`, remark', $where, '`sort` asc, id asc');
-$departments = TreeService::getTree($departments, 'child', 'id', 'parent_id');
-$departments = SafeService::frontDisplay($departments);
-$departmentNode = DepartmentService::getIndexTreeNode($departments, 1);
+$departments = Db::selectAll('id, parent_id, name, `sort`, remark', $where, '`sort` asc, id asc');
+$departments = Tree::getTree($departments, 'child', 'id', 'parent_id');
+$departments = Safe::frontDisplay($departments);
+$departmentNode = Department::getIndexTreeNode($departments, 1);
 
 ?><!doctype html>
 <html>

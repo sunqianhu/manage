@@ -5,20 +5,19 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\UserModel;
-use library\model\DepartmentModel;
+use library\Db;
 use library\model\RoleModel;
-use library\service\AuthService;
-use library\service\ConfigService;
-use library\service\FrameMainService;
-use library\service\PaginationService;
-use library\service\ZtreeService;
-use library\service\ArrayTwoService;
-use library\service\SafeService;
-use library\service\DictionaryService;
-use library\service\UserService;
+use library\Auth;
+use library\Config;
+use library\FrameMain;
+use library\Pagination;
+use library\Ztree;
+use library\ArrayTwo;
+use library\Safe;
+use library\Dictionary;
+use library\User;
 
-$config = ConfigService::getAll();
+$config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
 $userModel = new UserModel(); // 模型
 $departmentModel = new DepartmentModel();
@@ -50,16 +49,16 @@ $roles = array();
 $roleOption = '';
 $statusOption = '';
 
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
 }
-if(!AuthService::isPermission('system_user')){
+if(!Auth::isPermission('system_user')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
 
-$frameMainMenu = FrameMainService::getPageLeftMenu('system_user');
+$frameMainMenu = FrameMain::getPageLeftMenu('system_user');
 
 if(!empty($_GET['id'])){
     $whereMarks[] = 'id = :id';
@@ -107,36 +106,36 @@ if(isset($_GET['department_name'])){
     $search['department_name'] = $_GET['department_name'];
 }
 
-$recordTotal = $userModel->selectOne('count(1)', $where);
+$recordTotal = Db::selectOne('count(1)', $where);
 
-$paginationService = new PaginationService($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
+$paginationService = new Pagination($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
 $paginationNodeIntact = $paginationService->getNodeIntact();
 
-$users = $userModel->selectAll('id, username, head, `name`, `time_login`, time_edit, phone, status, department_id', $where, 'id asc', ''.$paginationService->limitStart.','.$paginationService->pageSize);
+$users = Db::selectAll('id, username, head, `name`, `time_login`, time_edit, phone, status, department_id', $where, 'id asc', ''.$paginationService->limitStart.','.$paginationService->pageSize);
 foreach($users as $key => $user){
-    $users[$key]['department_name'] = $departmentModel->selectOne('name', array(
+    $users[$key]['department_name'] = Db::selectOne('name', array(
         'mark'=>'id = :id',
         'value'=>array(
             ':id'=>$user['department_id']
         )
     ));
-    $users[$key]['status_name'] = DictionaryService::getValue('system_user_status', $user['status']);
+    $users[$key]['status_name'] = Dictionary::getValue('system_user_status', $user['status']);
     $users[$key]['status_style_class'] = $user['status'] == 2 ? 'sun-badge orange': 'sun-badge';
     $users[$key]['time_edit_name'] = $user['time_edit'] ? date('Y-m-d H:i:s', $user['time_edit']) : '-';
     $users[$key]['time_login_name'] = $user['time_login'] ? date('Y-m-d H:i:s', $user['time_login']) : '-';
-    $users[$key]['head_url'] = UserService::getHeadUrl($user['head']);
+    $users[$key]['head_url'] = User::getHeadUrl($user['head']);
 }
 
-$departments = $departmentModel->selectAll('id, name, parent_id', array(), 'parent_id asc, sort asc');
-$departments = ZtreeService::setOpenByFirst($departments);
+$departments = Db::selectAll('id, name, parent_id', array(), 'parent_id asc, sort asc');
+$departments = Ztree::setOpenByFirst($departments);
 $department = json_encode($departments);
 
-$statusOption = DictionaryService::getSelectOption('system_user_status', array($search['status']));
-$roles = $roleModel->selectAll('id, name', array());
-$roleOption = ArrayTwoService::getSelectOption($roles, array($search['role_id']), 'id', 'name');
+$statusOption = Dictionary::getSelectOption('system_user_status', array($search['status']));
+$roles = Db::selectAll('id, name', array());
+$roleOption = ArrayTwo::getSelectOption($roles, array($search['role_id']), 'id', 'name');
 
-$users = SafeService::frontDisplay($users);
-$search = SafeService::frontDisplay($search);
+$users = Safe::frontDisplay($users);
+$search = Safe::frontDisplay($search);
 
 ?><!doctype html>
 <html>

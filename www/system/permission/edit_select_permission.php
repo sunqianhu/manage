@@ -5,27 +5,27 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\PermissionModel;
-use library\service\ConfigService;
-use library\service\ZtreeService;
-use library\service\AuthService;
+use library\Db;
+use library\Config;
+use library\Ztree;
+use library\Auth;
 
-$config = ConfigService::getAll();
+$config = Config::getAll();
 $permissionModel = new PermissionModel();
 $permissions = array(); // 权限数据
 $permission = ''; // 权限json数据
 
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
 }
-if(!AuthService::isPermission('system_permission')){
+if(!Auth::isPermission('system_permission')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
 
-$permissions = $permissionModel->selectAll('id, name, parent_id', array(), 'parent_id asc, id asc');
-$permissions = ZtreeService::setOpenByFirst($permissions);
+$permissions = Db::selectAll('id, name, parent_id', array(), 'parent_id asc, id asc');
+$permissions = Ztree::setOpenByFirst($permissions);
 $permission = json_encode($permissions);
 
 ?><!doctype html>

@@ -5,14 +5,13 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\DepartmentModel;
-use library\service\ConfigService;
-use library\service\AuthService;
-use library\service\ValidateService;
-use library\service\SafeService;
+use library\Db;
+use library\Config;
+use library\Auth;
+use library\Validate;
+use library\Safe;
 
 $config = array();
-$validateService = new ValidateService();
 $departmentModel = new DepartmentModel();
 $departmentParent = array();
 $init = array(
@@ -20,27 +19,27 @@ $init = array(
     'parent_name'=>'顶级部门',
 );
 
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
 }
-if(!AuthService::isPermission('system_department')){
+if(!Auth::isPermission('system_department')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
-$validateService->rule = array(
+Validate::setRule(array(
     'parent_id' => 'number'
 );
-$validateService->message = array(
+Validate::setMessage(array(
     'parent_id.number' => 'parent_id必须是个数字'
 );
-if(!$validateService->check($_GET)){
-    header('location:../../error.php?message='.urlencode($validateService->getErrorMessage()));
+if(!Validate::check($_GET)){
+    header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
     exit;
 }
 
 if(!empty($_GET['parent_id'])){
-    $departmentParent = $departmentModel->selectRow('id, name', array(
+    $departmentParent = Db::selectRow('id, name', array(
         'mark'=>'id = :id',
         'value'=>array(
             ':id'=> $_GET['parent_id']
@@ -50,9 +49,9 @@ if(!empty($_GET['parent_id'])){
         $init['parent_id'] = $departmentParent['id'];
         $init['parent_name'] = $departmentParent['name'];
     }
-    $init = SafeService::frontDisplay($init);
+    $init = Safe::frontDisplay($init);
 }
-$config = ConfigService::getAll();
+$config = Config::getAll();
 ?><!doctype html>
 <html>
 <head>

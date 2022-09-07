@@ -5,15 +5,15 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\PermissionModel;
-use library\service\ConfigService;
-use library\service\FrameMainService;
-use library\service\TreeService;
-use library\service\SafeService;
-use library\service\PermissionService;
-use library\service\AuthService;
+use library\Db;
+use library\Config;
+use library\FrameMain;
+use library\Tree;
+use library\Safe;
+use library\Permission;
+use library\Auth;
 
-$config = ConfigService::getAll();
+$config = Config::getAll();
 $permissionModel = new PermissionModel();
 $permissions = array(); // 权限数据
 $permissionNode = ''; // 权限表格节点
@@ -27,17 +27,17 @@ $whereMarks = array();
 $whereValues = array();
 $where = array();
 
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
 }
-if(!AuthService::isPermission('system_permission')){
+if(!Auth::isPermission('system_permission')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
 
 // 权限
-$frameMainMenu = FrameMainService::getPageLeftMenu('system_permission');
+$frameMainMenu = FrameMain::getPageLeftMenu('system_permission');
 
 // 搜索
 if(!empty($_GET['id'])){
@@ -55,17 +55,17 @@ if(isset($_GET['permission']) && $_GET['permission'] !== ''){
     $whereValues[':permission'] = $_GET['permission'];
     $search['permission'] = $_GET['permission'];
 }
-$search = SafeService::frontDisplay($search);
+$search = Safe::frontDisplay($search);
 if(!empty($whereMarks)){
     $where['mark'] = implode(' and ', $whereMarks);
 }
 $where['value'] = $whereValues;
 
 // 数据
-$permissions = $permissionModel->selectAll('id, parent_id, name, `sort`, tag', $where, '`sort` asc, id asc');
-$permissions = TreeService::getTree($permissions, 'child', 'id', 'parent_id');
-$permissions = SafeService::frontDisplay($permissions, 'id,parent_id');
-$permissionNode = PermissionService::getIndexTreeNode($permissions, 1);
+$permissions = Db::selectAll('id, parent_id, name, `sort`, tag', $where, '`sort` asc, id asc');
+$permissions = Tree::getTree($permissions, 'child', 'id', 'parent_id');
+$permissions = Safe::frontDisplay($permissions, 'id,parent_id');
+$permissionNode = Permission::getIndexTreeNode($permissions, 1);
 
 ?><!doctype html>
 <html>

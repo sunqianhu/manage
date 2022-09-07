@@ -2,9 +2,9 @@
 /**
  * ztree服务
  */
-namespace library\service;
+namespace library;
 
-class ZtreeService{
+class Ztree{
     /**
      * 数据parent_id转换为pid
      * @param array $datas 数据

@@ -2,9 +2,9 @@
 /**
  * 图片处理服务
  */
-namespace library\service;
+namespace library;
 
-class ImageService{
+class Image{
 
     /**
      * 缩略（只支持jpg和png）

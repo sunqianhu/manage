@@ -5,16 +5,16 @@
 require_once 'library/session.php';
 require_once 'library/app.php';
 
-use library\service\ConfigService;
-use library\service\SafeService;
+use library\Config;
+use library\Safe;
 
-$config = ConfigService::getAll();
+$config = Config::getAll();
 $message = '';
 
 if(isset($_GET['message'])){
     $message = $_GET['message'];
 }
-$message = SafeService::frontDisplay($message);
+$message = Safe::frontDisplay($message);
 ?><!doctype html>
 <html>
 <head>

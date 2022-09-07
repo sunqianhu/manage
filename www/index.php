@@ -5,22 +5,22 @@
 require_once 'library/session.php';
 require_once 'library/app.php';
 
-use library\service\ConfigService;
-use library\service\FrameMainService;
-use library\service\AuthService;
+use library\Config;
+use library\FrameMain;
+use library\Auth;
 
 $config = array();
 $frameMainMenu = '';
 $timeLogin = '无';
 $ip = '无';
 
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:my/login.php');
     exit;
 }
 
-$config = ConfigService::getAll();
-$frameMainMenu = FrameMainService::getPageLeftMenu('home');
+$config = Config::getAll();
+$frameMainMenu = FrameMain::getPageLeftMenu('home');
 if($_SESSION['user']['time_login'] > 0){
     $timeLogin = date('Y-m-d H:i:s', $_SESSION['user']['time_login']);
 }

@@ -2,11 +2,11 @@
 /**
  * 分页服务
  */
-namespace library\service;
+namespace library;
 
-use library\service\ConfigService;
+use library\Config;
 
-class PaginationService{
+class Pagination{
     public $id;
     public $recordTotal = 0; // 总记录
     public $pageSize = 50; // 每页显示记录数

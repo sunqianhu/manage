@@ -2,12 +2,12 @@
 /**
  * 操作日志服务
  */
-namespace library\service;
+namespace library;
 
-use \library\model\OperationLogModel;
-use \library\service\IpService;
+use \library\Db;
+use \library\Ip;
 
-class OperationLogService{
+class OperationLog{
     
     /**
      * 添加操作日志
@@ -16,14 +16,14 @@ class OperationLogService{
      * @return string 用户姓名
      */
     static function add(){
-        $operationLogModel = new OperationLogModel();
         $departmentId = 0;
         $userId = 0;
         $data = array();
-        $ip = IpService::getIp();
+        $ip = Ip::get();
         $request = '';
         $url = '';
         $userAgent = '';
+        $sql = '';
         
         if(!empty($_SESSION['police']['department']['id'])){
             $departmentId = $_SESSION['police']['department']['id'];
@@ -43,17 +43,18 @@ class OperationLogService{
         if(!empty($_POST)){
             $request .= 'post参数：'.print_r($_POST, true);
         }
-        $data = array(
-            'department_id'=>$departmentId,
-            'user_id'=>$userId,
-            'url'=>$url,
-            'ip'=>$ip,
-            'user_agent'=>$userAgent,
-            'request'=>$request,
-            'time_add'=>time()
-        );
         
-        return $operationLogModel->insert($data);
+        $sql = 'insert into operation_log(user_id,department_id,url,ip,user_agent,request,time_add) values(:user_id,:department_id,:url,:ip,:user_agent,:request,:time_add)';
+        $data = array(
+            ':department_id'=>$departmentId,
+            ':user_id'=>$userId,
+            ':url'=>$url,
+            ':ip'=>$ip,
+            ':user_agent'=>$userAgent,
+            ':request'=>$request,
+            ':time_add'=>time()
+        );
+        return Db::insert($sql, $data);
     }
     
 }

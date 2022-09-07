@@ -2,11 +2,11 @@
 /**
  * 用户文件服务
  */
-namespace library\service;
+namespace library;
 
-use library\service\ConfigService;
+use library\Config;
 
-class UserFileService{
+class UserFile{
     /**
      * 得到文件访问url
      * @param string $path 文件全路径
@@ -14,7 +14,7 @@ class UserFileService{
      */
     static function getUrl($path){
         $url = '';
-        $configFileDomain = ConfigService::getOne('user_file_domain');
+        $configFileDomain = Config::getOne('user_file_domain');
         
         if(empty($path)){
             return $url;
@@ -35,7 +35,7 @@ class UserFileService{
         $configUserFilePath = ''; // 配置文件路径
         $dir = dirname($path);
         
-        $configUserFilePath = ConfigService::getOne('user_file_path');
+        $configUserFilePath = Config::getOne('user_file_path');
         if(empty($configUserFilePath)){
             throw new \Exception('file_path配置错误');
             return false;

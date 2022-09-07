@@ -2,9 +2,9 @@
 /**
  * 缓存
  */
-namespace library\service;
+namespace library;
 
-class CacheService{
+class Cache{
     
     static $dir = array(); // 缓存目录
     
@@ -25,7 +25,7 @@ class CacheService{
         
         // 配置
         if(empty(self::$dir)){
-            self::$dir = ConfigService::getOne('cache_dir');
+            self::$dir = Config::getOne('cache_dir');
         }
         
         // 保存
@@ -49,7 +49,7 @@ class CacheService{
         
         // 配置
         if(empty(self::$dir)){
-            self::$dir = ConfigService::getOne('cache_dir');
+            self::$dir = Config::getOne('cache_dir');
         }
         
         // 存在

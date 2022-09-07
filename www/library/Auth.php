@@ -2,9 +2,9 @@
 /**
  * 认证
  */
-namespace library\service;
+namespace library;
 
-class AuthService{
+class Auth{
     /**
      * 是否登录
      * @access public

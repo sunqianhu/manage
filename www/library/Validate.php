@@ -2,29 +2,48 @@
 /**
  * 验证器
  */
-namespace library\service;
+namespace library;
 
-class ValidateService{
+class Validate{
     // 规则
-    public $rule = array();
+    static public $rule = array();
     
     // 错误描述
-    public $message = array();
+    static public $message = array();
     
     // 错误信息
-    public $error = array(
+    static public $error = array(
         'field'=>'',
         'message'=>''
     );
+    
+    /**
+     * 设置规则
+     * @param array $rule 规则数组
+     * @return boolean
+     */
+    static public function setRule($rule){
+        self::$rule = $rule;
+    }
+    
+    /**
+     * 设置描述
+     * @param array $message 描述
+     * @return boolean
+     */
+    static public function setMessage($message){
+        self::$message = $message;
+    }
     
     /**
      * 验证
      * @param array $datas 数据
      * @return boolean
      */
-    public function check($datas){
+    static public function check($datas){
         $field = ''; // 数据字段
         $value = ''; // 数据值
+        $ruleString = '';
         $rules = array(); // 一个字段的规则数组
         $rule = ''; // 一个字段的规则字符串
         $ruleItems = array(); // 一个字段的一个规则项数组
@@ -33,12 +52,12 @@ class ValidateService{
         $message = ''; // 描述
         
         // 验证
-        if(empty($this->rule)){
+        if(empty(self::$rule)){
             return true;
         }
         
         // 检测
-        foreach($this->rule as $field => $ruleString){
+        foreach(self::$rule as $field => $ruleString){
             $value = '';
             if(isset($datas[$field])){
                 $value = $datas[$field];
@@ -58,62 +77,70 @@ class ValidateService{
                 }
                 
                 // 错误描述
-                $message = $this->getMessage($field, $ruleName, $ruleValue);
+                $message = self::getMessage($field, $ruleName, $ruleValue);
                 
                 // 检测
                 switch($ruleName){
                     // 必填
                     case 'require':
-                        if(!$this->checkRequire($value, $ruleValue)){
-                            $this->setError($field, $message);
+                        if(!self::checkRequire($value, $ruleValue)){
+                            self::setError($field, $message);
+                            return false;
+                        }
+                    break;
+                    
+                    // 长度等于
+                    case 'length':
+                        if(!self::checkLength($value, $ruleValue)){
+                            self::setError($field, $message);
                             return false;
                         }
                     break;
                     
                     // 最大长度
                     case 'max_length':
-                        if(!$this->checkMaxLength($value, $ruleValue)){
-                            $this->setError($field, $message);
+                        if(!self::checkMaxLength($value, $ruleValue)){
+                            self::setError($field, $message);
                             return false;
                         }
                     break;
                     
                     // 最小长度
                     case 'min_length':
-                        if(!$this->checkMinLength($value, $ruleValue)){
-                            $this->setError($field, $message);
+                        if(!self::checkMinLength($value, $ruleValue)){
+                            self::setError($field, $message);
                             return false;
                         }
                     break;
                     
                     // 数字
                     case 'number':
-                        if(!$this->checkNumber($value)){
-                            $this->setError($field, $message);
+                        if(!self::checkNumber($value)){
+                            self::setError($field, $message);
                             return false;
                         }
                     break;
                     
                     // 数字字符串
                     case 'number_string':
-                        if(!$this->checkNumberString($value, $ruleValue)){
-                            $this->setError($field, $message);
+                        if(!self::checkNumberString($value, $ruleValue)){
+                            self::setError($field, $message);
                             return false;
                         }
                     break;
                     
                     // 数字数组
                     case 'number_array':
-                        if(!$this->checkNumberArray($value)){
-                            $this->setError($field, $message);
+                        if(!self::checkNumberArray($value)){
+                            self::setError($field, $message);
                             return false;
                         }
                     break;
                     
                     // 正则
                     case 'regex':
-                        if(!$this->checkRegex($value, $ruleValue)){
-                            $this->setError($field, $message);
+                        if(!self::checkRegex($value, $ruleValue)){
+                            self::setError($field, $message);
                             return false;
                         }
                     break;
@@ -128,7 +155,7 @@ class ValidateService{
      * 检测必填
      * @return boolean 验证是否通过
      */
-    function checkRequire($value, $rule = ''){
+    static function checkRequire($value, $rule = ''){
         // 字符串
         if($value === ''){
             return false;
@@ -150,12 +177,26 @@ class ValidateService{
     }
     
     /**
+     * 检测长度
+     * @param $value 值
+     * @param $length 最大长度
+     * @return boolean 验证是否通过
+     */
+    static function checkLength($value, $length){
+        if(mb_strlen($value) != $length){
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /**
      * 检测最大长度
      * @param $value 值
      * @param $max 最大长度
      * @return boolean 验证是否通过
      */
-    function checkMaxLength($value, $max){
+    static function checkMaxLength($value, $max){
         if(mb_strlen($value) > $max){
             return false;
         }
@@ -169,7 +210,7 @@ class ValidateService{
      * @param $min 最小长度
      * @return boolean 验证是否通过
      */
-    function checkMinLength($value, $min){
+    static function checkMinLength($value, $min){
         if(mb_strlen($value) < $min){
             return false;
         }
@@ -181,7 +222,7 @@ class ValidateService{
      * 检测数字
      * @return boolean 验证是否通过
      */
-    function checkNumber($value){
+    static function checkNumber($value){
         if(!is_numeric($value)){
             return false;
         }
@@ -193,7 +234,7 @@ class ValidateService{
      * 检测数字字符串
      * @return boolean 验证是否通过
      */
-    function checkNumberString($value, $split){
+    static function checkNumberString($value, $split){
         $datas = explode($split, $value);
         
         if(empty($datas)){
@@ -213,7 +254,7 @@ class ValidateService{
      * 检测数字数组
      * @return boolean 验证是否通过
      */
-    function checkNumberArray($value){
+    static function checkNumberArray($value){
         $datas = $value;
         
         if(empty($datas)){
@@ -233,7 +274,7 @@ class ValidateService{
      * 检测正则
      * @return boolean 验证是否通过
      */
-    function checkRegex($value, $pattern){
+    static function checkRegex($value, $pattern){
         if(empty($pattern)){
             return true;
         }
@@ -249,12 +290,12 @@ class ValidateService{
      * 得到描述
      * @return string
      */
-    function getMessage($field, $ruleName, $ruleValue){
+    static function getMessage($field, $ruleName, $ruleValue){
         $message = '';
         
         // 自定义描述
-        if(!empty($this->message[$field.'.'.$ruleName])){
-            $message = $this->message[$field.'.'.$ruleName];
+        if(!empty(self::$message[$field.'.'.$ruleName])){
+            $message = self::$message[$field.'.'.$ruleName];
         }
         
         // 默认描述
@@ -281,24 +322,24 @@ class ValidateService{
     /**
      * 设置错误
      */
-    function setError($field, $message = ''){
-        $this->error['field'] = $field;
-        $this->error['message'] = $message;
+    static function setError($field, $message = ''){
+        self::$error['field'] = $field;
+        self::$error['message'] = $message;
     }
     
     /**
      * 得到错误描述
      * @return string 错误描述
      */
-    function getErrorMessage(){
-        return $this->error['message'];
+    static function getErrorMessage(){
+        return self::$error['message'];
     }
     
     /**
      * 得到错误字段
      * @return string 错误描述
      */
-    function getErrorField(){
-        return $this->error['field'];
+    static function getErrorField(){
+        return self::$error['field'];
     }
 }

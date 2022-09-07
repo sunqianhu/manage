@@ -6,13 +6,13 @@ require_once '../../library/session.php';
 require_once '../../library/app.php';
 
 use library\model\RoleModel;
-use library\service\ConfigService;
-use library\service\FrameMainService;
-use library\service\SafeService;
-use library\service\PaginationService;
-use library\service\AuthService;
+use library\Config;
+use library\FrameMain;
+use library\Safe;
+use library\Pagination;
+use library\Auth;
 
-$config = ConfigService::getAll();
+$config = Config::getAll();
 $frameMainMenu = ''; // 框架权限
 $roleModel = new RoleModel(); // 模型
 $search = array(
@@ -27,17 +27,17 @@ $recordTotal = 0; // 总记录
 $paginationNodeIntact = ''; // 节点
 $roles = array();
 
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
 }
-if(!AuthService::isPermission('system_role')){
+if(!Auth::isPermission('system_role')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
 
 // 权限
-$frameMainMenu = FrameMainService::getPageLeftMenu('system_role');
+$frameMainMenu = FrameMain::getPageLeftMenu('system_role');
 
 // 搜索
 if(!empty($_GET['id'])){
@@ -56,18 +56,18 @@ if(!empty($whereMarks)){
 if(!empty($whereMarks)){
     $where['value'] = $whereValues;
 }
-$recordTotal = $roleModel->selectOne('count(1)', $where);
+$recordTotal = Db::selectOne('count(1)', $where);
 
-$paginationService = new PaginationService($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
+$paginationService = new Pagination($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
 $paginationNodeIntact = $paginationService->getNodeIntact();
 
-$roles = $roleModel->selectAll('id, name, time_edit', $where, 'id asc', ''.$paginationService->limitStart.','.$paginationService->pageSize);
+$roles = Db::selectAll('id, name, time_edit', $where, 'id asc', ''.$paginationService->limitStart.','.$paginationService->pageSize);
 foreach($roles as $key => $role){
     $roles[$key]['time_edit_name'] = date('Y-m-d H:i:s', $role['time_edit']);
 }
 
-$search = SafeService::frontDisplay($search);
-$roles = SafeService::frontDisplay($roles);
+$search = Safe::frontDisplay($search);
+$roles = Safe::frontDisplay($roles);
 
 ?><!doctype html>
 <html>

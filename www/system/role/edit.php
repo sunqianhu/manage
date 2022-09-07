@@ -6,16 +6,14 @@ require_once '../../library/session.php';
 require_once '../../library/app.php';
 
 use library\model\RoleModel;
-use library\model\PermissionModel;
-use library\model\RolePermissionModel;
-use library\service\ConfigService;
-use library\service\ZtreeService;
-use library\service\ValidateService;
-use library\service\SafeService;
-use library\service\AuthService;
+use library\Db;
+use library\Config;
+use library\Ztree;
+use library\Validate;
+use library\Safe;
+use library\Auth;
 
-$config = ConfigService::getAll();
-$validateService = new ValidateService();
+$config = Config::getAll();
 $roleModel = new RoleModel();
 $rolePermissionModel = new RolePermissionModel();
 $permissionModel = new PermissionModel();
@@ -26,28 +24,28 @@ $permissions = array();
 $permission = ''; // 权限json数据
 
 // 验证
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
 }
-if(!AuthService::isPermission('system_role')){
+if(!Auth::isPermission('system_role')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
 
-$validateService->rule = array(
+Validate::setRule(array(
     'id' => 'require|number'
 );
-$validateService->message = array(
+Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
 );
-if(!$validateService->check($_GET)){
-    header('location:../../error.php?message='.urlencode($validateService->getErrorMessage()));
+if(!Validate::check($_GET)){
+    header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
     exit;
 }
 
-$role = $roleModel->selectRow('id, name, remark', array(
+$role = Db::selectRow('id, name, remark', array(
     'mark'=>'id = :id',
     'value'=>array(
         ':id'=>$_GET['id']
@@ -58,7 +56,7 @@ if(empty($role)){
     exit;
 }
 
-$rolePermissions = $rolePermissionModel->selectAll('permission_id', array(
+$rolePermissions = Db::selectAll('permission_id', array(
     'mark'=>'role_id = :role_id',
     'value'=>array(
         ':role_id'=>$role['id']
@@ -66,13 +64,13 @@ $rolePermissions = $rolePermissionModel->selectAll('permission_id', array(
 ));
 $permissionIds = array_column($rolePermissions, 'permission_id');
 $role['permission_ids'] = implode(',', $permissionIds);
-$role = SafeService::frontDisplay($role);
+$role = Safe::frontDisplay($role);
 
-$permissions = $permissionModel->selectAll('id, name, parent_id', array(
+$permissions = Db::selectAll('id, name, parent_id', array(
     'mark'=>'parent_id != 0'
 ), 'parent_id asc, id asc');
-$permissions = ZtreeService::setOpenByFirst($permissions);
-$permissions = ZtreeService::setChecked($permissions, $permissionIds);
+$permissions = Ztree::setOpenByFirst($permissions);
+$permissions = Ztree::setChecked($permissions, $permissionIds);
 $permission = json_encode($permissions);
 
 ?><!doctype html>

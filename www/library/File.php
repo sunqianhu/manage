@@ -2,9 +2,9 @@
 /**
  * 文件服务
  */
-namespace library\service;
+namespace library;
 
-class FileService{
+class File{
     /**
      * 得到可读字节大小
      * @param int $byte 字节数

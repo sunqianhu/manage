@@ -2,12 +2,12 @@
 /**
  * 用户服务
  */
-namespace library\service;
+namespace library;
 
-use library\model\UserModel;
-use library\service\ConfigService;
+use library\Db;
+use library\Config;
 
-class userService{
+class User{
     
     /**
      * 得到用户姓名
@@ -19,7 +19,7 @@ class userService{
         $userModel = new UserModel();
         $name = '';
         
-        $name = $userModel->selectOne('name', array(
+        $name = Db::selectOne('name', array(
             'mark'=>'id = :id',
             'value'=>array(
                 ':id'=>$id
@@ -36,7 +36,7 @@ class userService{
      * @return string 头像url
      */
     static function getHeadUrl($path){
-        $config = ConfigService::getAll();
+        $config = Config::getAll();
         $url = '';
         
         if(empty($path)){

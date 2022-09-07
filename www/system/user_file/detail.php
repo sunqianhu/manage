@@ -5,44 +5,43 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\UserFileModel;
-use library\service\ValidateService;
-use library\service\AuthService;
-use library\service\ConfigService;
-use library\service\SafeService;
-use library\service\FileService;
-use library\service\UserFileService;
-use library\service\UserService;
-use library\service\DepartmentService;
-use library\service\DictionaryService;
+use library\Db;
+use library\Validate;
+use library\Auth;
+use library\Config;
+use library\Safe;
+use library\File;
+use library\UserFile;
+use library\User;
+use library\Department;
+use library\Dictionary;
 
 $userFileModel = new UserFileModel(); // 模型
-$validateService = new ValidateService();
-$config = ConfigService::getAll();
+$config = Config::getAll();
 $userFile = array();
 
 // 验证
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
 }
-if(!AuthService::isPermission('system_user_file')){
+if(!Auth::isPermission('system_user_file')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
-$validateService->rule = array(
+Validate::setRule(array(
     'id' => 'require|number'
 );
-$validateService->message = array(
+Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
 );
-if(!$validateService->check($_GET)){
-    header('location:../../error.php?message='.urlencode($validateService->getErrorMessage()));
+if(!Validate::check($_GET)){
+    header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
     exit;
 }
 
-$userFile = $userFileModel->selectRow('*', array(
+$userFile = Db::selectRow('*', array(
     'mark'=>'id = :id',
     'value'=>array(
         ':id'=>$_GET['id']
@@ -53,13 +52,13 @@ if(empty($userFile)){
     exit;
 }
 $userFile['time_add_name'] = date('Y-m-d H:i:s', $userFile['time_add']);
-$userFile['user_name'] = UserService::getName($userFile['user_id']);
-$userFile['department_name'] = DepartmentService::getName($userFile['department_id']);
-$userFile['module_name'] = DictionaryService::getValue('system_user_file_module', $userFile['module_id']);
-$userFile['size_name'] = FileService::getByteReadable($userFile['size']);
-$userFile['path_url'] = UserFileService::getUrl($userFile['path']);
+$userFile['user_name'] = User::getName($userFile['user_id']);
+$userFile['department_name'] = Department::getName($userFile['department_id']);
+$userFile['module_name'] = Dictionary::getValue('system_user_file_module', $userFile['module_id']);
+$userFile['size_name'] = File::getByteReadable($userFile['size']);
+$userFile['path_url'] = UserFile::getUrl($userFile['path']);
 
-$userFile = SafeService::frontDisplay($userFile, 'id,url');
+$userFile = Safe::frontDisplay($userFile, 'id,url');
 ?><!doctype html>
 <html>
 <head>

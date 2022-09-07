@@ -5,9 +5,9 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\UserModel;
-use library\service\ValidateService;
-use library\service\AuthService;
+use library\Db;
+use library\Validate;
+use library\Auth;
 
 $return = array(
     'status'=>'error',
@@ -16,22 +16,21 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$validateService = new ValidateService();
 $userModel = new UserModel();
 $user = array();
 
 // 验证
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     $return['message'] = '登录已失效';
     echo json_encode($return);
     exit;
 }
-if(!AuthService::isPermission('system_user')){
+if(!Auth::isPermission('system_user')){
     $return['message'] = '无权限';
     echo json_encode($return);
     exit;
 }
-$validateService->rule = array(
+Validate::setRule(array(
     'username' => 'require|max_length:64',
     'status' => 'require|number',
     'password' => 'require|min_length:8',
@@ -40,7 +39,7 @@ $validateService->rule = array(
     'department_id' => 'require:^0|number',
     'role_ids' => 'require|number_array'
 );
-$validateService->message = array(
+Validate::setMessage(array(
     'username.require' => '请输入用户名',
     'username.max_length' => '用户名不能大于64个字',
     'password.require' => '请输入密码',
@@ -56,9 +55,9 @@ $validateService->message = array(
     'role_ids.require' => '请选择角色',
     'role_ids.number_array' => '角色参数错误'
 );
-if(!$validateService->check($_POST)){
-    $return['message'] = $validateService->getErrorMessage();
-    $return['data']['dom'] = '#'.$validateService->getErrorField();
+if(!Validate::check($_POST)){
+    $return['message'] = Validate::getErrorMessage();
+    $return['data']['dom'] = '#'.Validate::getErrorField();
     echo json_encode($return);
     exit;
 }
@@ -71,7 +70,7 @@ if($_POST['password'] != $_POST['password2']){
 
 $_POST['role_id_string'] = implode(',', $_POST['role_ids']);
 
-$user = $userModel->selectRow('id', array(
+$user = Db::selectRow('id', array(
     'mark'=>'username = :username',
     'value'=>array(
         ':username'=>$_POST['username']
@@ -96,7 +95,7 @@ $data = array(
     'time_add'=>time()
 );
 try{
-    $userModel->insert($data);
+    Db::insert($data);
 }catch(Exception $e){
     $return['message'] = $e->getMessage();
     echo json_encode($return);

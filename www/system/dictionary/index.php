@@ -5,14 +5,14 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\DictionaryModel;
-use library\service\ConfigService;
-use library\service\FrameMainService;
-use library\service\PaginationService;
-use library\service\SafeService;
-use library\service\AuthService;
+use library\Db;
+use library\Config;
+use library\FrameMain;
+use library\Pagination;
+use library\Safe;
+use library\Auth;
 
-$config = ConfigService::getAll();
+$config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
 $dictionaryModel = new DictionaryModel(); // 模型
 $search = array(
@@ -29,17 +29,17 @@ $recordTotal = 0; // 总记录
 $paginationNodeIntact = ''; // 节点
 $dictionarys = array();
 
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
 }
-if(!AuthService::isPermission('system_dictionary')){
+if(!Auth::isPermission('system_dictionary')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
 
 // 菜单
-$frameMainMenu = FrameMainService::getPageLeftMenu('system_dictionary');
+$frameMainMenu = FrameMain::getPageLeftMenu('system_dictionary');
 
 // 搜索
 if(isset($_GET['type']) && $_GET['type'] !== ''){
@@ -57,7 +57,7 @@ if(isset($_GET['value']) && $_GET['value'] !== ''){
     $whereValues[':value'] = $_GET['value'];
     $search['value'] = $_GET['value'];
 }
-$search = SafeService::frontDisplay($search);
+$search = Safe::frontDisplay($search);
 
 if(!empty($whereMarks)){
     $where['mark'] = implode(' and ', $whereMarks);
@@ -66,14 +66,14 @@ if(!empty($whereMarks)){
     $where['value'] = $whereValues;
 }
 
-$recordTotal = $dictionaryModel->selectOne('count(1)', $where);
+$recordTotal = Db::selectOne('count(1)', $where);
 
-$paginationService = new PaginationService($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
+$paginationService = new Pagination($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
 $paginationNodeIntact = $paginationService->getNodeIntact();
 
-$dictionarys = $dictionaryModel->selectAll('id, type, `key`, `value`, `sort`', $where, 'type asc, `sort` asc, id asc', ''.$paginationService->limitStart.','.$paginationService->pageSize);
+$dictionarys = Db::selectAll('id, type, `key`, `value`, `sort`', $where, 'type asc, `sort` asc, id asc', ''.$paginationService->limitStart.','.$paginationService->pageSize);
 
-$dictionarys = SafeService::frontDisplay($dictionarys);
+$dictionarys = Safe::frontDisplay($dictionarys);
 
 ?><!doctype html>
 <html>

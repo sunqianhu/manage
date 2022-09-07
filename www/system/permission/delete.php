@@ -5,9 +5,9 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\PermissionModel;
-use library\service\ValidateService;
-use library\service\AuthService;
+use library\Db;
+use library\Validate;
+use library\Auth;
 
 $return = array(
     'status'=>'error',
@@ -15,29 +15,28 @@ $return = array(
 );
 $permissionChild = array();
 $permissionModel = new PermissionModel();
-$validateService = new ValidateService();
 
 // 验证
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     $return['message'] = '登录已失效';
     echo json_encode($return);
     exit;
 }
-if(!AuthService::isPermission('system_permission')){
+if(!Auth::isPermission('system_permission')){
     $return['message'] = '无权限';
     echo json_encode($return);
     exit;
 }
 
-$validateService->rule = array(
+Validate::setRule(array(
     'id' => 'require:number'
 );
-$validateService->message = array(
+Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
 );
-if(!$validateService->check($_GET)){
-    $return['message'] = $validateService->getErrorMessage();
+if(!Validate::check($_GET)){
+    $return['message'] = Validate::getErrorMessage();
     echo json_encode($return);
     exit;
 }
@@ -47,7 +46,7 @@ if($_GET['id'] == '1'){
     exit;
 }
 
-$permissionChild = $permissionModel->selectRow(
+$permissionChild = Db::selectRow(
     'id',
     array(
         'mark'=>'parent_id = :id',
@@ -63,7 +62,7 @@ if(!empty($permissionChild)){
 }
 
 try{
-    $permissionModel->delete(
+    Db::delete(
         array(
             'mark'=>'id = :id',
             'value'=> array(

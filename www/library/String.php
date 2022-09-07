@@ -2,11 +2,11 @@
 /**
  * 字符串服务
  */
-namespace library\service;
+namespace library;
 
-use library\service\SafeService;
+use library\Safe;
 
-class StringService{
+class String{
     /**
      * 得到字符串长度
      * @param string $string 字符串

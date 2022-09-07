@@ -2,9 +2,9 @@
 /**
  * 配置
  */
-namespace library\service;
+namespace library;
 
-class ConfigService{
+class Config{
     static $config = array();
     static $a = '1';
     
@@ -13,7 +13,7 @@ class ConfigService{
      */
     static function getAll(){
         if(empty(self::$config)){
-            self::$config = require_once dirname(dirname(__DIR__)).'/config.php';
+            self::$config = require_once dirname(__DIR__).'/config.php';
         }
         
         return self::$config;
@@ -27,7 +27,7 @@ class ConfigService{
         $value = '';
         
         if(empty(self::$config)){
-            self::$config = require_once dirname(dirname(__DIR__)).'/config.php';
+            self::$config = require_once dirname(__DIR__).'/config.php';
         }
         
         if(isset(self::$config[$key])){

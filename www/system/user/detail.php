@@ -5,27 +5,24 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\UserModel;
+use library\Db;
 use library\model\RoleModel;
-use library\model\DepartmentModel;
-use library\model\LoginLogModel;
-use library\model\OperationLogModel;
-use library\service\ValidateService;
-use library\service\AuthService;
-use library\service\ConfigService;
-use library\service\FrameMainService;
-use library\service\SafeService;
-use library\service\DictionaryService;
-use library\service\ArrayTwoService;
-use library\service\StringService;
+use library\Db;
+use library\Validate;
+use library\Auth;
+use library\Config;
+use library\FrameMain;
+use library\Safe;
+use library\Dictionary;
+use library\ArrayTwo;
+use library\String;
 
 $userModel = new UserModel(); // 模型
 $departmentModel = new DepartmentModel();
 $roleModel = new RoleModel();
 $loginLogModel = new LoginLogModel();
 $operationLogModel = new OperationLogModel();
-$validateService = new ValidateService();
-$config = ConfigService::getAll();
+$config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
 $roles = array(); // 角色
 $loginLogs = array();
@@ -34,27 +31,27 @@ $operationLogs = array(); // 操作日志
 $operationLog = array();
 
 // 验证
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
 }
-if(!AuthService::isPermission('system_user')){
+if(!Auth::isPermission('system_user')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
-$validateService->rule = array(
+Validate::setRule(array(
     'id' => 'require|number'
 );
-$validateService->message = array(
+Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
 );
-if(!$validateService->check($_GET)){
-    header('location:../../error.php?message='.urlencode($validateService->getErrorMessage()));
+if(!Validate::check($_GET)){
+    header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
     exit;
 }
 
-$user = $userModel->selectRow('id, username, `name`, `phone`, `status`, department_id, role_id_string, time_add, time_login, time_edit, ip', array(
+$user = Db::selectRow('id, username, `name`, `phone`, `status`, department_id, role_id_string, time_add, time_login, time_edit, ip', array(
     'mark'=>'id = :id',
     'value'=>array(
         ':id'=>$_GET['id']
@@ -65,52 +62,52 @@ if(empty($user)){
     exit;
 }
 
-$user['status_name'] = DictionaryService::getValue('system_user_status', $user['status']);
+$user['status_name'] = Dictionary::getValue('system_user_status', $user['status']);
 $user['time_add_name'] = date('Y-m-d H:i:s', $user['time_add']);
 $user['time_edit_name'] = $user['time_edit'] ? date('Y-m-d H:i:s', $user['time_edit']) : '-';
 $user['time_login_name'] = $user['time_login'] ? date('Y-m-d H:i:s', $user['time_login']) : '-';
-$user['department_name'] = $departmentModel->selectOne('name', array(
+$user['department_name'] = Db::selectOne('name', array(
     'mark'=>'id = :id',
     'value'=>array(
         ':id'=>$user['department_id']
     )
 ));
 
-$roles = $roleModel->selectAll('name', array(
+$roles = Db::selectAll('name', array(
     'mark'=>'id in (:id)',
     'value'=>array(
         ':id'=>$user['role_id_string']
     )
 ));
-$user['role_name'] = ArrayTwoService::getColumnString($roles, 'name', '，');
-$user = SafeService::frontDisplay($user);
+$user['role_name'] = ArrayTwo::getColumnString($roles, 'name', '，');
+$user = Safe::frontDisplay($user);
 
 // 登录日志
-$loginLogs = $loginLogModel->selectAll("ip, time_login",  array(
+$loginLogs = Db::selectAll("ip, time_login",  array(
     'mark'=>'user_id = :user_id',
     'value'=>array(
         ':user_id'=>$user['id']
     )
 ), 'id desc', '0,50');
-$loginLogs = ArrayTwoService::columnTimestampToTime($loginLogs, 'time_login', 'time_login_name');
-$loginLogs = SafeService::frontDisplay($loginLogs);
+$loginLogs = ArrayTwo::columnTimestampToTime($loginLogs, 'time_login', 'time_login_name');
+$loginLogs = Safe::frontDisplay($loginLogs);
 
 // 操作日志
-$operationLogs = $operationLogModel->selectAll("id, ip, time_add, url",  array(
+$operationLogs = Db::selectAll("id, ip, time_add, url",  array(
     'mark'=>'user_id = :user_id',
     'value'=>array(
         ':user_id'=>$user['id']
     )
 ), 'id desc', '0,50');
-$operationLogs = ArrayTwoService::columnTimestampToTime($operationLogs, 'time_add', 'time_add_name');
+$operationLogs = ArrayTwo::columnTimestampToTime($operationLogs, 'time_add', 'time_add_name');
 
 foreach($operationLogs as $key => $operationLog){
-    $operationLogs[$key]['url_sub'] = StringService::getSubFromZero($operationLog['url'], 60);
+    $operationLogs[$key]['url_sub'] = String::getSubFromZero($operationLog['url'], 60);
 }
-$operationLogs = SafeService::frontDisplay($operationLogs, 'url, url_sub');
+$operationLogs = Safe::frontDisplay($operationLogs, 'url, url_sub');
 
 // 菜单
-$frameMainMenu = FrameMainService::getPageLeftMenu('system_user');
+$frameMainMenu = FrameMain::getPageLeftMenu('system_user');
 
 ?><!doctype html>
 <html>

@@ -2,9 +2,9 @@
 /**
  * 安全
  */
-namespace library\service;
+namespace library;
 
-class SafeService{
+class Safe{
     
     /**
      * 前台显示

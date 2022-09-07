@@ -2,9 +2,9 @@
 /**
  * 请求响应服务
  */
-namespace library\service;
+namespace library;
 
-class HttpService{
+class Http{
     static $errorCode = ''; // 错误代码
     static $errorMessage = ''; // 错误描述
 

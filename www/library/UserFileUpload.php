@@ -2,21 +2,15 @@
 /**
  * 用户文件上传服务
  */
-namespace library\service;
+namespace library;
 
-use library\model\UserFileModel;
-use library\service\ConfigService;
-use library\service\UserFileService;
-use library\service\IpService;
+use library\Db;
+use library\Config;
+use library\UserFile;
+use library\Ip;
 
-class UserFileUploadService{
-    static $path = ''; // 文件全路径
-    static $name = ''; // 文件名
-    static $extension = ''; // 扩展名
-    static $size = ''; // 文件大小
-    static $url = ''; // 文件访问域名
-    static $message = ''; // 上传描述
-    
+class UserFileUpload{
+
     /**
      * 上传
      * @param string $dirModule 目录模块 
@@ -54,33 +48,29 @@ class UserFileUploadService{
         $sizeMax = 1024 * 1024 * 200; // 文件上传大小限制
         $userFileModel = new UserFileModel();
         $data = array();
+        $return = array();
         
-        $configUserFilePath = ConfigService::getOne('user_file_path');
+        $configUserFilePath = Config::getOne('user_file_path');
         if(empty($configUserFilePath)){
-            self::$message = 'file_path配置错误';
-            return false;
+            throw new \Exception('file_path配置错误');
         }
         
         if(empty($_FILES[$fieldName])){
-            self::$message = '文件表单字段名称错误';
-            return false;
+            throw new \Exception('文件表单字段名称错误');
         }
         $file = $_FILES[$fieldName];
         
         if($file['error']){
-            self::$message = '文件上传错误，错误号：'.$_FILES['file']['error'];
-            return false;
+            throw new \Exception('文件上传错误，错误号：'.$_FILES['file']['error']);
         }
         
         if(!in_array($file['type'], array_values($typeAllows))){
-            self::$message = '此mime类型的文件不允许上传';
-            return false;
+            throw new \Exception('此mime类型的文件不允许上传');
         }
         $extension = array_search($file['type'], $typeAllows);
         
         if($file['size'] > $sizeMax){
-            self::$message = '文件超过200Mb';
-            return false;
+            throw new \Exception('文件超过200Mb');
         }
 
         if($dirModule !== ''){
@@ -88,16 +78,14 @@ class UserFileUploadService{
         }
         if(!file_exists($configUserFilePath.$dir)){
             if(!@mkdir($configUserFilePath.$dir, 0755, true)){
-                self::$message = '文件夹创建失败';
-                return false;
+                throw new \Exception('文件夹创建失败');
             }
         }
         
         $name = time().rand(1000, 9999).'.'.$extension;
         $path = $dir.'/'.$name;
         if(!move_uploaded_file($file['tmp_name'], $configUserFilePath.$path)){
-            self::$message = '文件上传失败';
-            return false;
+            throw new \Exception('文件上传失败');
         }
         
         // 记录
@@ -109,19 +97,19 @@ class UserFileUploadService{
             'path'=>$path,
             'size'=>$file['size'],
             'type'=>$file['type'],
-            'ip'=>IpService::getIp(),
+            'ip'=>Ip::get(),
             'time_add'=>time()
         );
-        $userFileModel->insert($data);
+        Db::insert($data);
         
         // 赋值
-        self::$path = $path;
-        self::$name = $name;
-        self::$extension = $extension;
-        self::$size = $file['size'];
-        self::$url = UserFileService::getUrl($path);
-        self::$message = '上传成功';
+        $return['path'] = $path;
+        $return['url'] = UserFile::getUrl($path);
+        $return['name'] = $name;
+        $return['extension'] = $extension;
+        $return['type'] = $file['type'];
+        $return['size'] = $file['size'];
         
-        return true;
+        return $return;
     }
 }

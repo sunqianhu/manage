@@ -5,27 +5,27 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\DepartmentModel;
-use library\service\ConfigService;
-use library\service\ZtreeService;
-use library\service\AuthService;
+use library\Db;
+use library\Config;
+use library\Ztree;
+use library\Auth;
 
-$config = ConfigService::getAll();
+$config = Config::getAll();
 $departmentModel = new DepartmentModel();
 $departments = array();
 $department = ''; // 部门json数据
 
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
 }
-if(!AuthService::isPermission('system_department')){
+if(!Auth::isPermission('system_department')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
 
-$departments = $departmentModel->selectAll('id, name, parent_id', array(), 'parent_id asc, id asc');
-$departments = ZtreeService::setOpenByFirst($departments);
+$departments = Db::selectAll('id, name, parent_id', array(), 'parent_id asc, id asc');
+$departments = Ztree::setOpenByFirst($departments);
 $department = json_encode($departments);
 
 ?><!doctype html>

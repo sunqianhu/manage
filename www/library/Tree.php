@@ -2,9 +2,9 @@
 /**
  * 树服务
  */
-namespace library\service;
+namespace library;
 
-class TreeService{
+class Tree{
     /**
      * 得到数据树
      * @param array $datas 数据

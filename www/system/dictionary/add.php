@@ -5,19 +5,19 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\service\ConfigService;
-use library\service\AuthService;
+use library\Config;
+use library\Auth;
 
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
 }
-if(!AuthService::isPermission('system_dictionary')){
+if(!Auth::isPermission('system_dictionary')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
 
-$config = ConfigService::getAll();
+$config = Config::getAll();
 ?><!doctype html>
 <html>
 <head>

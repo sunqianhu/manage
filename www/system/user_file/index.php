@@ -5,19 +5,19 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\UserFileModel;
-use library\service\ConfigService;
-use library\service\FrameMainService;
-use library\service\PaginationService;
-use library\service\SafeService;
-use library\service\AuthService;
-use library\service\FileService;
-use library\service\StringService;
-use library\service\UserService;
-use library\service\DepartmentService;
-use library\service\DictionaryService;
+use library\Db;
+use library\Config;
+use library\FrameMain;
+use library\Pagination;
+use library\Safe;
+use library\Auth;
+use library\File;
+use library\String;
+use library\User;
+use library\Department;
+use library\Dictionary;
 
-$config = ConfigService::getAll();
+$config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
 $userFileModel = new UserFileModel();
 $search = array(
@@ -35,17 +35,17 @@ $recordTotal = 0; // 总记录
 $paginationNodeIntact = ''; // 节点
 $userFiles = array();
 
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
 }
-if(!AuthService::isPermission('system_user_file')){
+if(!Auth::isPermission('system_user_file')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
 
 // 菜单
-$frameMainMenu = FrameMainService::getPageLeftMenu('system_user_file');
+$frameMainMenu = FrameMain::getPageLeftMenu('system_user_file');
 
 // 搜索
 if(isset($_GET['time_start']) && $_GET['time_start'] !== ''){
@@ -80,24 +80,24 @@ if(!empty($whereMarks)){
     $where['value'] = $whereValues;
 }
 
-$recordTotal = $userFileModel->selectOne('count(1)', $where);
+$recordTotal = Db::selectOne('count(1)', $where);
 
-$paginationService = new PaginationService($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
+$paginationService = new Pagination($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
 $paginationNodeIntact = $paginationService->getNodeIntact();
 
-$userFiles = $userFileModel->selectAll('id, department_id, user_id, module_id, name, path, size, type, ip, time_add', $where, 'id desc', ''.$paginationService->limitStart.','.$paginationService->pageSize);
+$userFiles = Db::selectAll('id, department_id, user_id, module_id, name, path, size, type, ip, time_add', $where, 'id desc', ''.$paginationService->limitStart.','.$paginationService->pageSize);
 
 foreach($userFiles as $key => $userFile){
     $userFiles[$key]['time_add_name'] = date('Y-m-d H:i:s', $userFile['time_add']);
-    $userFiles[$key]['department_name'] = DepartmentService::getName($userFile['department_id']);
-    $userFiles[$key]['size_name'] = FileService::getByteReadable($userFile['size']);
-    $userFiles[$key]['user_name'] = UserService::getName($userFile['user_id']);
-    $userFiles[$key]['module_name'] = DictionaryService::getValue('system_user_file_module', $userFile['module_id']);
-    $userFiles[$key]['name_sub'] = StringService::getSubFromZero($userFile['name'], 25);
+    $userFiles[$key]['department_name'] = Department::getName($userFile['department_id']);
+    $userFiles[$key]['size_name'] = File::getByteReadable($userFile['size']);
+    $userFiles[$key]['user_name'] = User::getName($userFile['user_id']);
+    $userFiles[$key]['module_name'] = Dictionary::getValue('system_user_file_module', $userFile['module_id']);
+    $userFiles[$key]['name_sub'] = String::getSubFromZero($userFile['name'], 25);
 }
 
-$search = SafeService::frontDisplay($search);
-$userFiles = SafeService::frontDisplay($userFiles, 'id, user_id, module_id');
+$search = Safe::frontDisplay($search);
+$userFiles = Safe::frontDisplay($userFiles, 'id, user_id, module_id');
 
 ?><!doctype html>
 <html>

@@ -2,14 +2,14 @@
 /**
  * ip服务
  */
-namespace library\service;
+namespace library;
 
-class IpService{
+class Ip{
     /**
      * 得到访问者的ip
      * @return string ip
      */
-    static function getIp(){
+    static function get(){
         $ip = '';
         
         if(getenv('HTTP_CLIENT_IP')){

@@ -5,9 +5,9 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\PermissionModel;
-use library\service\ValidateService;
-use library\service\AuthService;
+use library\Db;
+use library\Validate;
+use library\Auth;
 
 $return = array(
     'status'=>'error',
@@ -16,7 +16,6 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$validateService = new ValidateService();
 $permissionModel = new PermissionModel();
 $permissionParent = array(); // 上级权限
 $id = 0; // 添加权限id
@@ -24,25 +23,25 @@ $parentIds = ''; // 所有上级权限id
 $data = array();
 
 // 验证
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     $return['message'] = '登录已失效';
     echo json_encode($return);
     exit;
 }
-if(!AuthService::isPermission('system_permission')){
+if(!Auth::isPermission('system_permission')){
     $return['message'] = '无权限';
     echo json_encode($return);
     exit;
 }
 
-$validateService->rule = array(
+Validate::setRule(array(
     'parent_id' => 'number',
     'type' => 'require',
     'name' => 'require|max_length:32',
     'tag' => 'require|max_length:64',
     'sort' => 'number|max_length:10'
 );
-$validateService->message = array(
+Validate::setMessage(array(
     'parent_id.number' => '请选择上级权限',
     'type.require' => '请选择权限类型',
     'name.require' => '请输入权限名称',
@@ -52,15 +51,15 @@ $validateService->message = array(
     'sort.number' => '排序必须是个数字',
     'sort.max_length' => '排序不能大于10个字'
 );
-if(!$validateService->check($_POST)){
-    $return['message'] = $validateService->getErrorMessage();
-    $return['data']['dom'] = '#'.$validateService->getErrorField();
+if(!Validate::check($_POST)){
+    $return['message'] = Validate::getErrorMessage();
+    $return['data']['dom'] = '#'.Validate::getErrorField();
     echo json_encode($return);
     exit;
 }
 
 // 上级权限
-$permissionParent = $permissionModel->selectRow(
+$permissionParent = Db::selectRow(
     'parent_ids',
     array(
         'mark'=> 'id = :id',
@@ -79,7 +78,7 @@ $data = array(
     'sort'=>$_POST['sort']
 );
 try{
-    $id = $permissionModel->insert($data);
+    $id = Db::insert($data);
 }catch(Exception $e){
     $return['message'] = $e->getMessage();
     echo json_encode($return);
@@ -87,7 +86,7 @@ try{
 }
 
 $parentIds = $permissionParent['parent_ids'].','.$id;
-$permissionModel->update(
+Db::update(
     array('parent_ids'=>$parentIds),
     array(
         'mark'=>'id = :id',

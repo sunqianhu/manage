@@ -5,55 +5,54 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\PermissionModel;
-use library\service\ConfigService;
-use library\service\ValidateService;
-use library\service\SafeService;
-use library\service\DictionaryService;
-use library\service\AuthService;
+use library\Db;
+use library\Config;
+use library\Validate;
+use library\Safe;
+use library\Dictionary;
+use library\Auth;
 
-$config = ConfigService::getAll();
-$validateService = new ValidateService();
+$config = Config::getAll();
 $permissionModel = new PermissionModel();
 $permission = array();
 
 // 验证
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
 }
-if(!AuthService::isPermission('system_permission')){
+if(!Auth::isPermission('system_permission')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
 
-$validateService->rule = array(
+Validate::setRule(array(
     'id' => 'require|number'
 );
-$validateService->message = array(
+Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
 );
-if(!$validateService->check($_GET)){
-    header('location:../../error.php?message='.urlencode($validateService->getErrorMessage()));
+if(!Validate::check($_GET)){
+    header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
     exit;
 }
 
-$permission = $permissionModel->selectRow('id, parent_id, type, name, `sort`, tag', array(
+$permission = Db::selectRow('id, parent_id, type, name, `sort`, tag', array(
     'mark'=>'id = :id',
     'value'=>array(
         ':id'=>$_GET['id']
     )
 ));
-$permission['parent_name'] = $permissionModel->selectOne('name', array(
+$permission['parent_name'] = Db::selectOne('name', array(
     'mark'=>'id = :id',
     'value'=>array(
         ':id'=> $permission['parent_id']
     )
 ));
-$permission = SafeService::frontDisplay($permission);
+$permission = Safe::frontDisplay($permission);
 
-$permissionTypeRadioNode = DictionaryService::getRadio('system_permission_type', 'type', $permission['type']);
+$permissionTypeRadioNode = Dictionary::getRadio('system_permission_type', 'type', $permission['type']);
 
 ?><!doctype html>
 <html>

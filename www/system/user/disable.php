@@ -5,44 +5,43 @@
 require_once '../../library/session.php';
 require_once '../../library/app.php';
 
-use library\model\UserModel;
-use library\service\ValidateService;
-use library\service\AuthService;
+use library\Db;
+use library\Validate;
+use library\Auth;
 
 $return = array(
     'status'=>'error',
     'message'=>''
 );
 $userModel = new UserModel();
-$validateService = new ValidateService();
 $user = array();
 
 // 验证
-if(!AuthService::isLogin()){
+if(!Auth::isLogin()){
     $return['message'] = '登录已失效';
     echo json_encode($return);
     exit;
 }
-if(!AuthService::isPermission('system_user')){
+if(!Auth::isPermission('system_user')){
     $return['message'] = '无权限';
     echo json_encode($return);
     exit;
 }
-$validateService->rule = array(
+Validate::setRule(array(
     'id' => 'require:number'
 );
-$validateService->message = array(
+Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
 );
-if(!$validateService->check($_GET)){
-    $return['message'] = $validateService->getErrorMessage();
+if(!Validate::check($_GET)){
+    $return['message'] = Validate::getErrorMessage();
     echo json_encode($return);
     exit;
 }
 
 // 本用户
-$user = $userModel->selectRow(
+$user = Db::selectRow(
     'id,status',
     array(
         'mark'=> 'id = :id',
@@ -63,7 +62,7 @@ if($user['status'] == 2){
 }
 
 try{
-    $userModel->update(
+    Db::update(
         array(
             'status'=>2
         ),

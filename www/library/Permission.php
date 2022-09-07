@@ -2,9 +2,9 @@
 /**
  * 权限服务
  */
-namespace library\service;
+namespace library;
 
-class PermissionService{
+class Permission{
     
     /**
      * 得到首页节点树
