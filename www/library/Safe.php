@@ -7,12 +7,12 @@ namespace library;
 class Safe{
     
     /**
-     * 前台显示
+     * 转实体
      * @param array $datas 数据
      * @param array $excludeField 排除字段
      * @return string 处理后可以被前台显示的字符串
      */
-    static function frontDisplay($datas, $excludeField = ''){
+    static function entity($datas, $excludeField = ''){
         $excludeFields = array();
     
         if(empty($datas)){
@@ -29,7 +29,7 @@ class Safe{
                     }
                 }
                 
-                $datas[$field] = self::frontDisplay($data, $excludeField);
+                $datas[$field] = self::entity($data, $excludeField);
             }
         }else{
             $datas = htmlspecialchars($datas);

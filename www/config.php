@@ -8,7 +8,7 @@ return array(
     'app_domain'=>'http://manage.sunqianhu123.cc/', // 站点访问域名
     
     // 缓存
-    'cache_dir'=>__DIR__.'/cache/', // 缓存目录
+    'cache_dir'=>dirname(__DIR__).'/cache/', // 缓存目录
     
     // 用户文件
     'user_file_path'=>__DIR__.'/userfile/', // 路径

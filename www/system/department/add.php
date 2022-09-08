@@ -4,19 +4,20 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Config;
-use library\Auth;
-use library\Validate;
-use library\Safe;
+use \library\Db;
+use \library\Config;
+use \library\Auth;
+use \library\Validate;
+use \library\Safe;
 
 $config = array();
-$departmentModel = new DepartmentModel();
 $departmentParent = array();
 $init = array(
     'parent_id'=>1,
     'parent_name'=>'顶级部门',
 );
+$sql = '';
+$data = array();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -28,27 +29,26 @@ if(!Auth::isPermission('system_department')){
 }
 Validate::setRule(array(
     'parent_id' => 'number'
-);
+));
 Validate::setMessage(array(
     'parent_id.number' => 'parent_id必须是个数字'
-);
+));
 if(!Validate::check($_GET)){
     header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
     exit;
 }
 
 if(!empty($_GET['parent_id'])){
-    $departmentParent = Db::selectRow('id, name', array(
-        'mark'=>'id = :id',
-        'value'=>array(
-            ':id'=> $_GET['parent_id']
-        )
-    ));
+    $sql = 'select id, name from department where id = :id';
+    $data = array(
+        ':id'=>$_GET['parent_id']
+    );
+    $departmentParent = Db::selectRow($sql, $data);
     if(!empty($departmentParent)){
         $init['parent_id'] = $departmentParent['id'];
         $init['parent_name'] = $departmentParent['name'];
     }
-    $init = Safe::frontDisplay($init);
+    $init = Safe::entity($init);
 }
 $config = Config::getAll();
 ?><!doctype html>

@@ -4,9 +4,9 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Validate;
-use library\Auth;
+use \library\Db;
+use \library\Validate;
+use \library\Auth;
 
 $return = array(
     'status'=>'error',
@@ -15,10 +15,10 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$permissionModel = new PermissionModel();
 $permissionParent = array(); // 上级权限
 $id = 0; // 添加权限id
 $parentIds = ''; // 所有上级权限id
+$sql = '';
 $data = array();
 
 // 验证
@@ -39,7 +39,7 @@ Validate::setRule(array(
     'name' => 'require|max_length:32',
     'tag' => 'require|max_length:64',
     'sort' => 'number|max_length:10'
-);
+));
 Validate::setMessage(array(
     'parent_id.number' => '请选择上级权限',
     'type.require' => '请选择权限类型',
@@ -49,7 +49,7 @@ Validate::setMessage(array(
     'tag.max_length' => '权限标识不能大于64个字',
     'sort.number' => '排序必须是个数字',
     'sort.max_length' => '排序不能大于10个字'
-);
+));
 if(!Validate::check($_POST)){
     $return['message'] = Validate::getErrorMessage();
     $return['data']['dom'] = '#'.Validate::getErrorField();
@@ -58,42 +58,39 @@ if(!Validate::check($_POST)){
 }
 
 // 上级权限
-$permissionParent = Db::selectRow(
-    'parent_ids',
-    array(
-        'mark'=> 'id = :id',
-        'value'=> array(
-            ':id'=>$_POST['parent_id']
-        )
-    )
+$sql = 'select parent_ids from permission where id = :id';
+$data = array(
+    ':id'=>$_POST['parent_id']
 );
+$permissionParent = Db::selectRow($sql, $data);
 
 // 入库
+$sql = 'insert into permission(parent_id,type,name,tag,sort) values(:parent_id,:type,:name,:tag,:sort)';
 $data = array(
-    'parent_id'=>$_POST['parent_id'],
-    'type'=>$_POST['type'],
-    'name'=>$_POST['name'],
-    'tag'=>$_POST['tag'],
-    'sort'=>$_POST['sort']
+    ':parent_id'=>$_POST['parent_id'],
+    ':type'=>$_POST['type'],
+    ':name'=>$_POST['name'],
+    ':tag'=>$_POST['tag'],
+    ':sort'=>$_POST['sort']
 );
-try{
-    $id = Db::insert($data);
-}catch(Exception $e){
-    $return['message'] = $e->getMessage();
+$id = Db::insert($sql, $data);
+if(!$id){
+    $return['message'] = Db::getError();
     echo json_encode($return);
     exit;
 }
 
 $parentIds = $permissionParent['parent_ids'].','.$id;
-Db::update(
-    array('parent_ids'=>$parentIds),
-    array(
-        'mark'=>'id = :id',
-        'value'=> array(
-            ':id'=>$id
-        )
-    )
+$sql = "update permission set parent_ids = :parent_ids where id = :id";
+$data = array(
+    ':parent_ids'=>$parentIds,
+    ':id'=>$id
 );
+if(!Db::update($sql, $data)){
+    $return['message'] = Db::getError();
+    echo json_encode($return);
+    exit;
+}
 
 $return['status'] = 'success';
 $return['message'] = '添加成功';

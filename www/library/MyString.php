@@ -4,9 +4,9 @@
  */
 namespace library;
 
-use library\Safe;
+use \library\Safe;
 
-class String{
+class MyString{
     /**
      * 得到字符串长度
      * @param string $string 字符串

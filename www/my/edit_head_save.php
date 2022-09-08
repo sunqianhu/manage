@@ -4,20 +4,19 @@
  */
 require_once '../library/app.php';
 
-use library\Db;
-use library\UserFileUpload;
-use library\User;
-use library\Auth;
+use \library\Db;
+use \library\UserFileUpload;
+use \library\User;
+use \library\Auth;
 
 $return = array(
     'status'=>'error',
     'msg'=>''
 ); // 返回数据
-$userModel = new UserModel();
 $user = array();
 $path = ''; // 头像路径
+$sql = '';
 $data = array();
-$returnUpload = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -27,12 +26,11 @@ if(!Auth::isLogin()){
 }
 
 // 本用户
-$user = Db::selectRow('id', array(
-    'mark'=>'id = :id',
-    'value'=>array(
-        ':id'=>$_SESSION['user']['id']
-    )
-));
+$sql = "select id from user where id = :id";
+$data = array(
+    ':id'=>$_SESSION['user']['id']
+);
+$user = Db::selectRow($sql, $data);
 if(empty($user)){
     $return['message'] = '用户没有找到';
     echo json_encode($return);
@@ -40,25 +38,20 @@ if(empty($user)){
 }
 
 // 上传文件
-try{
-    $returnUpload = UserFileUpload::upload('user_head', 'head');
-}catch(Exception $e){
-    $return['message'] = $e->getMessage();
+if(!UserFileUpload::upload('user_head', 'head')){
+    $return['message'] = UserFileUpload::getError();
     echo json_encode($return);
     exit;
 }
-$path = $returnUpload['path'];
+$path = UserFileUpload::$path;
 
 // 更新
+$sql = 'update user set head = :head where id = :id';
 $data = array(
-    'head'=>$path
+    ':head'=>$path,
+    ':id'=>$user['id']
 );
-Db::update($data, array(
-    'mark'=>'id = :id',
-    'value'=> array(
-        ':id'=>$user['id']
-    )
-));
+Db::update($sql, $data);
 
 $_SESSION['user']['head'] = $path;
 $_SESSION['user']['head_url'] = User::getHeadUrl($path);

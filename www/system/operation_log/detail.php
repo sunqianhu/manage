@@ -4,19 +4,20 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Validate;
-use library\Auth;
-use library\Config;
-use library\FrameMain;
-use library\Safe;
-use library\User;
-use library\Department;
+use \library\Db;
+use \library\Validate;
+use \library\Auth;
+use \library\Config;
+use \library\FrameMain;
+use \library\Safe;
+use \library\User;
+use \library\Department;
 
-$operationLogModel = new OperationLogModel(); // 模型
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
 $operationLog = array();
+$sql = '';
+$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -29,22 +30,21 @@ if(!Auth::isPermission('system_operation_log')){
 }
 Validate::setRule(array(
     'id' => 'require|number'
-);
+));
 Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
-);
+));
 if(!Validate::check($_GET)){
     header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
     exit;
 }
 
-$operationLog = Db::selectRow('*', array(
-    'mark'=>'id = :id',
-    'value'=>array(
-        ':id'=>$_GET['id']
-    )
-));
+$sql = 'select * from operation_log where id = :id';
+$data = array(
+    ':id'=>$_GET['id']
+);
+$operationLog = Db::selectRow($sql, $data);
 if(empty($operationLog)){
     header('location:../../error.php?message='.urlencode('没有找到用户'));
     exit;
@@ -53,10 +53,10 @@ $operationLog['time_add_name'] = date('Y-m-d H:i:s', $operationLog['time_add']);
 $operationLog['user_name'] = User::getName($operationLog['user_id']);
 $operationLog['department_name'] = Department::getName($operationLog['department_id']);
 
-$operationLog = Safe::frontDisplay($operationLog, 'url');
+$operationLog = Safe::entity($operationLog, 'url');
 
 // 菜单
-$frameMainMenu = FrameMain::getPageLeftMenu('system_operation_log');
+$frameMainMenu = FrameMain::getMenu('system_operation_log');
 
 ?><!doctype html>
 <html>

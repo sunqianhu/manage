@@ -4,8 +4,8 @@
  */
 require_once '../library/app.php';
 
-use library\Config;
-use library\Auth;
+use \library\Config;
+use \library\Auth;
 
 $config = Config::getAll();
 

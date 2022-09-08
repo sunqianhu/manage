@@ -4,9 +4,9 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Validate;
-use library\Auth;
+use \library\Db;
+use \library\Validate;
+use \library\Auth;
 
 $return = array(
     'status'=>'error',
@@ -15,8 +15,8 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$dictionaryModel = new DictionaryModel();
 $dictionary = array();
+$sql = '';
 $data = array();
 
 // 验证
@@ -37,7 +37,7 @@ Validate::setRule(array(
     'key' => 'require|max_length:64',
     'value' => 'require|max_length:128',
     'sort' => 'number|max_length:10'
-);
+));
 Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字',
@@ -49,7 +49,7 @@ Validate::setMessage(array(
     'value.max_length' => '字典值不能大于128个字',
     'sort.number' => '排序必须是个数字',
     'sort.max_length' => '排序不能大于10个字'
-);
+));
 if(!Validate::check($_POST)){
     $return['message'] = Validate::getErrorMessage();
     $return['data']['dom'] = '#'.Validate::getErrorField();
@@ -58,15 +58,11 @@ if(!Validate::check($_POST)){
 }
 
 // 本字典
-$dictionary = Db::selectRow(
-    'id',
-    array(
-        'mark'=> 'id = :id',
-        'value'=> array(
-            ':id'=>$_POST['id']
-        )
-    )
+$sql = 'select id from dictionary where id = :id';
+$data = array(
+    ':id'=>$_POST['id']
 );
+$dictionary = Db::selectRow($sql, $data);
 if(empty($dictionary)){
     $return['message'] = '字典没有找到';
     echo json_encode($return);
@@ -74,21 +70,21 @@ if(empty($dictionary)){
 }
 
 // 更新
+$sql = 'update dictionary set
+type = :type,
+`key` = :key,
+`value` = :value,
+`sort` = :sort
+where id = :id';
 $data = array(
-    'type'=>$_POST['type'],
-    'key'=>$_POST['key'],
-    'value'=>$_POST['value'],
-    'sort'=>$_POST['sort']
+    ':type'=>$_POST['type'],
+    ':key'=>$_POST['key'],
+    ':value'=>$_POST['value'],
+    ':sort'=>$_POST['sort'],
+    ':id'=>$dictionary['id']
 );
-try{
-    Db::update($data, array(
-        'mark'=>'id = :id',
-        'value'=> array(
-            ':id'=>$dictionary['id']
-        )
-    ));
-}catch(Exception $e){
-    $return['message'] = $e->getMessage();
+if(!Db::update($sql, $data)){
+    $return['message'] = Db::getError();
     echo json_encode($return);
     exit;
 }

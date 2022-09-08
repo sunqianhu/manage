@@ -4,9 +4,9 @@
  */
 require_once 'library/app.php';
 
-use library\Config;
-use library\FrameMain;
-use library\Auth;
+use \library\Config;
+use \library\FrameMain;
+use \library\Auth;
 
 $config = array();
 $frameMainMenu = '';
@@ -19,7 +19,7 @@ if(!Auth::isLogin()){
 }
 
 $config = Config::getAll();
-$frameMainMenu = FrameMain::getPageLeftMenu('home');
+$frameMainMenu = FrameMain::getMenu('home');
 if($_SESSION['user']['time_login'] > 0){
     $timeLogin = date('Y-m-d H:i:s', $_SESSION['user']['time_login']);
 }

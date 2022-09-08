@@ -4,9 +4,9 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Validate;
-use library\Auth;
+use \library\Db;
+use \library\Validate;
+use \library\Auth;
 
 $return = array(
     'status'=>'error',
@@ -15,9 +15,9 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$departmentModel = new DepartmentModel();
 $departmentCurrent = array(); // 本部门
 $departmentParent = array(); // 上级部门
+$sql = '';
 $data = array();
 
 // 验证
@@ -37,7 +37,7 @@ Validate::setRule(array(
     'parent_id' => 'number',
     'name' => 'require|max_length:25',
     'sort' => 'number|max_length:10'
-);
+));
 Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字',
@@ -46,7 +46,7 @@ Validate::setMessage(array(
     'name.max_length' => '部门名称不能大于32个字',
     'sort.number' => '排序必须是个数字',
     'sort.max_length' => '排序不能大于10个字'
-);
+));
 if(!Validate::check($_POST)){
     $return['message'] = Validate::getErrorMessage();
     $return['data']['dom'] = '#'.Validate::getErrorField();
@@ -60,15 +60,11 @@ if($_POST['id'] == '1'){
 }
 
 // 本部门
-$departmentCurrent = Db::selectRow(
-    'id, parent_id',
-    array(
-        'mark'=> 'id = :id',
-        'value'=> array(
-            ':id'=>$_POST['id']
-        )
-    )
+$sql = 'select id, parent_id from department where id = :id';
+$data = array(
+    ':id'=>$_POST['id']
 );
+$departmentCurrent = Db::selectRow($sql, $data);
 if(empty($departmentCurrent)){
     $return['message'] = '此部门没有找到';
     echo json_encode($return);
@@ -76,33 +72,30 @@ if(empty($departmentCurrent)){
 }
 
 // 上级部门
-$departmentParent = Db::selectRow(
-    'parent_ids',
-    array(
-        'mark'=> 'id = :id',
-        'value'=> array(
-            ':id'=>$_POST['parent_id']
-        )
-    )
+$sql = 'select parent_ids from department where id = :id';
+$data = array(
+    ':id'=>$_POST['parent_id']
 );
+$departmentParent = Db::selectRow($sql, $data);
 
 // 更新
+$sql = 'update department set
+    parent_id = :parent_id,
+    parent_ids = :parent_ids,
+    name = :name,
+    sort = :sort,
+    remark = :remark
+where id = :id';
 $data = array(
-    'parent_id'=>$_POST['parent_id'],
-    'parent_ids'=>$departmentParent['parent_ids'].','.$departmentCurrent['id'],
-    'name'=>$_POST['name'],
-    'sort'=>$_POST['sort'],
-    'remark'=>$_POST['remark']
+    ':parent_id'=>$_POST['parent_id'],
+    ':parent_ids'=>$departmentParent['parent_ids'].','.$departmentCurrent['id'],
+    ':name'=>$_POST['name'],
+    ':sort'=>$_POST['sort'],
+    ':remark'=>$_POST['remark'],
+    ':id'=>$departmentCurrent['id']
 );
-try{
-    $id = Db::update($data, array(
-        'mark'=>'id = :id',
-        'value'=> array(
-            ':id'=>$departmentCurrent['id']
-        )
-    ));
-}catch(Exception $e){
-    $return['message'] = $e->getMessage();
+if(!Db::update($sql, $data)){
+    $return['message'] = Db::getError();
     echo json_encode($return);
     exit;
 }

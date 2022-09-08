@@ -4,7 +4,7 @@
  */
 namespace library;
 
-use library\Config;
+use \library\Config;
 
 class Pagination{
     public $id;
@@ -27,13 +27,17 @@ class Pagination{
         if(is_numeric($recordNumber) && $recordNumber > 0){
             $this->recordTotal = $recordNumber;
         }
-        if(is_numeric($pageSize) && $pageSize > 0){
+        if(is_numeric($_GET['page_size']) && $_GET['page_size'] > 0){
+            $this->pageSize = $_GET['page_size'];
+        }else{
             $this->pageSize = $pageSize;
         }
-        $this->pageTotal = ceil($this->recordTotal / $this->pageSize);
-        if(is_numeric($pageCurrent) && $pageCurrent > 0){
+        if(is_numeric($_GET['page_current']) && $_GET['page_current'] > 0){
+            $this->pageCurrent = $_GET['page_current'];
+        }else{
             $this->pageCurrent = $pageCurrent;
         }
+        $this->pageTotal = ceil($this->recordTotal / $this->pageSize);
         if($this->pageCurrent > $this->pageTotal){
             $this->pageCurrent = $this->pageTotal;
         }

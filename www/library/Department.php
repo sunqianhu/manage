@@ -4,7 +4,7 @@
  */
 namespace library;
 
-use library\Db;
+use \library\Db;
 
 class Department{
     
@@ -15,15 +15,15 @@ class Department{
      * @return string 用户姓名
      */
     static function getName($id){
-        $departmentModel = new DepartmentModel();
         $name = '';
-        
-        $name = Db::selectOne('name', array(
-            'mark'=>'id = :id',
-            'value'=>array(
-                ':id'=>$id
-            )
-        ));
+        $sql = '';
+        $data = array();
+                
+        $sql = 'select name from department where id = :id';
+        $data = array(
+            ':id'=>$id
+        );
+        $name = Db::selectOne($sql, $data);
         
         return $name;
     }

@@ -4,24 +4,22 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\model\RoleModel;
-use library\Db;
-use library\Config;
-use library\ArrayTwo;
-use library\Validate;
-use library\Safe;
-use library\Dictionary;
-use library\Auth;
+use \library\Db;
+use \library\Config;
+use \library\ArrayTwo;
+use \library\Validate;
+use \library\Safe;
+use \library\Dictionary;
+use \library\Auth;
+use \library\Department;
 
 $config = Config::getAll();
-$userModel = new UserModel();
-$departmentModel = new DepartmentModel();
-$roleModel = new RoleModel();
 $user = array();
 $roles = array();
 $status = '';
 $roleOption = '';
+$sql = '';
+$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -34,38 +32,33 @@ if(!Auth::isPermission('system_user')){
 }
 Validate::setRule(array(
     'id' => 'require|number'
-);
+));
 Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
-);
+));
 if(!Validate::check($_GET)){
     header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
     exit;
 }
 
-$user = Db::selectRow('id, username, `name`, `phone`, `status`, department_id, role_id_string', array(
-    'mark'=>'id = :id',
-    'value'=>array(
-        ':id'=>$_GET['id']
-    )
-));
+$sql = 'select id, username, `name`, `phone`, `status`, department_id, role_id_string from user where id = :id';
+$data = array(
+    ':id'=>$_GET['id']
+);
+$user = Db::selectRow($sql, $data);
 if(empty($user)){
     header('location:../../error.php?message='.urlencode('没有找到用户'));
     exit;
 }
 
 $user['role_ids'] = explode(',', $user['role_id_string']);
-$user['department_name'] = Db::selectOne('name', array(
-    'mark'=>'id = :id',
-    'value'=>array(
-        ':id'=>$user['department_id']
-    )
-));
-$user = Safe::frontDisplay($user);
+$user['department_name'] = Department::getName($user['department_id']);
+$user = Safe::entity($user);
 $status = Dictionary::getRadio('system_user_status', 'status', $user['status']);
 
-$roles = Db::selectAll('id, name', array());
+$sql = 'select id, name from role order by id asc';
+$roles = Db::selectAll($sql);
 $roleOption = ArrayTwo::getSelectOption($roles, $user['role_ids'], 'id', 'name');
 
 ?><!doctype html>

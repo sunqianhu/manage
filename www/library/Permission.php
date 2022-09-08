@@ -7,6 +7,26 @@ namespace library;
 class Permission{
     
     /**
+     * 得到权限名
+     * @access public
+     * @param int $id 用户id
+     * @return string 用户姓名
+     */
+    static function getName($id){
+        $name = '';
+        $sql = '';
+        $data = array();
+        
+        $sql = 'select name from permission where id = :id';
+        $data = array(
+            ':id'=>$id
+        );
+        $name = Db::selectOne($sql, $data);
+        
+        return $name;
+    }
+    
+    /**
      * 得到首页节点树
      * @param array $permissions 数据
      * @return array

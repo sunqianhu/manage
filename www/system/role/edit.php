@@ -4,23 +4,21 @@
  */
 require_once '../../library/app.php';
 
-use library\model\RoleModel;
-use library\Db;
-use library\Config;
-use library\Ztree;
-use library\Validate;
-use library\Safe;
-use library\Auth;
+use \library\Db;
+use \library\Config;
+use \library\Ztree;
+use \library\Validate;
+use \library\Safe;
+use \library\Auth;
 
 $config = Config::getAll();
-$roleModel = new RoleModel();
-$rolePermissionModel = new RolePermissionModel();
-$permissionModel = new PermissionModel();
 $role = array();
 $rolePermissions = array();
 $permissionIds = array();
 $permissions = array();
 $permission = ''; // 权限json数据
+$sql = '';
+$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -34,40 +32,37 @@ if(!Auth::isPermission('system_role')){
 
 Validate::setRule(array(
     'id' => 'require|number'
-);
+));
 Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
-);
+));
 if(!Validate::check($_GET)){
     header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
     exit;
 }
 
-$role = Db::selectRow('id, name, remark', array(
-    'mark'=>'id = :id',
-    'value'=>array(
-        ':id'=>$_GET['id']
-    )
-));
+$sql = 'select id, name, remark from role where id = :id';
+$data = array(
+    ':id'=>$_GET['id']
+);
+$role = Db::selectRow($sql, $data);
 if(empty($role)){
     header('location:../../error.php?message='.urlencode('角色没有找到'));
     exit;
 }
 
-$rolePermissions = Db::selectAll('permission_id', array(
-    'mark'=>'role_id = :role_id',
-    'value'=>array(
-        ':role_id'=>$role['id']
-    )
-));
+$sql = 'select permission_id from role_permission where role_id = :role_id';
+$data = array(
+    ':role_id'=>$role['id']
+);
+$rolePermissions = Db::selectAll($sql, $data);
 $permissionIds = array_column($rolePermissions, 'permission_id');
 $role['permission_ids'] = implode(',', $permissionIds);
-$role = Safe::frontDisplay($role);
+$role = Safe::entity($role);
 
-$permissions = Db::selectAll('id, name, parent_id', array(
-    'mark'=>'parent_id != 0'
-), 'parent_id asc, id asc');
+$sql = 'select id, name, parent_id from permission where parent_id != 0 order by parent_id asc, id asc';
+$permissions = Db::selectAll($sql);
 $permissions = Ztree::setOpenByFirst($permissions);
 $permissions = Ztree::setChecked($permissions, $permissionIds);
 $permission = json_encode($permissions);

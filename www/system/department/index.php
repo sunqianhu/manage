@@ -4,16 +4,15 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Config;
-use library\FrameMain;
-use library\Tree;
-use library\Safe;
-use library\Department;
-use library\Auth;
+use \library\Db;
+use \library\Config;
+use \library\FrameMain;
+use \library\Tree;
+use \library\Safe;
+use \library\Department;
+use \library\Auth;
 
 $config = Config::getAll();
-$departmentModel = new DepartmentModel();
 $departments = array(); // 部门数据
 $departmentNode = ''; // 部门表格节点
 $frameMainMenu = '';
@@ -22,9 +21,10 @@ $search = array(
     'name'=>'',
     'remark'=>''
 );
-$whereMarks = array();
-$whereValues = array();
-$where = array();
+$wheres = array();
+$where = '1';
+$sql = '';
+$data = array();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -36,35 +36,35 @@ if(!Auth::isPermission('system_department')){
 }
 
 // 菜单
-$frameMainMenu = FrameMain::getPageLeftMenu('system_department');
+$frameMainMenu = FrameMain::getMenu('system_department');
 
 // 搜索
 if(!empty($_GET['id'])){
-    $whereMarks[] = 'id = :id';
-    $whereValues[':id'] = $_GET['id'];
+    $wheres[] = 'id = :id';
+    $data[':id'] = $_GET['id'];
     $search['id'] = $_GET['id'];
 }
 if(isset($_GET['name']) && $_GET['name'] !== ''){
-    $whereMarks[] = 'name like :name';
-    $whereValues[':name'] = '%'.$_GET['name'].'%';
+    $wheres[] = 'name like :name';
+    $data[':name'] = '%'.$_GET['name'].'%';
     $search['name'] = $_GET['name'];
 }
 if(isset($_GET['remark']) && $_GET['remark'] !== ''){
-    $whereMarks[] = 'remark like :remark';
-    $whereValues[':remark'] = '%'.$_GET['remark'].'%';
+    $wheres[] = 'remark like :remark';
+    $data[':remark'] = '%'.$_GET['remark'].'%';
     $search['remark'] = $_GET['remark'];
 }
-$search = Safe::frontDisplay($search);
+$search = Safe::entity($search);
 
-if(!empty($whereMarks)){
-    $where['mark'] = implode(' and ', $whereMarks);
+if(!empty($wheres)){
+    $where = implode(' and ', $wheres);
 }
-$where['value'] = $whereValues;
 
 // 数据
-$departments = Db::selectAll('id, parent_id, name, `sort`, remark', $where, '`sort` asc, id asc');
+$sql = "select id, parent_id, name, `sort`, remark from department where $where order by `sort` asc, id asc";
+$departments = Db::selectAll($sql);
 $departments = Tree::getTree($departments, 'child', 'id', 'parent_id');
-$departments = Safe::frontDisplay($departments);
+$departments = Safe::entity($departments);
 $departmentNode = Department::getIndexTreeNode($departments, 1);
 
 ?><!doctype html>

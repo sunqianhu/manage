@@ -4,27 +4,27 @@
  */
 require_once '../../library/app.php';
 
-use library\model\RoleModel;
-use library\Config;
-use library\FrameMain;
-use library\Safe;
-use library\Pagination;
-use library\Auth;
+use \library\Db;
+use \library\Config;
+use \library\FrameMain;
+use \library\Safe;
+use \library\Pagination;
+use \library\Auth;
 
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架权限
-$roleModel = new RoleModel(); // 模型
 $search = array(
     'id'=>'',
     'name'=>''
 ); // 搜索
-$whereMarks = array();
-$whereValues = array();
-$where = array();
-$paginationService = null; // 分页
+$wheres = array();
+$where = '1';
 $recordTotal = 0; // 总记录
+$pagination = null; // 分页
 $paginationNodeIntact = ''; // 节点
 $roles = array();
+$sql = '';
+$data = array();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -36,37 +36,37 @@ if(!Auth::isPermission('system_role')){
 }
 
 // 权限
-$frameMainMenu = FrameMain::getPageLeftMenu('system_role');
+$frameMainMenu = FrameMain::getMenu('system_role');
 
 // 搜索
 if(!empty($_GET['id'])){
-    $whereMarks[] = 'id = :id';
-    $whereValues[':id'] = $_GET['id'];
+    $wheres[] = 'id = :id';
+    $data[':id'] = $_GET['id'];
     $search['id'] = $_GET['id'];
 }
 if(isset($_GET['name']) && $_GET['name'] !== ''){
-    $whereMarks[] = 'name = :name';
-    $whereValues[':name'] = '%'.$_GET['name'].'%';
+    $wheres[] = 'name = :name';
+    $data[':name'] = '%'.$_GET['name'].'%';
     $search['name'] = $_GET['name'];
 }
-if(!empty($whereMarks)){
-    $where['mark'] = implode(' and ', $whereMarks);
+if(!empty($wheres)){
+    $where = implode(' and ', $wheres);
 }
-if(!empty($whereMarks)){
-    $where['value'] = $whereValues;
-}
-$recordTotal = Db::selectOne('count(1)', $where);
 
-$paginationService = new Pagination($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
-$paginationNodeIntact = $paginationService->getNodeIntact();
+$sql = "select count(1) from role where $where";
+$recordTotal = Db::selectOne($sql, $data);
 
-$roles = Db::selectAll('id, name, time_edit', $where, 'id asc', ''.$paginationService->limitStart.','.$paginationService->pageSize);
+$pagination = new Pagination($recordTotal);
+$paginationNodeIntact = $pagination->getNodeIntact();
+
+$sql = "select id, name, time_edit from role where $where order by id asc limit ".$pagination->limitStart.','.$pagination->pageSize;
+$roles = Db::selectAll($sql, $data);
 foreach($roles as $key => $role){
     $roles[$key]['time_edit_name'] = date('Y-m-d H:i:s', $role['time_edit']);
 }
 
-$search = Safe::frontDisplay($search);
-$roles = Safe::frontDisplay($roles);
+$search = Safe::entity($search);
+$roles = Safe::entity($roles);
 
 ?><!doctype html>
 <html>

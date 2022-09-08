@@ -4,15 +4,17 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Config;
-use library\Validate;
-use library\Safe;
-use library\Auth;
+use \library\Db;
+use \library\Config;
+use \library\Validate;
+use \library\Safe;
+use \library\Auth;
+use \library\Department;
 
 $config = Config::getAll();
-$departmentModel = new DepartmentModel();
 $department = array();
+$sql = '';
+$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -26,11 +28,11 @@ if(!Auth::isPermission('system_department')){
 
 Validate::setRule(array(
     'id' => 'require|number'
-);
+));
 Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
-);
+));
 if(!Validate::check($_GET)){
     header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
     exit;
@@ -40,19 +42,13 @@ if($_GET['id'] == '1'){
     exit;
 }
 
-$department = Db::selectRow('id, parent_id, name, `sort`, remark', array(
-    'mark'=>'id = :id',
-    'value'=>array(
-        ':id'=>$_GET['id']
-    )
-));
-$department['parent_name'] = Db::selectOne('name', array(
-    'mark'=>'id = :id',
-    'value'=>array(
-        ':id'=> $department['parent_id']
-    )
-));
-$department = Safe::frontDisplay($department);
+$sql = 'select id, parent_id, name, `sort`, remark from department where id = :id';
+$data = array(
+    ':id'=>$_GET['id']
+);
+$department = Db::selectRow($sql, $data);
+$department['parent_name'] = Department::getName($department['parent_id']);
+$department = Safe::entity($department);
 
 ?><!doctype html>
 <html>

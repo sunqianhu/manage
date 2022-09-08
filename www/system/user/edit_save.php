@@ -4,9 +4,9 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Validate;
-use library\Auth;
+use \library\Db;
+use \library\Validate;
+use \library\Auth;
 
 $return = array(
     'status'=>'error',
@@ -15,8 +15,8 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$userModel = new UserModel();
 $user = array();
+$sql = '';
 $data = array();
 
 // 验证
@@ -37,7 +37,7 @@ Validate::setRule(array(
     'phone' => 'require|number|min_length:11|max_length:11',
     'department_id' => 'require|number',
     'role_ids' => 'require|number_array'
-);
+));
 Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字',
@@ -51,7 +51,7 @@ Validate::setMessage(array(
     'department_id.number' => '部门参数必须是个数字',
     'role_ids.require' => '请选择角色',
     'role_ids.number_array' => '角色参数错误'
-);
+));
 if(!Validate::check($_POST)){
     $return['message'] = Validate::getErrorMessage();
     $return['data']['dom'] = '#'.Validate::getErrorField();
@@ -61,12 +61,11 @@ if(!Validate::check($_POST)){
 $_POST['role_id_string'] = implode(',', $_POST['role_ids']);
 
 // 本用户
-$user = Db::selectRow('id', array(
-    'mark'=>'id = :id',
-    'value'=>array(
-        ':id'=>$_POST['id']
-    )
-));
+$sql = 'select id from user where id = :id';
+$data = array(
+    ':id'=>$_POST['id']
+);
+$user = Db::selectRow($sql, $data);
 if(empty($user)){
     $return['message'] = '用户没有找到';
     echo json_encode($return);
@@ -74,26 +73,32 @@ if(empty($user)){
 }
 
 // 更新
+$sql = 'update user set
+status = :status,
+name = :name,
+phone = :phone,
+department_id = :department_id,
+role_id_string = :role_id_string,
+time_edit = :time_edit
+[password]
+where id = :id';
 $data = array(
-    'status'=>$_POST['status'],
-    'name'=>$_POST['name'],
-    'phone'=>$_POST['phone'],
-    'department_id'=>$_POST['department_id'],
-    'role_id_string'=>$_POST['role_id_string'],
-    'time_edit'=>time()
+    ':status'=>$_POST['status'],
+    ':name'=>$_POST['name'],
+    ':phone'=>$_POST['phone'],
+    ':department_id'=>$_POST['department_id'],
+    ':role_id_string'=>$_POST['role_id_string'],
+    ':time_edit'=>time(),
+    ':id'=>$user['id']
 );
 if($_POST['password'] !== ''){
-    $data['password'] = md5($_POST['password']);
+    $sql = str_replace('[password]', ',password = :password', $sql);
+    $data[':password'] = md5($_POST['password']);
+}else{
+    $sql = str_replace('[password]', '', $sql);
 }
-try{
-    Db::update($data, array(
-        'mark'=>'id = :id',
-        'value'=> array(
-            ':id'=>$user['id']
-        )
-    ));
-}catch(Exception $e){
-    $return['message'] = $e->getMessage();
+if(!Db::update($sql, $data)){
+    $return['message'] = Db::getError();
     echo json_encode($return);
     exit;
 }

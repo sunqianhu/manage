@@ -6,7 +6,6 @@ namespace library;
 
 class Config{
     static $config = array();
-    static $a = '1';
     
     /**
      * 得到全部配置

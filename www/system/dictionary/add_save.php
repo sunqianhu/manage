@@ -4,9 +4,9 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Validate;
-use library\Auth;
+use \library\Db;
+use \library\Validate;
+use \library\Auth;
 
 $return = array(
     'status'=>'error',
@@ -15,7 +15,8 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$dictionaryModel = new DictionaryModel();
+$sql = '';
+$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -34,7 +35,7 @@ Validate::setRule(array(
     'key' => 'require|max_length:64',
     'value' => 'require|max_length:128',
     'sort' => 'number|max_length:10'
-);
+));
 Validate::setMessage(array(
     'type.require' => '请输入字典类型',
     'type.max_length' => '字典类型不能大于64个字',
@@ -44,7 +45,7 @@ Validate::setMessage(array(
     'value.max_length' => '字典值不能大于128个字',
     'sort.number' => '排序必须是个数字',
     'sort.max_length' => '排序不能大于10个字'
-);
+));
 if(!Validate::check($_POST)){
     $return['message'] = Validate::getErrorMessage();
     $return['data']['dom'] = '#'.Validate::getErrorField();
@@ -53,16 +54,15 @@ if(!Validate::check($_POST)){
 }
 
 // 入库
+$sql = 'insert into dictionary(type, `key`, `value`, sort) values(:type, :key, :value, :sort)';
 $data = array(
-    'type'=>$_POST['type'],
-    'key'=>$_POST['key'],
-    'value'=>$_POST['value'],
-    'sort'=>$_POST['sort']
+    ':type'=>$_POST['type'],
+    ':key'=>$_POST['key'],
+    ':value'=>$_POST['value'],
+    ':sort'=>$_POST['sort']
 );
-try{
-    Db::insert($data);
-}catch(Exception $e){
-    $return['message'] = $e->getMessage();
+if(!Db::insert($sql, $data)){
+    $return['message'] = Db::getError();
     echo json_encode($return);
     exit;
 }

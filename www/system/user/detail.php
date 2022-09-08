@@ -4,23 +4,17 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\model\RoleModel;
-use library\Db;
-use library\Validate;
-use library\Auth;
-use library\Config;
-use library\FrameMain;
-use library\Safe;
-use library\Dictionary;
-use library\ArrayTwo;
-use library\String;
+use \library\Db;
+use \library\Validate;
+use \library\Auth;
+use \library\Config;
+use \library\FrameMain;
+use \library\Safe;
+use \library\Dictionary;
+use \library\ArrayTwo;
+use \library\MyString;
+use \library\Department;
 
-$userModel = new UserModel(); // 模型
-$departmentModel = new DepartmentModel();
-$roleModel = new RoleModel();
-$loginLogModel = new LoginLogModel();
-$operationLogModel = new OperationLogModel();
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
 $roles = array(); // 角色
@@ -28,6 +22,8 @@ $loginLogs = array();
 $loginLog = array();
 $operationLogs = array(); // 操作日志
 $operationLog = array();
+$sql = '';
+$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -40,22 +36,21 @@ if(!Auth::isPermission('system_user')){
 }
 Validate::setRule(array(
     'id' => 'require|number'
-);
+));
 Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
-);
+));
 if(!Validate::check($_GET)){
     header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
     exit;
 }
 
-$user = Db::selectRow('id, username, `name`, `phone`, `status`, department_id, role_id_string, time_add, time_login, time_edit, ip', array(
-    'mark'=>'id = :id',
-    'value'=>array(
-        ':id'=>$_GET['id']
-    )
-));
+$sql = 'select id, username, `name`, `phone`, `status`, department_id, role_id_string, time_add, time_login, time_edit, ip from user where id = :id';
+$data = array(
+    ':id'=>$_GET['id']
+);
+$user = Db::selectRow($sql, $data);
 if(empty($user)){
     header('location:../../error.php?message='.urlencode('没有找到用户'));
     exit;
@@ -65,48 +60,40 @@ $user['status_name'] = Dictionary::getValue('system_user_status', $user['status'
 $user['time_add_name'] = date('Y-m-d H:i:s', $user['time_add']);
 $user['time_edit_name'] = $user['time_edit'] ? date('Y-m-d H:i:s', $user['time_edit']) : '-';
 $user['time_login_name'] = $user['time_login'] ? date('Y-m-d H:i:s', $user['time_login']) : '-';
-$user['department_name'] = Db::selectOne('name', array(
-    'mark'=>'id = :id',
-    'value'=>array(
-        ':id'=>$user['department_id']
-    )
-));
+$user['department_name'] = Department::getName($user['department_id']);
 
-$roles = Db::selectAll('name', array(
-    'mark'=>'id in (:id)',
-    'value'=>array(
-        ':id'=>$user['role_id_string']
-    )
-));
+$sql = 'select name from role where id in (:id)';
+$data = array(
+    ':id'=>$user['role_id_string']
+);
+$roles = Db::selectAll($sql, $data);
 $user['role_name'] = ArrayTwo::getColumnString($roles, 'name', '，');
-$user = Safe::frontDisplay($user);
+$user = Safe::entity($user);
 
 // 登录日志
-$loginLogs = Db::selectAll("ip, time_login",  array(
-    'mark'=>'user_id = :user_id',
-    'value'=>array(
-        ':user_id'=>$user['id']
-    )
-), 'id desc', '0,50');
+$sql = "select ip, time_login from login_log where user_id = :user_id order by id desc limit 0,50";
+$data = array(
+    ':user_id'=>$user['id']
+);
+$loginLogs = Db::selectAll($sql, $data);
 $loginLogs = ArrayTwo::columnTimestampToTime($loginLogs, 'time_login', 'time_login_name');
-$loginLogs = Safe::frontDisplay($loginLogs);
+$loginLogs = Safe::entity($loginLogs);
 
 // 操作日志
-$operationLogs = Db::selectAll("id, ip, time_add, url",  array(
-    'mark'=>'user_id = :user_id',
-    'value'=>array(
-        ':user_id'=>$user['id']
-    )
-), 'id desc', '0,50');
+$sql = "select id, ip, time_add, url from operation_log where user_id = :user_id order by id desc limit 0,50";
+$data = array(
+    ':user_id'=>$user['id']
+);
+$operationLogs = Db::selectAll($sql, $data);
 $operationLogs = ArrayTwo::columnTimestampToTime($operationLogs, 'time_add', 'time_add_name');
 
 foreach($operationLogs as $key => $operationLog){
-    $operationLogs[$key]['url_sub'] = String::getSubFromZero($operationLog['url'], 60);
+    $operationLogs[$key]['url_sub'] = MyString::getSubFromZero($operationLog['url'], 60);
 }
-$operationLogs = Safe::frontDisplay($operationLogs, 'url, url_sub');
+$operationLogs = Safe::entity($operationLogs, 'url, url_sub');
 
 // 菜单
-$frameMainMenu = FrameMain::getPageLeftMenu('system_user');
+$frameMainMenu = FrameMain::getMenu('system_user');
 
 ?><!doctype html>
 <html>

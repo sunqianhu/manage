@@ -4,8 +4,8 @@
  */
 require_once 'library/app.php';
 
-use library\Config;
-use library\Safe;
+use \library\Config;
+use \library\Safe;
 
 $config = Config::getAll();
 $message = '';
@@ -13,7 +13,7 @@ $message = '';
 if(isset($_GET['message'])){
     $message = $_GET['message'];
 }
-$message = Safe::frontDisplay($message);
+$message = Safe::entity($message);
 ?><!doctype html>
 <html>
 <head>

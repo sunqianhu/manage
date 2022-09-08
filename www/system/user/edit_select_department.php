@@ -4,15 +4,15 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Ztree;
-use library\Config;
-use library\Auth;
+use \library\Db;
+use \library\Ztree;
+use \library\Config;
+use \library\Auth;
 
 $config = Config::getAll();
-$departmentModel = new DepartmentModel();
 $departments = array();
 $department = ''; // 部门json数据
+$sql = '';
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -22,7 +22,9 @@ if(!Auth::isPermission('system_user')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
-$departments = Db::selectAll('id, name, parent_id', array(), 'parent_id asc, id asc');
+
+$sql = 'select id, name, parent_id from department order by parent_id asc, id asc';
+$departments = Db::selectAll($sql);
 $departments = Ztree::setOpenByFirst($departments);
 $department = json_encode($departments);
 

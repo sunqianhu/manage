@@ -4,9 +4,9 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Validate;
-use library\Auth;
+use \library\Db;
+use \library\Validate;
+use \library\Auth;
 
 $return = array(
     'status'=>'error',
@@ -15,9 +15,9 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$permissionModel = new PermissionModel();
 $permissionCurrent = array(); // 本权限
 $permissionParent = array(); // 上级权限
+$sql = '';
 $data = array();
 
 // 验证
@@ -39,7 +39,7 @@ Validate::setRule(array(
     'name' => 'require|max_length:32',
     'tag' => 'require|max_length:64',
     'sort' => 'number|max_length:10'
-);
+));
 Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字',
@@ -51,7 +51,7 @@ Validate::setMessage(array(
     'tag.max_length' => '权限标识不能大于64个字',
     'sort.number' => '排序必须是个数字',
     'sort.max_length' => '排序不能大于10个字'
-);
+));
 if(!Validate::check($_POST)){
     $return['message'] = Validate::getErrorMessage();
     $return['data']['dom'] = '#'.Validate::getErrorField();
@@ -60,15 +60,11 @@ if(!Validate::check($_POST)){
 }
 
 // 本权限
-$permissionCurrent = Db::selectRow(
-    'id, parent_id',
-    array(
-        'mark'=> 'id = :id',
-        'value'=> array(
-            ':id'=>$_POST['id']
-        )
-    )
+$sql = 'select id, parent_id from permission where id = :id';
+$data = array(
+    ':id'=>$_POST['id']
 );
+$permissionCurrent = Db::selectRow($sql, $data);
 if(empty($permissionCurrent)){
     $return['message'] = '此权限没有找到';
     echo json_encode($return);
@@ -76,34 +72,32 @@ if(empty($permissionCurrent)){
 }
 
 // 上级权限
-$permissionParent = Db::selectRow(
-    'parent_ids',
-    array(
-        'mark'=> 'id = :id',
-        'value'=> array(
-            ':id'=>$_POST['parent_id']
-        )
-    )
+$sql = 'select parent_ids from permission where id = :id';
+$data = array(
+    ':id'=>$_POST['parent_id']
 );
+$permissionParent = Db::selectRow($sql, $data);
 
 // 更新
+$sql = 'update permission set
+parent_id = :parent_id,
+parent_ids = :parent_ids,
+name = :name,
+type = :type,
+tag = :tag,
+sort = :sort
+where id = :id';
 $data = array(
-    'parent_id'=>$_POST['parent_id'],
-    'parent_ids'=>$permissionParent['parent_ids'].','.$permissionCurrent['id'],
-    'name'=>$_POST['name'],
-    'type'=>$_POST['type'],
-    'tag'=>$_POST['tag'],
-    'sort'=>$_POST['sort']
+    ':parent_id'=>$_POST['parent_id'],
+    ':parent_ids'=>$permissionParent['parent_ids'].','.$permissionCurrent['id'],
+    ':name'=>$_POST['name'],
+    ':type'=>$_POST['type'],
+    ':tag'=>$_POST['tag'],
+    ':sort'=>$_POST['sort'],
+    ':id'=>$permissionCurrent['id']
 );
-try{
-    $id = Db::update($data, array(
-        'mark'=>'id = :id',
-        'value'=> array(
-            ':id'=>$permissionCurrent['id']
-        )
-    ));
-}catch(Exception $e){
-    $return['message'] = $e->getMessage();
+if(!Db::update($sql, $data)){
+    $return['message'] = Db::getError();
     echo json_encode($return);
     exit;
 }

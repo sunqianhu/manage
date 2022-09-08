@@ -4,16 +4,20 @@
  */
 require_once '../library/app.php';
 
-use library\Db;
-use library\Config;
-use library\Validate;
-use library\Auth;
-use library\Ip;
-use library\User;
-use library\Dictionary;
+use \library\Db;
+use \library\Config;
+use \library\Validate;
+use \library\Auth;
+use \library\Ip;
+use \library\User;
+use \library\Dictionary;
 
 $sql = '';
 $data = array(); // 数据
+$user = array();
+$department = array();
+$permissions = array(); // 权限
+$ip = '';
 $return = array(
     'status'=>'error',
     'message'=>'',
@@ -22,10 +26,6 @@ $return = array(
         'captcha'=>'0'
     )
 );
-$user = array();
-$department = array();
-$permissions = array(); // 权限
-$ip = '';
 
 // 验证
 Validate::setRule(array(
@@ -85,7 +85,7 @@ if($user['status'] != 1){
 $user['head_url'] = User::getHeadUrl($user['head']);
 
 // 部门
-$sql = 'select id, name from role where id = :id';
+$sql = 'select id, name from department where id = :id';
 $data = array(
     ':id'=>$user['department_id']
 );
@@ -112,12 +112,12 @@ $data = array(
 Db::update($sql, $data);
 
 // 日志
-$sql = "insert into login_log(user_id, department_id, time_login, ip) values(:user_id, :department_id, :time_login, :ip)";
+$sql = 'insert into login_log(user_id, department_id, time_login, ip) values(:user_id, :department_id, :time_login, :ip)';
 $data = array(
     ':user_id'=>$user['id'],
-    'department_id'=>$department['id'],
-    'time_login'=>time(),
-    'ip'=>$ip
+    ':department_id'=>$department['id'],
+    ':time_login'=>time(),
+    ':ip'=>$ip
 );
 Db::insert($sql, $data);
 

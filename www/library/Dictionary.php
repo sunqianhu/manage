@@ -4,8 +4,8 @@
  */
 namespace library;
 
-use library\Db;
-use library\Cache;
+use \library\Db;
+use \library\Cache;
 
 class Dictionary{
     /**
@@ -14,27 +14,22 @@ class Dictionary{
      * @return string value
      */
     static function getAndSetCacheType($type){
-        $dictionaryModel = null; // 模型
         $cacheKey = 'dictionary_'.$type; // 缓存key
         $data = '';
         $datas = array();
+        $sql = '';
+        $dbData = array();
         
         $data = Cache::get($cacheKey);
         if($data !== ''){
             return $data;
         }
         
-        $dictionaryModel = new DictionaryModel();
-        $datas = Db::selectAll(
-            '`key`, `value`',
-            array(
-                'mark'=>'type = :type',
-                'value'=>array(
-                    ':type'=>$type
-                )
-            ), 
-            '`sort` asc'
+        $sql = 'select `key`, `value` from dictionary where type = :type order by `sort` asc';
+        $dbData = array(
+            ':type'=>$type
         );
+        $datas = Db::selectAll($sql, $dbData);
         if(empty($datas)){
             return $data;
         }

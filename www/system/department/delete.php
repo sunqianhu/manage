@@ -4,16 +4,17 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Validate;
-use library\Auth;
+use \library\Db;
+use \library\Validate;
+use \library\Auth;
 
 $return = array(
     'status'=>'error',
     'message'=>''
 );
 $departmentChild = array();
-$departmentModel = new DepartmentModel();
+$sql = '';
+$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -29,11 +30,11 @@ if(!Auth::isPermission('system_department')){
 
 Validate::setRule(array(
     'id' => 'require:number'
-);
+));
 Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
-);
+));
 if(!Validate::check($_GET)){
     $return['message'] = Validate::getErrorMessage();
     echo json_encode($return);
@@ -45,33 +46,23 @@ if($_GET['id'] == '1'){
     exit;
 }
 
-$departmentChild = Db::selectRow(
-    'id',
-    array(
-        'mark'=>'parent_id = :id',
-        'value'=> array(
-            ':id'=>$_GET['id']
-        )
-    )
+$sql = 'select id from department where parent_id = :id limit 0,1';
+$data = array(
+    ':id'=>$_GET['id']
 );
+$departmentChild = Db::selectRow($sql, $data);
 if(!empty($departmentChild)){
     $return['message'] = '该部门存在下级部门';
     echo json_encode($return);
     exit;
 }
 
-try{
-    Db::delete(
-        array(
-            'mark'=>'id = :id',
-            'value'=> array(
-                ':id'=>$_GET['id']
-
-            )
-        )
-    );
-}catch(Exception $e){
-    $return['message'] = $e->getMessage();
+$sql = 'delete from department where id = :id';
+$data = array(
+    ':id'=>$_GET['id']
+);
+if(!Db::delete($sql, $data)){
+    $return['message'] = Db::getError();
     echo json_encode($return);
     exit;
 }

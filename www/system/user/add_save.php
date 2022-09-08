@@ -4,9 +4,9 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Validate;
-use library\Auth;
+use \library\Db;
+use \library\Validate;
+use \library\Auth;
 
 $return = array(
     'status'=>'error',
@@ -15,8 +15,9 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$userModel = new UserModel();
 $user = array();
+$sql = '';
+$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -37,7 +38,7 @@ Validate::setRule(array(
     'phone' => 'require|number|min_length:11|max_length:11',
     'department_id' => 'require:^0|number',
     'role_ids' => 'require|number_array'
-);
+));
 Validate::setMessage(array(
     'username.require' => '请输入用户名',
     'username.max_length' => '用户名不能大于64个字',
@@ -53,7 +54,7 @@ Validate::setMessage(array(
     'department_id.number' => '部门参数必须是个数字',
     'role_ids.require' => '请选择角色',
     'role_ids.number_array' => '角色参数错误'
-);
+));
 if(!Validate::check($_POST)){
     $return['message'] = Validate::getErrorMessage();
     $return['data']['dom'] = '#'.Validate::getErrorField();
@@ -69,12 +70,11 @@ if($_POST['password'] != $_POST['password2']){
 
 $_POST['role_id_string'] = implode(',', $_POST['role_ids']);
 
-$user = Db::selectRow('id', array(
-    'mark'=>'username = :username',
-    'value'=>array(
-        ':username'=>$_POST['username']
-    )
-));
+$sql = 'select id from user where username = :username';
+$data = array(
+    ':username'=>$_POST['username']
+);
+$user = Db::selectRow($sql, $data);
 if(!empty($user)){
     $return['message'] = '用户名已经存在';
     $return['data']['dom'] = '#username';
@@ -82,21 +82,32 @@ if(!empty($user)){
     exit;
 }
 
-// 入库
+$sql = 'select id from user where phone = :phone';
 $data = array(
-    'username'=>$_POST['username'],
-    'status'=>$_POST['status'],
-    'password'=>md5($_POST['password']),
-    'name'=>$_POST['name'],
-    'phone'=>$_POST['phone'],
-    'department_id'=>$_POST['department_id'],
-    'role_id_string'=>$_POST['role_id_string'],
-    'time_add'=>time()
+    ':phone'=>$_POST['phone']
 );
-try{
-    Db::insert($data);
-}catch(Exception $e){
-    $return['message'] = $e->getMessage();
+$user = Db::selectRow($sql, $data);
+if(!empty($user)){
+    $return['message'] = '手机号码已经存在';
+    $return['data']['dom'] = '#phone';
+    echo json_encode($return);
+    exit;
+}
+
+// 入库
+$sql = 'insert into user(username,status,password,name,phone,department_id,role_id_string,time_add) values(:username,:status,:password,:name,:phone,:department_id,:role_id_string,:time_add)';
+$data = array(
+    ':username'=>$_POST['username'],
+    ':status'=>$_POST['status'],
+    ':password'=>md5($_POST['password']),
+    ':name'=>$_POST['name'],
+    ':phone'=>$_POST['phone'],
+    ':department_id'=>$_POST['department_id'],
+    ':role_id_string'=>$_POST['role_id_string'],
+    ':time_add'=>time()
+);
+if(!Db::insert($sql, $data)){
+    $return['message'] = Db::getError();
     echo json_encode($return);
     exit;
 }

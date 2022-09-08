@@ -4,8 +4,8 @@
  */
 require_once '../../library/app.php';
 
-use library\Config;
-use library\Auth;
+use \library\Config;
+use \library\Auth;
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');

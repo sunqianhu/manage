@@ -4,16 +4,17 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Validate;
-use library\Auth;
+use \library\Db;
+use \library\Validate;
+use \library\Auth;
 
 $return = array(
     'status'=>'error',
     'message'=>''
 );
 $permissionChild = array();
-$permissionModel = new PermissionModel();
+$sql = '';
+$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -29,11 +30,11 @@ if(!Auth::isPermission('system_permission')){
 
 Validate::setRule(array(
     'id' => 'require:number'
-);
+));
 Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
-);
+));
 if(!Validate::check($_GET)){
     $return['message'] = Validate::getErrorMessage();
     echo json_encode($return);
@@ -45,32 +46,23 @@ if($_GET['id'] == '1'){
     exit;
 }
 
-$permissionChild = Db::selectRow(
-    'id',
-    array(
-        'mark'=>'parent_id = :id',
-        'value'=> array(
-            ':id'=>$_GET['id']
-        )
-    )
+$sql = 'select id from permission where parent_id = :parent_id limit 0,1';
+$data = array(
+    ':parent_id'=>$_GET['id']
 );
+$permissionChild = Db::selectRow($sql, $data);
 if(!empty($permissionChild)){
     $return['message'] = '该权限存在下级权限';
     echo json_encode($return);
     exit;
 }
 
-try{
-    Db::delete(
-        array(
-            'mark'=>'id = :id',
-            'value'=> array(
-                ':id'=>$_GET['id']
-            )
-        )
-    );
-}catch(Exception $e){
-    $return['message'] = $e->getMessage();
+$sql = 'delete from permission where id = :id';
+$data = array(
+    ':id'=>$_GET['id']
+);
+if(!Db::delete($sql, $data)){
+    $return['message'] = Db::getError();
     echo json_encode($return);
     exit;
 }

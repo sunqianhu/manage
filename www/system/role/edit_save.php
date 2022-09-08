@@ -4,10 +4,9 @@
  */
 require_once '../../library/app.php';
 
-use library\model\RoleModel;
-use library\Db;
-use library\Validate;
-use library\Auth;
+use \library\Db;
+use \library\Validate;
+use \library\Auth;
 
 $return = array(
     'status'=>'error',
@@ -16,11 +15,10 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$roleModel = new RoleModel();
-$rolePermissionModel = new RolePermissionModel();
 $role = array();
-$data = array();
 $permissionIds = array();
+$sql = '';
+$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -39,7 +37,7 @@ Validate::setRule(array(
     'name' => 'require|max_length:64',
     'remark' => 'max_length:255',
     'permission_ids' => 'require|number_string:,'
-);
+));
 Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字',
@@ -48,7 +46,7 @@ Validate::setMessage(array(
     'remark.max_length' => '角色名称不能大于255个字',
     'permission_ids.require' => '请选择权限',
     'permission_ids.number_string' => '权限参数错误'
-);
+));
 if(!Validate::check($_POST)){
     $return['message'] = Validate::getErrorMessage();
     $return['data']['dom'] = '#'.Validate::getErrorField();
@@ -58,15 +56,11 @@ if(!Validate::check($_POST)){
 $permissionIds = explode(',', $_POST['permission_ids']);
 
 // 本角色
-$role = Db::selectRow(
-    'id',
-    array(
-        'mark'=> 'id = :id',
-        'value'=> array(
-            ':id'=>$_POST['id']
-        )
-    )
+$sql = 'select id from role where id = :id';
+$data = array(
+    ':id'=>$_POST['id']
 );
+$role = Db::selectRow($sql, $data);
 if(empty($role)){
     $return['message'] = '角色没有找到';
     echo json_encode($return);
@@ -74,44 +68,40 @@ if(empty($role)){
 }
 
 // 更新
+$sql = 'update role set
+name = :name,
+remark = :remark,
+time_edit = :time_edit
+where id = :id';
 $data = array(
-    'name'=>$_POST['name'],
-    'remark'=>$_POST['remark'],
-    'time_edit'=>time()
+    ':name'=>$_POST['name'],
+    ':remark'=>$_POST['remark'],
+    ':time_edit'=>time(),
+    ':id'=>$role['id']
 );
-try{
-    Db::update($data, array(
-        'mark'=>'id = :id',
-        'value'=> array(
-            ':id'=>$role['id']
-        )
-    ));
-}catch(Exception $e){
-    $return['message'] = $e->getMessage();
+if(!Db::update($sql, $data)){
+    $return['message'] = Db::getError();
     echo json_encode($return);
     exit;
 }
 
 // 关联
-Db::delete(array(
-    'mark'=>'role_id = :role_id',
-    'value'=>array(
-        ':role_id'=>$role['id']
-    )
-));
+$sql = 'delete from role_permission where role_id = :role_id';
+$data = array(
+    ':role_id'=>$role['id']
+);
+Db::delete($sql, $data);
 foreach($permissionIds as $permissionId){
+    $sql = 'insert into role_permission(role_id,permission_id) values(:role_id,:permission_id)';
     $data = array(
-        'role_id'=>$role['id'],
-        'permission_id'=>$permissionId
+        ':role_id'=>$role['id'],
+        ':permission_id'=>$permissionId
     );
-    Db::insert($data);
+    Db::insert($sql, $data);
 }
 
 $return['status'] = 'success';
 $return['message'] = '修改成功';
 echo json_encode($return);
-
-
-
 
 ?>

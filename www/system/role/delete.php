@@ -4,18 +4,17 @@
  */
 require_once '../../library/app.php';
 
-use library\model\RoleModel;
-use library\Db;
-use library\Validate;
-use library\Auth;
+use \library\Db;
+use \library\Validate;
+use \library\Auth;
 
 $return = array(
     'status'=>'error',
     'message'=>''
 );
-$roleModel = new RoleModel();
-$rolePermissionModel = new RolePermissionModel();
 $role = array();
+$sql = '';
+$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -31,52 +30,42 @@ if(!Auth::isPermission('system_role')){
 
 Validate::setRule(array(
     'id' => 'require:number'
-);
+));
 Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
-);
+));
 if(!Validate::check($_GET)){
     $return['message'] = Validate::getErrorMessage();
     echo json_encode($return);
     exit;
 }
 
-$role = Db::selectRow('id', array(
-    'mark'=>'id = :id',
-    'value'=>array(
-        ':id'=>$_GET['id']
-    )
-));
+$sql = 'select id from role where id = :id';
+$data = array(
+    ':id'=>$_GET['id']
+);
+$role = Db::selectRow($sql, $data);
 if(empty($role)){
     $return['message'] = '角色没有找到';
     echo json_encode($return);
     exit;
 }
 
-try{
-    Db::delete(
-        array(
-            'mark'=>'id = :id',
-            'value'=> array(
-                ':id'=>$role['id']
-            )
-        )
-    );
-}catch(Exception $e){
-    $return['message'] = $e->getMessage();
+$sql = 'delete from role where id = :id';
+$data = array(
+    ':id'=>$role['id']
+);
+if(!Db::delete($sql, $data)){
+    $return['message'] = Db::getError();
     echo json_encode($return);
     exit;
 }
-
-Db::delete(
-    array(
-        'mark'=>'role_id = :role_id',
-        'value'=> array(
-            ':role_id'=>$role['id']
-        )
-    )
-);
+if(!Db::delete($sql, $data)){
+    $return['message'] = Db::getError();
+    echo json_encode($return);
+    exit;
+}
 
 $return['status'] = 'success';
 $return['message'] = '删除成功';

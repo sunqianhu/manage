@@ -4,29 +4,28 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Config;
-use library\FrameMain;
-use library\Pagination;
-use library\Safe;
-use library\Auth;
+use \library\Db;
+use \library\Config;
+use \library\FrameMain;
+use \library\Pagination;
+use \library\Safe;
+use \library\Auth;
 
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
-$dictionaryModel = new DictionaryModel(); // 模型
 $search = array(
     'type'=>'',
     'key'=>'',
     'value'=>''
-    
 ); // 搜索
-$whereMarks = array();
-$whereValues = array();
-$where = array();
-$paginationService = null; // 分页
+$wheres = array();
+$where = '1';
 $recordTotal = 0; // 总记录
+$pagination = null; // 分页
 $paginationNodeIntact = ''; // 节点
 $dictionarys = array();
+$sql = '';
+$data = array();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -38,42 +37,39 @@ if(!Auth::isPermission('system_dictionary')){
 }
 
 // 菜单
-$frameMainMenu = FrameMain::getPageLeftMenu('system_dictionary');
+$frameMainMenu = FrameMain::getMenu('system_dictionary');
 
 // 搜索
 if(isset($_GET['type']) && $_GET['type'] !== ''){
-    $whereMarks[] = 'type = :type';
-    $whereValues[':type'] = $_GET['type'];
+    $wheres[] = 'type = :type';
+    $data[':type'] = $_GET['type'];
     $search['type'] = $_GET['type'];
 }
 if(isset($_GET['key']) && $_GET['key'] !== ''){
-    $whereMarks[] = '`key` = :key';
-    $whereValues[':key'] = $_GET['key'];
+    $wheres[] = '`key` = :key';
+    $data[':key'] = $_GET['key'];
     $search['key'] = $_GET['key'];
 }
 if(isset($_GET['value']) && $_GET['value'] !== ''){
-    $whereMarks[] = '`value` = :value';
-    $whereValues[':value'] = $_GET['value'];
+    $wheres[] = '`value` = :value';
+    $data[':value'] = $_GET['value'];
     $search['value'] = $_GET['value'];
 }
-$search = Safe::frontDisplay($search);
-
-if(!empty($whereMarks)){
-    $where['mark'] = implode(' and ', $whereMarks);
-}
-if(!empty($whereMarks)){
-    $where['value'] = $whereValues;
+$search = Safe::entity($search);
+if(!empty($wheres)){
+    $where = implode(' and ', $wheres);
 }
 
-$recordTotal = Db::selectOne('count(1)', $where);
+$sql = 'select count(1) from dictionary where '.$where;
+$recordTotal = Db::selectOne($sql, $data);
 
-$paginationService = new Pagination($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
-$paginationNodeIntact = $paginationService->getNodeIntact();
+$pagination = new Pagination($recordTotal);
+$paginationNodeIntact = $pagination->getNodeIntact();
 
-$dictionarys = Db::selectAll('id, type, `key`, `value`, `sort`', $where, 'type asc, `sort` asc, id asc', ''.$paginationService->limitStart.','.$paginationService->pageSize);
+$sql = "select id, type, `key`, `value`, `sort` from dictionary where $where order by type asc, `sort` asc, id asc limit ".$pagination->limitStart.','.$pagination->pageSize;
+$dictionarys = Db::selectAll($sql, $data);
 
-$dictionarys = Safe::frontDisplay($dictionarys);
-
+$dictionarys = Safe::entity($dictionarys);
 ?><!doctype html>
 <html>
 <head>

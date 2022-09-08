@@ -25,11 +25,11 @@ class OperationLog{
         $userAgent = '';
         $sql = '';
         
-        if(!empty($_SESSION['police']['department']['id'])){
-            $departmentId = $_SESSION['police']['department']['id'];
+        if(!empty($_SESSION['department']['id'])){
+            $departmentId = $_SESSION['department']['id'];
         }
-        if(!empty($_SESSION['police']['user']['id'])){
-            $userId = $_SESSION['police']['user']['id'];
+        if(!empty($_SESSION['user']['id'])){
+            $userId = $_SESSION['user']['id'];
         }
         if(!empty($_SERVER['REQUEST_URI'])){
             $url = $_SERVER['REQUEST_URI'];

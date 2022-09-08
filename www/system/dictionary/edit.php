@@ -4,15 +4,16 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Config;
-use library\Validate;
-use library\Safe;
-use library\Auth;
+use \library\Db;
+use \library\Config;
+use \library\Validate;
+use \library\Safe;
+use \library\Auth;
 
 $config = Config::getAll();
-$dictionaryModel = new DictionaryModel();
 $dictionary = array();
+$sql = '';
+$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -26,23 +27,22 @@ if(!Auth::isPermission('system_dictionary')){
 
 Validate::setRule(array(
     'id' => 'require|number'
-);
+));
 Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
-);
+));
 if(!Validate::check($_GET)){
     header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
     exit;
 }
 
-$dictionary = Db::selectRow('id, type, `key`, `value`, `sort`', array(
-    'mark'=>'id = :id',
-    'value'=>array(
-        ':id'=>$_GET['id']
-    )
-));
-$dictionary = Safe::frontDisplay($dictionary);
+$sql = 'select id, type, `key`, `value`, `sort` from dictionary where id = :id';
+$data = array(
+    ':id'=>$_GET['id']
+);
+$dictionary = Db::selectRow($sql, $data);
+$dictionary = Safe::entity($dictionary);
 
 ?><!doctype html>
 <html>

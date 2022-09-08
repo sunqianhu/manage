@@ -4,8 +4,8 @@
  */
 namespace library;
 
-use library\Db;
-use library\Config;
+use \library\Db;
+use \library\Config;
 
 class User{
     
@@ -16,15 +16,15 @@ class User{
      * @return string 用户姓名
      */
     static function getName($id){
-        $userModel = new UserModel();
         $name = '';
-        
-        $name = Db::selectOne('name', array(
-            'mark'=>'id = :id',
-            'value'=>array(
-                ':id'=>$id
-            )
-        ));
+        $sql = '';
+        $data = array();
+                
+        $sql = 'select name from user where id = :id';
+        $data = array(
+            ':id'=>$id
+        );
+        $name = Db::selectOne($sql, $data);
         
         return $name;
     }

@@ -4,16 +4,17 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Validate;
-use library\Auth;
+use \library\Db;
+use \library\Validate;
+use \library\Auth;
 
 $return = array(
     'status'=>'error',
     'message'=>''
 );
-$userModel = new UserModel();
 $user = array();
+$sql = '';
+$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -28,11 +29,11 @@ if(!Auth::isPermission('system_user')){
 }
 Validate::setRule(array(
     'id' => 'require:number'
-);
+));
 Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
-);
+));
 if(!Validate::check($_GET)){
     $return['message'] = Validate::getErrorMessage();
     echo json_encode($return);
@@ -40,15 +41,11 @@ if(!Validate::check($_GET)){
 }
 
 // 本用户
-$user = Db::selectRow(
-    'id,status',
-    array(
-        'mark'=> 'id = :id',
-        'value'=> array(
-            ':id'=>$_GET['id']
-        )
-    )
+$sql = 'select id,status from user where id = :id';
+$data = array(
+    ':id'=>$_GET['id']
 );
+$user = Db::selectRow($sql, $data);
 if(empty($user)){
     $return['message'] = '用户没有找到';
     echo json_encode($return);
@@ -60,20 +57,15 @@ if($user['status'] == 1){
     exit;
 }
 
-try{
-    Db::update(
-        array(
-            'status'=>1
-        ),
-        array(
-            'mark'=>'id = :id',
-            'value'=> array(
-                ':id'=>$user['id']
-            )
-        )
-    );
-}catch(Exception $e){
-    $return['message'] = $e->getMessage();
+$sql = 'update user set
+status = :status
+where id = :id';
+$data = array(
+    ':status'=>1,
+    ':id'=>$user['id']
+);
+if(!Db::update($sql, $data)){
+    $return['message'] = Db::getError();
     echo json_encode($return);
     exit;
 }

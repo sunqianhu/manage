@@ -4,32 +4,25 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\model\RoleModel;
-use library\Auth;
-use library\Config;
-use library\FrameMain;
-use library\Pagination;
-use library\Ztree;
-use library\ArrayTwo;
-use library\Safe;
-use library\Dictionary;
-use library\User;
+use \library\Db;
+use \library\Auth;
+use \library\Config;
+use \library\FrameMain;
+use \library\Pagination;
+use \library\Ztree;
+use \library\ArrayTwo;
+use \library\Safe;
+use \library\Dictionary;
+use \library\User;
+use \library\Department;
 
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
-$userModel = new UserModel(); // 模型
-$departmentModel = new DepartmentModel();
-$roleModel = new RoleModel();
-
-$whereMarks = array();
-$whereValues = array();
-$where = array();
-
-$paginationService = null; // 分页
+$wheres = array();
+$where = '1';
 $recordTotal = 0; // 总记录
+$pagination = null; // 分页
 $paginationNodeIntact = ''; // 节点
-
 $search = array(
     'id'=>'',
     'department_id'=>'0',
@@ -40,13 +33,14 @@ $search = array(
     'name'=>'',
     'phone'=>''
 ); // 搜索
-
 $users = array();
 $departments = array();
 $department = ''; // 部门json数据
 $roles = array();
 $roleOption = '';
 $statusOption = '';
+$sql = '';
+$data = array();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -57,67 +51,61 @@ if(!Auth::isPermission('system_user')){
     exit;
 }
 
-$frameMainMenu = FrameMain::getPageLeftMenu('system_user');
+$frameMainMenu = FrameMain::getMenu('system_user');
 
 if(!empty($_GET['id'])){
-    $whereMarks[] = 'id = :id';
-    $whereValues[':id'] = $_GET['id'];
+    $wheres[] = 'id = :id';
+    $data[':id'] = $_GET['id'];
     $search['id'] = $_GET['id'];
 }
 if(isset($_GET['department_id']) && $_GET['department_id'] != '0'){
-    $whereMarks[] = 'department_id = :department_id';
-    $whereValues[':department_id'] = $_GET['department_id'];
+    $wheres[] = 'department_id = :department_id';
+    $data[':department_id'] = $_GET['department_id'];
     $search['department_id'] = $_GET['department_id'];
 }
 if(isset($_GET['status']) && $_GET['status'] != '0'){
-    $whereMarks[] = 'status = :status';
-    $whereValues[':status'] = $_GET['status'];
+    $wheres[] = 'status = :status';
+    $data[':status'] = $_GET['status'];
     $search['status'] = $_GET['status'];
 }
 if(isset($_GET['role_id']) && $_GET['role_id'] != '0'){
-    $whereMarks[] = 'find_in_set(:role_id, role_id_string)';
-    $whereValues[':role_id'] = $_GET['role_id'];
+    $wheres[] = 'find_in_set(:role_id, role_id_string)';
+    $data[':role_id'] = $_GET['role_id'];
     $search['role_id'] = $_GET['role_id'];
 }
 if(isset($_GET['username']) && $_GET['username'] !== ''){
-    $whereMarks[] = 'username like :username';
-    $whereValues[':username'] = '%'.$_GET['username'].'%';
+    $wheres[] = 'username like :username';
+    $data[':username'] = '%'.$_GET['username'].'%';
     $search['username'] = $_GET['username'];
 }
 if(isset($_GET['phone']) && $_GET['phone'] !== ''){
-    $whereMarks[] = 'phone like :phone';
-    $whereValues[':phone'] = '%'.$_GET['phone'].'%';
+    $wheres[] = 'phone like :phone';
+    $data[':phone'] = '%'.$_GET['phone'].'%';
     $search['phone'] = $_GET['phone'];
 }
 if(isset($_GET['name']) && $_GET['name'] !== ''){
-    $whereMarks[] = 'name like :name';
-    $whereValues[':name'] = '%'.$_GET['name'].'%';
+    $wheres[] = 'name like :name';
+    $data[':name'] = '%'.$_GET['name'].'%';
     $search['name'] = $_GET['name'];
 }
-if(!empty($whereMarks)){
-    $where['mark'] = implode(' and ', $whereMarks);
-}
-if(!empty($whereMarks)){
-    $where['value'] = $whereValues;
+if(!empty($wheres)){
+    $where = implode(' and ', $wheres);
 }
 
 if(isset($_GET['department_name'])){
     $search['department_name'] = $_GET['department_name'];
 }
 
-$recordTotal = Db::selectOne('count(1)', $where);
+$sql = "select count(1) from user where $where";
+$recordTotal = Db::selectOne($sql, $data);
 
-$paginationService = new Pagination($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
-$paginationNodeIntact = $paginationService->getNodeIntact();
+$pagination = new Pagination($recordTotal);
+$paginationNodeIntact = $pagination->getNodeIntact();
 
-$users = Db::selectAll('id, username, head, `name`, `time_login`, time_edit, phone, status, department_id', $where, 'id asc', ''.$paginationService->limitStart.','.$paginationService->pageSize);
+$sql = "select id, username, head, `name`, `time_login`, time_edit, phone, status, department_id from user where $where order by id asc limit ".$pagination->limitStart.','.$pagination->pageSize;
+$users = Db::selectAll($sql, $data);
 foreach($users as $key => $user){
-    $users[$key]['department_name'] = Db::selectOne('name', array(
-        'mark'=>'id = :id',
-        'value'=>array(
-            ':id'=>$user['department_id']
-        )
-    ));
+    $users[$key]['department_name'] = Department::getName($user['department_id']);
     $users[$key]['status_name'] = Dictionary::getValue('system_user_status', $user['status']);
     $users[$key]['status_style_class'] = $user['status'] == 2 ? 'sun-badge orange': 'sun-badge';
     $users[$key]['time_edit_name'] = $user['time_edit'] ? date('Y-m-d H:i:s', $user['time_edit']) : '-';
@@ -125,16 +113,19 @@ foreach($users as $key => $user){
     $users[$key]['head_url'] = User::getHeadUrl($user['head']);
 }
 
-$departments = Db::selectAll('id, name, parent_id', array(), 'parent_id asc, sort asc');
+$sql = 'select id, name, parent_id from department order by parent_id asc, sort asc';
+$departments = Db::selectAll($sql);
 $departments = Ztree::setOpenByFirst($departments);
 $department = json_encode($departments);
 
 $statusOption = Dictionary::getSelectOption('system_user_status', array($search['status']));
-$roles = Db::selectAll('id, name', array());
+
+$sql = 'select id, name from role order by id asc';
+$roles = Db::selectAll($sql);
 $roleOption = ArrayTwo::getSelectOption($roles, array($search['role_id']), 'id', 'name');
 
-$users = Safe::frontDisplay($users);
-$search = Safe::frontDisplay($search);
+$users = Safe::entity($users);
+$search = Safe::entity($search);
 
 ?><!doctype html>
 <html>

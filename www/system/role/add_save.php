@@ -4,10 +4,9 @@
  */
 require_once '../../library/app.php';
 
-use library\model\RoleModel;
-use library\Db;
-use library\Validate;
-use library\Auth;
+use \library\Db;
+use \library\Validate;
+use \library\Auth;
 
 $return = array(
     'status'=>'error',
@@ -16,10 +15,10 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$roleModel = new RoleModel();
-$rolePermissionModel = new RolePermissionModel();
 $roleId = 0; // 角色id
 $permissionIds = array();
+$sql = '';
+$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -37,14 +36,14 @@ Validate::setRule(array(
     'name' => 'require|max_length:64',
     'remark' => 'max_length:255',
     'permission_ids' => 'require|number_string:,'
-);
+));
 Validate::setMessage(array(
     'name.require' => '请输入角色名称',
     'name.max_length' => '角色名称不能大于64个字',
     'remark.max_length' => '角色名称不能大于255个字',
     'permission_ids.require' => '请选择权限',
     'permission_ids.number_string' => '权限参数错误'
-);
+));
 if(!Validate::check($_POST)){
     $return['message'] = Validate::getErrorMessage();
     $return['data']['dom'] = '#'.Validate::getErrorField();
@@ -54,33 +53,34 @@ if(!Validate::check($_POST)){
 $permissionIds = explode(',', $_POST['permission_ids']);
 
 // 入库
+$sql = 'insert into role(name,remark,time_add,time_edit) values(:name,:remark,:time_add,:time_edit)';
 $data = array(
-    'name'=>$_POST['name'],
-    'remark'=>$_POST['remark'],
-    'time_add'=>time(),
-    'time_edit'=>time()
+    ':name'=>$_POST['name'],
+    ':remark'=>$_POST['remark'],
+    ':time_add'=>time(),
+    ':time_edit'=>time()
 );
-try{
-    $roleId = Db::insert($data);
-}catch(Exception $e){
-    $return['message'] = $e->getMessage();
+$roleId = Db::insert($sql, $data);
+if(!$roleId){
+    $return['message'] = Db::getError();
     echo json_encode($return);
     exit;
 }
 
 // 关联
-Db::delete(array(
-    'mark'=>'role_id = :role_id',
-    'value'=>array(
-        ':role_id'=>$roleId
-    )
-));
+$sql = 'delete from role_permission where role_id = :role_id';
+$data = array(
+    ':role_id'=>$roleId
+);
+Db::delete($sql, $data);
+
 foreach($permissionIds as $permissionId){
+    $sql = 'insert into role_permission(role_id,permission_id) values(:role_id,:permission_id)';
     $data = array(
-        'role_id'=>$roleId,
-        'permission_id'=>$permissionId
+        ':role_id'=>$roleId,
+        ':permission_id'=>$permissionId
     );
-    Db::insert($data);
+    Db::insert($sql, $data);
 }
 
 $return['status'] = 'success';

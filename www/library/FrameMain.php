@@ -4,9 +4,9 @@
  */
 namespace library;
 
-use library\Config;
-use library\Auth;
-use library\Tree;
+use \library\Config;
+use \library\Auth;
+use \library\Tree;
 
 class FrameMain{
     /**
@@ -15,7 +15,7 @@ class FrameMain{
      * @access public
      * @return string 节点
      */
-    static function getPageLeftMenu($active = ''){
+    static function getMenu($active = ''){
         $node = '';
         $liActive = '';
         $appDomain = Config::getOne('app_domain');
@@ -49,11 +49,6 @@ class FrameMain{
             // 字典管理
             if(Auth::isPermission('system_dictionary')){
                 $node .= '<li'.($active == 'system_dictionary' ? ' class="active"' : '').'><a href="'.$appDomain.'system/dictionary/index.php"><span class="text">字典管理</span></a></li>';
-            }
-            
-            // 用户文件
-            if(Auth::isPermission('system_user_file')){
-                $node .= '<li'.($active == 'system_user_file' ? ' class="active"' : '').'><a href="'.$appDomain.'system/user_file/index.php"><span class="text">用户文件</span></a></li>';
             }
             
             // 登录日志

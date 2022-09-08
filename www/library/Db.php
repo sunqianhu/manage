@@ -4,7 +4,7 @@
  */
 namespace library;
 
-use library\Config;
+use \library\Config;
 
 class Db{
     static public $pdo = null;
@@ -87,11 +87,11 @@ class Db{
             self::setError($error);
             return false;
         }
-        foreach($data as $filed => $value){
+        foreach($data as $field => $value){
             if(is_array($value) && count($value) > 1){
-                $pdoStatement->bindValue($filed, $value[0], $value[1]);
+                $pdoStatement->bindValue($field, $value[0], $value[1]);
             }else{
-                $pdoStatement->bindValue($filed, $value);
+                $pdoStatement->bindValue($field, $value);
             }
         }
         if(!$pdoStatement->execute()){
@@ -129,11 +129,11 @@ class Db{
             self::setError($error);
             return false;
         }
-        foreach($data as $filed => $value){
+        foreach($data as $field => $value){
             if(is_array($value) && count($value) > 1){
-                $pdoStatement->bindValue($filed, $value[0], $value[1]);
+                $pdoStatement->bindValue($field, $value[0], $value[1]);
             }else{
-                $pdoStatement->bindValue($filed, $value);
+                $pdoStatement->bindValue($field, $value);
             }
         }
         if(!$pdoStatement->execute()){
@@ -171,11 +171,11 @@ class Db{
             self::setError($error);
             return false;
         }
-        foreach($data as $filed => $value){
+        foreach($data as $field => $value){
             if(is_array($value) && count($value) > 1){
-                $pdoStatement->bindValue($filed, $value[0], $value[1]);
+                $pdoStatement->bindValue($field, $value[0], $value[1]);
             }else{
-                $pdoStatement->bindValue($filed, $value);
+                $pdoStatement->bindValue($field, $value);
             }
         }
         if(!$pdoStatement->execute()){
@@ -213,11 +213,11 @@ class Db{
             self::setError($error);
             return false;
         }
-        foreach($data as $filed => $value){
+        foreach($data as $field => $value){
             if(is_array($value) && count($value) > 1){
-                $pdoStatement->bindValue($filed, $value[0], $value[1]);
+                $pdoStatement->bindValue($field, $value[0], $value[1]);
             }else{
-                $pdoStatement->bindValue($filed, $value);
+                $pdoStatement->bindValue($field, $value);
             }
         }
         if(!$pdoStatement->execute()){
@@ -256,11 +256,11 @@ class Db{
             self::setError($error);
             return $results;
         }
-        foreach($data as $filed => $value){
+        foreach($data as $field => $value){
             if(is_array($value) && count($value) > 1){
-                $pdoStatement->bindValue($filed, $value[0], $value[1]);
+                $pdoStatement->bindValue($field, $value[0], $value[1]);
             }else{
-                $pdoStatement->bindValue($filed, $value);
+                $pdoStatement->bindValue($field, $value);
             }
         }
         if(!$pdoStatement->execute()){
@@ -304,11 +304,11 @@ class Db{
             self::setError($error);
             return $result;
         }
-        foreach($data as $filed => $value){
+        foreach($data as $field => $value){
             if(is_array($value) && count($value) > 1){
-                $pdoStatement->bindValue($filed, $value[0], $value[1]);
+                $pdoStatement->bindValue($field, $value[0], $value[1]);
             }else{
-                $pdoStatement->bindValue($filed, $value);
+                $pdoStatement->bindValue($field, $value);
             }
         }
         if(!$pdoStatement->execute()){
@@ -352,11 +352,11 @@ class Db{
             self::setError($error);
             return $result;
         }
-        foreach($data as $filed => $value){
+        foreach($data as $field => $value){
             if(is_array($value) && count($value) > 1){
-                $pdoStatement->bindValue($filed, $value[0], $value[1]);
+                $pdoStatement->bindValue($field, $value[0], $value[1]);
             }else{
-                $pdoStatement->bindValue($filed, $value);
+                $pdoStatement->bindValue($field, $value);
             }
         }
         if(!$pdoStatement->execute()){

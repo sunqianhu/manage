@@ -4,32 +4,32 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Config;
-use library\FrameMain;
-use library\Pagination;
-use library\Safe;
-use library\Auth;
-use library\String;
-use library\User;
-use library\Department;
+use \library\Db;
+use \library\Config;
+use \library\FrameMain;
+use \library\Pagination;
+use \library\Safe;
+use \library\Auth;
+use \library\MyString;
+use \library\User;
+use \library\Department;
 
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
-$operationLogModel = new OperationLogModel(); // 模型
 $search = array(
     'time_start'=>'',
     'time_end'=>'',
     'department_name'=>'',
     'user_name'=>''
 ); // 搜索
-$whereMarks = array();
-$whereValues = array();
-$where = array();
-$paginationService = null; // 分页
+$wheres = array();
+$where = '1';
 $recordTotal = 0; // 总记录
+$pagination = null; // 分页
 $paginationNodeIntact = ''; // 节点
 $operationLogs = array();
+$sql = '';
+$data = array();
 
 if(!Auth::isLogin()){
     header('location:../../operation/index.php');
@@ -41,56 +41,55 @@ if(!Auth::isPermission('system_operation_log')){
 }
 
 // 菜单
-$frameMainMenu = FrameMain::getPageLeftMenu('system_operation_log');
+$frameMainMenu = FrameMain::getMenu('system_operation_log');
 
 // 搜索
 if(isset($_GET['time_start']) && $_GET['time_start'] !== ''){
-    $whereMarks[] = 'time_add > :time_start';
-    $whereValues[':time_start'] = strtotime($_GET['time_start']);
+    $wheres[] = 'time_add > :time_start';
+    $data[':time_start'] = strtotime($_GET['time_start']);
     $search['time_start'] = $_GET['time_start'];
 }
 if(isset($_GET['time_end']) && $_GET['time_end'] !== ''){
-    $whereMarks[] = 'time_add < :time_end';
-    $whereValues[':time_end'] = strtotime($_GET['time_end']);
+    $wheres[] = 'time_add < :time_end';
+    $data[':time_end'] = strtotime($_GET['time_end']);
     $search['time_end'] = $_GET['time_end'];
 }
 if(isset($_GET['department_name']) && $_GET['department_name'] !== ''){
-    $whereMarks[] = 'department_id in (select id from department where name like :department_name)';
-    $whereValues[':department_name'] = '%'.$_GET['department_name'].'%';
+    $wheres[] = 'department_id in (select id from department where name like :department_name)';
+    $data[':department_name'] = '%'.$_GET['department_name'].'%';
     $search['department_name'] = $_GET['department_name'];
 }
 if(isset($_GET['user_id']) && $_GET['user_id'] !== ''){
-    $whereMarks[] = 'user_id = :user_id';
-    $whereValues[':user_id'] = $_GET['user_id'];
+    $wheres[] = 'user_id = :user_id';
+    $data[':user_id'] = $_GET['user_id'];
 }
 if(isset($_GET['user_name']) && $_GET['user_name'] !== ''){
-    $whereMarks[] = 'user_id in (select id from user where name like :user_name)';
-    $whereValues[':user_name'] = '%'.$_GET['user_name'].'%';
+    $wheres[] = 'user_id in (select id from user where name like :user_name)';
+    $data[':user_name'] = '%'.$_GET['user_name'].'%';
     $search['user_name'] = $_GET['user_name'];
 }
-if(!empty($whereMarks)){
-    $where['mark'] = implode(' and ', $whereMarks);
-}
-if(!empty($whereMarks)){
-    $where['value'] = $whereValues;
+if(!empty($wheres)){
+    $where = implode(' and ', $wheres);
 }
 
-$recordTotal = Db::selectOne('count(1)', $where);
+$sql = "select count(1) from xxx where $where";
+$recordTotal = Db::selectOne($sql, $data);
 
-$paginationService = new Pagination($recordTotal, @$_GET['page_size'], @$_GET['page_current']);
-$paginationNodeIntact = $paginationService->getNodeIntact();
+$pagination = new Pagination($recordTotal);
+$paginationNodeIntact = $pagination->getNodeIntact();
 
-$operationLogs = Db::selectAll('id, user_id, department_id, ip, time_add, url', $where, 'id desc', ''.$paginationService->limitStart.','.$paginationService->pageSize);
+$sql = "select id, user_id, department_id, ip, time_add, url from operation_log where $where order by id desc limit ".$pagination->limitStart.','.$pagination->pageSize;
+$operationLogs = Db::selectAll($sql, $data);
 
 foreach($operationLogs as $key => $operationLog){
     $operationLogs[$key]['time_add_name'] = date('Y-m-d H:i:s', $operationLog['time_add']);
     $operationLogs[$key]['user_name'] = User::getName($operationLog['user_id']);
     $operationLogs[$key]['department_name'] = Department::getName($operationLog['department_id']);
-    $operationLogs[$key]['url_sub'] = String::getSubFromZero($operationLog['url'], 60);
+    $operationLogs[$key]['url_sub'] = MyString::getSubFromZero($operationLog['url'], 60);
 }
 
-$search = Safe::frontDisplay($search);
-$operationLogs = Safe::frontDisplay($operationLogs, 'id,url,url_sub');
+$search = Safe::entity($search);
+$operationLogs = Safe::entity($operationLogs, 'id,url,url_sub');
 
 ?><!doctype html>
 <html>

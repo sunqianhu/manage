@@ -4,13 +4,12 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Config;
-use library\Ztree;
-use library\Auth;
+use \library\Db;
+use \library\Config;
+use \library\Ztree;
+use \library\Auth;
 
 $config = Config::getAll();
-$permissionModel = new PermissionModel();
 $permissions = array(); // 权限数据
 $permission = ''; // 权限json数据
 
@@ -23,7 +22,8 @@ if(!Auth::isPermission('system_permission')){
     exit;
 }
 
-$permissions = Db::selectAll('id, name, parent_id', array(), 'parent_id asc, id asc');
+$sql = "select id, name, parent_id from permission order by parent_id asc, id asc";
+$permissions = Db::selectAll($sql);
 $permissions = Ztree::setOpenByFirst($permissions);
 $permission = json_encode($permissions);
 

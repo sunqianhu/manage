@@ -4,16 +4,15 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Config;
-use library\FrameMain;
-use library\Tree;
-use library\Safe;
-use library\Permission;
-use library\Auth;
+use \library\Db;
+use \library\Config;
+use \library\FrameMain;
+use \library\Tree;
+use \library\Safe;
+use \library\Permission;
+use \library\Auth;
 
 $config = Config::getAll();
-$permissionModel = new PermissionModel();
 $permissions = array(); // 权限数据
 $permissionNode = ''; // 权限表格节点
 $frameMainMenu = '';
@@ -22,9 +21,9 @@ $search = array(
     'name'=>'',
     'permission'=>''
 );
-$whereMarks = array();
-$whereValues = array();
-$where = array();
+$wheres = array();
+$where = '1';
+$sql = '';
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -36,34 +35,34 @@ if(!Auth::isPermission('system_permission')){
 }
 
 // 权限
-$frameMainMenu = FrameMain::getPageLeftMenu('system_permission');
+$frameMainMenu = FrameMain::getMenu('system_permission');
 
 // 搜索
 if(!empty($_GET['id'])){
-    $whereMarks[] = 'id = :id';
-    $whereValues[':id'] = $_GET['id'];
+    $wheres[] = 'id = :id';
+    $data[':id'] = $_GET['id'];
     $search['id'] = $_GET['id'];
 }
 if(isset($_GET['name']) && $_GET['name'] !== ''){
-    $whereMarks[] = 'name like :name';
-    $whereValues[':name'] = '%'.$_GET['name'].'%';
+    $wheres[] = 'name like :name';
+    $data[':name'] = '%'.$_GET['name'].'%';
     $search['name'] = $_GET['name'];
 }
 if(isset($_GET['permission']) && $_GET['permission'] !== ''){
-    $whereMarks[] = 'permission like :permission';
-    $whereValues[':permission'] = $_GET['permission'];
+    $wheres[] = 'permission like :permission';
+    $data[':permission'] = $_GET['permission'];
     $search['permission'] = $_GET['permission'];
 }
-$search = Safe::frontDisplay($search);
-if(!empty($whereMarks)){
-    $where['mark'] = implode(' and ', $whereMarks);
+$search = Safe::entity($search);
+if(!empty($wheres)){
+    $where = implode(' and ', $wheres);
 }
-$where['value'] = $whereValues;
 
 // 数据
-$permissions = Db::selectAll('id, parent_id, name, `sort`, tag', $where, '`sort` asc, id asc');
+$sql = "select id, parent_id, name, `sort`, tag from permission where $where order by `sort` asc, id asc";
+$permissions = Db::selectAll($sql);
 $permissions = Tree::getTree($permissions, 'child', 'id', 'parent_id');
-$permissions = Safe::frontDisplay($permissions, 'id,parent_id');
+$permissions = Safe::entity($permissions, 'id,parent_id');
 $permissionNode = Permission::getIndexTreeNode($permissions, 1);
 
 ?><!doctype html>
@@ -124,7 +123,6 @@ $permissionNode = Permission::getIndexTreeNode($permissions, 1);
 </table>
 
 </div>
-
 </div>
 </div>
 </div>

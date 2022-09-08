@@ -14,6 +14,6 @@ header('Content-type: text/html; charset=utf-8');
 require_once dirname(__DIR__).'/vendor/autoload.php';
 
 // 日志
-use library\OperationLog;
+use \library\OperationLog;
 OperationLog::add();
 ?>

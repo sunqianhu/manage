@@ -4,15 +4,16 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Validate;
-use library\Auth;
+use \library\Db;
+use \library\Validate;
+use \library\Auth;
 
 $return = array(
     'status'=>'error',
     'message'=>''
 );
-$dictionaryModel = new DictionaryModel();
+$sql = '';
+$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -28,28 +29,23 @@ if(!Auth::isPermission('system_dictionary')){
 
 Validate::setRule(array(
     'id' => 'require:number'
-);
+));
 Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
-);
+));
 if(!Validate::check($_GET)){
     $return['message'] = Validate::getErrorMessage();
     echo json_encode($return);
     exit;
 }
 
-try{
-    Db::delete(
-        array(
-            'mark'=>'id = :id',
-            'value'=> array(
-                ':id'=>$_GET['id']
-            )
-        )
-    );
-}catch(Exception $e){
-    $return['message'] = $e->getMessage();
+$sql = 'delete from dictionary where id = :id';
+$data = array(
+    ':id'=>$_GET['id']
+);
+if(!Db::delete($sql, $data)){
+    $return['message'] = Db::getError();
     echo json_encode($return);
     exit;
 }

@@ -4,17 +4,17 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\model\RoleModel;
-use library\Config;
-use library\ArrayTwo;
-use library\Dictionary;
-use library\Auth;
+use \library\Db;
+use \library\Config;
+use \library\ArrayTwo;
+use \library\Dictionary;
+use \library\Auth;
 
 $config = Config::getAll();
-$roleModel = new RoleModel();
 $status = Dictionary::getRadio('system_user_status', 'status', 1);
 $roleOption = '';
+$sql = '';
+$data = array();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -25,7 +25,8 @@ if(!Auth::isPermission('system_user')){
     exit;
 }
 
-$roles = Db::selectAll('id, name');
+$sql = "select id, name from role order by id asc";
+$roles = Db::selectAll($sql);
 $roleOption = ArrayTwo::getSelectOption($roles);
 
 ?><!doctype html>

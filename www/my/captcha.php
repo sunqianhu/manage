@@ -4,7 +4,7 @@
  */
 require_once '../library/app.php';
 
-use library\Captcha;
+use \library\Captcha;
 
 Captcha::create('login_captcha');
 ?>

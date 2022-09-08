@@ -4,14 +4,13 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Config;
-use library\Dictionary;
-use library\Auth;
-use library\Validate;
-use library\Safe;
+use \library\Db;
+use \library\Config;
+use \library\Dictionary;
+use \library\Auth;
+use \library\Validate;
+use \library\Safe;
 
-$permissionModel = new PermissionModel();
 $config = Config::getAll();
 $permissionTypeRadioNode = Dictionary::getRadio('system_permission_type', 'type', 1);
 $permissionParent = array();
@@ -19,6 +18,8 @@ $init = array(
     'parent_id'=>1,
     'parent_name'=>'顶级权限',
 );
+$sql = '';
+$data = array();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -30,27 +31,26 @@ if(!Auth::isPermission('system_permission')){
 }
 Validate::setRule(array(
     'parent_id' => 'number'
-);
+));
 Validate::setMessage(array(
     'parent_id.number' => 'parent_id必须是个数字'
-);
+));
 if(!Validate::check($_GET)){
     header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
     exit;
 }
 
 if(!empty($_GET['parent_id'])){
-    $permissionParent = Db::selectRow('id, name', array(
-        'mark'=>'id = :id',
-        'value'=>array(
-            ':id'=> $_GET['parent_id']
-        )
-    ));
+    $sql = "select id, name from permission where id = :id";
+    $data = array(
+        ':id'=> $_GET['parent_id']
+    );
+    $permissionParent = Db::selectRow($sql, $data);
     if(!empty($permissionParent)){
         $init['parent_id'] = $permissionParent['id'];
         $init['parent_name'] = $permissionParent['name'];
     }
-    $init = Safe::frontDisplay($init);
+    $init = Safe::entity($init);
 }
 
 ?><!doctype html>

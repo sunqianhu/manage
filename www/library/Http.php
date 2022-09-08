@@ -5,8 +5,23 @@
 namespace library;
 
 class Http{
-    static $errorCode = ''; // 错误代码
-    static $errorMessage = ''; // 错误描述
+    public $error = ''; // 错误描述
+    
+    /**
+     * 得到错误
+     */
+    static function getError(){
+        return self::$error;
+    }
+    
+    /**
+     * 设置错误
+     * @param string $info 错误描述
+     * @return boolean
+     */
+    static function setError($error){
+        return self::$error = $error;
+    }
 
     /**
      * get请求
@@ -31,9 +46,9 @@ class Http{
         $return = curl_exec($ch);
         
         if($return === false){
-            throw new \Exception(curl_errno($ch).' '.curl_error($ch));
+            self::setError('错误号：'.curl_errno($ch).','.'错误描述：'.curl_error($ch));
+            return false;
         }
-        
         curl_close($ch);
         
         return $return;
@@ -67,9 +82,9 @@ class Http{
         $return = curl_exec($ch);
         
         if($return === false){
-            throw new \Exception(curl_errno($ch).' '.curl_error($ch));
+            self::setError('错误号：'.curl_errno($ch).','.'错误描述：'.curl_error($ch));
+            return false;
         }
-        
         curl_close($ch);
         
         return $return;

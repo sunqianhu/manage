@@ -4,16 +4,18 @@
  */
 require_once '../../library/app.php';
 
-use library\Db;
-use library\Config;
-use library\Validate;
-use library\Safe;
-use library\Dictionary;
-use library\Auth;
+use \library\Db;
+use \library\Config;
+use \library\Validate;
+use \library\Safe;
+use \library\Dictionary;
+use \library\Auth;
+use \library\Permission;
 
 $config = Config::getAll();
-$permissionModel = new PermissionModel();
 $permission = array();
+$sql = '';
+$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -27,29 +29,25 @@ if(!Auth::isPermission('system_permission')){
 
 Validate::setRule(array(
     'id' => 'require|number'
-);
+));
 Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
-);
+));
 if(!Validate::check($_GET)){
     header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
     exit;
 }
 
-$permission = Db::selectRow('id, parent_id, type, name, `sort`, tag', array(
-    'mark'=>'id = :id',
-    'value'=>array(
-        ':id'=>$_GET['id']
-    )
-));
-$permission['parent_name'] = Db::selectOne('name', array(
-    'mark'=>'id = :id',
-    'value'=>array(
-        ':id'=> $permission['parent_id']
-    )
-));
-$permission = Safe::frontDisplay($permission);
+$sql = 'select id, parent_id, type, name, `sort`, tag from permission where id = :id';
+$data = array(
+    ':id'=>$_GET['id']
+);
+$permission = Db::selectRow($sql, $data);
+
+
+$permission['parent_name'] = Permission::getName($permission['parent_id']);
+$permission = Safe::entity($permission);
 
 $permissionTypeRadioNode = Dictionary::getRadio('system_permission_type', 'type', $permission['type']);
 
