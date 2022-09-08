@@ -18,7 +18,7 @@ class UserFile{
     
     /**
      * 设置错误
-     * @param string $info 错误描述
+     * @param string $error 错误描述
      * @return boolean
      */
     static function setError($error){

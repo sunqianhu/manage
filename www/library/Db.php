@@ -19,7 +19,7 @@ class Db{
     
     /**
      * 设置错误
-     * @param string $info 错误描述
+     * @param string $error 错误描述
      * @return boolean
      */
     static function setError($error){
@@ -383,10 +383,10 @@ class Db{
             $error .= 'SQLSTATE['.$errors[0].']';
         }
         if(!empty($errors[1])){
-            $error .= '，错误代码：'.$errors[1];
+            $error .= '，驱动错误代码：'.$errors[1];
         }
         if(!empty($errors[2])){
-            $error .= '，错误描述：'.$errors[2];
+            $error .= '，驱动错误描述：'.$errors[2];
         }
 
         return $error;
@@ -411,10 +411,10 @@ class Db{
             $error .= 'SQLSTATE['.$errors[0].']';
         }
         if(!empty($errors[1])){
-            $error .= '，错误代码：'.$errors[1];
+            $error .= '，驱动错误代码：'.$errors[1];
         }
         if(!empty($errors[2])){
-            $error .= '，错误描述：'.$errors[2];
+            $error .= '，驱动错误描述：'.$errors[2];
         }
 
         return $error;
