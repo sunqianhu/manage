@@ -4,6 +4,7 @@
  */
 require_once 'library/app.php';
 
+use \library\Session;
 use \library\Config;
 use \library\FrameMain;
 use \library\Auth;
@@ -12,6 +13,8 @@ $config = array();
 $frameMainMenu = '';
 $timeLogin = '无';
 $ip = '无';
+
+Session::start();
 
 if(!Auth::isLogin()){
     header('location:my/login.php');

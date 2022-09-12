@@ -4,6 +4,8 @@
  */
 require_once '../../library/app.php';
 
+use \library\Session;
+use \library\OperationLog;
 use \library\Db;
 use \library\Auth;
 use \library\Config;
@@ -15,6 +17,8 @@ use \library\Safe;
 use \library\Dictionary;
 use \library\User;
 use \library\Department;
+
+Session::start();
 
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
@@ -41,6 +45,8 @@ $roleOption = '';
 $statusOption = '';
 $sql = '';
 $data = array();
+
+OperationLog::add();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');

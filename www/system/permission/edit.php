@@ -4,6 +4,8 @@
  */
 require_once '../../library/app.php';
 
+use \library\Session;
+use \library\OperationLog;
 use \library\Db;
 use \library\Config;
 use \library\Validate;
@@ -12,10 +14,14 @@ use \library\Dictionary;
 use \library\Auth;
 use \library\Permission;
 
+Session::start();
+
 $config = Config::getAll();
 $permission = array();
 $sql = '';
 $data = array();
+
+OperationLog::add();
 
 // 验证
 if(!Auth::isLogin()){

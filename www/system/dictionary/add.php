@@ -4,8 +4,12 @@
  */
 require_once '../../library/app.php';
 
+use \library\Session;
+use \library\OperationLog;
 use \library\Config;
 use \library\Auth;
+
+Session::start();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -17,6 +21,8 @@ if(!Auth::isPermission('system_dictionary')){
 }
 
 $config = Config::getAll();
+
+OperationLog::add();
 ?><!doctype html>
 <html>
 <head>

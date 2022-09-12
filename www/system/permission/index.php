@@ -4,6 +4,8 @@
  */
 require_once '../../library/app.php';
 
+use \library\Session;
+use \library\OperationLog;
 use \library\Db;
 use \library\Config;
 use \library\FrameMain;
@@ -11,6 +13,8 @@ use \library\Tree;
 use \library\Safe;
 use \library\Permission;
 use \library\Auth;
+
+Session::start();
 
 $config = Config::getAll();
 $permissions = array(); // 权限数据
@@ -24,6 +28,8 @@ $search = array(
 $wheres = array();
 $where = '1';
 $sql = '';
+
+OperationLog::add();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');

@@ -4,10 +4,16 @@
  */
 require_once '../library/app.php';
 
+use \library\Session;
+use \library\OperationLog;
 use \library\Config;
 use \library\Auth;
 
+Session::start();
+
 $config = Config::getAll();
+
+OperationLog::add();
 
 // 验证
 if(!Auth::isLogin()){

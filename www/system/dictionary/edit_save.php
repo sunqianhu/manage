@@ -4,9 +4,12 @@
  */
 require_once '../../library/app.php';
 
+use \library\Session;
 use \library\Db;
 use \library\Validate;
 use \library\Auth;
+
+Session::start();
 
 $return = array(
     'status'=>'error',
@@ -18,6 +21,8 @@ $return = array(
 $dictionary = array();
 $sql = '';
 $data = array();
+
+OperationLog::add();
 
 // 验证
 if(!Auth::isLogin()){

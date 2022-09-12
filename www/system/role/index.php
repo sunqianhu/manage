@@ -4,12 +4,16 @@
  */
 require_once '../../library/app.php';
 
+use \library\Session;
+use \library\OperationLog;
 use \library\Db;
 use \library\Config;
 use \library\FrameMain;
 use \library\Safe;
 use \library\Pagination;
 use \library\Auth;
+
+Session::start();
 
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架权限
@@ -25,6 +29,8 @@ $paginationNodeIntact = ''; // 节点
 $roles = array();
 $sql = '';
 $data = array();
+
+OperationLog::add();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');

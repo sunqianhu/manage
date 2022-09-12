@@ -4,6 +4,8 @@
  */
 require_once '../../library/app.php';
 
+use \library\Session;
+use \library\OperationLog;
 use \library\Db;
 use \library\Config;
 use \library\ArrayTwo;
@@ -13,6 +15,8 @@ use \library\Dictionary;
 use \library\Auth;
 use \library\Department;
 
+Session::start();
+
 $config = Config::getAll();
 $user = array();
 $roles = array();
@@ -20,6 +24,8 @@ $status = '';
 $roleOption = '';
 $sql = '';
 $data = array();
+
+OperationLog::add();
 
 // 验证
 if(!Auth::isLogin()){

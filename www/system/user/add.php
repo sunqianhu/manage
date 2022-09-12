@@ -4,17 +4,23 @@
  */
 require_once '../../library/app.php';
 
+use \library\Session;
+use \library\OperationLog;
 use \library\Db;
 use \library\Config;
 use \library\ArrayTwo;
 use \library\Dictionary;
 use \library\Auth;
 
+Session::start();
+
 $config = Config::getAll();
 $status = Dictionary::getRadio('system_user_status', 'status', 1);
 $roleOption = '';
 $sql = '';
 $data = array();
+
+OperationLog::add();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');

@@ -4,10 +4,13 @@
  */
 require_once '../library/app.php';
 
+use \library\Session;
 use \library\Db;
 use \library\UserFileUpload;
 use \library\User;
 use \library\Auth;
+
+Session::start();
 
 $return = array(
     'status'=>'error',

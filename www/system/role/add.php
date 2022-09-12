@@ -4,15 +4,21 @@
  */
 require_once '../../library/app.php';
 
+use \library\Session;
+use \library\OperationLog;
 use \library\Db;
 use \library\Config;
 use \library\Ztree;
 use \library\Auth;
 
+Session::start();
+
 $config = Config::getAll();
 $permissions = array();
 $permission = ''; // 权限json数据
 $sql = '';
+
+OperationLog::add();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');

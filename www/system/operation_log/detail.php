@@ -4,6 +4,8 @@
  */
 require_once '../../library/app.php';
 
+use \library\Session;
+use \library\OperationLog;
 use \library\Db;
 use \library\Validate;
 use \library\Auth;
@@ -13,11 +15,15 @@ use \library\Safe;
 use \library\User;
 use \library\Department;
 
+Session::start();
+
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
 $operationLog = array();
 $sql = '';
 $data = array();
+
+OperationLog::add();
 
 // 验证
 if(!Auth::isLogin()){

@@ -4,6 +4,7 @@
  */
 require_once '../library/app.php';
 
+use \library\Session;
 use \library\Db;
 use \library\Config;
 use \library\Validate;
@@ -11,6 +12,8 @@ use \library\Auth;
 use \library\Ip;
 use \library\User;
 use \library\Dictionary;
+
+Session::start();
 
 $sql = '';
 $data = array(); // 数据

@@ -4,16 +4,22 @@
  */
 require_once '../../library/app.php';
 
+use \library\Session;
+use \library\OperationLog;
 use \library\Db;
 use \library\Config;
 use \library\Validate;
 use \library\Safe;
 use \library\Auth;
 
+Session::start();
+
 $config = Config::getAll();
 $dictionary = array();
 $sql = '';
 $data = array();
+
+OperationLog::add();
 
 // 验证
 if(!Auth::isLogin()){

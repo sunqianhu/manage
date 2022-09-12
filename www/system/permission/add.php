@@ -4,12 +4,16 @@
  */
 require_once '../../library/app.php';
 
+use \library\Session;
+use \library\OperationLog;
 use \library\Db;
 use \library\Config;
 use \library\Dictionary;
 use \library\Auth;
 use \library\Validate;
 use \library\Safe;
+
+Session::start();
 
 $config = Config::getAll();
 $permissionTypeRadioNode = Dictionary::getRadio('system_permission_type', 'type', 1);
@@ -20,6 +24,8 @@ $init = array(
 );
 $sql = '';
 $data = array();
+
+OperationLog::add();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');

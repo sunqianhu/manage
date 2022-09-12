@@ -4,10 +4,13 @@
  */
 require_once '../../library/app.php';
 
+use \library\Session;
 use \library\Db;
 use \library\Ztree;
 use \library\Config;
 use \library\Auth;
+
+Session::start();
 
 $config = Config::getAll();
 $departments = array();

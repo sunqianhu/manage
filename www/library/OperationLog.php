@@ -12,8 +12,7 @@ class OperationLog{
     /**
      * 添加操作日志
      * @access public
-     * @param int $id 用户id
-     * @return string 用户姓名
+     * @return id 日志id
      */
     static function add(){
         $departmentId = 0;
@@ -25,12 +24,12 @@ class OperationLog{
         $userAgent = '';
         $sql = '';
         
-        if(!empty($_SESSION['department']['id'])){
-            $departmentId = $_SESSION['department']['id'];
+        if(empty($_SESSION['user']) || empty($_SESSION['department'])){
+            return 0;
         }
-        if(!empty($_SESSION['user']['id'])){
-            $userId = $_SESSION['user']['id'];
-        }
+        
+        $departmentId = $_SESSION['department']['id'];
+        $userId = $_SESSION['user']['id'];
         if(!empty($_SERVER['REQUEST_URI'])){
             $url = $_SERVER['REQUEST_URI'];
         }
@@ -56,5 +55,4 @@ class OperationLog{
         );
         return Db::insert($sql, $data);
     }
-    
 }

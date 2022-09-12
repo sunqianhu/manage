@@ -4,6 +4,8 @@
  */
 require_once '../../library/app.php';
 
+use \library\Session;
+use \library\OperationLog;
 use \library\Db;
 use \library\Config;
 use \library\FrameMain;
@@ -11,6 +13,8 @@ use \library\Tree;
 use \library\Safe;
 use \library\Department;
 use \library\Auth;
+
+Session::start();
 
 $config = Config::getAll();
 $departments = array(); // 部门数据
@@ -25,6 +29,8 @@ $wheres = array();
 $where = '1';
 $sql = '';
 $data = array();
+
+OperationLog::add();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');

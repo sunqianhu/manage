@@ -4,6 +4,8 @@
  */
 require_once '../../library/app.php';
 
+use \library\Session;
+use \library\OperationLog;
 use \library\Db;
 use \library\Config;
 use \library\FrameMain;
@@ -13,6 +15,8 @@ use \library\Auth;
 use \library\MyString;
 use \library\User;
 use \library\Department;
+
+Session::start();
 
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
@@ -30,6 +34,8 @@ $paginationNodeIntact = ''; // 节点
 $operationLogs = array();
 $sql = '';
 $data = array();
+
+OperationLog::add();
 
 if(!Auth::isLogin()){
     header('location:../../operation/index.php');
@@ -53,6 +59,11 @@ if(isset($_GET['time_end']) && $_GET['time_end'] !== ''){
     $wheres[] = 'time_add < :time_end';
     $data[':time_end'] = strtotime($_GET['time_end']);
     $search['time_end'] = $_GET['time_end'];
+}
+if(isset($_GET['ip']) && $_GET['ip'] !== ''){
+    $wheres[] = 'ip = :ip';
+    $data[':ip'] = $_GET['ip'];
+    $search['ip'] = $_GET['ip'];
 }
 if(isset($_GET['department_name']) && $_GET['department_name'] !== ''){
     $wheres[] = 'department_id in (select id from department where name like :department_name)';
@@ -125,6 +136,7 @@ $operationLogs = Safe::entity($operationLogs, 'id,url,url_sub');
 <ul>
 <li>操作时间：<span class="time_range"><input type="text" name="time_start" id="time_start" value="<?php echo $search['time_start'];?>" autocomplete="off" /> 到 
 <input type="text" name="time_end" id="time_end" value="<?php echo $search['time_end'];?>" autocomplete="off" /></span></li>
+<li>ip：<input type="text" name="ip" value="<?php echo $search['ip'];?>" /></li>
 <li>部门：<input type="text" name="department_name" value="<?php echo $search['department_name'];?>" /></li>
 <li>姓名：<input type="text" name="user_name" value="<?php echo $search['user_name'];?>" /></li>
 <li>

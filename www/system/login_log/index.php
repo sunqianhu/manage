@@ -4,6 +4,8 @@
  */
 require_once '../../library/app.php';
 
+use \library\Session;
+use \library\OperationLog;
 use \library\Db;
 use \library\Config;
 use \library\FrameMain;
@@ -12,6 +14,8 @@ use \library\Safe;
 use \library\Auth;
 use \library\User;
 use \library\Department;
+
+Session::start();
 
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
@@ -29,6 +33,8 @@ $paginationNodeIntact = ''; // 节点
 $loginLogs = array();
 $sql = '';
 $data = array();
+
+OperationLog::add();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');

@@ -4,11 +4,15 @@
  */
 require_once '../../library/app.php';
 
+use \library\Session;
+use \library\OperationLog;
 use \library\Db;
 use \library\Config;
 use \library\Auth;
 use \library\Validate;
 use \library\Safe;
+
+Session::start();
 
 $config = array();
 $departmentParent = array();
@@ -18,6 +22,8 @@ $init = array(
 );
 $sql = '';
 $data = array();
+
+OperationLog::add();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
