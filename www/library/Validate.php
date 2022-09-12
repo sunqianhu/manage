@@ -8,10 +8,10 @@ class Validate{
     // 规则
     static public $rule = array();
     
-    // 错误描述
+    // 描述
     static public $message = array();
     
-    // 错误信息
+    // 错误
     static public $error = array(
         'field'=>'',
         'message'=>''
@@ -27,12 +27,28 @@ class Validate{
     }
     
     /**
+     * 得到规则
+     * @return boolean
+     */
+    static public function getRule(){
+        return self::$rule;
+    }
+    
+    /**
      * 设置描述
      * @param array $message 描述
      * @return boolean
      */
     static public function setMessage($message){
         self::$message = $message;
+    }
+    
+    /**
+     * 得到描述
+     * @return boolean
+     */
+    static public function getMessage(){
+        return self::$message;
     }
     
     /**
@@ -43,12 +59,12 @@ class Validate{
     static public function check($datas){
         $field = ''; // 数据字段
         $value = ''; // 数据值
-        $ruleString = '';
+        $ruleString = ''; // 一个字段的规则字符串
         $rules = array(); // 一个字段的规则数组
-        $rule = ''; // 一个字段的规则字符串
-        $ruleItems = array(); // 一个字段的一个规则项数组
-        $ruleName = ''; // 规则名
-        $ruleValue = ''; // 规则值
+        $rule = ''; // 一个字段的一个规则
+        $checks = array(); // 验证
+        $checkName = ''; // 验证名
+        $checkValue = ''; // 验证值
         $message = ''; // 描述
         
         // 验证
@@ -69,21 +85,21 @@ class Validate{
             }
             
             foreach($rules as $rule){
-                $ruleItem = explode(':', $rule);
-                $ruleName = $ruleItem[0];
-                $ruleValue = '';
-                if(!empty($ruleItem[1])){
-                    $ruleValue = $ruleItem[1];
+                $checks = explode(':', $rule);
+                $checkName = $checks[0];
+                $checkValue = '';
+                if(!empty($checks[1])){
+                    $checkValue = $checks[1];
                 }
                 
-                // 错误描述
-                $message = self::getMessage($field, $ruleName, $ruleValue);
+                // 字段描述
+                $message = self::getFieldMessage($field, $checkName, $checkValue);
                 
                 // 检测
-                switch($ruleName){
+                switch($checkName){
                     // 必填
                     case 'require':
-                        if(!self::checkRequire($value, $ruleValue)){
+                        if(!self::checkRequire($value, $checkValue)){
                             self::setError($field, $message);
                             return false;
                         }
@@ -91,7 +107,7 @@ class Validate{
                     
                     // 长度等于
                     case 'length':
-                        if(!self::checkLength($value, $ruleValue)){
+                        if(!self::checkLength($value, $checkValue)){
                             self::setError($field, $message);
                             return false;
                         }
@@ -99,7 +115,7 @@ class Validate{
                     
                     // 最大长度
                     case 'max_length':
-                        if(!self::checkMaxLength($value, $ruleValue)){
+                        if(!self::checkMaxLength($value, $checkValue)){
                             self::setError($field, $message);
                             return false;
                         }
@@ -107,7 +123,7 @@ class Validate{
                     
                     // 最小长度
                     case 'min_length':
-                        if(!self::checkMinLength($value, $ruleValue)){
+                        if(!self::checkMinLength($value, $checkValue)){
                             self::setError($field, $message);
                             return false;
                         }
@@ -123,7 +139,7 @@ class Validate{
                     
                     // 数字字符串
                     case 'number_string':
-                        if(!self::checkNumberString($value, $ruleValue)){
+                        if(!self::checkNumberString($value, $checkValue)){
                             self::setError($field, $message);
                             return false;
                         }
@@ -139,7 +155,7 @@ class Validate{
                     
                     // 正则
                     case 'regex':
-                        if(!self::checkRegex($value, $ruleValue)){
+                        if(!self::checkRegex($value, $checkValue)){
                             self::setError($field, $message);
                             return false;
                         }
@@ -287,31 +303,31 @@ class Validate{
     }
     
     /**
-     * 得到描述
+     * 得到字段描述
      * @return string
      */
-    static function getMessage($field, $ruleName, $ruleValue){
+    static function getFieldMessage($field, $checkName, $checkValue){
         $message = '';
         
         // 自定义描述
-        if(!empty(self::$message[$field.'.'.$ruleName])){
-            $message = self::$message[$field.'.'.$ruleName];
+        if(!empty(self::$message[$field.'.'.$checkName])){
+            $message = self::$message[$field.'.'.$checkName];
         }
         
         // 默认描述
         if(empty($message)){
-            switch($ruleName){
+            switch($checkName){
                 case 'require':
-                    $message = $ruleName.'不能为空';
+                    $message = $checkName.'不能为空';
                 break;
                 case 'max_length':
-                    $message = $ruleName.'长度不能超过'.$ruleValue;
+                    $message = $checkName.'长度不能超过'.$checkValue;
                 break;
                 case 'number':
-                    $message = $ruleName.'不是一个数字';
+                    $message = $checkName.'不是一个数字';
                 break;
                 case 'regex':
-                    $message = $ruleName.'不符合规则';
+                    $message = $checkName.'不符合规则';
                 break;
             }
         }
@@ -321,6 +337,8 @@ class Validate{
     
     /**
      * 设置错误
+     * @param string $field 字段
+     * @param string $message 描述
      */
     static function setError($field, $message = ''){
         self::$error['field'] = $field;
@@ -328,11 +346,10 @@ class Validate{
     }
     
     /**
-     * 得到错误描述
-     * @return string 错误描述
+     * 得到错误
      */
-    static function getErrorMessage(){
-        return self::$error['message'];
+    static function getError(){
+        return self::$error;
     }
     
     /**
@@ -341,5 +358,13 @@ class Validate{
      */
     static function getErrorField(){
         return self::$error['field'];
+    }
+    
+    /**
+     * 得到错误描述
+     * @return string 错误描述
+     */
+    static function getErrorMessage(){
+        return self::$error['message'];
     }
 }
