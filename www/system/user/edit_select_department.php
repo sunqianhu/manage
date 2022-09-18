@@ -12,6 +12,8 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $config = Config::getAll();
 $departments = array();
 $department = ''; // 部门json数据
@@ -27,7 +29,8 @@ if(!Auth::isPermission('system_user')){
 }
 
 $sql = 'select id, name, parent_id from department order by parent_id asc, id asc';
-$departments = Db::selectAll($sql);
+$pdoStatement = Db::query($pdo, $sql);
+$departments = Db::fetchAll($pdoStatement);
 $departments = Ztree::setOpenByFirst($departments);
 $department = json_encode($departments);
 

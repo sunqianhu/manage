@@ -19,6 +19,8 @@ use \library\Department;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
 $roles = array(); // 角色
@@ -56,7 +58,8 @@ $sql = 'select id, username, `name`, `phone`, `status`, department_id, role_id_s
 $data = array(
     ':id'=>$_GET['id']
 );
-$user = Db::selectRow($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$user = Db::fetch($pdoStatement);
 if(empty($user)){
     header('location:../../error.php?message='.urlencode('没有找到用户'));
     exit;
@@ -72,7 +75,8 @@ $sql = 'select name from role where id in (:id)';
 $data = array(
     ':id'=>$user['role_id_string']
 );
-$roles = Db::selectAll($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$roles = Db::fetchAll($pdoStatement);
 $user['role_name'] = ArrayTwo::getColumnString($roles, 'name', '，');
 $user = Safe::entity($user);
 
@@ -81,7 +85,8 @@ $sql = "select ip, time_login from login_log where user_id = :user_id order by i
 $data = array(
     ':user_id'=>$user['id']
 );
-$loginLogs = Db::selectAll($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$loginLogs = Db::fetchAll($pdoStatement);
 $loginLogs = ArrayTwo::columnTimestampToTime($loginLogs, 'time_login', 'time_login_name');
 $loginLogs = Safe::entity($loginLogs);
 
@@ -90,7 +95,8 @@ $sql = "select id, ip, time_add, url from operation_log where user_id = :user_id
 $data = array(
     ':user_id'=>$user['id']
 );
-$operationLogs = Db::selectAll($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$operationLogs = Db::fetchAll($pdoStatement);
 $operationLogs = ArrayTwo::columnTimestampToTime($operationLogs, 'time_add', 'time_add_name');
 
 foreach($operationLogs as $key => $operationLog){

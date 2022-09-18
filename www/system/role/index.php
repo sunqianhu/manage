@@ -15,6 +15,8 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架权限
 $search = array(
@@ -60,13 +62,15 @@ if(!empty($wheres)){
 }
 
 $sql = "select count(1) from role where $where";
-$recordTotal = Db::selectOne($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$recordTotal = Db::fetchColumn($pdoStatement);
 
 $pagination = new Pagination($recordTotal);
 $paginationNodeIntact = $pagination->getNodeIntact();
 
 $sql = "select id, name, time_edit from role where $where order by id asc limit ".$pagination->limitStart.','.$pagination->pageSize;
-$roles = Db::selectAll($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$roles = Db::fetchAll($pdoStatement);
 foreach($roles as $key => $role){
     $roles[$key]['time_edit_name'] = date('Y-m-d H:i:s', $role['time_edit']);
 }

@@ -11,6 +11,8 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -63,19 +65,19 @@ $data = array(
     ':time_add'=>time(),
     ':time_edit'=>time()
 );
-$roleId = Db::insert($sql, $data);
-if(!$roleId){
+if(!Db::query($pdo, $sql, $data)){
     $return['message'] = Db::getError();
     echo json_encode($return);
     exit;
 }
+$roleId = Db::getLastInsertId($pdo);
 
 // 关联
 $sql = 'delete from role_permission where role_id = :role_id';
 $data = array(
     ':role_id'=>$roleId
 );
-Db::delete($sql, $data);
+Db::query($pdo, $sql, $data);
 
 foreach($permissionIds as $permissionId){
     $sql = 'insert into role_permission(role_id,permission_id) values(:role_id,:permission_id)';
@@ -83,7 +85,7 @@ foreach($permissionIds as $permissionId){
         ':role_id'=>$roleId,
         ':permission_id'=>$permissionId
     );
-    Db::insert($sql, $data);
+    Db::query($pdo, $sql, $data);
 }
 
 $return['status'] = 'success';

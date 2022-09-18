@@ -11,6 +11,8 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -60,7 +62,8 @@ $sql = 'select parent_ids from department where id = :id';
 $data = array(
     ':id'=>$_POST['parent_id']
 );
-$departmentParent = Db::selectRow($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$departmentParent = Db::fetch($pdoStatement);
 
 // 入库
 $sql = "insert into department(parent_id, name, sort, remark) values(:parent_id, :name, :sort, :remark)";
@@ -70,12 +73,12 @@ $data = array(
     ':sort'=>$_POST['sort'],
     ':remark'=>$_POST['remark']
 );
-$id = Db::insert($sql, $data);
-if(empty($id)){
+if(!Db::query($pdo, $sql, $data)){
     $return['message'] = Db::getError();
     echo json_encode($return);
     exit;
 }
+$id = Db::getLastInsertId($pdo);
 
 // 父级id
 $parentIds = $departmentParent['parent_ids'].','.$id;
@@ -84,7 +87,7 @@ $data = array(
     ':parent_ids'=>$parentIds,
     ':id'=>$id
 );
-Db::update($sql, $data);
+Db::query($pdo, $sql, $data);
 
 $return['status'] = 'success';
 $return['message'] = '添加成功';

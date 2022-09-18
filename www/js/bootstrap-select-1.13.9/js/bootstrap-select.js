@@ -2474,9 +2474,9 @@
         e.stopPropagation();
 
         if ($(this).hasClass('bs-select-all')) {
-          that.selectAll();
+          that.fetchAll();
         } else {
-          that.deselectAll();
+          that.defetchAll();
         }
       });
 

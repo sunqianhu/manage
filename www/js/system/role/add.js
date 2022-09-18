@@ -54,7 +54,7 @@ add.setPermissionId = function(){
  */
 add.formSubmit = function(){
     sun.formSubmit({
-        element: ".form",
+        selector: ".form",
         success: function(ret){
             if(ret.status == "error"){
                 sun.toast("error", ret.message, 3000);

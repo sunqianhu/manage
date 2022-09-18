@@ -14,6 +14,8 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $config = Config::getAll();
 $dictionary = array();
 $sql = '';
@@ -47,7 +49,8 @@ $sql = 'select id, type, `key`, `value`, `sort` from dictionary where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
-$dictionary = Db::selectRow($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$dictionary = Db::fetch($pdoStatement);
 $dictionary = Safe::entity($dictionary);
 
 ?><!doctype html>

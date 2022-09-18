@@ -20,6 +20,8 @@ use \library\Department;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
 $wheres = array();
@@ -103,13 +105,15 @@ if(isset($_GET['department_name'])){
 }
 
 $sql = "select count(1) from user where $where";
-$recordTotal = Db::selectOne($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$recordTotal = Db::fetchColumn($pdoStatement);
 
 $pagination = new Pagination($recordTotal);
 $paginationNodeIntact = $pagination->getNodeIntact();
 
 $sql = "select id, username, head, `name`, `time_login`, time_edit, phone, status, department_id from user where $where order by id asc limit ".$pagination->limitStart.','.$pagination->pageSize;
-$users = Db::selectAll($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$users = Db::fetchAll($pdoStatement);
 foreach($users as $key => $user){
     $users[$key]['department_name'] = Department::getName($user['department_id']);
     $users[$key]['status_name'] = Dictionary::getValue('system_user_status', $user['status']);
@@ -120,14 +124,16 @@ foreach($users as $key => $user){
 }
 
 $sql = 'select id, name, parent_id from department order by parent_id asc, sort asc';
-$departments = Db::selectAll($sql);
+$pdoStatement = Db::query($pdo, $sql);
+$departments = Db::fetchAll($pdoStatement);
 $departments = Ztree::setOpenByFirst($departments);
 $department = json_encode($departments);
 
 $statusOption = Dictionary::getSelectOption('system_user_status', array($search['status']));
 
 $sql = 'select id, name from role order by id asc';
-$roles = Db::selectAll($sql);
+$pdoStatement = Db::query($pdo, $sql);
+$roles = Db::fetchAll($pdoStatement);
 $roleOption = ArrayTwo::getSelectOption($roles, array($search['role_id']), 'id', 'name');
 
 $users = Safe::entity($users);

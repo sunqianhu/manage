@@ -11,6 +11,8 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -67,7 +69,8 @@ $sql = 'select id, parent_id from permission where id = :id';
 $data = array(
     ':id'=>$_POST['id']
 );
-$permissionCurrent = Db::selectRow($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$permissionCurrent = Db::fetch($pdoStatement);
 if(empty($permissionCurrent)){
     $return['message'] = '此权限没有找到';
     echo json_encode($return);
@@ -79,7 +82,8 @@ $sql = 'select parent_ids from permission where id = :id';
 $data = array(
     ':id'=>$_POST['parent_id']
 );
-$permissionParent = Db::selectRow($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$permissionParent = Db::fetch($pdoStatement);
 
 // 更新
 $sql = 'update permission set
@@ -99,7 +103,7 @@ $data = array(
     ':sort'=>$_POST['sort'],
     ':id'=>$permissionCurrent['id']
 );
-if(!Db::update($sql, $data)){
+if(!Db::query($pdo, $sql, $data)){
     $return['message'] = Db::getError();
     echo json_encode($return);
     exit;

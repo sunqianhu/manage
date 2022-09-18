@@ -15,6 +15,8 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
 $search = array(
@@ -67,13 +69,15 @@ if(!empty($wheres)){
 }
 
 $sql = 'select count(1) from dictionary where '.$where;
-$recordTotal = Db::selectOne($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$recordTotal = Db::fetchColumn($pdoStatement);
 
 $pagination = new Pagination($recordTotal);
 $paginationNodeIntact = $pagination->getNodeIntact();
 
 $sql = "select id, type, `key`, `value`, `sort` from dictionary where $where order by type asc, `sort` asc, id asc limit ".$pagination->limitStart.','.$pagination->pageSize;
-$dictionarys = Db::selectAll($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$dictionarys = Db::fetchAll($pdoStatement);
 
 $dictionarys = Safe::entity($dictionarys);
 ?><!doctype html>

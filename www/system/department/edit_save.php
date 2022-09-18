@@ -11,6 +11,8 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -67,7 +69,8 @@ $sql = 'select id, parent_id from department where id = :id';
 $data = array(
     ':id'=>$_POST['id']
 );
-$departmentCurrent = Db::selectRow($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$departmentCurrent = Db::fetch($pdoStatement);
 if(empty($departmentCurrent)){
     $return['message'] = '此部门没有找到';
     echo json_encode($return);
@@ -79,7 +82,8 @@ $sql = 'select parent_ids from department where id = :id';
 $data = array(
     ':id'=>$_POST['parent_id']
 );
-$departmentParent = Db::selectRow($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$departmentParent = Db::fetch($pdoStatement);
 
 // 更新
 $sql = 'update department set
@@ -97,7 +101,7 @@ $data = array(
     ':remark'=>$_POST['remark'],
     ':id'=>$departmentCurrent['id']
 );
-if(!Db::update($sql, $data)){
+if(!Db::query($pdo, $sql, $data)){
     $return['message'] = Db::getError();
     echo json_encode($return);
     exit;

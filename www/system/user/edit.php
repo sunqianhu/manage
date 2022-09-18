@@ -17,6 +17,8 @@ use \library\Department;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $config = Config::getAll();
 $user = array();
 $roles = array();
@@ -52,7 +54,8 @@ $sql = 'select id, username, `name`, `phone`, `status`, department_id, role_id_s
 $data = array(
     ':id'=>$_GET['id']
 );
-$user = Db::selectRow($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$user = Db::fetch($pdoStatement);
 if(empty($user)){
     header('location:../../error.php?message='.urlencode('没有找到用户'));
     exit;
@@ -64,7 +67,8 @@ $user = Safe::entity($user);
 $status = Dictionary::getRadio('system_user_status', 'status', $user['status']);
 
 $sql = 'select id, name from role order by id asc';
-$roles = Db::selectAll($sql);
+$pdoStatement = Db::query($pdo, $sql);
+$roles = Db::fetchAll($pdoStatement);
 $roleOption = ArrayTwo::getSelectOption($roles, $user['role_ids'], 'id', 'name');
 
 ?><!doctype html>

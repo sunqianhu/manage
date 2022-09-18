@@ -14,6 +14,8 @@ class Dictionary{
      * @return string value
      */
     static function getAndSetCacheType($type){
+        $pdo = Db::getInstance();
+        $pdoStatement = null;
         $cacheKey = 'dictionary_'.$type; // 缓存key
         $data = '';
         $datas = array();
@@ -29,7 +31,8 @@ class Dictionary{
         $dbData = array(
             ':type'=>$type
         );
-        $datas = Db::selectAll($sql, $dbData);
+        $pdoStatement = Db::query($pdo, $sql, $dbData);
+        $datas = Db::fetchAll($pdoStatement);
         if(empty($datas)){
             return $data;
         }

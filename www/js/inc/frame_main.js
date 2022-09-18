@@ -9,7 +9,7 @@ var frameMain = {};
  */
 frameMain.userDropDownMenu = function(){
     sun.dropDownHover({
-        element: ".page .page_header .link .user"
+        selector: ".page .page_header .link .user"
     });
 }
 

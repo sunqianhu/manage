@@ -25,7 +25,7 @@ index.searchDepartmentZtreeInit = function(){
     index.searchDepartmentZtree = $.fn.zTree.init($(".search #ztree"), setting, nodes);
     
     sun.dropDownClick.init({
-        element: ".search .department"
+        selector: ".search .department"
     });
 }
 
@@ -115,6 +115,6 @@ $(function(){
     index.searchDepartmentZtreeInit();
     
     sun.dropDownMenuClick.init({
-        element: ".data table .operation_more"
+        selector: ".data table .operation_more"
     });
 });

@@ -11,6 +11,8 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -67,7 +69,8 @@ $sql = 'select id from dictionary where id = :id';
 $data = array(
     ':id'=>$_POST['id']
 );
-$dictionary = Db::selectRow($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$dictionary = Db::fetch($pdoStatement);
 if(empty($dictionary)){
     $return['message'] = '字典没有找到';
     echo json_encode($return);
@@ -88,7 +91,7 @@ $data = array(
     ':sort'=>$_POST['sort'],
     ':id'=>$dictionary['id']
 );
-if(!Db::update($sql, $data)){
+if(!Db::query($pdo, $sql, $data)){
     $return['message'] = Db::getError();
     echo json_encode($return);
     exit;

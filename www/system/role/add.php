@@ -13,6 +13,8 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $config = Config::getAll();
 $permissions = array();
 $permission = ''; // 权限json数据
@@ -30,7 +32,8 @@ if(!Auth::isPermission('system_role')){
 }
 
 $sql = 'select id, name, parent_id from permission where parent_id != 0 order by parent_id asc, sort asc';
-$permissions = Db::selectAll($sql);
+$pdoStatement = Db::query($pdo, $sql);
+$permissions = Db::fetchAll($pdoStatement);
 $permissions = Ztree::setOpenByFirst($permissions);
 $permission = json_encode($permissions);
 

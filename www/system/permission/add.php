@@ -15,6 +15,8 @@ use \library\Safe;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $config = Config::getAll();
 $permissionTypeRadioNode = Dictionary::getRadio('system_permission_type', 'type', 1);
 $permissionParent = array();
@@ -51,7 +53,8 @@ if(!empty($_GET['parent_id'])){
     $data = array(
         ':id'=> $_GET['parent_id']
     );
-    $permissionParent = Db::selectRow($sql, $data);
+    $pdoStatement = Db::query($pdo, $sql, $data);
+    $permissionParent = Db::fetch($pdoStatement);
     if(!empty($permissionParent)){
         $init['parent_id'] = $permissionParent['id'];
         $init['parent_name'] = $permissionParent['name'];

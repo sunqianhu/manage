@@ -14,6 +14,8 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $config = Config::getAll();
 $status = Dictionary::getRadio('system_user_status', 'status', 1);
 $roleOption = '';
@@ -32,7 +34,8 @@ if(!Auth::isPermission('system_user')){
 }
 
 $sql = "select id, name from role order by id asc";
-$roles = Db::selectAll($sql);
+$pdoStatement = Db::query($pdo, $sql);
+$roles = Db::fetchAll($pdoStatement);
 $roleOption = ArrayTwo::getSelectOption($roles);
 
 ?><!doctype html>

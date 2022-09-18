@@ -11,6 +11,8 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -65,7 +67,8 @@ $sql = 'select parent_ids from permission where id = :id';
 $data = array(
     ':id'=>$_POST['parent_id']
 );
-$permissionParent = Db::selectRow($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$permissionParent = Db::fetch($pdoStatement);
 
 // 入库
 $sql = 'insert into permission(parent_id,type,name,tag,sort) values(:parent_id,:type,:name,:tag,:sort)';
@@ -76,8 +79,7 @@ $data = array(
     ':tag'=>$_POST['tag'],
     ':sort'=>$_POST['sort']
 );
-$id = Db::insert($sql, $data);
-if(!$id){
+if(!Db::query($pdo, $sql, $data)){
     $return['message'] = Db::getError();
     echo json_encode($return);
     exit;
@@ -89,7 +91,7 @@ $data = array(
     ':parent_ids'=>$parentIds,
     ':id'=>$id
 );
-if(!Db::update($sql, $data)){
+if(!Db::query($pdo, $sql, $data)){
     $return['message'] = Db::getError();
     echo json_encode($return);
     exit;

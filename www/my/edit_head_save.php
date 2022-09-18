@@ -12,14 +12,16 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
+$sql = '';
+$data = array();
 $return = array(
     'status'=>'error',
     'msg'=>''
 ); // 返回数据
 $user = array();
 $path = ''; // 头像路径
-$sql = '';
-$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -33,7 +35,8 @@ $sql = "select id from user where id = :id";
 $data = array(
     ':id'=>$_SESSION['user']['id']
 );
-$user = Db::selectRow($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$user = Db::fetch($pdoStatement);
 if(empty($user)){
     $return['message'] = '用户没有找到';
     echo json_encode($return);
@@ -54,7 +57,7 @@ $data = array(
     ':head'=>$path,
     ':id'=>$user['id']
 );
-Db::update($sql, $data);
+Db::query($pdo, $sql, $data);
 
 $_SESSION['user']['head'] = $path;
 $_SESSION['user']['head_url'] = User::getHeadUrl($path);

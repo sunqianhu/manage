@@ -15,6 +15,8 @@ use \library\Dictionary;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $sql = '';
 $data = array(); // 数据
 $user = array();
@@ -74,7 +76,13 @@ $data = array(
     ':username'=>$_POST['username'],
     ':password'=>md5($_POST['password'])
 );
-$user = Db::selectRow($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+if(empty($pdoStatement)){
+    $return['message'] = Db::getError();
+    echo json_encode($return);
+    exit;
+}
+$user = Db::fetch($pdoStatement);
 if(empty($user)){
     $return['message'] = '用户名或密码错误';
     echo json_encode($return);
@@ -92,7 +100,8 @@ $sql = 'select id, name from department where id = :id';
 $data = array(
     ':id'=>$user['department_id']
 );
-$department = Db::selectRow($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$department = Db::fetch($pdoStatement);
 if(empty($department)){
     $return['message'] = '用户还没有设置部门';
     echo json_encode($return);
@@ -104,7 +113,8 @@ $sql = 'select id, parent_id, type, name, tag from permission where id in (selec
 $data = array(
     ':role_id'=> $user['role_id_string']
 );
-$permissions = Db::selectAll($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$permissions = Db::fetchAll($pdoStatement);
 
 // 记录
 $ip = Ip::get();
@@ -112,7 +122,7 @@ $sql = "update user set time_login = ".time().", ip = '".$ip."' where id = :id";
 $data = array(
     ':id'=>$user['id']
 );
-Db::update($sql, $data);
+Db::query($pdo, $sql, $data);
 
 // 日志
 $sql = 'insert into login_log(user_id, department_id, time_login, ip) values(:user_id, :department_id, :time_login, :ip)';
@@ -122,7 +132,8 @@ $data = array(
     ':time_login'=>time(),
     ':ip'=>$ip
 );
-Db::insert($sql, $data);
+Db::query($pdo, $sql, $data)
+$id = Db::getLastInsertId($pdo);
 
 // 会话
 $_SESSION['user'] = $user;

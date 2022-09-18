@@ -11,6 +11,8 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $return = array(
     'status'=>'error',
     'message'=>''
@@ -53,7 +55,8 @@ $sql = 'select id from department where parent_id = :id limit 0,1';
 $data = array(
     ':id'=>$_GET['id']
 );
-$departmentChild = Db::selectRow($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$departmentChild = Db::fetch($pdoStatement);
 if(!empty($departmentChild)){
     $return['message'] = '该部门存在下级部门';
     echo json_encode($return);
@@ -64,7 +67,7 @@ $sql = 'delete from department where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
-if(!Db::delete($sql, $data)){
+if(!Db::query($pdo, $sql, $data)){
     $return['message'] = Db::getError();
     echo json_encode($return);
     exit;

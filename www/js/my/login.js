@@ -28,7 +28,7 @@ index.changeCaptcha = function(){
  */
 index.formSubmit = function(){
     sun.formSubmit({
-        element: ".form",
+        selector: ".form",
         success: function(ret){
             if(ret.data.captcha == "1"){
                 index.changeCaptcha();

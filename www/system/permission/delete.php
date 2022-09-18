@@ -11,6 +11,8 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $return = array(
     'status'=>'error',
     'message'=>''
@@ -53,7 +55,8 @@ $sql = 'select id from permission where parent_id = :parent_id limit 0,1';
 $data = array(
     ':parent_id'=>$_GET['id']
 );
-$permissionChild = Db::selectRow($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$permissionChild = Db::fetch($pdoStatement);
 if(!empty($permissionChild)){
     $return['message'] = '该权限存在下级权限';
     echo json_encode($return);
@@ -64,7 +67,7 @@ $sql = 'delete from permission where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
-if(!Db::delete($sql, $data)){
+if(!Db::query($pdo, $sql, $data)){
     $return['message'] = Db::getError();
     echo json_encode($return);
     exit;

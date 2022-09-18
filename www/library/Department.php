@@ -15,6 +15,8 @@ class Department{
      * @return string 用户姓名
      */
     static function getName($id){
+        $pdo = Db::getInstance();
+        $pdoStatement = null;
         $name = '';
         $sql = '';
         $data = array();
@@ -23,7 +25,8 @@ class Department{
         $data = array(
             ':id'=>$id
         );
-        $name = Db::selectOne($sql, $data);
+        $pdoStatement = Db::query($pdo, $sql, $data);
+        $name = Db::fetchColumn($pdoStatement);
         
         return $name;
     }

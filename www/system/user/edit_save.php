@@ -11,6 +11,8 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -68,7 +70,8 @@ $sql = 'select id from user where id = :id';
 $data = array(
     ':id'=>$_POST['id']
 );
-$user = Db::selectRow($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$user = Db::fetch($pdoStatement);
 if(empty($user)){
     $return['message'] = '用户没有找到';
     echo json_encode($return);
@@ -100,7 +103,7 @@ if($_POST['password'] !== ''){
 }else{
     $sql = str_replace('[password]', '', $sql);
 }
-if(!Db::update($sql, $data)){
+if(!Db::query($pdo, $sql, $data)){
     $return['message'] = Db::getError();
     echo json_encode($return);
     exit;

@@ -1,17 +1,18 @@
 <?php
 /**
- * 数据库助手类
+ * 数据库操作辅助类
  */
 namespace library;
 
 use \library\Config;
 
 class Db{
-    static public $pdo = null;
+    static public $pdo;
     static public $error = ''; // 错误
     
     /**
      * 得到错误
+     * @return String 错误描述
      */
     static function getError(){
         return self::$error;
@@ -19,17 +20,19 @@ class Db{
     
     /**
      * 设置错误
-     * @param string $error 错误描述
-     * @return boolean
+     * @param String $error 错误描述
+     * @return Boolean
      */
     static function setError($error){
         return self::$error = $error;
     }
     
     /**
-     * 得到db单例实例
+     * 得到pdo单例实例
+     * @return Object pdo对象
      */
-    static function getPdoInstance(){
+    static function getInstance(){
+        $pdo = null;
         $dsn = '';
         $config = array();
         
@@ -48,7 +51,8 @@ class Db{
             empty($config['db_username']) ||
             empty($config['db_password'])
         ){
-            throw new \Exception('数据库配置错误');
+            self::setError('数据库配置参数错误');
+            return $pdo;
         }
         
         $dsn = $config['db_type'].
@@ -56,20 +60,26 @@ class Db{
         ';port='.$config['db_port'].
         ';dbname='.$config['db_database'].
         ';charset='.$config['db_charset'];
-        self::$pdo = new \PDO($dsn, $config['db_username'], $config['db_password']);
+        try{
+            $pdo = new \PDO($dsn, $config['db_username'], $config['db_password']);
+        }catch(Exception $e){
+            self::setError($e->getMessage());
+            return $pdo;
+        }
         
-        return self::$pdo;
+        self::$pdo = $pdo;
+        return $pdo;
     }
     
     /**
-     * 执行
+     * 执行sql语句
      * @access public
-     * @param string $sql sql模式
-     * @param array $data 数据
-     * @return boolean
+     * @param Object $pdo pdo对象
+     * @param String $sql sql
+     * @param Array $data 数据
+     * @return Object 预处理语句
      */
-    static function execute($sql, $data = array()){
-        $pdo = null; // pdo对象
+    static function query($pdo, $sql, $data = array()){
         $pdoStatement = null;
         $field = ''; // 字段
         $value = ''; // 值
@@ -77,15 +87,14 @@ class Db{
         
         if(empty($sql)){
             self::setError('sql不能为空');
-            return false;
+            return $pdoStatement;
         }
         
-        $pdo = self::getPdoInstance();
         $pdoStatement = $pdo->prepare($sql);
         if($pdoStatement === false){
             $error = self::getPdoError($pdo);
             self::setError($error);
-            return false;
+            return $pdoStatement;
         }
         foreach($data as $field => $value){
             if(is_array($value) && count($value) > 1){
@@ -95,278 +104,85 @@ class Db{
             }
         }
         if(!$pdoStatement->execute()){
-            $error = self::getStatementError($pdoStatement);
+            $error = self::getPodStatementError($pdoStatement);
             self::setError($error);
-            return false;
+            return $pdoStatement;
         }
         
-        return true;
-    }
-    
-    /**
-     * 插入
-     * @access public
-     * @param string $sql sql
-     * @param array $data 数据
-     * @return id 新插入记录id
-     */
-    static function insert($sql, $data = array()){
-        $pdo = null; // pdo对象
-        $pdoStatement = null;
-        $field = ''; // 字段
-        $value = ''; // 值
-        $error = ''; // 错误描述
-        
-        if(empty($sql)){
-            self::setError('sql不能为空');
-            return false;
-        }
-        
-        $pdo = self::getPdoInstance();
-        $pdoStatement = $pdo->prepare($sql);
-        if($pdoStatement === false){
-            $error = self::getPdoError($pdo);
-            self::setError($error);
-            return false;
-        }
-        foreach($data as $field => $value){
-            if(is_array($value) && count($value) > 1){
-                $pdoStatement->bindValue($field, $value[0], $value[1]);
-            }else{
-                $pdoStatement->bindValue($field, $value);
-            }
-        }
-        if(!$pdoStatement->execute()){
-            $error = self::getStatementError($pdoStatement);
-            self::setError($error);
-            return false;
-        }
-        
-        return $pdo->lastInsertId();
-    }
-    
-    /**
-     * 删除
-     * @access public
-     * @param string $sql sql模式
-     * @param array $data 数据
-     * @return boolean
-     */
-    static function delete($sql, $data = array()){
-        $pdo = null; // pdo对象
-        $pdoStatement = null;
-        $field = ''; // 字段
-        $value = ''; // 值
-        $error = ''; // 错误描述
-        
-        if(empty($sql)){
-            self::setError('sql不能为空');
-            return false;
-        }
-        
-        $pdo = self::getPdoInstance();
-        $pdoStatement = $pdo->prepare($sql);
-        if($pdoStatement === false){
-            $error = self::getPdoError($pdo);
-            self::setError($error);
-            return false;
-        }
-        foreach($data as $field => $value){
-            if(is_array($value) && count($value) > 1){
-                $pdoStatement->bindValue($field, $value[0], $value[1]);
-            }else{
-                $pdoStatement->bindValue($field, $value);
-            }
-        }
-        if(!$pdoStatement->execute()){
-            $error = self::getStatementError($pdoStatement);
-            self::setError($error);
-            return false;
-        }
-        
-        return true;
-    }
-    
-    /**
-     * 更新
-     * @access public
-     * @param string $sql sql模式
-     * @param array $data 数据
-     * @return boolean
-     */
-    static function update($sql, $data = array()){
-        $pdo = null; // pdo对象
-        $pdoStatement = null;
-        $field = ''; // 字段
-        $value = ''; // 值
-        $error = ''; // 错误描述
-        
-        if(empty($sql)){
-            self::setError('sql不能为空');
-            return false;
-        }
-        
-        $pdo = self::getPdoInstance();
-        $pdoStatement = $pdo->prepare($sql);
-        if($pdoStatement === false){
-            $error = self::getPdoError($pdo);
-            self::setError($error);
-            return false;
-        }
-        foreach($data as $field => $value){
-            if(is_array($value) && count($value) > 1){
-                $pdoStatement->bindValue($field, $value[0], $value[1]);
-            }else{
-                $pdoStatement->bindValue($field, $value);
-            }
-        }
-        if(!$pdoStatement->execute()){
-            $error = self::getStatementError($pdoStatement);
-            self::setError($error);
-            return false;
-        }
-        
-        return true;
+        return $pdoStatement;
     }
     
     /**
      * 得到查询条件的全部数据
      * @access public
-     * @param string $sql sql模式
-     * @param array $data 数据
-     * @return array
+     * @param Object $pdoStatement 结果集对象
+     * @param Integer $type 返回内容格式
+     * @return Array
      */
-    static function selectAll($sql, $data = array()){
-        $pdo = null; // pdo对象
-        $pdoStatement = null;
-        $field = ''; // 字段
-        $value = ''; // 值
-        $error = ''; // 错误描述
-        $results = array();
+    static function fetchAll($pdoStatement, $type = \PDO::FETCH_ASSOC){
+        $datas = array();
         
-        if(empty($sql)){
-            self::setError('sql不能为空');
-            return $results;
-        }
-        
-        $pdo = self::getPdoInstance();
-        $pdoStatement = $pdo->prepare($sql);
-        if($pdoStatement === false){
-            $error = self::getPdoError($pdo);
-            self::setError($error);
-            return $results;
-        }
-        foreach($data as $field => $value){
-            if(is_array($value) && count($value) > 1){
-                $pdoStatement->bindValue($field, $value[0], $value[1]);
-            }else{
-                $pdoStatement->bindValue($field, $value);
-            }
-        }
-        if(!$pdoStatement->execute()){
-            $error = self::getStatementError($pdoStatement);
-            self::setError($error);
-            return $results;
-        }
-        
-        $results = $pdoStatement->fetchAll(\PDO::FETCH_ASSOC);
-        if(empty($results)){
+        $datas = $pdoStatement->fetchAll($type);
+        if(empty($datas)){
             return array();
         }
         
-        return $results;
+        return $datas;
     }
     
     /**
-     * 得到一条记录
+     * 从结果集中获取下一行
      * @access public
-     * @param string $sql sql模式
-     * @param array $data 数据
-     * @return array
+     * @param Object $pdoStatement 结果集对象
+     * @param Integer $type 返回内容格式
+     * @return Array
      */
-    static function selectRow($sql, $data = array()){
-        $pdo = null; // pdo对象
-        $pdoStatement = null;
-        $field = ''; // 字段
-        $value = ''; // 值
-        $error = ''; // 错误描述
-        $result = array();
+    static function fetch($pdoStatement, $type = \PDO::FETCH_ASSOC){
+        $data = array();
         
-        if(empty($sql)){
-            self::setError('sql不能为空');
-            return $result;
-        }
-        
-        $pdo = self::getPdoInstance();
-        $pdoStatement = $pdo->prepare($sql);
-        if($pdoStatement === false){
-            $error = self::getPdoError($pdo);
-            self::setError($error);
-            return $result;
-        }
-        foreach($data as $field => $value){
-            if(is_array($value) && count($value) > 1){
-                $pdoStatement->bindValue($field, $value[0], $value[1]);
-            }else{
-                $pdoStatement->bindValue($field, $value);
-            }
-        }
-        if(!$pdoStatement->execute()){
-            $error = self::getStatementError($pdoStatement);
-            self::setError($error);
-            return $result;
-        }
-        
-        $result = $pdoStatement->fetch(\PDO::FETCH_ASSOC);
-        if(empty($result)){
+        $data = $pdoStatement->fetch($type);
+        if($data === false){
             return array();
         }
         
-        return $result;
+        return $data;
     }
     
     /**
-     * 得到一个字段内容
+     * 从结果集中的下一行返回单独的一列
      * @access public
-     * @param string $sql sql模式
-     * @param array $data 数据
-     * @return array
+     * @param Object $pdoStatement 结果集对象
+     * @param Array $data 数据
+     * @return String
      */
-    static function selectOne($sql, $data = array()){
-        $pdo = null; // pdo对象
-        $pdoStatement = null;
-        $field = ''; // 字段
-        $value = ''; // 值
-        $error = ''; // 错误描述
-        $result = '';
+    static function fetchColumn($pdoStatement, $columnNumber = 0){
+        $field = '';
         
-        if(empty($sql)){
-            self::setError('sql不能为空');
-            return $result;
+        $field = $pdoStatement->fetchColumn($columnNumber);
+        if($field === false){
+            return '';
         }
         
-        $pdo = self::getPdoInstance();
-        $pdoStatement = $pdo->prepare($sql);
-        if($pdoStatement === false){
-            $error = self::getPdoError($pdo);
-            self::setError($error);
-            return $result;
-        }
-        foreach($data as $field => $value){
-            if(is_array($value) && count($value) > 1){
-                $pdoStatement->bindValue($field, $value[0], $value[1]);
-            }else{
-                $pdoStatement->bindValue($field, $value);
-            }
-        }
-        if(!$pdoStatement->execute()){
-            $error = self::getStatementError($pdoStatement);
-            self::setError($error);
-            return $result;
+        return $field;
+    }
+    
+    /**
+     * 返回最后插入行的ID或序列值
+     * @access public
+     * @param Object $pdo pdo对象
+     * @return Integer 新插入记录id
+     */
+    static function getLastInsertId($pdo){
+        $id = 0;
+        
+        try{
+            $id = $pdo->lastInsertId();
+        }catch(Exception $e){
+            self::setError($e->getMessage());
+            return 0;
         }
         
-        $result = $pdoStatement->fetchColumn();
-        return $result;
+        return $id;
     }
     
     /**
@@ -397,7 +213,7 @@ class Db{
      * @param PDOStatement $pdoStatement 结果集对象
      * @return string 错误描述
      */
-    static function getStatementError($pdoStatement){
+    static function getPodStatementError($pdoStatement){
         $errors = array();
         $error = '';
 

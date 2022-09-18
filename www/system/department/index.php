@@ -16,6 +16,8 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $config = Config::getAll();
 $departments = array(); // 部门数据
 $departmentNode = ''; // 部门表格节点
@@ -68,7 +70,8 @@ if(!empty($wheres)){
 
 // 数据
 $sql = "select id, parent_id, name, `sort`, remark from department where $where order by `sort` asc, id asc";
-$departments = Db::selectAll($sql);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$departments = Db::fetchAll($pdoStatement);
 $departments = Tree::getTree($departments, 'child', 'id', 'parent_id');
 $departments = Safe::entity($departments);
 $departmentNode = Department::getIndexTreeNode($departments, 1);

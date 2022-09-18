@@ -18,6 +18,8 @@ use \library\Department;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
 $search = array(
@@ -84,13 +86,15 @@ if(!empty($wheres)){
 }
 
 $sql = "select count(1) from xxx where $where";
-$recordTotal = Db::selectOne($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$recordTotal = Db::fetchColumn($pdoStatement);
 
 $pagination = new Pagination($recordTotal);
 $paginationNodeIntact = $pagination->getNodeIntact();
 
 $sql = "select id, user_id, department_id, ip, time_add, url from operation_log where $where order by id desc limit ".$pagination->limitStart.','.$pagination->pageSize;
-$operationLogs = Db::selectAll($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$operationLogs = Db::fetchAll($pdoStatement);
 
 foreach($operationLogs as $key => $operationLog){
     $operationLogs[$key]['time_add_name'] = date('Y-m-d H:i:s', $operationLog['time_add']);

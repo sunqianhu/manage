@@ -17,6 +17,8 @@ use \library\Department;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
 $operationLog = array();
@@ -50,7 +52,8 @@ $sql = 'select * from operation_log where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
-$operationLog = Db::selectRow($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$operationLog = Db::fetch($pdoStatement);
 if(empty($operationLog)){
     header('location:../../error.php?message='.urlencode('没有找到用户'));
     exit;

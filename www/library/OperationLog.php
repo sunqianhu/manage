@@ -15,6 +15,9 @@ class OperationLog{
      * @return id 日志id
      */
     static function add(){
+        $pdo = Db::getInstance();
+        $pdoStatement = null;
+        $sql = '';
         $departmentId = 0;
         $userId = 0;
         $data = array();
@@ -22,10 +25,10 @@ class OperationLog{
         $request = '';
         $url = '';
         $userAgent = '';
-        $sql = '';
+        $id = 0;
         
         if(empty($_SESSION['user']) || empty($_SESSION['department'])){
-            return 0;
+            return $id;
         }
         
         $departmentId = $_SESSION['department']['id'];
@@ -53,6 +56,9 @@ class OperationLog{
             ':request'=>$request,
             ':time_add'=>time()
         );
-        return Db::insert($sql, $data);
+        $pdoStatement = Db::query($pdo, $sql, $data);
+        $id = Db::getLastInsertId($pdo);
+        
+        return $id;
     }
 }

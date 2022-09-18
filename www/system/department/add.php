@@ -14,6 +14,8 @@ use \library\Safe;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $config = array();
 $departmentParent = array();
 $init = array(
@@ -49,7 +51,8 @@ if(!empty($_GET['parent_id'])){
     $data = array(
         ':id'=>$_GET['parent_id']
     );
-    $departmentParent = Db::selectRow($sql, $data);
+    $pdoStatement = Db::query($pdo, $sql, $data);
+    $departmentParent = Db::fetch($pdoStatement);
     if(!empty($departmentParent)){
         $init['parent_id'] = $departmentParent['id'];
         $init['parent_name'] = $departmentParent['name'];

@@ -21,7 +21,7 @@ class Permission{
         $data = array(
             ':id'=>$id
         );
-        $name = Db::selectOne($sql, $data);
+        $name = Db::fetchColumn($sql, $data);
         
         return $name;
     }

@@ -4,7 +4,6 @@
  */
 namespace library;
 
-use \library\Db;
 use \library\Config;
 use \library\UserFile;
 
@@ -99,7 +98,7 @@ class UserFileUpload{
         // 赋值
         self::$path = $path;
         self::$url = UserFile::getUrl($path);
-        self::$name = $name;
+        self::$name = $file['name'];
         self::$extension = $extension;
         self::$type = $file['type'];
         self::$size = $file['size'];

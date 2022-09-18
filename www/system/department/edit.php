@@ -15,6 +15,8 @@ use \library\Department;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $config = Config::getAll();
 $department = array();
 $sql = '';
@@ -52,7 +54,8 @@ $sql = 'select id, parent_id, name, `sort`, remark from department where id = :i
 $data = array(
     ':id'=>$_GET['id']
 );
-$department = Db::selectRow($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$department = Db::fetch($pdoStatement);
 $department['parent_name'] = Department::getName($department['parent_id']);
 $department = Safe::entity($department);
 

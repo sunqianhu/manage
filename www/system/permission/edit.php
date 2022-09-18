@@ -16,6 +16,8 @@ use \library\Permission;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $config = Config::getAll();
 $permission = array();
 $sql = '';
@@ -49,7 +51,8 @@ $sql = 'select id, parent_id, type, name, `sort`, tag from permission where id =
 $data = array(
     ':id'=>$_GET['id']
 );
-$permission = Db::selectRow($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$permission = Db::fetch($pdoStatement);
 
 
 $permission['parent_name'] = Permission::getName($permission['parent_id']);

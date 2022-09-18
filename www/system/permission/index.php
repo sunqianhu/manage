@@ -16,6 +16,8 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $config = Config::getAll();
 $permissions = array(); // 权限数据
 $permissionNode = ''; // 权限表格节点
@@ -27,6 +29,7 @@ $search = array(
 );
 $wheres = array();
 $where = '1';
+$data = array();
 $sql = '';
 
 OperationLog::add();
@@ -66,7 +69,8 @@ if(!empty($wheres)){
 
 // 数据
 $sql = "select id, parent_id, name, `sort`, tag from permission where $where order by `sort` asc, id asc";
-$permissions = Db::selectAll($sql);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$permissions = Db::fetchAll($pdoStatement);
 $permissions = Tree::getTree($permissions, 'child', 'id', 'parent_id');
 $permissions = Safe::entity($permissions, 'id,parent_id');
 $permissionNode = Permission::getIndexTreeNode($permissions, 1);

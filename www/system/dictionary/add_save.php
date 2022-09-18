@@ -11,6 +11,8 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -64,7 +66,8 @@ $data = array(
     ':value'=>$_POST['value'],
     ':sort'=>$_POST['sort']
 );
-if(!Db::insert($sql, $data)){
+
+if(!Db::query($pdo, $sql, $data)){
     $return['message'] = Db::getError();
     echo json_encode($return);
     exit;

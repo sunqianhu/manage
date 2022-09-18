@@ -11,6 +11,8 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
+$pdoStatement = null;
 $return = array(
     'status'=>'error',
     'message'=>''
@@ -48,7 +50,8 @@ $sql = 'select id from role where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
-$role = Db::selectRow($sql, $data);
+$pdoStatement = Db::query($pdo, $sql, $data);
+$role = Db::fetch($pdoStatement);
 if(empty($role)){
     $return['message'] = '角色没有找到';
     echo json_encode($return);
@@ -59,12 +62,7 @@ $sql = 'delete from role where id = :id';
 $data = array(
     ':id'=>$role['id']
 );
-if(!Db::delete($sql, $data)){
-    $return['message'] = Db::getError();
-    echo json_encode($return);
-    exit;
-}
-if(!Db::delete($sql, $data)){
+if(!Db::query($pdo, $sql, $data)){
     $return['message'] = Db::getError();
     echo json_encode($return);
     exit;

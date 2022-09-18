@@ -11,6 +11,7 @@ use \library\Auth;
 
 Session::start();
 
+$pdo = Db::getInstance();
 $return = array(
     'status'=>'error',
     'message'=>''
@@ -47,7 +48,7 @@ $sql = 'delete from dictionary where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
-if(!Db::delete($sql, $data)){
+if(!Db::query($pdo, $sql, $data)){
     $return['message'] = Db::getError();
     echo json_encode($return);
     exit;

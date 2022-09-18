@@ -96,42 +96,49 @@ sun.loading.close = function(id){
 
 /**
  * 表单提交
- * @param config.element 元素
- * @param config.buttonSubmitText 提交中文字描述
+ * @param config.selector 表单form选择器
  * @param config.before 请求前的回调
  * @param config.success 请求成功回调
+ * @param config.buttonSelector 提交按钮节点选择器
+ * @param config.buttonText 提交按钮提交时的文字
+ * @param config.buttonClass 提交按钮提交时的样式
  */
 sun.formSubmit = function(config){
-    if(!config.element){
+    var domForm; // 表单节点
+    var submitHandle; // 提交处理程序
+    
+    // 验证
+    if(!config.selector){
         sun.toast("error", "表单选择器参数错误", 3000);
         return false;
     }
-    
-    var domForm = $(config.element);
-    var domInputSubmits; // 所有input提交按钮
-    var domInputSubmit; // 一个input提交按钮
-    var domButtonSubmits; // 所有button提交按钮
-    var domButtonSubmit; // 一个button提交按钮
-    var url = ""; // 提交url
-    var method = ""; // 提交方式
-    var data; // 提交数据
-    
-    // 验证
+    domForm = $(config.selector);
     if(domForm.length == 0){
         sun.toast("error", "没有找到表单节点", 3000);
         return false;
     }
-    if(!config.buttonSubmitText){
-        config.buttonSubmitText = "处理中...";
+    
+    // 初始化
+    if(!config.buttonSelector){
+        config.buttonSelector = "input:submit";
+    }
+    if(!config.buttonText){
+        config.buttonText = "处理中...";
     }
     
-    domForm.on("submit", function(){
+    // 提交处理
+    submitHandle = function(){
+        var domButtons; // 按钮所有
+        var domButton; // 按钮一个
+        var buttonText = ""; // 按钮文字
+        var url = ""; // 提交url
+        var method = ""; // 提交方式
+        var data; // 提交数据
+
         url = domForm.attr("action");
         method = domForm.attr("method");
         data = domForm.serialize();
-
-        domInputSubmits = $("input:submit", domForm);
-        domButtonSubmits = $("button[type='submit']", domForm);
+        domButtons = $(config.buttonSelector, domForm);
 
         // 提交前
         if(config.before){
@@ -139,28 +146,21 @@ sun.formSubmit = function(config){
                 return false;
             }
         }
-
+        
         // 按钮文字改成提交中
-        domInputSubmits.each(function(index, element) {
-            domInputSubmit = $(this);
-            domInputSubmit.attr({"disabled":"disabled"}); // 禁用防止重复提交
-            if(config.buttonSubmitText){
-                domInputSubmit.attr({"value_old":domInputSubmit.val()});
-                domInputSubmit.val(config.buttonSubmitText);
+        domButtons.each(function(index, element) {
+            domButton = $(this);
+            buttonText = domButton.val();
+            if(!buttonText){
+                buttonText = domButton.html();
             }
-            if(config.buttonSubmitClass){
-                domInputSubmit.addClass(config.buttonSubmitClass);
-            }
-        });
-        domButtonSubmits.each(function(index, element) {
-            domButtonSubmit = $(this);
-            domButtonSubmit.attr({"disabled":"disabled"});
-            if(config.buttonSubmitText){
-                domButtonSubmit.attr({"value_old":domButtonSubmit.html()});
-                domButtonSubmit.html(config.buttonSubmitText);
-            }
-            if(config.buttonSubmitClass){
-                domButtonSubmit.addClass(config.buttonSubmitClass);
+            
+            domButton.attr({"disabled": "disabled"}); // 禁用防止重复提交
+            domButton.attr({"value_old": buttonText});
+            domButton.val(config.buttonText);
+            domButton.text(config.buttonText);
+            if(config.buttonClass){
+                domButton.addClass(config.buttonClass);
             }
         });
 
@@ -185,32 +185,27 @@ sun.formSubmit = function(config){
 
                 // 按钮还原
                 setTimeout(function(){
-                    domInputSubmits.each(function(index, element) {
-                        domInputSubmit = $(this);
-                        if(config.buttonSubmitText){
-                            domInputSubmit.val(domInputSubmit.attr("value_old"));
+                    domButtons.each(function(index, element) {
+                        domButton = $(this);
+                        buttonText = domButton.attr("value_old");
+                        
+                        domButton.val(buttonText);
+                        domButton.text(buttonText);
+                        if(config.buttonClass){
+                            domButton.removeClass(config.buttonClass);
                         }
-                        if(config.buttonSubmitClass){
-                            domInputSubmit.removeClass(config.buttonSubmitClass);
-                        }
-                        domInputSubmit.removeAttr("disabled");
-                    });
-                    domButtonSubmits.each(function(index, element) {
-                        domButtonSubmit = $(this);
-                        if(config.buttonSubmitText){
-                            domButtonSubmit.html(domButtonSubmit.attr("value_old"));
-                        }
-                        if(config.buttonSubmitClass){
-                            domButtonSubmit.removeClass(config.buttonSubmitClass);
-                        }
-                        domButtonSubmit.removeAttr("disabled");
+                        domButton.removeAttr("disabled");
                     });
                 }, 1000);
             }
         });
 
         return false;
-    });
+    }
+    
+    // 绑定事件
+    domForm.off("submit");
+    domForm.on("submit", submitHandle);
 };
 
 /**
@@ -220,7 +215,7 @@ sun.dropDownClick = {};
 
 /**
  * 下拉点击
- * @param string config.element 元素
+ * @param string config.selector 元素
  */
 sun.dropDownClick.init = function(config){
     var domDocument; // 文档
@@ -230,14 +225,14 @@ sun.dropDownClick.init = function(config){
     var contentDisplay = "none"; // 内容显示
     
     // 配置
-    if(!config.element){
+    if(!config.selector){
         sun.toast("error", "下拉元素选择器参数错误", 3000);
         return false;
     }
     
     // 对象
     domDocument = $(document);
-    domDropdowns = $(config.element);
+    domDropdowns = $(config.selector);
     domDropdownTitles = $(" > .title", domDropdowns);
     domDropdownContents = $(" > .content", domDropdowns);
     
@@ -258,7 +253,7 @@ sun.dropDownClick.init = function(config){
     
     // 关闭
 	domDocument.on("click", function(e){
-		if($(e.target).closest(config.element).length === 0){
+		if($(e.target).closest(config.selector).length === 0){
 			domDropdownContents.slideUp(200);
 		}
 	});
@@ -287,7 +282,7 @@ sun.dropDownMenuClick = {};
 
 /**
  * 下拉菜单点击
- * @param string config.element 元素
+ * @param string config.selector 元素
  */
 sun.dropDownMenuClick.init = function(config){
     var domDocument; // 文档
@@ -298,14 +293,14 @@ sun.dropDownMenuClick.init = function(config){
     var contentDisplay = "none"; // 内容是否显示
     
     // 配置
-    if(!config.element){
+    if(!config.selector){
         sun.toast("error", "下拉元素选择器参数错误", 3000);
         return false;
     }
     
     // 对象
     domDocument = $(document);
-    domDropdownMenus = $(config.element);
+    domDropdownMenus = $(config.selector);
     domDropdownMenuTitles = $(" > .title", domDropdownMenus);
     domDropdownMenuContents = $(" > .content", domDropdownMenus);
     domDropdownMenuContentLis = $(" > ul > li", domDropdownMenuContents);
@@ -328,7 +323,7 @@ sun.dropDownMenuClick.init = function(config){
     // 选项
     domDropdownMenuContentLis.on("click", function(){
         var domDropdownMenuContentLi = $(this);
-        var domDropdownMenu = domDropdownMenuContentLi.parents(config.element).eq(0);
+        var domDropdownMenu = domDropdownMenuContentLi.parents(config.selector).eq(0);
         var domDropdownMenuContent = $(" > .content", domDropdownMenu);
         
         domDropdownMenuContent.slideUp(200);
@@ -336,7 +331,7 @@ sun.dropDownMenuClick.init = function(config){
     
     // 关闭
 	domDocument.on("click", function(e){
-		if($(e.target).closest(config.element).length === 0){
+		if($(e.target).closest(config.selector).length === 0){
 			domDropdownMenuContents.slideUp(200);
 		}
 	});
@@ -360,7 +355,7 @@ sun.dropDownMenuClick.close = function(element){
 
 /**
  * 下拉悬停初始化
- * @param string config.element 元素
+ * @param string config.selector 元素
  */
 sun.dropDownHover = function(config){
     var domDropdowns; // 下拉所有
@@ -370,13 +365,13 @@ sun.dropDownHover = function(config){
     var sto;
     
     // 配置
-    if(!config.element){
+    if(!config.selector){
         sun.toast("error", "下拉元素选择器参数错误", 3000);
         return false;
     }
     
     // 对象
-    domDropdowns = $(config.element);
+    domDropdowns = $(config.selector);
     domDropdownContents = $(" > .content", domDropdowns);
     
     // 鼠标移入
@@ -607,7 +602,7 @@ sun.treeTable = {};
 
 /**
  * 表格树初始化
- * @param string config.element 元素
+ * @param string config.selector 元素
  * @param string config.column 那一列
  * @param string config.expand 展开几级
  */
@@ -625,13 +620,13 @@ sun.treeTable.init = function(config){
     var parentId = 0; // 父级id
     
     // 配置
-    if(!config.element || !config.column || !config.expand){
+    if(!config.selector || !config.column || !config.expand){
         sun.toast("error", "表格树参数错误", 3000);
         return false;
     }
     
     // trs
-    domTable = $(config.element);
+    domTable = $(config.selector);
     domTrs = $("> tbody > tr", domTable);
     trLength = domTrs.length;
     if(trLength == 0){
@@ -735,7 +730,7 @@ sun.treeTable.childClose = function(id){
 
 /**
  * 文件上传
- * @param string config.element 元素
+ * @param string config.selector 元素
  * @param string config.name 文件上传表单字段名
  * @param string config.accept 可选择的文件mime类型
  * @param string config.url 处理url
@@ -754,12 +749,12 @@ sun.fileUpload = function(config){
     var i = 0; // 遍历索引
         
     // 验证
-    if(!config.element || !config.name){
+    if(!config.selector || !config.name){
         sun.toast("error", "文件上传参数错误", 3000);
         return false;
     }
     
-    domButton = $(config.element);
+    domButton = $(config.selector);
     if(domButton.length === 0){
         sun.toast("error", "文件上传element参数错误", 3000);
         return false;
