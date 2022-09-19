@@ -55,7 +55,7 @@ $data = array(
 $pdoStatement = Db::query($pdo, $sql, $data);
 $operationLog = Db::fetch($pdoStatement);
 if(empty($operationLog)){
-    header('location:../../error.php?message='.urlencode('没有找到用户'));
+    header('location:../../error.php?message='.urlencode('没有找到记录'));
     exit;
 }
 $operationLog['time_add_name'] = date('Y-m-d H:i:s', $operationLog['time_add']);

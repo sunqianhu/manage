@@ -66,7 +66,6 @@ $data = array(
     ':value'=>$_POST['value'],
     ':sort'=>$_POST['sort']
 );
-
 if(!Db::query($pdo, $sql, $data)){
     $return['message'] = Db::getError();
     echo json_encode($return);

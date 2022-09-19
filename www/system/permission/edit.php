@@ -54,7 +54,6 @@ $data = array(
 $pdoStatement = Db::query($pdo, $sql, $data);
 $permission = Db::fetch($pdoStatement);
 
-
 $permission['parent_name'] = Permission::getName($permission['parent_id']);
 $permission = Safe::entity($permission);
 

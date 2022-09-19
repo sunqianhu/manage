@@ -28,7 +28,7 @@ if(!Auth::isPermission('system_permission')){
 }
 
 $sql = "select id, name, parent_id from permission order by parent_id asc, id asc";
-$pdoStatement = Db::query($pdo, $sql, $data);
+$pdoStatement = Db::query($pdo, $sql);
 $permissions = Db::fetchAll($pdoStatement);
 $permissions = Ztree::setOpenByFirst($permissions);
 $permission = json_encode($permissions);

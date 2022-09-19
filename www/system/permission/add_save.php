@@ -84,6 +84,7 @@ if(!Db::query($pdo, $sql, $data)){
     echo json_encode($return);
     exit;
 }
+$id = $pdo->lastInsertId();
 
 $parentIds = $permissionParent['parent_ids'].','.$id;
 $sql = "update permission set parent_ids = :parent_ids where id = :id";
@@ -91,11 +92,7 @@ $data = array(
     ':parent_ids'=>$parentIds,
     ':id'=>$id
 );
-if(!Db::query($pdo, $sql, $data)){
-    $return['message'] = Db::getError();
-    echo json_encode($return);
-    exit;
-}
+Db::query($pdo, $sql, $data);
 
 $return['status'] = 'success';
 $return['message'] = '添加成功';

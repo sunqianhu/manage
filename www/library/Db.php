@@ -60,12 +60,7 @@ class Db{
         ';port='.$config['db_port'].
         ';dbname='.$config['db_database'].
         ';charset='.$config['db_charset'];
-        try{
-            $pdo = new \PDO($dsn, $config['db_username'], $config['db_password']);
-        }catch(Exception $e){
-            self::setError($e->getMessage());
-            return $pdo;
-        }
+        $pdo = new \PDO($dsn, $config['db_username'], $config['db_password']);
         
         self::$pdo = $pdo;
         return $pdo;
@@ -77,7 +72,7 @@ class Db{
      * @param Object $pdo pdo对象
      * @param String $sql sql
      * @param Array $data 数据
-     * @return Object 预处理语句
+     * @return Object PDOStatement对象
      */
     static function query($pdo, $sql, $data = array()){
         $pdoStatement = null;
@@ -94,7 +89,7 @@ class Db{
         if($pdoStatement === false){
             $error = self::getPdoError($pdo);
             self::setError($error);
-            return $pdoStatement;
+            return null;
         }
         foreach($data as $field => $value){
             if(is_array($value) && count($value) > 1){
@@ -106,7 +101,7 @@ class Db{
         if(!$pdoStatement->execute()){
             $error = self::getPodStatementError($pdoStatement);
             self::setError($error);
-            return $pdoStatement;
+            return null;
         }
         
         return $pdoStatement;
@@ -141,7 +136,7 @@ class Db{
         $data = array();
         
         $data = $pdoStatement->fetch($type);
-        if($data === false){
+        if(empty($data)){
             return array();
         }
         
@@ -164,25 +159,6 @@ class Db{
         }
         
         return $field;
-    }
-    
-    /**
-     * 返回最后插入行的ID或序列值
-     * @access public
-     * @param Object $pdo pdo对象
-     * @return Integer 新插入记录id
-     */
-    static function getLastInsertId($pdo){
-        $id = 0;
-        
-        try{
-            $id = $pdo->lastInsertId();
-        }catch(Exception $e){
-            self::setError($e->getMessage());
-            return 0;
-        }
-        
-        return $id;
     }
     
     /**

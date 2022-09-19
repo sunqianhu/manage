@@ -18,9 +18,9 @@ class OperationLog{
         $pdo = Db::getInstance();
         $pdoStatement = null;
         $sql = '';
+        $data = array();
         $departmentId = 0;
         $userId = 0;
-        $data = array();
         $ip = Ip::get();
         $request = '';
         $url = '';
@@ -57,7 +57,7 @@ class OperationLog{
             ':time_add'=>time()
         );
         $pdoStatement = Db::query($pdo, $sql, $data);
-        $id = Db::getLastInsertId($pdo);
+        $id = $pdo->lastInsertId();
         
         return $id;
     }

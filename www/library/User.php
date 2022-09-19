@@ -18,9 +18,9 @@ class User{
     static function getName($id){
         $pdo = Db::getInstance();
         $pdoStatement = null;
-        $name = '';
         $sql = '';
         $data = array();
+        $name = '';
                 
         $sql = 'select name from user where id = :id';
         $data = array(

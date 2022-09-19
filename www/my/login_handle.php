@@ -132,8 +132,7 @@ $data = array(
     ':time_login'=>time(),
     ':ip'=>$ip
 );
-Db::query($pdo, $sql, $data)
-$id = Db::getLastInsertId($pdo);
+Db::query($pdo, $sql, $data);
 
 // 会话
 $_SESSION['user'] = $user;

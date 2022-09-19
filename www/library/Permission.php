@@ -4,6 +4,8 @@
  */
 namespace library;
 
+use \library\Db;
+
 class Permission{
     
     /**
@@ -13,14 +15,17 @@ class Permission{
      * @return string 用户姓名
      */
     static function getName($id){
-        $name = '';
+        $pdo = Db::getInstance();
+        $pdoStatement = null;
         $sql = '';
         $data = array();
+        $name = '';
         
         $sql = 'select name from permission where id = :id';
         $data = array(
             ':id'=>$id
         );
+        $pdoStatement = Db::query($pdo, $sql, $data);
         $name = Db::fetchColumn($sql, $data);
         
         return $name;

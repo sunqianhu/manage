@@ -78,7 +78,7 @@ if(!Db::query($pdo, $sql, $data)){
     echo json_encode($return);
     exit;
 }
-$id = Db::getLastInsertId($pdo);
+$id = $pdo->lastInsertId();
 
 // 父级id
 $parentIds = $departmentParent['parent_ids'].','.$id;

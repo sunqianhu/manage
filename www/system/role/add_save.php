@@ -70,7 +70,7 @@ if(!Db::query($pdo, $sql, $data)){
     echo json_encode($return);
     exit;
 }
-$roleId = Db::getLastInsertId($pdo);
+$roleId = $pdo->lastInsertId();
 
 // 关联
 $sql = 'delete from role_permission where role_id = :role_id';

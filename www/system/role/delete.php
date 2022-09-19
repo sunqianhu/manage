@@ -68,6 +68,12 @@ if(!Db::query($pdo, $sql, $data)){
     exit;
 }
 
+$sql = 'delete from role_permission where role_id = :role_id';
+$data = array(
+    ':role_id'=>$role['id']
+);
+Db::query($pdo, $sql, $data);
+
 $return['status'] = 'success';
 $return['message'] = '删除成功';
 echo json_encode($return);
