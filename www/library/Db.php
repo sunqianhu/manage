@@ -164,7 +164,7 @@ class Db{
     /**
      * 得到pdo错误描述
      * @param PDO $pdo pdo对象
-     * @return string 错误描述
+     * @return String 错误描述
      */
     static function getPdoError($pdo){
         $errors = array();
@@ -187,7 +187,7 @@ class Db{
     /**
      * 得到预处理结果对象错误描述
      * @param PDOStatement $pdoStatement 结果集对象
-     * @return string 错误描述
+     * @return String 错误描述
      */
     static function getPodStatementError($pdoStatement){
         $errors = array();

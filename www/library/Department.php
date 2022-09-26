@@ -11,8 +11,8 @@ class Department{
     /**
      * 得到部门名
      * @access public
-     * @param int $id 用户id
-     * @return string 用户姓名
+     * @param Integer $id 用户id
+     * @return String 用户姓名
      */
     static function getName($id){
         $pdo = Db::getInstance();
@@ -33,7 +33,7 @@ class Department{
     
     /**
      * 得到首页节点树
-     * @param array $datas 数据
+     * @param Array $datas 数据
      * @return array
      */
     static function getIndexTreeNode($departments, $level = 1){

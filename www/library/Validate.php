@@ -19,8 +19,8 @@ class Validate{
     
     /**
      * 设置规则
-     * @param array $rule 规则数组
-     * @return boolean
+     * @param Array $rule 规则数组
+     * @return Boolean
      */
     static public function setRule($rule){
         self::$rule = $rule;
@@ -28,7 +28,7 @@ class Validate{
     
     /**
      * 得到规则
-     * @return boolean
+     * @return Boolean
      */
     static public function getRule(){
         return self::$rule;
@@ -36,8 +36,8 @@ class Validate{
     
     /**
      * 设置描述
-     * @param array $message 描述
-     * @return boolean
+     * @param Array $message 描述
+     * @return Boolean
      */
     static public function setMessage($message){
         self::$message = $message;
@@ -45,7 +45,7 @@ class Validate{
     
     /**
      * 得到描述
-     * @return boolean
+     * @return Boolean
      */
     static public function getMessage(){
         return self::$message;
@@ -53,8 +53,8 @@ class Validate{
     
     /**
      * 验证
-     * @param array $datas 数据
-     * @return boolean
+     * @param Array $datas 数据
+     * @return Boolean
      */
     static public function check($datas){
         $field = ''; // 数据字段
@@ -169,7 +169,7 @@ class Validate{
     
     /**
      * 检测必填
-     * @return boolean 验证是否通过
+     * @return Boolean 验证是否通过
      */
     static function checkRequire($value, $rule = ''){
         // 字符串
@@ -196,7 +196,7 @@ class Validate{
      * 检测长度
      * @param $value 值
      * @param $length 最大长度
-     * @return boolean 验证是否通过
+     * @return Boolean 验证是否通过
      */
     static function checkLength($value, $length){
         if(mb_strlen($value) != $length){
@@ -210,7 +210,7 @@ class Validate{
      * 检测最大长度
      * @param $value 值
      * @param $max 最大长度
-     * @return boolean 验证是否通过
+     * @return Boolean 验证是否通过
      */
     static function checkMaxLength($value, $max){
         if(mb_strlen($value) > $max){
@@ -224,7 +224,7 @@ class Validate{
      * 检测最小长度
      * @param $value 值
      * @param $min 最小长度
-     * @return boolean 验证是否通过
+     * @return Boolean 验证是否通过
      */
     static function checkMinLength($value, $min){
         if(mb_strlen($value) < $min){
@@ -236,7 +236,7 @@ class Validate{
     
     /**
      * 检测数字
-     * @return boolean 验证是否通过
+     * @return Boolean 验证是否通过
      */
     static function checkNumber($value){
         if(!is_numeric($value)){
@@ -248,7 +248,7 @@ class Validate{
     
     /**
      * 检测数字字符串
-     * @return boolean 验证是否通过
+     * @return Boolean 验证是否通过
      */
     static function checkNumberString($value, $split){
         $datas = explode($split, $value);
@@ -268,7 +268,7 @@ class Validate{
     
     /**
      * 检测数字数组
-     * @return boolean 验证是否通过
+     * @return Boolean 验证是否通过
      */
     static function checkNumberArray($value){
         $datas = $value;
@@ -288,7 +288,7 @@ class Validate{
     
     /**
      * 检测正则
-     * @return boolean 验证是否通过
+     * @return Boolean 验证是否通过
      */
     static function checkRegex($value, $pattern){
         if(empty($pattern)){
@@ -304,7 +304,7 @@ class Validate{
     
     /**
      * 得到字段描述
-     * @return string
+     * @return String
      */
     static function getFieldMessage($field, $checkName, $checkValue){
         $message = '';
@@ -337,8 +337,8 @@ class Validate{
     
     /**
      * 设置错误
-     * @param string $field 字段
-     * @param string $message 描述
+     * @param String $field 字段
+     * @param String $message 描述
      */
     static function setError($field, $message = ''){
         self::$error['field'] = $field;
@@ -347,6 +347,7 @@ class Validate{
     
     /**
      * 得到错误
+     * @return String 错误描述
      */
     static function getError(){
         return self::$error;
@@ -354,7 +355,7 @@ class Validate{
     
     /**
      * 得到错误字段
-     * @return string 错误描述
+     * @return String 错误描述
      */
     static function getErrorField(){
         return self::$error['field'];
@@ -362,7 +363,7 @@ class Validate{
     
     /**
      * 得到错误描述
-     * @return string 错误描述
+     * @return String 错误描述
      */
     static function getErrorMessage(){
         return self::$error['message'];

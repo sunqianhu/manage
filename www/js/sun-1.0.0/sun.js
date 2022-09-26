@@ -215,7 +215,7 @@ sun.dropDownClick = {};
 
 /**
  * 下拉点击
- * @param string config.selector 元素
+ * @param String config.selector 元素
  */
 sun.dropDownClick.init = function(config){
     var domDocument; // 文档
@@ -261,7 +261,7 @@ sun.dropDownClick.init = function(config){
 
 /**
  * 下拉关闭
- * @param string element 选择器
+ * @param String element 选择器
  */
 sun.dropDownClick.close = function(element){
     var domDropdownContents;
@@ -282,7 +282,7 @@ sun.dropDownMenuClick = {};
 
 /**
  * 下拉菜单点击
- * @param string config.selector 元素
+ * @param String config.selector 元素
  */
 sun.dropDownMenuClick.init = function(config){
     var domDocument; // 文档
@@ -339,7 +339,7 @@ sun.dropDownMenuClick.init = function(config){
 
 /**
  * 下拉菜单点击关闭
- * @param string element 选择器
+ * @param String element 选择器
  */
 sun.dropDownMenuClick.close = function(element){
     var domDropdownMenuContents;
@@ -355,7 +355,7 @@ sun.dropDownMenuClick.close = function(element){
 
 /**
  * 下拉悬停初始化
- * @param string config.selector 元素
+ * @param String config.selector 元素
  */
 sun.dropDownHover = function(config){
     var domDropdowns; // 下拉所有
@@ -550,8 +550,8 @@ sun.pagination = {};
 
 /**
  * 分页跳转到指定页
- * @param string url 分页模板链接
- * @param string id 分页对象id
+ * @param String url 分页模板链接
+ * @param String id 分页对象id
  */
 sun.pagination.skip = function(url, id){
     var domInput = $(".pagination_skip_"+id);
@@ -577,8 +577,8 @@ sun.pagination.skip = function(url, id){
 
 /**
  * 分页每页显示记录数
- * @param string url 分页模板链接
- * @param string id 分页对象id
+ * @param String url 分页模板链接
+ * @param String id 分页对象id
  */
 sun.pagination.limit = function(url, th){
     var domSelect = $(th);
@@ -602,9 +602,9 @@ sun.treeTable = {};
 
 /**
  * 表格树初始化
- * @param string config.selector 元素
- * @param string config.column 那一列
- * @param string config.expand 展开几级
+ * @param String config.selector 元素
+ * @param String config.column 那一列
+ * @param String config.expand 展开几级
  */
 sun.treeTable.init = function(config){
     var domTable; // 表格
@@ -730,12 +730,12 @@ sun.treeTable.childClose = function(id){
 
 /**
  * 文件上传
- * @param string config.selector 元素
- * @param string config.name 文件上传表单字段名
- * @param string config.accept 可选择的文件mime类型
- * @param string config.url 处理url
+ * @param String config.selector 元素
+ * @param String config.name 文件上传表单字段名
+ * @param String config.accept 可选择的文件mime类型
+ * @param String config.url 处理url
  * @param obj config.data 额外的参数 [{key: "", value: ""}]
- * @param string config.success 成功回调
+ * @param String config.success 成功回调
  */
 sun.fileUpload = function(config){
     var domButton; // 按钮上传

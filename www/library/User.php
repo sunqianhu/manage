@@ -12,8 +12,8 @@ class User{
     /**
      * 得到用户姓名
      * @access public
-     * @param int $id 用户id
-     * @return string 用户姓名
+     * @param Integer $id 用户id
+     * @return String 用户姓名
      */
     static function getName($id){
         $pdo = Db::getInstance();
@@ -35,8 +35,8 @@ class User{
     /**
      * 得到用户头像url
      * @access public
-     * @param string $path 头像路径
-     * @return string 头像url
+     * @param String $path 头像路径
+     * @return String 头像url
      */
     static function getHeadUrl($path){
         $config = Config::getAll();

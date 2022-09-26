@@ -13,8 +13,8 @@ class Cache{
      * @access public
      * @param String $key 缓存key
      * @param String $value 缓存value
-     * @param int $timeOut 超时时间
-     * @return boolean 布尔
+     * @param Integer $timeOut 超时时间
+     * @return Boolean 布尔
      */
     static function set($key, $value, $timeOut = 0){
         $path = '';
@@ -40,7 +40,7 @@ class Cache{
      * 获取缓存
      * @access public
      * @param String $key 缓存key
-     * @return string 缓存内容
+     * @return String 缓存内容
      */
     static function get($key){
         $path = '';

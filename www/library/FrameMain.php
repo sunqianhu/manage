@@ -11,9 +11,9 @@ use \library\Tree;
 class FrameMain{
     /**
      * 得到页面左边菜单节点
-     * @param string $active 活跃项
      * @access public
-     * @return string 节点
+     * @param String $active 活跃项
+     * @return String 节点
      */
     static function getMenu($active = ''){
         $node = '';

@@ -10,10 +10,10 @@ use \library\Cache;
 class Dictionary{
     /**
      * 得到和设置缓存字典的某一类型
-     * @param string $type 类型
-     * @return string value
+     * @param String $type 类型
+     * @return String value
      */
-    static function getAndSetCacheType($type){
+    static function getAndSetCache($type){
         $pdo = Db::getInstance();
         $pdoStatement = null;
         $cacheKey = 'dictionary_'.$type; // 缓存key
@@ -45,16 +45,16 @@ class Dictionary{
 
     /**
      * 得到值
-     * @param string $type 类型
-     * @param string $key 键
-     * @return string value
+     * @param String $type 类型
+     * @param String $key 键
+     * @return String value
      */
     static function getValue($type, $key){
         $value = ''; // 返回值
         $data = ''; // 字典数据
         $datas = array(); // 字典数据数组
 
-        $data = self::getAndSetCacheType($type);
+        $data = self::getAndSetCache($type);
         
         // 验证
         if($data == ''){
@@ -77,14 +77,14 @@ class Dictionary{
     
     /**
      * 得到集合
-     * @param string $type 类型
+     * @param String $type 类型
      * @return array 集合
      */
     static function getList($type){
         $data = ''; // 字典数据
         $datas = array(); // 字典数据数组
 
-        $data = self::getAndSetCacheType($type);
+        $data = self::getAndSetCache($type);
         
         if($data == ''){
             return $datas;
@@ -99,15 +99,15 @@ class Dictionary{
     
     /**
      * 得到得到下拉菜单选项
-     * @param string $type 类型
-     * @return string value
+     * @param String $type 类型
+     * @return String value
      */
     static function getSelectOption($type, $selectKeys = array()){
         $node = ''; // 节点
         $data = ''; // 字典数据
         $datas = array(); // 字典数据数组
         
-        $data = self::getAndSetCacheType($type);
+        $data = self::getAndSetCache($type);
         
         // 验证
         if($data == ''){
@@ -131,10 +131,10 @@ class Dictionary{
     
     /**
      * 得到单选按钮
-     * @param string $type 类型
-     * @param string $name 单选按钮名称
-     * @param string $checkKey 选中项的key
-     * @return string value
+     * @param String $type 类型
+     * @param String $name 单选按钮名称
+     * @param String $checkKey 选中项的key
+     * @return String value
      */
     static function getRadio($type, $name = '', $checkKey = '', $event = ''){
         $node = ''; // 返回值
@@ -142,7 +142,7 @@ class Dictionary{
         $datas = array(); // 字典数据数组
         $index = 0;
         
-        $data = self::getAndSetCacheType($type);
+        $data = self::getAndSetCache($type);
         
         // 验证
         if($data == ''){
@@ -155,7 +155,7 @@ class Dictionary{
         
         foreach($datas as $data){
             $index ++;
-            $node .= '<label><input type="radio"';
+            $node .= '<span><label><input type="radio"';
             if($name !== ''){
                 $node .= ' name="'.$name.'" id="'.$name.$index.'"';
             }
@@ -165,7 +165,7 @@ class Dictionary{
             if($event !== ''){
                 $node .= ' '.$event;
             }
-            $node .= ' value="'.$data['key'].'" />'.$data['value'].'</label>'."\r\n";
+            $node .= ' value="'.$data['key'].'" />'.$data['value'].'</label></span>'."\r\n";
         }
         
         return $node;
@@ -173,11 +173,11 @@ class Dictionary{
     
     /**
      * 得到得到复选按钮
-     * @param string $type 类型
-     * @param string $name 单选按钮名称
-     * @param string $checkKeys 选中项的key
-     * @param string $event 事件
-     * @return string value
+     * @param String $type 类型
+     * @param String $name 单选按钮名称
+     * @param String $checkKeys 选中项的key
+     * @param String $event 事件
+     * @return String value
      */
     static function getCheckBox($type, $name = '', $checkKeys = array(), $event = ''){
         $node = ''; // 返回值
@@ -185,7 +185,7 @@ class Dictionary{
         $datas = array(); // 字典数据数组
         $index = 0;
         
-        $data = self::getAndSetCacheType($type);
+        $data = self::getAndSetCache($type);
         
         // 验证
         if($data == ''){
@@ -198,7 +198,7 @@ class Dictionary{
         
         foreach($datas as $data){
             $index ++;
-            $node .= '<label><input type="checkbox"';
+            $node .= '<span><label><input type="checkbox"';
             if($name !== ''){
                 $node .= ' name="'.$name.'"';
             }
@@ -208,7 +208,7 @@ class Dictionary{
             if($event !== ''){
                 $node .= ' '.$event;
             }
-            $node .= ' value="'.$data['key'].'" />'.$data['value'].'</label>'."\r\n";
+            $node .= ' value="'.$data['key'].'" />'.$data['value'].'</label></span>'."\r\n";
         }
         
         return $node;

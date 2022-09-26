@@ -7,7 +7,7 @@ namespace library;
 class Ip{
     /**
      * 得到访问者的ip
-     * @return string ip
+     * @return String ip
      */
     static function get(){
         $ip = '';

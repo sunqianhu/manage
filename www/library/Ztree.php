@@ -7,7 +7,7 @@ namespace library;
 class Ztree{
     /**
      * 数据parent_id转换为pid
-     * @param array $datas 数据
+     * @param Array $datas 数据
      * @return array
      */
     static function parentIdToPid($datas){
@@ -24,7 +24,7 @@ class Ztree{
     
     /**
      * 通过级别设置打开
-     * @param array $datas 数据
+     * @param Array $datas 数据
      * @return array
      */
     static function setOpenByFirst($datas){
@@ -44,8 +44,8 @@ class Ztree{
     
     /**
      * 设置选中
-     * @param array $datas 数据
-     * @param array $ids 选中id数组
+     * @param Array $datas 数据
+     * @param Array $ids 选中id数组
      * @return array
      */
     static function setChecked($datas, $ids, $primaryKey = 'id', $childKey = 'child'){

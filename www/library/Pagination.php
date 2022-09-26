@@ -17,10 +17,10 @@ class Pagination{
     
     /**
      * 分页
-     * @param int $recordNumber 总记录数
-     * @param int $pageSize 每页显示多少条
-     * @param int $pageCurrent 当前页
-     * @return string 分页数据
+     * @param Integer $recordNumber 总记录数
+     * @param Integer $pageSize 每页显示多少条
+     * @param Integer $pageCurrent 当前页
+     * @return String 分页数据
      */
     function __construct($recordNumber, $pageSize = 50, $pageCurrent = 1, $urlTemplate = ''){
         $this->id = time().rand(100,999);
@@ -65,9 +65,9 @@ class Pagination{
     
     /**
      * 得到url
-     * @param int $pageSize 每页显示多少条
-     * @param int $pageCurrent 当前页
-     * @return string url
+     * @param Integer $pageSize 每页显示多少条
+     * @param Integer $pageCurrent 当前页
+     * @return String url
      */
     function getUrl($pageSize, $pageCurrent){
         $url = str_replace(array('PAGE_SIZE', 'PAGE_CURRENT'), array($pageSize, $pageCurrent), $this->urlTemplate);
@@ -76,7 +76,7 @@ class Pagination{
     
     /**
      * 得到节点总记录
-     * @return string node
+     * @return String node
      */
     function getNodeTotal(){
         $node = '';
@@ -92,7 +92,7 @@ class Pagination{
     
     /**
      * 得到节点记录范围
-     * @return string node
+     * @return String node
      */
     function getNodeRecordRange(){
         $node = '';
@@ -108,7 +108,7 @@ class Pagination{
     
     /**
      * 得到节点页码范围
-     * @return string node
+     * @return String node
      */
     function getNodePageRange(){
         $node = '';
@@ -123,7 +123,7 @@ class Pagination{
     
     /**
      * 得到节点链接
-     * @return string node
+     * @return String node
      */
     function getNodeLink(){
         $node = '';
@@ -181,7 +181,7 @@ class Pagination{
     
     /**
      * 获取节点limit
-     * @return string node
+     * @return String node
      */
     function getNodeLimit(){
         $node = '';
@@ -203,7 +203,7 @@ class Pagination{
     
     /**
      * 得到节点跳转到第几页
-     * @return string node
+     * @return String node
      */
     function getNodeSkip(){
         $node = '';
@@ -222,7 +222,7 @@ class Pagination{
     
     /**
      * 得到节点完整分页
-     * @return string node
+     * @return String node
      */
     function getNodeIntact(){
         $node = '';
@@ -244,7 +244,7 @@ class Pagination{
     
     /**
      * 得到节点简单分页
-     * @return string node
+     * @return String node
      */
     function getNodeSimple(){
         $node = '';

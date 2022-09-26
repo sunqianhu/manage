@@ -9,6 +9,7 @@ class Http{
     
     /**
      * 得到错误
+     * @return String 错误描述
      */
     static function getError(){
         return self::$error;
@@ -16,8 +17,8 @@ class Http{
     
     /**
      * 设置错误
-     * @param string $error 错误描述
-     * @return boolean
+     * @param String $error 错误描述
+     * @return Boolean
      */
     static function setError($error){
         return self::$error = $error;
@@ -25,9 +26,9 @@ class Http{
 
     /**
      * get请求
-     * @param string $url 网址
-     * @param array $options 选项参数
-     * @return string 响应内容
+     * @param String $url 网址
+     * @param Array $options 选项参数
+     * @return String 响应内容
      */
     static function get($url, $options = array()){
         $ch = null;
@@ -58,10 +59,10 @@ class Http{
     
     /**
      * post请求
-     * @param string $url 网址
-     * @param array $content 请求内容
-     * @param array $options 选项参数
-     * @return string 响应内容
+     * @param String $url 网址
+     * @param Array $content 请求内容
+     * @param Array $options 选项参数
+     * @return String 响应内容
      */
     static function post($url, $content = array(), $options = array()){
         $ch = null;

@@ -7,8 +7,11 @@ namespace library;
 class ArrayTwo{
     /**
      * 得到下拉选项
-     * @param array $datas 二维数组
-     * @return string value
+     * @param Array $datas 二维数组
+     * @param Array $selectKeys 选中项的key
+     * @param String $key option的key
+     * @param String $value option的值
+     * @return String option字符串
      */
     static function getSelectOption($datas, $selectKeys = array(), $key = 'id', $value = 'name'){
         $node = ''; // 节点
@@ -30,10 +33,10 @@ class ArrayTwo{
     
     /**
      * 得到某列的字符串
-     * @param array $datas 二维数组
-     * @param string $column 列
-     * @param string $split 分隔符
-     * @return string
+     * @param Array $datas 二维数组
+     * @param String $column 列
+     * @param String $split 分隔符
+     * @return String
      */
     static function getColumnString($datas, $column, $split = ','){
         $content = '';
@@ -55,11 +58,11 @@ class ArrayTwo{
     
     /**
      * 某列时间戳转时间
-     * @param array $datas 二维数组
-     * @param string $columnOld 列老
-     * @param string $columnNew 列新
-     * @param string $split 分隔符
-     * @return string
+     * @param Array $datas 二维数组
+     * @param String $columnOld 列老
+     * @param String $columnNew 列新
+     * @param String $split 分隔符
+     * @return String
      */
     static function columnTimestampToTime($datas, $columnOld, $columnNew, $format = 'Y-m-d H:i:s'){
         $data = array();

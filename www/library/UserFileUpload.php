@@ -18,9 +18,9 @@ class UserFileUpload{
     
     /**
      * 上传
-     * @param string $dirModule 目录模块 
-     * @param string $fieldName 文件表单字段名称 
-     * @return boolean 上传结果 true | false
+     * @param String $dirModule 目录模块 
+     * @param String $fieldName 文件表单字段名称 
+     * @return Boolean 上传结果 true | false
      */
     static function upload($dirModule, $fieldName){
         $configUserFilePath = ''; // 配置文件路径
@@ -108,6 +108,7 @@ class UserFileUpload{
     
     /**
      * 得到错误
+     * @return String 错误描述
      */
     static function getError(){
         return self::$error;
@@ -115,8 +116,8 @@ class UserFileUpload{
     
     /**
      * 设置错误
-     * @param string $error 错误描述
-     * @return boolean
+     * @param String $error 错误描述
+     * @return Boolean
      */
     static function setError($error){
         return self::$error = $error;
