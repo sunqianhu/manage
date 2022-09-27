@@ -17,7 +17,7 @@ Session::start();
 $pdo = Db::getInstance();
 $pdoStatement = null;
 $config = Config::getAll();
-$status = Dictionary::getRadio('system_user_status', 'status', 1);
+$radioStatus = Dictionary::getRadio('system_user_status', 'status_id', 1);
 $optionRole = '';
 $sql = '';
 $data = array();
@@ -68,7 +68,7 @@ $optionRole = ArrayTwo::getSelectOption($roles);
 <div class="row">
 <div class="title"><span class="required">*</span> 状态</div>
 <div class="content">
-<?php echo $status;?>
+<?php echo $radioStatus;?>
 </div>
 </div>
 

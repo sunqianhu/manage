@@ -37,7 +37,7 @@ if(!Auth::isPermission('system_user')){
 }
 Validate::setRule(array(
     'username' => 'require|max_length:64',
-    'status' => 'require|number',
+    'status_id' => 'require|number',
     'password' => 'require|min_length:8',
     'name' => 'require|max_length:32',
     'phone' => 'require|number|min_length:11|max_length:11',
@@ -47,6 +47,8 @@ Validate::setRule(array(
 Validate::setMessage(array(
     'username.require' => '请输入用户名',
     'username.max_length' => '用户名不能大于64个字',
+    'status_id.require' => '请选择状态',
+    'status_id.number' => 'status_id必须是个数字',
     'password.require' => '请输入密码',
     'password.min_length' => '密码不能小于8个字符',
     'name.require' => '请输入姓名',
@@ -102,10 +104,10 @@ if(!empty($user)){
 }
 
 // 入库
-$sql = 'insert into user(username,status,password,name,phone,department_id,role_id_string,time_add) values(:username,:status,:password,:name,:phone,:department_id,:role_id_string,:time_add)';
+$sql = 'insert into user(username,status_id,password,name,phone,department_id,role_id_string,time_add) values(:username,:status_id,:password,:name,:phone,:department_id,:role_id_string,:time_add)';
 $data = array(
     ':username'=>$_POST['username'],
-    ':status'=>$_POST['status'],
+    ':status_id'=>$_POST['status_id'],
     ':password'=>md5($_POST['password']),
     ':name'=>$_POST['name'],
     ':phone'=>$_POST['phone'],

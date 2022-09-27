@@ -47,6 +47,7 @@ Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字',
     'status_id.require' => '请选择状态',
+    'status_id.number' => 'status_id必须是个数字',
     'name.require' => '请输入姓名',
     'name.max_length' => '姓名不能大于32个字',
     'phone.require' => '请输入手机号码',

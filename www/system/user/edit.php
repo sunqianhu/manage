@@ -22,7 +22,7 @@ $pdoStatement = null;
 $config = Config::getAll();
 $user = array();
 $roles = array();
-$status = '';
+$radioStatus = '';
 $optionRole = '';
 $sql = '';
 $data = array();
@@ -64,7 +64,7 @@ if(empty($user)){
 $user['role_ids'] = explode(',', $user['role_id_string']);
 $user['department_name'] = Department::getName($user['department_id']);
 $user = Safe::entity($user);
-$status = Dictionary::getRadio('system_user_status', 'status_id', $user['status_id']);
+$radioStatus = Dictionary::getRadio('system_user_status', 'status_id', $user['status_id']);
 
 $sql = 'select id, name from role order by id asc';
 $pdoStatement = Db::query($pdo, $sql);
@@ -100,7 +100,7 @@ $optionRole = ArrayTwo::getSelectOption($roles, $user['role_ids'], 'id', 'name')
 <div class="row">
 <div class="title"><span class="required">*</span> 状态</div>
 <div class="content">
-<?php echo $status;?>
+<?php echo $radioStatus;?>
 </div>
 </div>
 
