@@ -5,26 +5,26 @@
 require_once '../../library/app.php';
 
 use \library\Session;
-use \library\OperationLog;
+use \library\Auth;
 use \library\Db;
+use \library\OperationLog;
 use \library\Config;
 use \library\Ztree;
 use \library\Validate;
 use \library\Safe;
-use \library\Auth;
 
 Session::start();
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
+$sql = '';
+$data = array();
 $config = Config::getAll();
 $role = array();
 $rolePermissions = array();
 $permissionIds = array();
 $permissions = array();
 $permission = ''; // 权限json数据
-$sql = '';
-$data = array();
 
 OperationLog::add();
 

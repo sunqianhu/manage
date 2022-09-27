@@ -13,6 +13,8 @@ Session::start();
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
+$sql = '';
+$data = array();
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -21,8 +23,6 @@ $return = array(
     )
 ); // 返回数据
 $user = array();
-$data = array();
-$sql = '';
 
 // 验证
 if(!Auth::isLogin()){

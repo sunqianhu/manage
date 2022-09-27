@@ -5,21 +5,21 @@
 require_once '../../library/app.php';
 
 use \library\Session;
+use \library\Auth;
 use \library\Db;
 use \library\Validate;
-use \library\Auth;
 
 Session::start();
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
+$sql = '';
+$data = array();
 $return = array(
     'status'=>'error',
     'message'=>''
 );
 $user = array();
-$sql = '';
-$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -46,7 +46,7 @@ if(!Validate::check($_GET)){
 }
 
 // 本用户
-$sql = 'select id,status from user where id = :id';
+$sql = 'select id, status_id from user where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
@@ -57,17 +57,17 @@ if(empty($user)){
     echo json_encode($return);
     exit;
 }
-if($user['status'] == 2){
+if($user['status_id'] == 2){
     $return['message'] = '用户已经是停用状态';
     echo json_encode($return);
     exit;
 }
 
 $sql = 'update user set
-status = :status
+status_id = :status_id
 where id = :id';
 $data = array(
-    ':status'=>2,
+    ':status_id'=>2,
     ':id'=>$user['id']
 );
 if(!Db::query($pdo, $sql, $data)){

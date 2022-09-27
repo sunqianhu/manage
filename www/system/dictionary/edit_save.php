@@ -5,14 +5,17 @@
 require_once '../../library/app.php';
 
 use \library\Session;
-use \library\Db;
-use \library\Validate;
 use \library\Auth;
+use \library\Db;
+use \library\OperationLog;
+use \library\Validate;
 
 Session::start();
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
+$sql = '';
+$data = array();
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -21,8 +24,6 @@ $return = array(
     )
 ); // 返回数据
 $dictionary = array();
-$sql = '';
-$data = array();
 
 OperationLog::add();
 

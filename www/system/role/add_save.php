@@ -5,14 +5,16 @@
 require_once '../../library/app.php';
 
 use \library\Session;
+use \library\Auth;
 use \library\Db;
 use \library\Validate;
-use \library\Auth;
 
 Session::start();
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
+$sql = '';
+$data = array();
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -22,8 +24,6 @@ $return = array(
 ); // 返回数据
 $roleId = 0; // 角色id
 $permissionIds = array();
-$sql = '';
-$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -73,12 +73,6 @@ if(!Db::query($pdo, $sql, $data)){
 $roleId = $pdo->lastInsertId();
 
 // 关联
-$sql = 'delete from role_permission where role_id = :role_id';
-$data = array(
-    ':role_id'=>$roleId
-);
-Db::query($pdo, $sql, $data);
-
 foreach($permissionIds as $permissionId){
     $sql = 'insert into role_permission(role_id,permission_id) values(:role_id,:permission_id)';
     $data = array(

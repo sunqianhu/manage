@@ -26,7 +26,7 @@ class Permission{
             ':id'=>$id
         );
         $pdoStatement = Db::query($pdo, $sql, $data);
-        $name = Db::fetchColumn($sql, $data);
+        $name = Db::fetchColumn($pdoStatement);
         
         return $name;
     }

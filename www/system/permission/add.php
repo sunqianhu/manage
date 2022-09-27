@@ -5,11 +5,11 @@
 require_once '../../library/app.php';
 
 use \library\Session;
-use \library\OperationLog;
+use \library\Auth;
 use \library\Db;
+use \library\OperationLog;
 use \library\Config;
 use \library\Dictionary;
-use \library\Auth;
 use \library\Validate;
 use \library\Safe;
 
@@ -17,6 +17,8 @@ Session::start();
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
+$sql = '';
+$data = array();
 $config = Config::getAll();
 $permissionTypeRadioNode = Dictionary::getRadio('system_permission_type', 'type', 1);
 $permissionParent = array();
@@ -24,8 +26,6 @@ $init = array(
     'parent_id'=>1,
     'parent_name'=>'顶级权限',
 );
-$sql = '';
-$data = array();
 
 OperationLog::add();
 

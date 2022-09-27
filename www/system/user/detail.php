@@ -5,10 +5,10 @@
 require_once '../../library/app.php';
 
 use \library\Session;
-use \library\OperationLog;
-use \library\Db;
-use \library\Validate;
 use \library\Auth;
+use \library\Db;
+use \library\OperationLog;
+use \library\Validate;
 use \library\Config;
 use \library\FrameMain;
 use \library\Safe;
@@ -21,6 +21,8 @@ Session::start();
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
+$sql = '';
+$data = array();
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
 $roles = array(); // 角色
@@ -28,8 +30,6 @@ $loginLogs = array();
 $loginLog = array();
 $operationLogs = array(); // 操作日志
 $operationLog = array();
-$sql = '';
-$data = array();
 
 OperationLog::add();
 
@@ -54,7 +54,7 @@ if(!Validate::check($_GET)){
     exit;
 }
 
-$sql = 'select id, username, `name`, `phone`, `status`, department_id, role_id_string, time_add, time_login, time_edit, ip from user where id = :id';
+$sql = 'select id, username, name, phone, status_id, department_id, role_id_string, time_add, time_login, time_edit, ip from user where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
@@ -65,7 +65,7 @@ if(empty($user)){
     exit;
 }
 
-$user['status_name'] = Dictionary::getValue('system_user_status', $user['status']);
+$user['status_name'] = Dictionary::getValue('system_user_status', $user['status_id']);
 $user['time_add_name'] = date('Y-m-d H:i:s', $user['time_add']);
 $user['time_edit_name'] = $user['time_edit'] ? date('Y-m-d H:i:s', $user['time_edit']) : '-';
 $user['time_login_name'] = $user['time_login'] ? date('Y-m-d H:i:s', $user['time_login']) : '-';
@@ -81,7 +81,7 @@ $user['role_name'] = ArrayTwo::getColumnString($roles, 'name', '，');
 $user = Safe::entity($user);
 
 // 登录日志
-$sql = "select ip, time_login from login_log where user_id = :user_id order by id desc limit 0,50";
+$sql = "select ip, time_login from login_log where user_id = :user_id order by id desc limit 0,10";
 $data = array(
     ':user_id'=>$user['id']
 );
@@ -91,14 +91,13 @@ $loginLogs = ArrayTwo::columnTimestampToTime($loginLogs, 'time_login', 'time_log
 $loginLogs = Safe::entity($loginLogs);
 
 // 操作日志
-$sql = "select id, ip, time_add, url from operation_log where user_id = :user_id order by id desc limit 0,50";
+$sql = "select id, ip, time_add, url from operation_log where user_id = :user_id order by id desc limit 0,10";
 $data = array(
     ':user_id'=>$user['id']
 );
 $pdoStatement = Db::query($pdo, $sql, $data);
 $operationLogs = Db::fetchAll($pdoStatement);
 $operationLogs = ArrayTwo::columnTimestampToTime($operationLogs, 'time_add', 'time_add_name');
-
 foreach($operationLogs as $key => $operationLog){
     $operationLogs[$key]['url_sub'] = MyString::getSubFromZero($operationLog['url'], 60);
 }
@@ -179,7 +178,7 @@ $frameMainMenu = FrameMain::getMenu('system_user');
 <div class="sun-section sun-mt10">
 <div class="title">
 <span class="name">登录日志</span>
-<span class="describe">显示最后50条</span>
+<span class="describe">显示最后10条</span>
 <a href="../login_log/index.php?user_id=<?php echo $user['id'];?>" class="more" target="_blank">更多</a>
 </div>
 <div class="content">
@@ -215,7 +214,7 @@ foreach($loginLogs as $loginLog){
 <div class="sun-section sun-mt10">
 <div class="title">
 <span class="name">操作日志</span>
-<span class="describe">显示最后50条</span>
+<span class="describe">显示最后10条</span>
 <a href="../operation_log/index.php?user_id=<?php echo $user['id'];?>" class="more" target="_blank">更多</a>
 </div>
 <div class="content">
@@ -234,7 +233,7 @@ foreach($operationLogs as $operationLog){
 <tr>
 <td><?php echo $operationLog['ip'];?></td>
 <td><?php echo $operationLog['time_add_name'];?></td>
-<td><a href="<?php echo $operationLog['url'];?>" target="_blank"><?php echo $operationLog['url_sub'];?></a></td>
+<td><?php echo $operationLog['url_sub'];?></td>
 <td><a href="../operation_log/detail.php?id=<?php echo $operationLog['id'];?>" target="_blank">详情</a></td>
 </tr>
 <?php

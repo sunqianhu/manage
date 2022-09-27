@@ -5,14 +5,16 @@
 require_once '../../library/app.php';
 
 use \library\Session;
+use \library\Auth;
 use \library\Db;
 use \library\Validate;
-use \library\Auth;
 
 Session::start();
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
+$sql = '';
+$data = array();
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -20,8 +22,6 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$sql = '';
-$data = array();
 
 // 验证
 if(!Auth::isLogin()){

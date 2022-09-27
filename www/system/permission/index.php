@@ -5,19 +5,21 @@
 require_once '../../library/app.php';
 
 use \library\Session;
-use \library\OperationLog;
+use \library\Auth;
 use \library\Db;
+use \library\OperationLog;
 use \library\Config;
 use \library\FrameMain;
 use \library\Tree;
 use \library\Safe;
 use \library\Permission;
-use \library\Auth;
 
 Session::start();
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
+$sql = '';
+$data = array();
 $config = Config::getAll();
 $permissions = array(); // 权限数据
 $permissionNode = ''; // 权限表格节点
@@ -29,8 +31,6 @@ $search = array(
 );
 $wheres = array();
 $where = '1';
-$data = array();
-$sql = '';
 
 OperationLog::add();
 

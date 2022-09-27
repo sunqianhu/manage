@@ -5,12 +5,12 @@
 require_once '../../library/app.php';
 
 use \library\Session;
-use \library\OperationLog;
+use \library\Auth;
 use \library\Db;
+use \library\OperationLog;
 use \library\Config;
 use \library\ArrayTwo;
 use \library\Dictionary;
-use \library\Auth;
 
 Session::start();
 
@@ -18,7 +18,7 @@ $pdo = Db::getInstance();
 $pdoStatement = null;
 $config = Config::getAll();
 $status = Dictionary::getRadio('system_user_status', 'status', 1);
-$roleOption = '';
+$optionRole = '';
 $sql = '';
 $data = array();
 
@@ -36,7 +36,7 @@ if(!Auth::isPermission('system_user')){
 $sql = "select id, name from role order by id asc";
 $pdoStatement = Db::query($pdo, $sql);
 $roles = Db::fetchAll($pdoStatement);
-$roleOption = ArrayTwo::getSelectOption($roles);
+$optionRole = ArrayTwo::getSelectOption($roles);
 
 ?><!doctype html>
 <html>
@@ -47,10 +47,8 @@ $roleOption = ArrayTwo::getSelectOption($roles);
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/jquery-1.12.4/jquery.min.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/bootstrap-4.6.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/bootstrap-4.6.1/js/bootstrap.bundle.min.js"></script>
-
 <link href="<?php echo $config['app_domain'];?>js/bootstrap-select-1.13.9/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/bootstrap-select-1.13.9/js/bootstrap-select.min.js"></script>
-
 <link href="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.js"></script>
 <link href="<?php echo $config['app_domain'];?>css/system/user/add.css" rel="stylesheet" type="text/css" />
@@ -117,7 +115,7 @@ $roleOption = ArrayTwo::getSelectOption($roles);
 <div class="title"><span class="required">*</span> 角色</div>
 <div class="content">
 <select name="role_ids[]" multiple="multiple" class="selectpicker role_ids" id="role_ids" data-live-search="true" title="请选择" data-width="170px">
-<?php echo $roleOption;?>
+<?php echo $optionRole;?>
 </select>
 </div>
 </div>

@@ -5,14 +5,14 @@
 require_once '../../library/app.php';
 
 use \library\Session;
-use \library\OperationLog;
+use \library\Auth;
 use \library\Db;
+use \library\OperationLog;
 use \library\Config;
 use \library\ArrayTwo;
 use \library\Validate;
 use \library\Safe;
 use \library\Dictionary;
-use \library\Auth;
 use \library\Department;
 
 Session::start();
@@ -23,7 +23,7 @@ $config = Config::getAll();
 $user = array();
 $roles = array();
 $status = '';
-$roleOption = '';
+$optionRole = '';
 $sql = '';
 $data = array();
 
@@ -50,7 +50,7 @@ if(!Validate::check($_GET)){
     exit;
 }
 
-$sql = 'select id, username, `name`, `phone`, `status`, department_id, role_id_string from user where id = :id';
+$sql = 'select id, username, name, phone, status_id, department_id, role_id_string from user where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
@@ -64,12 +64,12 @@ if(empty($user)){
 $user['role_ids'] = explode(',', $user['role_id_string']);
 $user['department_name'] = Department::getName($user['department_id']);
 $user = Safe::entity($user);
-$status = Dictionary::getRadio('system_user_status', 'status', $user['status']);
+$status = Dictionary::getRadio('system_user_status', 'status_id', $user['status_id']);
 
 $sql = 'select id, name from role order by id asc';
 $pdoStatement = Db::query($pdo, $sql);
 $roles = Db::fetchAll($pdoStatement);
-$roleOption = ArrayTwo::getSelectOption($roles, $user['role_ids'], 'id', 'name');
+$optionRole = ArrayTwo::getSelectOption($roles, $user['role_ids'], 'id', 'name');
 
 ?><!doctype html>
 <html>
@@ -80,10 +80,8 @@ $roleOption = ArrayTwo::getSelectOption($roles, $user['role_ids'], 'id', 'name')
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/jquery-1.12.4/jquery.min.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/bootstrap-4.6.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/bootstrap-4.6.1/js/bootstrap.bundle.min.js"></script>
-
 <link href="<?php echo $config['app_domain'];?>js/bootstrap-select-1.13.9/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/bootstrap-select-1.13.9/js/bootstrap-select.min.js"></script>
-
 <link href="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.js"></script>
 <link href="<?php echo $config['app_domain'];?>css/system/user/edit.css" rel="stylesheet" type="text/css" />
@@ -143,7 +141,7 @@ $roleOption = ArrayTwo::getSelectOption($roles, $user['role_ids'], 'id', 'name')
 <div class="title"><span class="required">*</span> 角色</div>
 <div class="content">
 <select name="role_ids[]" multiple="multiple" class="selectpicker role_ids" id="role_ids" data-live-search="true" title="请选择" data-width="170px">
-<?php echo $roleOption;?>
+<?php echo $optionRole;?>
 </select>
 </div>
 </div>

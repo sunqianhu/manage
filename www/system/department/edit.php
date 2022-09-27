@@ -5,22 +5,22 @@
 require_once '../../library/app.php';
 
 use \library\Session;
-use \library\OperationLog;
+use \library\Auth;
 use \library\Db;
+use \library\OperationLog;
 use \library\Config;
 use \library\Validate;
 use \library\Safe;
-use \library\Auth;
 use \library\Department;
 
 Session::start();
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
-$config = Config::getAll();
-$department = array();
 $sql = '';
 $data = array();
+$config = Config::getAll();
+$department = array();
 
 OperationLog::add();
 

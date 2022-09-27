@@ -5,8 +5,8 @@
 require_once '../../library/app.php';
 
 use \library\Session;
-use \library\OperationLog;
 use \library\Db;
+use \library\OperationLog;
 use \library\Validate;
 use \library\Auth;
 use \library\Config;

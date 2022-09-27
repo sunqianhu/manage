@@ -5,9 +5,9 @@
 require_once '../../library/app.php';
 
 use \library\Session;
+use \library\Auth;
 use \library\Db;
 use \library\Validate;
-use \library\Auth;
 
 Session::start();
 

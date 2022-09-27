@@ -5,9 +5,9 @@
 require_once '../../library/app.php';
 
 use \library\Session;
-use \library\OperationLog;
-use \library\Db;
 use \library\Auth;
+use \library\Db;
+use \library\OperationLog;
 use \library\Config;
 use \library\FrameMain;
 use \library\Pagination;
@@ -15,13 +15,15 @@ use \library\Ztree;
 use \library\ArrayTwo;
 use \library\Safe;
 use \library\Dictionary;
-use \library\User;
 use \library\Department;
+use \library\User;
 
 Session::start();
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
+$sql = '';
+$data = array();
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
 $wheres = array();
@@ -43,10 +45,8 @@ $users = array();
 $departments = array();
 $department = ''; // 部门json数据
 $roles = array();
-$roleOption = '';
-$statusOption = '';
-$sql = '';
-$data = array();
+$optionRole = '';
+$optionStatus = '';
 
 OperationLog::add();
 
@@ -111,13 +111,12 @@ $recordTotal = Db::fetchColumn($pdoStatement);
 $pagination = new Pagination($recordTotal);
 $paginationNodeIntact = $pagination->getNodeIntact();
 
-$sql = "select id, username, head, `name`, `time_login`, time_edit, phone, status, department_id from user where $where order by id asc limit ".$pagination->limitStart.','.$pagination->pageSize;
+$sql = "select id, username, head, `name`, `time_login`, time_edit, phone, status_id, department_id from user where $where order by id asc limit ".$pagination->limitStart.','.$pagination->pageSize;
 $pdoStatement = Db::query($pdo, $sql, $data);
 $users = Db::fetchAll($pdoStatement);
 foreach($users as $key => $user){
     $users[$key]['department_name'] = Department::getName($user['department_id']);
-    $users[$key]['status_name'] = Dictionary::getValue('system_user_status', $user['status']);
-    $users[$key]['status_style_class'] = $user['status'] == 2 ? 'sun-badge orange': 'sun-badge';
+    $users[$key]['status_name'] = User::getBadgeStatusName($user['status_id']);
     $users[$key]['time_edit_name'] = $user['time_edit'] ? date('Y-m-d H:i:s', $user['time_edit']) : '-';
     $users[$key]['time_login_name'] = $user['time_login'] ? date('Y-m-d H:i:s', $user['time_login']) : '-';
     $users[$key]['head_url'] = User::getHeadUrl($user['head']);
@@ -129,14 +128,14 @@ $departments = Db::fetchAll($pdoStatement);
 $departments = Ztree::setOpenByFirst($departments);
 $department = json_encode($departments);
 
-$statusOption = Dictionary::getSelectOption('system_user_status', array($search['status']));
+$optionStatus = Dictionary::getSelectOption('system_user_status', array($search['status']));
 
 $sql = 'select id, name from role order by id asc';
 $pdoStatement = Db::query($pdo, $sql);
 $roles = Db::fetchAll($pdoStatement);
-$roleOption = ArrayTwo::getSelectOption($roles, array($search['role_id']), 'id', 'name');
+$optionRole = ArrayTwo::getSelectOption($roles, array($search['role_id']), 'id', 'name');
 
-$users = Safe::entity($users);
+$users = Safe::entity($users, 'status_name');
 $search = Safe::entity($search);
 
 ?><!doctype html>
@@ -187,11 +186,11 @@ index.departmentData = <?php echo $department;?>;
 </span></li>
 <li>状态：<select name="status">
 <option value="0">不限</option>
-<?php echo $statusOption;?>
+<?php echo $optionStatus;?>
 </select></li>
 <li>角色：<select name="role_id">
 <option value="0">不限</option>
-<?php echo $roleOption;?>
+<?php echo $optionRole;?>
 </select></li>
 <li>用户id：<input type="text" name="id" value="<?php echo $search['id'];?>" /></li>
 <li>用户名：<input type="text" name="username" value="<?php echo $search['username'];?>" /></li>
@@ -235,7 +234,7 @@ foreach($users as $user){
     <td><?php echo $user['department_name'];?></td>
     <td><?php echo $user['time_edit_name'];?></td>
     <td><?php echo $user['time_login_name'];?></td>
-    <td><span class="<?php echo $user['status_style_class'];?>"><?php echo $user['status_name'];?></span></td>
+    <td><?php echo $user['status_name'];?></td>
     <td>
 <a href="detail.php?id=<?php echo $user['id'];?>" class="sun-button plain small sun-mr5">详情</a>
 <a href="javascript:;" class="sun-button plain small sun-mr5" onClick="index.edit(<?php echo $user['id'];?>)">修改</a>

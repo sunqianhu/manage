@@ -5,9 +5,9 @@
 require_once '../../library/app.php';
 
 use \library\Session;
+use \library\Auth;
 use \library\Db;
 use \library\Validate;
-use \library\Auth;
 
 Session::start();
 
@@ -37,7 +37,7 @@ if(!Auth::isPermission('system_user')){
 }
 Validate::setRule(array(
     'id' => 'require|number',
-    'status' => 'require|number',
+    'status_id' => 'require|number',
     'name' => 'require|max_length:32',
     'phone' => 'require|number|min_length:11|max_length:11',
     'department_id' => 'require|number',
@@ -46,6 +46,7 @@ Validate::setRule(array(
 Validate::setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字',
+    'status_id.require' => '请选择状态',
     'name.require' => '请输入姓名',
     'name.max_length' => '姓名不能大于32个字',
     'phone.require' => '请输入手机号码',
@@ -80,7 +81,7 @@ if(empty($user)){
 
 // 更新
 $sql = 'update user set
-status = :status,
+status_id = :status_id,
 name = :name,
 phone = :phone,
 department_id = :department_id,
@@ -89,7 +90,7 @@ time_edit = :time_edit
 [password]
 where id = :id';
 $data = array(
-    ':status'=>$_POST['status'],
+    ':status_id'=>$_POST['status_id'],
     ':name'=>$_POST['name'],
     ':phone'=>$_POST['phone'],
     ':department_id'=>$_POST['department_id'],

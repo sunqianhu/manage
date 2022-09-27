@@ -5,14 +5,16 @@
 require_once '../../library/app.php';
 
 use \library\Session;
+use \library\Auth;
 use \library\Db;
 use \library\Validate;
-use \library\Auth;
 
 Session::start();
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
+$sql = '';
+$data = array();
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -22,8 +24,6 @@ $return = array(
 ); // 返回数据
 $role = array();
 $permissionIds = array();
-$sql = '';
-$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -109,5 +109,4 @@ foreach($permissionIds as $permissionId){
 $return['status'] = 'success';
 $return['message'] = '修改成功';
 echo json_encode($return);
-
 ?>

@@ -5,19 +5,19 @@
 require_once '../../library/app.php';
 
 use \library\Session;
+use \library\Auth;
 use \library\Db;
 use \library\Validate;
-use \library\Auth;
 
 Session::start();
 
 $pdo = Db::getInstance();
+$sql = '';
+$data = array();
 $return = array(
     'status'=>'error',
     'message'=>''
 );
-$sql = '';
-$data = array();
 
 // 验证
 if(!Auth::isLogin()){
@@ -57,7 +57,4 @@ if(!Db::query($pdo, $sql, $data)){
 $return['status'] = 'success';
 $return['message'] = '删除成功';
 echo json_encode($return);
-
-
-
 ?>

@@ -5,13 +5,13 @@
 require_once '../../library/app.php';
 
 use \library\Session;
-use \library\OperationLog;
+use \library\Auth;
 use \library\Db;
+use \library\OperationLog;
 use \library\Config;
 use \library\FrameMain;
 use \library\Pagination;
 use \library\Safe;
-use \library\Auth;
 use \library\MyString;
 use \library\User;
 use \library\Department;
@@ -20,6 +20,8 @@ Session::start();
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
+$sql = '';
+$data = array();
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
 $search = array(
@@ -34,8 +36,6 @@ $recordTotal = 0; // 总记录
 $pagination = null; // 分页
 $paginationNodeIntact = ''; // 节点
 $operationLogs = array();
-$sql = '';
-$data = array();
 
 OperationLog::add();
 
@@ -85,7 +85,7 @@ if(!empty($wheres)){
     $where = implode(' and ', $wheres);
 }
 
-$sql = "select count(1) from xxx where $where";
+$sql = "select count(1) from login_log where $where";
 $pdoStatement = Db::query($pdo, $sql, $data);
 $recordTotal = Db::fetchColumn($pdoStatement);
 
@@ -170,7 +170,7 @@ foreach($operationLogs as $operationLog){
     <td><?php echo $operationLog['department_name'];?></td>
     <td><?php echo $operationLog['user_name'];?></td>
     <td><?php echo $operationLog['ip'];?></td>
-    <td><a href="<?php echo $operationLog['url'];?>" target="_blank" title="<?php echo $operationLog['url'];?>"><?php echo $operationLog['url_sub'];?></a></td>
+    <td><?php echo $operationLog['url_sub'];?></td>
     <td><?php echo $operationLog['time_add_name'];?></td>
     <td>
 <a href="javascript:;" class="sun-button plain small sun-mr5" onClick="sun.layer.open({id: 'layer_detail', name: '操作日志详情', url: 'detail.php?id=<?php echo $operationLog['id'];?>', width: 700, height: 500})">详情</a>

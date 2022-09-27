@@ -5,13 +5,13 @@
 require_once '../../library/app.php';
 
 use \library\Session;
-use \library\OperationLog;
+use \library\Auth;
 use \library\Db;
+use \library\OperationLog;
 use \library\Config;
 use \library\FrameMain;
 use \library\Pagination;
 use \library\Safe;
-use \library\Auth;
 use \library\User;
 use \library\Department;
 
@@ -19,6 +19,8 @@ Session::start();
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
+$sql = '';
+$data = array();
 $config = Config::getAll();
 $frameMainMenu = ''; // 框架菜单
 $search = array(
@@ -33,8 +35,6 @@ $recordTotal = 0; // 总记录
 $pagination = null; // 分页
 $paginationNodeIntact = ''; // 节点
 $loginLogs = array();
-$sql = '';
-$data = array();
 
 OperationLog::add();
 

@@ -6,6 +6,7 @@ namespace library;
 
 use \library\Db;
 use \library\Config;
+use \library\Dictionary;
 
 class User{
     
@@ -49,5 +50,27 @@ class User{
         }
         
         return $url;
+    }
+    
+    /**
+     * 得到徽章状态
+     * @access public
+     * @param Integer $statusId 状态ID
+     * @return String 徽章
+     */
+    static function getBadgeStatusName($statusId){
+        $statusName = '';
+        $class = '';
+        $node = '';
+        
+        $statusName = Dictionary::getValue('system_user_status', $statusId);
+        switch($statusId){
+            case 2:
+                $class = 'orange';
+            break;
+        }
+        $node = '<span class="sun-badge '.$class.'">'.$statusName.'</span>';
+        
+        return $node;
     }
 }

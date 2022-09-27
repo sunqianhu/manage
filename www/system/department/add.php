@@ -5,10 +5,10 @@
 require_once '../../library/app.php';
 
 use \library\Session;
-use \library\OperationLog;
-use \library\Db;
-use \library\Config;
 use \library\Auth;
+use \library\Db;
+use \library\OperationLog;
+use \library\Config;
 use \library\Validate;
 use \library\Safe;
 
@@ -16,14 +16,14 @@ Session::start();
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
+$sql = '';
+$data = array();
 $config = array();
 $departmentParent = array();
 $init = array(
     'parent_id'=>1,
     'parent_name'=>'顶级部门',
 );
-$sql = '';
-$data = array();
 
 OperationLog::add();
 

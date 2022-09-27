@@ -5,19 +5,21 @@
 require_once '../../library/app.php';
 
 use \library\Session;
-use \library\OperationLog;
+use \library\Auth;
 use \library\Db;
+use \library\OperationLog;
 use \library\Config;
 use \library\FrameMain;
 use \library\Tree;
 use \library\Safe;
 use \library\Department;
-use \library\Auth;
 
 Session::start();
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
+$sql = '';
+$data = array();
 $config = Config::getAll();
 $departments = array(); // 部门数据
 $departmentNode = ''; // 部门表格节点
@@ -29,8 +31,6 @@ $search = array(
 );
 $wheres = array();
 $where = '1';
-$sql = '';
-$data = array();
 
 OperationLog::add();
 

@@ -47,7 +47,7 @@ Validate::setMessage(array(
 ));
 if(!Validate::check($_POST)){
     $return['message'] = Validate::getErrorMessage();
-    $return['data']['dom'] = Validate::getErrorField();
+    $return['data']['dom'] = '#'.Validate::getErrorField();
     echo json_encode($return);
     exit;
 }
@@ -71,7 +71,7 @@ unset($_SESSION['login_captcha']);
 $return['data']['captcha'] = '1';
 
 // 用户
-$sql = 'select id, username, name, department_id, role_id_string, head, status, time_login, ip from user where username = :username and password = :password limit 0,1';
+$sql = 'select id, username, name, department_id, role_id_string, head, status_id, time_login, ip from user where username = :username and password = :password limit 0,1';
 $data = array(
     ':username'=>$_POST['username'],
     ':password'=>md5($_POST['password'])
@@ -88,8 +88,8 @@ if(empty($user)){
     echo json_encode($return);
     exit;
 }
-if($user['status'] != 1){
-    $return['message'] = Dictionary::getValue('system_user_status', $user['status']);
+if($user['status_id'] != 1){
+    $return['message'] = Dictionary::getValue('system_user_status', $user['status_id']);
     echo json_encode($return);
     exit;
 }
@@ -115,6 +115,11 @@ $data = array(
 );
 $pdoStatement = Db::query($pdo, $sql, $data);
 $permissions = Db::fetchAll($pdoStatement);
+if(empty($permissions)){
+    $return['message'] = '用户还没有任何功能的权限';
+    echo json_encode($return);
+    exit;
+}
 
 // 记录
 $ip = Ip::get();
