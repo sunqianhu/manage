@@ -15,7 +15,7 @@ class Dictionary{
      */
     function getSetCache($type){
         $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+        $pdo = $dbHelper->getInstance();
         $pdoStatement = null;
         $cacheKey = 'dictionary_'.$type; // 缓存key
         $data = '';

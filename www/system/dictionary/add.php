@@ -19,8 +19,6 @@ if(!Auth::isPermission('system_dictionary')){
 }
 
 $config = Config::getAll();
-
-OperationLog::add();
 ?><!doctype html>
 <html>
 <head>

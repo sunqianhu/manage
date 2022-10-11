@@ -16,7 +16,7 @@ class Permission{
      */
     function getName($id){
         $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+        $pdo = $dbHelper->getInstance();
         $pdoStatement = null;
         $sql = '';
         $data = array();

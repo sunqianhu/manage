@@ -16,7 +16,7 @@ class OperationLog{
      */
     function add(){
         $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+        $pdo = $dbHelper->getInstance();
         $pdoStatement = null;
         $sql = '';
         $data = array();
