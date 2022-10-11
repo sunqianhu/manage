@@ -4,26 +4,25 @@
  */
 require_once '../../library/app.php';
 
-use \library\Session;
-use \library\Auth;
-use \library\Db;
-use \library\OperationLog;
-use \library\Config;
-use \library\Validate;
-use \library\Safe;
-use \library\Dictionary;
-use \library\Permission;
-
-Session::start();
+use library\Session;
+use library\Auth;
+use library\Db;
+use library\OperationLog;
+use library\Config;
+use library\Validate;
+use library\Safe;
+use library\Dictionary;
+use library\Permission;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
 $sql = '';
+$validate = new Validate();
 $data = array();
 $config = Config::getAll();
 $permission = array();
-
-OperationLog::add();
+$permissionObject = new Permission();
+$dictionary = new Dictionary();
 
 // 验证
 if(!Auth::isLogin()){
@@ -35,15 +34,15 @@ if(!Auth::isPermission('system_permission')){
     exit;
 }
 
-Validate::setRule(array(
+$validate->setRule(array(
     'id' => 'require|number'
 ));
-Validate::setMessage(array(
+$validate->setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
 ));
-if(!Validate::check($_GET)){
-    header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
+if(!$validate->check($_GET)){
+    header('location:../../error.php?message='.urlencode($validate->getErrorMessage()));
     exit;
 }
 
@@ -54,10 +53,10 @@ $data = array(
 $pdoStatement = Db::query($pdo, $sql, $data);
 $permission = Db::fetch($pdoStatement);
 
-$permission['parent_name'] = Permission::getName($permission['parent_id']);
+$permission['parent_name'] = $permissionObject->getName($permission['parent_id']);
 $permission = Safe::entity($permission);
 
-$permissionTypeRadioNode = Dictionary::getRadio('system_permission_type', 'type', $permission['type']);
+$permissionTypeRadioNode = $dictionary->getRadio('system_permission_type', 'type', $permission['type']);
 
 ?><!doctype html>
 <html>

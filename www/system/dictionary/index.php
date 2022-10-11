@@ -4,22 +4,21 @@
  */
 require_once '../../library/app.php';
 
-use \library\Session;
-use \library\Auth;
-use \library\Db;
-use \library\OperationLog;
-use \library\Config;
-use \library\FrameMain;
-use \library\Pagination;
-use \library\Safe;
-
-Session::start();
+use library\Session;
+use library\Auth;
+use library\Db;
+use library\OperationLog;
+use library\Config;
+use library\FrameMain;
+use library\Pagination;
+use library\Safe;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
 $sql = '';
 $data = array();
 $config = Config::getAll();
+$frameMain = new FrameMain();
 $frameMainMenu = ''; // 框架菜单
 $search = array(
     'type'=>'',
@@ -33,8 +32,6 @@ $pagination = null; // 分页
 $paginationNodeIntact = ''; // 节点
 $dictionarys = array();
 
-OperationLog::add();
-
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
@@ -45,7 +42,7 @@ if(!Auth::isPermission('system_dictionary')){
 }
 
 // 菜单
-$frameMainMenu = FrameMain::getMenu('system_dictionary');
+$frameMainMenu = $frameMain->getMenu('system_dictionary');
 
 // 搜索
 if(isset($_GET['type']) && $_GET['type'] !== ''){

@@ -4,8 +4,8 @@
  */
 require_once 'library/app.php';
 
-use \library\Config;
-use \library\Safe;
+use library\Config;
+use library\Safe;
 
 $config = Config::getAll();
 $message = '';

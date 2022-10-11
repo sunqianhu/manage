@@ -4,17 +4,16 @@
  */
 require_once 'library/app.php';
 
-use \library\Session;
-use \library\Config;
-use \library\FrameMain;
-use \library\Auth;
+use library\Session;
+use library\Config;
+use library\FrameMain;
+use library\Auth;
 
 $config = array();
+$frameMain = new FrameMain();
 $frameMainMenu = '';
 $timeLogin = '无';
 $ip = '无';
-
-Session::start();
 
 if(!Auth::isLogin()){
     header('location:my/login.php');
@@ -22,7 +21,7 @@ if(!Auth::isLogin()){
 }
 
 $config = Config::getAll();
-$frameMainMenu = FrameMain::getMenu('home');
+$frameMainMenu = $frameMain->getMenu('home');
 if($_SESSION['user']['time_login'] > 0){
     $timeLogin = date('Y-m-d H:i:s', $_SESSION['user']['time_login']);
 }

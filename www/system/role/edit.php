@@ -4,20 +4,19 @@
  */
 require_once '../../library/app.php';
 
-use \library\Session;
-use \library\Auth;
-use \library\Db;
-use \library\OperationLog;
-use \library\Config;
-use \library\Ztree;
-use \library\Validate;
-use \library\Safe;
-
-Session::start();
+use library\Session;
+use library\Auth;
+use library\Db;
+use library\OperationLog;
+use library\Config;
+use library\Ztree;
+use library\Validate;
+use library\Safe;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
 $sql = '';
+$validate = new Validate();
 $data = array();
 $config = Config::getAll();
 $role = array();
@@ -25,8 +24,7 @@ $rolePermissions = array();
 $permissionIds = array();
 $permissions = array();
 $permission = ''; // 权限json数据
-
-OperationLog::add();
+$ztree = new Ztree();
 
 // 验证
 if(!Auth::isLogin()){
@@ -38,15 +36,15 @@ if(!Auth::isPermission('system_role')){
     exit;
 }
 
-Validate::setRule(array(
+$validate->setRule(array(
     'id' => 'require|number'
 ));
-Validate::setMessage(array(
+$validate->setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
 ));
-if(!Validate::check($_GET)){
-    header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
+if(!$validate->check($_GET)){
+    header('location:../../error.php?message='.urlencode($validate->getErrorMessage()));
     exit;
 }
 
@@ -74,8 +72,8 @@ $role = Safe::entity($role);
 $sql = 'select id, name, parent_id from permission where parent_id != 0 order by parent_id asc, id asc';
 $pdoStatement = Db::query($pdo, $sql);
 $permissions = Db::fetchAll($pdoStatement);
-$permissions = Ztree::setOpenByFirst($permissions);
-$permissions = Ztree::setChecked($permissions, $permissionIds);
+$permissions = $ztree->setOpenByFirst($permissions);
+$permissions = $ztree->setChecked($permissions, $permissionIds);
 $permission = json_encode($permissions);
 
 ?><!doctype html>

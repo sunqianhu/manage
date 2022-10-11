@@ -4,17 +4,15 @@
  */
 require_once '../../library/app.php';
 
-use \library\Session;
-use \library\Auth;
-use \library\Db;
-use \library\OperationLog;
-use \library\Config;
-use \library\FrameMain;
-use \library\Tree;
-use \library\Safe;
-use \library\Department;
-
-Session::start();
+use library\Session;
+use library\Auth;
+use library\Db;
+use library\OperationLog;
+use library\Config;
+use library\FrameMain;
+use library\Tree;
+use library\Safe;
+use library\Department;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
@@ -23,6 +21,7 @@ $data = array();
 $config = Config::getAll();
 $departments = array(); // 部门数据
 $departmentNode = ''; // 部门表格节点
+$frameMain = new FrameMain();
 $frameMainMenu = '';
 $search = array(
     'id'=>'',
@@ -31,8 +30,8 @@ $search = array(
 );
 $wheres = array();
 $where = '1';
-
-OperationLog::add();
+$departmentObject = new Department();
+$tree = new Tree();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -44,7 +43,7 @@ if(!Auth::isPermission('system_department')){
 }
 
 // 菜单
-$frameMainMenu = FrameMain::getMenu('system_department');
+$frameMainMenu = $frameMain->getMenu('system_department');
 
 // 搜索
 if(!empty($_GET['id'])){
@@ -72,9 +71,9 @@ if(!empty($wheres)){
 $sql = "select id, parent_id, name, `sort`, remark from department where $where order by `sort` asc, id asc";
 $pdoStatement = Db::query($pdo, $sql, $data);
 $departments = Db::fetchAll($pdoStatement);
-$departments = Tree::getTree($departments, 'child', 'id', 'parent_id');
+$departments = $tree->getTree($departments, 'child', 'id', 'parent_id');
 $departments = Safe::entity($departments);
-$departmentNode = Department::getIndexTreeNode($departments, 1);
+$departmentNode = $departmentObject->getIndexTreeNode($departments, 1);
 
 ?><!doctype html>
 <html>

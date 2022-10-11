@@ -4,30 +4,28 @@
  */
 require_once '../../library/app.php';
 
-use \library\Session;
-use \library\Auth;
-use \library\Db;
-use \library\OperationLog;
-use \library\Config;
-use \library\Dictionary;
-use \library\Validate;
-use \library\Safe;
-
-Session::start();
+use library\Session;
+use library\Auth;
+use library\Db;
+use library\OperationLog;
+use library\Config;
+use library\Dictionary;
+use library\Validate;
+use library\Safe;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
 $sql = '';
+$validate = new Validate();
 $data = array();
 $config = Config::getAll();
-$permissionTypeRadioNode = Dictionary::getRadio('system_permission_type', 'type', 1);
+$radioPermissionType = '';
 $permissionParent = array();
 $init = array(
     'parent_id'=>1,
     'parent_name'=>'顶级权限',
 );
-
-OperationLog::add();
+$dictionary = new Dictionary();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -37,14 +35,14 @@ if(!Auth::isPermission('system_permission')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
-Validate::setRule(array(
+$validate->setRule(array(
     'parent_id' => 'number'
 ));
-Validate::setMessage(array(
+$validate->setMessage(array(
     'parent_id.number' => 'parent_id必须是个数字'
 ));
-if(!Validate::check($_GET)){
-    header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
+if(!$validate->check($_GET)){
+    header('location:../../error.php?message='.urlencode($validate->getErrorMessage()));
     exit;
 }
 
@@ -62,6 +60,7 @@ if(!empty($_GET['parent_id'])){
     $init = Safe::entity($init);
 }
 
+$radioPermissionType = $dictionary->getRadio('system_permission_type', 'type', 1);
 ?><!doctype html>
 <html>
 <head>
@@ -92,7 +91,7 @@ if(!empty($_GET['parent_id'])){
 <div class="row">
 <div class="title"><span class="required">*</span> 权限类型</div>
 <div class="content">
-<?php echo $permissionTypeRadioNode;?>
+<?php echo $radioPermissionType;?>
 </div>
 </div>
 

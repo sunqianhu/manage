@@ -8,7 +8,7 @@ class Session{
     /**
      * 开启session
      */
-    static function start(){
+    function start(){
         session_start();
     }
     

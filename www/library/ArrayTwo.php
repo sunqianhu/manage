@@ -13,7 +13,7 @@ class ArrayTwo{
      * @param String $value option的值
      * @return String option字符串
      */
-    static function getSelectOption($datas, $selectKeys = array(), $key = 'id', $value = 'name'){
+    static function getOption($datas, $selectKeys = array(), $key = 'id', $value = 'name'){
         $node = ''; // 节点
 
         if(empty($datas)){

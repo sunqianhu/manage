@@ -4,24 +4,23 @@
  */
 require_once '../../library/app.php';
 
-use \library\Session;
-use \library\Auth;
-use \library\Db;
-use \library\OperationLog;
-use \library\Config;
-use \library\FrameMain;
-use \library\Pagination;
-use \library\Safe;
-use \library\User;
-use \library\Department;
-
-Session::start();
+use library\Session;
+use library\Auth;
+use library\Db;
+use library\OperationLog;
+use library\Config;
+use library\FrameMain;
+use library\Pagination;
+use library\Safe;
+use library\User;
+use library\Department;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
 $sql = '';
 $data = array();
 $config = Config::getAll();
+$frameMain = new FrameMain();
 $frameMainMenu = ''; // 框架菜单
 $search = array(
     'time_start'=>'',
@@ -35,8 +34,8 @@ $recordTotal = 0; // 总记录
 $pagination = null; // 分页
 $paginationNodeIntact = ''; // 节点
 $loginLogs = array();
-
-OperationLog::add();
+$department = new Department();
+$user = new User();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -48,7 +47,7 @@ if(!Auth::isPermission('system_login_log')){
 }
 
 // 菜单
-$frameMainMenu = FrameMain::getMenu('system_login_log');
+$frameMainMenu = $frameMain->getMenu('system_login_log');
 
 // 搜索
 if(isset($_GET['time_start']) && $_GET['time_start'] !== ''){
@@ -92,8 +91,8 @@ $loginLogs = Db::fetchAll($pdoStatement);
 
 foreach($loginLogs as $key => $loginLog){
     $loginLogs[$key]['time_login_name'] = date('Y-m-d H:i:s', $loginLog['time_login']);
-    $loginLogs[$key]['user_name'] = User::getName($loginLog['user_id']);
-    $loginLogs[$key]['department_name'] = Department::getName($loginLog['department_id']);
+    $loginLogs[$key]['user_name'] = $user->getName($loginLog['user_id']);
+    $loginLogs[$key]['department_name'] = $department->getName($loginLog['department_id']);
 }
 
 $search = Safe::entity($search);

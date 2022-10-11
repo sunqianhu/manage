@@ -1,16 +1,16 @@
 <?php
 /**
- * 文件服务
+ * 文件
  */
 namespace library;
 
 class File{
     /**
-     * 得到可读字节大小
+     * 得到可读文件大小
      * @param Integer $byte 字节数
      * @return String 可读字节大小
      */
-    static function getByteReadable($byte){
+    function getSizeReadable($byte){
         $readable = '';
         
         if($byte < 1024){
@@ -25,5 +25,4 @@ class File{
         
         return $readable;
     }
-    
 }

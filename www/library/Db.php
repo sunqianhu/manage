@@ -4,7 +4,7 @@
  */
 namespace library;
 
-use \library\Config;
+use library\Config;
 
 class Db{
     static public $pdo;

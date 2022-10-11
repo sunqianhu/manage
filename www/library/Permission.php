@@ -1,10 +1,10 @@
 <?php
 /**
- * 权限服务
+ * 权限
  */
 namespace library;
 
-use \library\Db;
+use library\Db;
 
 class Permission{
     
@@ -14,7 +14,7 @@ class Permission{
      * @param Integer $id 用户id
      * @return String 用户姓名
      */
-    static function getName($id){
+    function getName($id){
         $pdo = Db::getInstance();
         $pdoStatement = null;
         $sql = '';
@@ -36,7 +36,7 @@ class Permission{
      * @param Array $permissions 数据
      * @return array
      */
-    static function getIndexTreeNode($permissions, $level = 1){
+    function getIndexTreeNode($permissions, $level = 1){
         $node = '';
 
         if(!empty($permissions)){
@@ -62,7 +62,7 @@ class Permission{
 </td>
 </tr>';
                 if(!empty($permission['child'])){
-                    $node .= self::getIndexTreeNode($permission['child'], ($level + 1));
+                    $node .= $this->getIndexTreeNode($permission['child'], ($level + 1));
                 }
             }
         }else{

@@ -1,10 +1,28 @@
 <?php
 /**
- * 图片处理服务
+ * 图片处理
  */
 namespace library;
 
 class Image{
+    public $error = ''; // 错误描述
+    
+    /**
+     * 得到错误
+     * @return String 错误描述
+     */
+    function getError(){
+        return $this->error;
+    }
+    
+    /**
+     * 设置错误
+     * @param String $error 错误描述
+     * @return Boolean
+     */
+    function setError($error){
+        return $this->error = $error;
+    }
 
     /**
      * 缩略（只支持jpg和png）
@@ -14,7 +32,7 @@ class Image{
      * @param String $type width|height|无 缩略参照边
      * @return Boolean 布尔
      */
-    static function shrink($srcPath, $dstPath, $size, $type = ''){
+    function shrink($srcPath, $dstPath, $size, $type = ''){
         $srcImageSizes = array(); // 源图像信息
         $srcImage = false; // 源图像画布
         $width = 0; // 目的图片宽度
@@ -24,20 +42,23 @@ class Image{
 
         // 验证
         if(empty($srcPath) || !file_exists($srcPath)){
+            $this->setError('原图像不存在');
             return false;
         }
         if(empty($dstPath)){
+            $this->setError('目标图像路径不能为空');
             return false;
         }
 
         // 源图像信息
         $srcImageSizes = getimagesize($srcPath);
         if($srcImageSizes[0] < $size && $srcImageSizes[1] < $size){
-            return false;
+            return true;
         }
 
         // 只支持jpg和png
         if(!in_array($srcImageSizes[2], array(2,3))){
+            $this->setError('只支持jpg和png');
             return false;
         }
 
@@ -59,6 +80,7 @@ class Image{
             break;
         }
         if(!$srcImage){
+            $this->setError('得到原图像画布失败');
             return false;
         }
 
@@ -84,6 +106,7 @@ class Image{
         }
         $dstImage = imagecreatetruecolor($width, $height);
         if(!$dstImage){
+            $this->setError('创建目标图像画布失败');
             return false;
         }
 
@@ -95,6 +118,7 @@ class Image{
 
         // 缩略
         if(!imagecopyresampled($dstImage, $srcImage, 0, 0, 0, 0, $width, $height, $srcImageSizes[0], $srcImageSizes[1])){
+            $this->setError('图片缩略失败');
             return false;
         }
 
@@ -118,6 +142,7 @@ class Image{
         imagedestroy($dstImage);
         
         if(!$save){
+            $this->setError('图片保存到磁盘失败');
             return false;
         }
         
@@ -131,7 +156,7 @@ class Image{
      * @param String$alpha 水印透明度
      * @return Boolean 布尔
      */
-    static function waterMark($srcPath, $markPath, $alpha = 80){
+    function waterMark($srcPath, $markPath, $alpha = 80){
         $srcImageSizes = array(); // 源图像信息
         $srcImage = false; // 源画布
         $waterMarkImageSizes = array(); // 水印图像信息
@@ -140,9 +165,11 @@ class Image{
 
         // 验证
         if(empty($srcPath) || !file_exists($srcPath)){
+            $this->setError('原图像不存在');
             return false;
         }
         if(empty($markPath) || !file_exists($markPath)){
+            $this->setError('水印图像不存在');
             return false;
         }
 
@@ -151,6 +178,7 @@ class Image{
 
         // 只支持jpg和png
         if(!in_array($srcImageSizes[2], array(2,3))){
+            $this->setError('只支持jpg和png');
             return false;
         }
 
@@ -171,6 +199,7 @@ class Image{
             break;
         }
         if(!$srcImage){
+            $this->setError('得到原图片画布失败');
             return false;
         }
 
@@ -199,6 +228,7 @@ class Image{
             break;
         }
         if(!$waterMarkImage){
+            $this->setError('创建目标图片画布失败');
             return false;
         }
 
@@ -206,6 +236,7 @@ class Image{
         $x = $srcImageSizes[0] - $waterMarkImageSizes[0];
         $y = $srcImageSizes[1] - $waterMarkImageSizes[1];
         if(!imagecopymerge($srcImage, $waterMarkImage, $x, $y, 0, 0, $waterMarkImageSizes[0], $waterMarkImageSizes[1], $alpha)){
+            $this->setError('图片加水印失败');
             return false;
         }
 
@@ -228,6 +259,7 @@ class Image{
         imagedestroy($waterMarkImage);
 
         if(!$save){
+            $this->setError('图片保存到磁盘失败');
             return false;
         }
         
@@ -240,7 +272,7 @@ class Image{
      * @param String $dstPath 目标图像路径
      * @return Boolean 布尔
      */
-    static function squareCenterCrop($srcPath, $dstPath){
+    function squareCenterCrop($srcPath, $dstPath){
         $srcImageSizes = array(); // 源图像信息
         $srcImage = false; // 源图像画布
         $width = 0; // 目的图片宽度
@@ -252,6 +284,7 @@ class Image{
 
         // 验证
         if(empty($srcPath) || !file_exists($srcPath)){
+            $this->setError('原图像不存在');
             return false;
         }
         if(empty($dstPath)){
@@ -264,7 +297,7 @@ class Image{
         $height = $srcImageSizes[1];
         
         if($width == $height){
-            return false;
+            return true;
         }
         
         $sideMin = $width;
@@ -280,6 +313,7 @@ class Image{
 
         // 只支持jpg和png
         if(!in_array($srcImageSizes[2], array(2,3))){
+            $this->setError('只支持jpg和png');
             return false;
         }
 
@@ -301,12 +335,14 @@ class Image{
             break;
         }
         if(!$srcImage){
+            $this->setError('得到原图片画布失败');
             return false;
         }
 
         // 创建目标画布
         $dstImage = imagecreatetruecolor($sideMin, $sideMin);
         if(!$dstImage){
+            $this->setError('创建目标画布失败');
             return false;
         }
 
@@ -319,10 +355,12 @@ class Image{
         // 缩略
         if($width > $height){
             if(!imagecopyresampled($dstImage, $srcImage, 0, 0, $offset, 0, $sideMin, $sideMin, $sideMin, $sideMin)){
+                $this->setError('图片裁剪失败');
                 return false;
             }
         }else{
             if(!imagecopyresampled($dstImage, $srcImage, 0, 0, 0, $offset, $sideMin, $sideMin, $sideMin, $sideMin)){
+                $this->setError('图片裁剪失败');
                 return false;
             }
         }
@@ -347,6 +385,7 @@ class Image{
         imagedestroy($dstImage);
         
         if(!$save){
+            $this->setError('图片保存到磁盘失败');
             return false;
         }
         

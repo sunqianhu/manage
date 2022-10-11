@@ -4,19 +4,18 @@
  */
 require_once '../../library/app.php';
 
-use \library\Session;
-use \library\Auth;
-use \library\Db;
-use \library\OperationLog;
-use \library\Config;
-use \library\ArrayTwo;
-use \library\Validate;
-use \library\Safe;
-use \library\Dictionary;
-use \library\Department;
+use library\Session;
+use library\Auth;
+use library\Db;
+use library\OperationLog;
+use library\Config;
+use library\ArrayTwo;
+use library\Validate;
+use library\Safe;
+use library\Dictionary;
+use library\Department;
 
-Session::start();
-
+$validate = new Validate();
 $pdo = Db::getInstance();
 $pdoStatement = null;
 $config = Config::getAll();
@@ -26,8 +25,8 @@ $radioStatus = '';
 $optionRole = '';
 $sql = '';
 $data = array();
-
-OperationLog::add();
+$department = new Department();
+$dictionary = new Dictionary();
 
 // 验证
 if(!Auth::isLogin()){
@@ -38,15 +37,15 @@ if(!Auth::isPermission('system_user')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
-Validate::setRule(array(
+$validate->setRule(array(
     'id' => 'require|number'
 ));
-Validate::setMessage(array(
+$validate->setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
 ));
-if(!Validate::check($_GET)){
-    header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
+if(!$validate->check($_GET)){
+    header('location:../../error.php?message='.urlencode($validate->getErrorMessage()));
     exit;
 }
 
@@ -62,14 +61,14 @@ if(empty($user)){
 }
 
 $user['role_ids'] = explode(',', $user['role_id_string']);
-$user['department_name'] = Department::getName($user['department_id']);
+$user['department_name'] = $department->getName($user['department_id']);
 $user = Safe::entity($user);
-$radioStatus = Dictionary::getRadio('system_user_status', 'status_id', $user['status_id']);
+$radioStatus = $dictionary->getRadio('system_user_status', 'status_id', $user['status_id']);
 
 $sql = 'select id, name from role order by id asc';
 $pdoStatement = Db::query($pdo, $sql);
 $roles = Db::fetchAll($pdoStatement);
-$optionRole = ArrayTwo::getSelectOption($roles, $user['role_ids'], 'id', 'name');
+$optionRole = ArrayTwo::getOption($roles, $user['role_ids'], 'id', 'name');
 
 ?><!doctype html>
 <html>

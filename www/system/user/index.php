@@ -4,27 +4,26 @@
  */
 require_once '../../library/app.php';
 
-use \library\Session;
-use \library\Auth;
-use \library\Db;
-use \library\OperationLog;
-use \library\Config;
-use \library\FrameMain;
-use \library\Pagination;
-use \library\Ztree;
-use \library\ArrayTwo;
-use \library\Safe;
-use \library\Dictionary;
-use \library\Department;
-use \library\User;
-
-Session::start();
+use library\Session;
+use library\Auth;
+use library\Db;
+use library\OperationLog;
+use library\Config;
+use library\FrameMain;
+use library\Pagination;
+use library\Ztree;
+use library\ArrayTwo;
+use library\Safe;
+use library\Dictionary;
+use library\Department;
+use library\User;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
 $sql = '';
 $data = array();
 $config = Config::getAll();
+$frameMain = new FrameMain();
 $frameMainMenu = ''; // 框架菜单
 $wheres = array();
 $where = '1';
@@ -42,13 +41,15 @@ $search = array(
     'phone'=>''
 ); // 搜索
 $users = array();
+$userObject = new User();
 $departments = array();
 $department = ''; // 部门json数据
+$departmentObject = new Department();
 $roles = array();
 $optionRole = '';
 $optionStatus = '';
-
-OperationLog::add();
+$ztree = new Ztree();
+$dictionary = new Dictionary();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -59,7 +60,7 @@ if(!Auth::isPermission('system_user')){
     exit;
 }
 
-$frameMainMenu = FrameMain::getMenu('system_user');
+$frameMainMenu = $frameMain->getMenu('system_user');
 
 if(!empty($_GET['id'])){
     $wheres[] = 'id = :id';
@@ -115,25 +116,25 @@ $sql = "select id, username, head, `name`, `time_login`, time_edit, phone, statu
 $pdoStatement = Db::query($pdo, $sql, $data);
 $users = Db::fetchAll($pdoStatement);
 foreach($users as $key => $user){
-    $users[$key]['department_name'] = Department::getName($user['department_id']);
-    $users[$key]['status_name'] = User::getBadgeStatusName($user['status_id']);
+    $users[$key]['department_name'] = $departmentObject->getName($user['department_id']);
+    $users[$key]['status_name'] = $userObject->getBadgeStatusName($user['status_id']);
     $users[$key]['time_edit_name'] = $user['time_edit'] ? date('Y-m-d H:i:s', $user['time_edit']) : '-';
     $users[$key]['time_login_name'] = $user['time_login'] ? date('Y-m-d H:i:s', $user['time_login']) : '-';
-    $users[$key]['head_url'] = User::getHeadUrl($user['head']);
+    $users[$key]['head_url'] = $userObject->getHeadUrl($user['head']);
 }
 
 $sql = 'select id, name, parent_id from department order by parent_id asc, sort asc';
 $pdoStatement = Db::query($pdo, $sql);
 $departments = Db::fetchAll($pdoStatement);
-$departments = Ztree::setOpenByFirst($departments);
+$departments = $ztree->setOpenByFirst($departments);
 $department = json_encode($departments);
 
-$optionStatus = Dictionary::getSelectOption('system_user_status', array($search['status']));
+$optionStatus = $dictionary->getOption('system_user_status', array($search['status']));
 
 $sql = 'select id, name from role order by id asc';
 $pdoStatement = Db::query($pdo, $sql);
 $roles = Db::fetchAll($pdoStatement);
-$optionRole = ArrayTwo::getSelectOption($roles, array($search['role_id']), 'id', 'name');
+$optionRole = ArrayTwo::getOption($roles, array($search['role_id']), 'id', 'name');
 
 $users = Safe::entity($users, 'status_name');
 $search = Safe::entity($search);

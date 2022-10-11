@@ -4,13 +4,11 @@
  */
 require_once '../library/app.php';
 
-use \library\Session;
-use \library\Db;
-use \library\UserFileUpload;
-use \library\User;
-use \library\Auth;
-
-Session::start();
+use library\Session;
+use library\Db;
+use library\UserFileUpload;
+use library\User;
+use library\Auth;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
@@ -22,6 +20,8 @@ $return = array(
 ); // 返回数据
 $user = array();
 $path = ''; // 头像路径
+$userObject = new User();
+$userFileUpload = new UserFileUpload();
 
 // 验证
 if(!Auth::isLogin()){
@@ -44,12 +44,12 @@ if(empty($user)){
 }
 
 // 上传文件
-if(!UserFileUpload::upload('user_head', 'head')){
-    $return['message'] = UserFileUpload::getError();
+if(!$userFileUpload->upload('user_head', 'head')){
+    $return['message'] = $userFileUpload->getError();
     echo json_encode($return);
     exit;
 }
-$path = UserFileUpload::$path;
+$path = $userFileUpload->path;
 
 // 更新
 $sql = 'update user set head = :head where id = :id';
@@ -60,7 +60,7 @@ $data = array(
 Db::query($pdo, $sql, $data);
 
 $_SESSION['user']['head'] = $path;
-$_SESSION['user']['head_url'] = User::getHeadUrl($path);
+$_SESSION['user']['head_url'] = $userObject->getHeadUrl($path);
 
 $return['status'] = 'success';
 $return['message'] = '修改成功';

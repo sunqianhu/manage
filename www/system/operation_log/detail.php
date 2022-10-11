@@ -4,28 +4,28 @@
  */
 require_once '../../library/app.php';
 
-use \library\Session;
-use \library\Db;
-use \library\OperationLog;
-use \library\Validate;
-use \library\Auth;
-use \library\Config;
-use \library\FrameMain;
-use \library\Safe;
-use \library\User;
-use \library\Department;
+use library\Session;
+use library\Db;
+use library\OperationLog;
+use library\Validate;
+use library\Auth;
+use library\Config;
+use library\FrameMain;
+use library\Safe;
+use library\User;
+use library\Department;
 
-Session::start();
-
+$validate = new Validate();
 $pdo = Db::getInstance();
 $pdoStatement = null;
 $config = Config::getAll();
+$frameMain = new FrameMain();
 $frameMainMenu = ''; // 框架菜单
 $operationLog = array();
 $sql = '';
 $data = array();
-
-OperationLog::add();
+$department = new Department();
+$user = new User();
 
 // 验证
 if(!Auth::isLogin()){
@@ -36,15 +36,15 @@ if(!Auth::isPermission('system_operation_log')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
-Validate::setRule(array(
+$validate->setRule(array(
     'id' => 'require|number'
 ));
-Validate::setMessage(array(
+$validate->setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
 ));
-if(!Validate::check($_GET)){
-    header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
+if(!$validate->check($_GET)){
+    header('location:../../error.php?message='.urlencode($validate->getErrorMessage()));
     exit;
 }
 
@@ -59,14 +59,13 @@ if(empty($operationLog)){
     exit;
 }
 $operationLog['time_add_name'] = date('Y-m-d H:i:s', $operationLog['time_add']);
-$operationLog['user_name'] = User::getName($operationLog['user_id']);
-$operationLog['department_name'] = Department::getName($operationLog['department_id']);
+$operationLog['user_name'] = $user->getName($operationLog['user_id']);
+$operationLog['department_name'] = $department->getName($operationLog['department_id']);
 
 $operationLog = Safe::entity($operationLog, 'url');
 
 // 菜单
-$frameMainMenu = FrameMain::getMenu('system_operation_log');
-
+$frameMainMenu = $frameMain->getMenu('system_operation_log');
 ?><!doctype html>
 <html>
 <head>

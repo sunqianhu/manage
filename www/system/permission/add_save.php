@@ -4,16 +4,15 @@
  */
 require_once '../../library/app.php';
 
-use \library\Session;
-use \library\Auth;
-use \library\Db;
-use \library\Validate;
-
-Session::start();
+use library\Session;
+use library\Auth;
+use library\Db;
+use library\Validate;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
 $sql = '';
+$validate = new Validate();
 $data = array();
 $return = array(
     'status'=>'error',
@@ -38,14 +37,14 @@ if(!Auth::isPermission('system_permission')){
     exit;
 }
 
-Validate::setRule(array(
+$validate->setRule(array(
     'parent_id' => 'number',
     'type' => 'require',
     'name' => 'require|max_length:32',
     'tag' => 'require|max_length:64',
     'sort' => 'number|max_length:10'
 ));
-Validate::setMessage(array(
+$validate->setMessage(array(
     'parent_id.number' => '请选择上级权限',
     'type.require' => '请选择权限类型',
     'name.require' => '请输入权限名称',
@@ -55,9 +54,9 @@ Validate::setMessage(array(
     'sort.number' => '排序必须是个数字',
     'sort.max_length' => '排序不能大于10个字'
 ));
-if(!Validate::check($_POST)){
-    $return['message'] = Validate::getErrorMessage();
-    $return['data']['dom'] = '#'.Validate::getErrorField();
+if(!$validate->check($_POST)){
+    $return['message'] = $validate->getErrorMessage();
+    $return['data']['dom'] = '#'.$validate->getErrorField();
     echo json_encode($return);
     exit;
 }

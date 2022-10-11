@@ -4,9 +4,8 @@
  */
 namespace library;
 
-use \library\Config;
-use \library\Auth;
-use \library\Tree;
+use library\Config;
+use library\Auth;
 
 class FrameMain{
     /**
@@ -15,7 +14,7 @@ class FrameMain{
      * @param String $active 活跃项
      * @return String 节点
      */
-    static function getMenu($active = ''){
+    function getMenu($active = ''){
         $node = '';
         $liActive = '';
         $appDomain = Config::getOne('app_domain');

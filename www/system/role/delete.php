@@ -4,16 +4,15 @@
  */
 require_once '../../library/app.php';
 
-use \library\Session;
-use \library\Auth;
-use \library\Db;
-use \library\Validate;
-
-Session::start();
+use library\Session;
+use library\Auth;
+use library\Db;
+use library\Validate;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
 $sql = '';
+$validate = new Validate();
 $data = array();
 $return = array(
     'status'=>'error',
@@ -33,15 +32,15 @@ if(!Auth::isPermission('system_role')){
     exit;
 }
 
-Validate::setRule(array(
+$validate->setRule(array(
     'id' => 'require:number'
 ));
-Validate::setMessage(array(
+$validate->setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
 ));
-if(!Validate::check($_GET)){
-    $return['message'] = Validate::getErrorMessage();
+if(!$validate->check($_GET)){
+    $return['message'] = $validate->getErrorMessage();
     echo json_encode($return);
     exit;
 }

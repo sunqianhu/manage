@@ -1,6 +1,6 @@
 <?php
 /**
- * 树服务
+ * 树
  */
 namespace library;
 
@@ -10,7 +10,7 @@ class Tree{
      * @param Array $datas 数据
      * @return array
      */
-    static function getTree($datas, $child = 'child', $id = 'id', $parentId = 'parent_id'){
+    function getTree($datas, $child = 'child', $id = 'id', $parentId = 'parent_id'){
         $middle = array(); // 中间数组
         $tree = array(); // 树形结构数组
         
@@ -40,12 +40,12 @@ class Tree{
      * @param Integer $level 开始级别
      * @return array
      */
-    static function addLevel($datas, $level = 1){
+    function addLevel($datas, $level = 1){
         foreach($datas as $key => $data){
             $datas[$key]['level'] = $level;
             
             if(!empty($data['child'])){
-                $datas[$key]['child'] = self::addLevel($data['child'], ($level + 1));
+                $datas[$key]['child'] = $this->addLevel($data['child'], ($level + 1));
             }
         }
         

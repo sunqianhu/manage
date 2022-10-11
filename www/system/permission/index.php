@@ -4,17 +4,15 @@
  */
 require_once '../../library/app.php';
 
-use \library\Session;
-use \library\Auth;
-use \library\Db;
-use \library\OperationLog;
-use \library\Config;
-use \library\FrameMain;
-use \library\Tree;
-use \library\Safe;
-use \library\Permission;
-
-Session::start();
+use library\Session;
+use library\Auth;
+use library\Db;
+use library\OperationLog;
+use library\Config;
+use library\FrameMain;
+use library\Tree;
+use library\Safe;
+use library\Permission;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
@@ -23,6 +21,7 @@ $data = array();
 $config = Config::getAll();
 $permissions = array(); // 权限数据
 $permissionNode = ''; // 权限表格节点
+$frameMain = new FrameMain();
 $frameMainMenu = '';
 $search = array(
     'id'=>'',
@@ -31,8 +30,8 @@ $search = array(
 );
 $wheres = array();
 $where = '1';
-
-OperationLog::add();
+$permissionObject = new Permission();
+$tree = new Tree();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -44,7 +43,7 @@ if(!Auth::isPermission('system_permission')){
 }
 
 // 权限
-$frameMainMenu = FrameMain::getMenu('system_permission');
+$frameMainMenu = $frameMain->getMenu('system_permission');
 
 // 搜索
 if(!empty($_GET['id'])){
@@ -71,9 +70,9 @@ if(!empty($wheres)){
 $sql = "select id, parent_id, name, `sort`, tag from permission where $where order by `sort` asc, id asc";
 $pdoStatement = Db::query($pdo, $sql, $data);
 $permissions = Db::fetchAll($pdoStatement);
-$permissions = Tree::getTree($permissions, 'child', 'id', 'parent_id');
+$permissions = $tree->getTree($permissions, 'child', 'id', 'parent_id');
 $permissions = Safe::entity($permissions, 'id,parent_id');
-$permissionNode = Permission::getIndexTreeNode($permissions, 1);
+$permissionNode = $permissionObject->getIndexTreeNode($permissions, 1);
 
 ?><!doctype html>
 <html>

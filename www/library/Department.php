@@ -1,10 +1,10 @@
 <?php
 /**
- * 部门服务
+ * 部门
  */
 namespace library;
 
-use \library\Db;
+use library\Db;
 
 class Department{
     
@@ -14,7 +14,7 @@ class Department{
      * @param Integer $id 用户id
      * @return String 用户姓名
      */
-    static function getName($id){
+    function getName($id){
         $pdo = Db::getInstance();
         $pdoStatement = null;
         $name = '';
@@ -36,7 +36,7 @@ class Department{
      * @param Array $datas 数据
      * @return array
      */
-    static function getIndexTreeNode($departments, $level = 1){
+    function getIndexTreeNode($departments, $level = 1){
         $node = '';
         if(!empty($departments)){
         foreach($departments as $department){
@@ -61,7 +61,7 @@ class Department{
 </tr>
 ';
             if(!empty($department['child'])){
-                $node .= self::getIndexTreeNode($department['child'], ($level + 1));
+                $node .= $this->getIndexTreeNode($department['child'], ($level + 1));
             }
         }
         }else{
@@ -69,5 +69,4 @@ class Department{
         }
         return $node;
     }
-    
 }

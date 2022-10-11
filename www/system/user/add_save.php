@@ -4,16 +4,15 @@
  */
 require_once '../../library/app.php';
 
-use \library\Session;
-use \library\Db;
-use \library\Validate;
-use \library\Auth;
-
-Session::start();
+use library\Session;
+use library\Db;
+use library\Validate;
+use library\Auth;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
 $sql = '';
+$validate = new Validate();
 $data = array();
 $return = array(
     'status'=>'error',
@@ -35,7 +34,7 @@ if(!Auth::isPermission('system_user')){
     echo json_encode($return);
     exit;
 }
-Validate::setRule(array(
+$validate->setRule(array(
     'username' => 'require|max_length:64',
     'status_id' => 'require|number',
     'password' => 'require|min_length:8',
@@ -44,7 +43,7 @@ Validate::setRule(array(
     'department_id' => 'require:^0|number',
     'role_ids' => 'require|number_array'
 ));
-Validate::setMessage(array(
+$validate->setMessage(array(
     'username.require' => '请输入用户名',
     'username.max_length' => '用户名不能大于64个字',
     'status_id.require' => '请选择状态',
@@ -62,9 +61,9 @@ Validate::setMessage(array(
     'role_ids.require' => '请选择角色',
     'role_ids.number_array' => '角色参数错误'
 ));
-if(!Validate::check($_POST)){
-    $return['message'] = Validate::getErrorMessage();
-    $return['data']['dom'] = '#'.Validate::getErrorField();
+if(!$validate->check($_POST)){
+    $return['message'] = $validate->getErrorMessage();
+    $return['data']['dom'] = '#'.$validate->getErrorField();
     echo json_encode($return);
     exit;
 }

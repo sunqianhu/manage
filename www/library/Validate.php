@@ -6,13 +6,13 @@ namespace library;
 
 class Validate{
     // 规则
-    static public $rule = array();
+    public $rule = array();
     
     // 描述
-    static public $message = array();
+    public $message = array();
     
     // 错误
-    static public $error = array(
+    public $error = array(
         'field'=>'',
         'message'=>''
     );
@@ -22,16 +22,16 @@ class Validate{
      * @param Array $rule 规则数组
      * @return Boolean
      */
-    static public function setRule($rule){
-        self::$rule = $rule;
+    function setRule($rule){
+        $this->rule = $rule;
     }
     
     /**
      * 得到规则
      * @return Boolean
      */
-    static public function getRule(){
-        return self::$rule;
+    function getRule(){
+        return $this->rule;
     }
     
     /**
@@ -39,279 +39,28 @@ class Validate{
      * @param Array $message 描述
      * @return Boolean
      */
-    static public function setMessage($message){
-        self::$message = $message;
+    function setMessage($message){
+        $this->message = $message;
     }
     
     /**
      * 得到描述
      * @return Boolean
      */
-    static public function getMessage(){
-        return self::$message;
-    }
-    
-    /**
-     * 验证
-     * @param Array $datas 数据
-     * @return Boolean
-     */
-    static public function check($datas){
-        $field = ''; // 数据字段
-        $value = ''; // 数据值
-        $ruleString = ''; // 一个字段的规则字符串
-        $rules = array(); // 一个字段的规则数组
-        $rule = ''; // 一个字段的一个规则
-        $checks = array(); // 验证
-        $checkName = ''; // 验证名
-        $checkValue = ''; // 验证值
-        $message = ''; // 描述
-        
-        // 验证
-        if(empty(self::$rule)){
-            return true;
-        }
-        
-        // 检测
-        foreach(self::$rule as $field => $ruleString){
-            $value = '';
-            if(isset($datas[$field])){
-                $value = $datas[$field];
-            }
-            
-            $rules = explode('|', $ruleString);
-            if(empty($rules)){
-                continue;
-            }
-            
-            foreach($rules as $rule){
-                $checks = explode(':', $rule);
-                $checkName = $checks[0];
-                $checkValue = '';
-                if(!empty($checks[1])){
-                    $checkValue = $checks[1];
-                }
-                
-                // 字段描述
-                $message = self::getFieldMessage($field, $checkName, $checkValue);
-                
-                // 检测
-                switch($checkName){
-                    // 必填
-                    case 'require':
-                        if(!self::checkRequire($value, $checkValue)){
-                            self::setError($field, $message);
-                            return false;
-                        }
-                    break;
-                    
-                    // 长度等于
-                    case 'length':
-                        if(!self::checkLength($value, $checkValue)){
-                            self::setError($field, $message);
-                            return false;
-                        }
-                    break;
-                    
-                    // 最大长度
-                    case 'max_length':
-                        if(!self::checkMaxLength($value, $checkValue)){
-                            self::setError($field, $message);
-                            return false;
-                        }
-                    break;
-                    
-                    // 最小长度
-                    case 'min_length':
-                        if(!self::checkMinLength($value, $checkValue)){
-                            self::setError($field, $message);
-                            return false;
-                        }
-                    break;
-                    
-                    // 数字
-                    case 'number':
-                        if(!self::checkNumber($value)){
-                            self::setError($field, $message);
-                            return false;
-                        }
-                    break;
-                    
-                    // 数字字符串
-                    case 'number_string':
-                        if(!self::checkNumberString($value, $checkValue)){
-                            self::setError($field, $message);
-                            return false;
-                        }
-                    break;
-                    
-                    // 数字数组
-                    case 'number_array':
-                        if(!self::checkNumberArray($value)){
-                            self::setError($field, $message);
-                            return false;
-                        }
-                    break;
-                    
-                    // 正则
-                    case 'regex':
-                        if(!self::checkRegex($value, $checkValue)){
-                            self::setError($field, $message);
-                            return false;
-                        }
-                    break;
-                }
-            }
-        }
-        
-        return true;
-    }
-    
-    /**
-     * 检测必填
-     * @return Boolean 验证是否通过
-     */
-    static function checkRequire($value, $rule = ''){
-        // 字符串
-        if($value === ''){
-            return false;
-        }
-        
-        // 数组
-        if(is_array($value)){
-            if(empty($value)){
-                return false;
-            }
-        }
-        
-        // 排除
-        if($rule == '^0' && strval($value) === '0'){
-            return false;
-        }
-
-        return true;
-    }
-    
-    /**
-     * 检测长度
-     * @param $value 值
-     * @param $length 最大长度
-     * @return Boolean 验证是否通过
-     */
-    static function checkLength($value, $length){
-        if(mb_strlen($value) != $length){
-            return false;
-        }
-        
-        return true;
-    }
-    
-    /**
-     * 检测最大长度
-     * @param $value 值
-     * @param $max 最大长度
-     * @return Boolean 验证是否通过
-     */
-    static function checkMaxLength($value, $max){
-        if(mb_strlen($value) > $max){
-            return false;
-        }
-        
-        return true;
-    }
-    
-    /**
-     * 检测最小长度
-     * @param $value 值
-     * @param $min 最小长度
-     * @return Boolean 验证是否通过
-     */
-    static function checkMinLength($value, $min){
-        if(mb_strlen($value) < $min){
-            return false;
-        }
-        
-        return true;
-    }
-    
-    /**
-     * 检测数字
-     * @return Boolean 验证是否通过
-     */
-    static function checkNumber($value){
-        if(!is_numeric($value)){
-            return false;
-        }
-
-        return true;
-    }
-    
-    /**
-     * 检测数字字符串
-     * @return Boolean 验证是否通过
-     */
-    static function checkNumberString($value, $split){
-        $datas = explode($split, $value);
-        
-        if(empty($datas)){
-            return false;
-        }
-        
-        foreach($datas as $data){
-            if(!is_numeric($data)){
-                return false;
-            }
-        }
-        
-        return true;
-    }
-    
-    /**
-     * 检测数字数组
-     * @return Boolean 验证是否通过
-     */
-    static function checkNumberArray($value){
-        $datas = $value;
-        
-        if(empty($datas)){
-            return false;
-        }
-        
-        foreach($datas as $data){
-            if(!is_numeric($data)){
-                return false;
-            }
-        }
-        
-        return true;
-    }
-    
-    /**
-     * 检测正则
-     * @return Boolean 验证是否通过
-     */
-    static function checkRegex($value, $pattern){
-        if(empty($pattern)){
-            return true;
-        }
-        
-        if(preg_match($pattern, $value) === 0){
-            return false;
-        }
-        
-        return true;
+    function getMessage(){
+        return $this->message;
     }
     
     /**
      * 得到字段描述
      * @return String
      */
-    static function getFieldMessage($field, $checkName, $checkValue){
+    function getMessageField($field, $checkName, $checkValue){
         $message = '';
         
         // 自定义描述
-        if(!empty(self::$message[$field.'.'.$checkName])){
-            $message = self::$message[$field.'.'.$checkName];
+        if(!empty($this->message[$field.'.'.$checkName])){
+            $message = $this->message[$field.'.'.$checkName];
         }
         
         // 默认描述
@@ -340,32 +89,283 @@ class Validate{
      * @param String $field 字段
      * @param String $message 描述
      */
-    static function setError($field, $message = ''){
-        self::$error['field'] = $field;
-        self::$error['message'] = $message;
+    function setError($field, $message = ''){
+        $this->error['field'] = $field;
+        $this->error['message'] = $message;
     }
     
     /**
      * 得到错误
      * @return String 错误描述
      */
-    static function getError(){
-        return self::$error;
+    function getError(){
+        return $this->error;
     }
     
     /**
      * 得到错误字段
      * @return String 错误描述
      */
-    static function getErrorField(){
-        return self::$error['field'];
+    function getErrorField(){
+        return $this->error['field'];
     }
     
     /**
      * 得到错误描述
      * @return String 错误描述
      */
-    static function getErrorMessage(){
-        return self::$error['message'];
+    function getErrorMessage(){
+        return $this->error['message'];
+    }
+    
+    /**
+     * 验证
+     * @param Array $datas 数据
+     * @return Boolean
+     */
+    function check($datas){
+        $field = ''; // 数据字段
+        $value = ''; // 数据值
+        $ruleString = ''; // 一个字段的规则字符串
+        $rules = array(); // 一个字段的规则数组
+        $rule = ''; // 一个字段的一个规则
+        $checks = array(); // 验证
+        $checkName = ''; // 验证名
+        $checkValue = ''; // 验证值
+        $message = ''; // 描述
+        
+        // 验证
+        if(empty($this->rule)){
+            return true;
+        }
+        
+        // 检测
+        foreach($this->rule as $field => $ruleString){
+            $value = '';
+            if(isset($datas[$field])){
+                $value = $datas[$field];
+            }
+            
+            $rules = explode('|', $ruleString);
+            if(empty($rules)){
+                continue;
+            }
+            
+            foreach($rules as $rule){
+                $checks = explode(':', $rule);
+                $checkName = $checks[0];
+                $checkValue = '';
+                if(!empty($checks[1])){
+                    $checkValue = $checks[1];
+                }
+                
+                // 字段描述
+                $message = $this->getMessageField($field, $checkName, $checkValue);
+                
+                // 检测
+                switch($checkName){
+                    // 必填
+                    case 'require':
+                        if(!$this->checkRequire($value, $checkValue)){
+                            $this->setError($field, $message);
+                            return false;
+                        }
+                    break;
+                    
+                    // 长度等于
+                    case 'length':
+                        if(!$this->checkLength($value, $checkValue)){
+                            $this->setError($field, $message);
+                            return false;
+                        }
+                    break;
+                    
+                    // 最大长度
+                    case 'max_length':
+                        if(!$this->checkMaxLength($value, $checkValue)){
+                            $this->setError($field, $message);
+                            return false;
+                        }
+                    break;
+                    
+                    // 最小长度
+                    case 'min_length':
+                        if(!$this->checkMinLength($value, $checkValue)){
+                            $this->setError($field, $message);
+                            return false;
+                        }
+                    break;
+                    
+                    // 数字
+                    case 'number':
+                        if(!$this->checkNumber($value)){
+                            $this->setError($field, $message);
+                            return false;
+                        }
+                    break;
+                    
+                    // 数字字符串
+                    case 'number_string':
+                        if(!$this->checkNumberString($value, $checkValue)){
+                            $this->setError($field, $message);
+                            return false;
+                        }
+                    break;
+                    
+                    // 数字数组
+                    case 'number_array':
+                        if(!$this->checkNumberArray($value)){
+                            $this->setError($field, $message);
+                            return false;
+                        }
+                    break;
+                    
+                    // 正则
+                    case 'regex':
+                        if(!$this->checkRegex($value, $checkValue)){
+                            $this->setError($field, $message);
+                            return false;
+                        }
+                    break;
+                }
+            }
+        }
+        
+        return true;
+    }
+    
+    /**
+     * 检测必填
+     * @return Boolean 验证是否通过
+     */
+    function checkRequire($value, $rule = ''){
+        // 字符串
+        if($value === ''){
+            return false;
+        }
+        
+        // 数组
+        if(is_array($value)){
+            if(empty($value)){
+                return false;
+            }
+        }
+        
+        // 排除
+        if($rule == '^0' && strval($value) === '0'){
+            return false;
+        }
+
+        return true;
+    }
+    
+    /**
+     * 检测长度
+     * @param $value 值
+     * @param $length 最大长度
+     * @return Boolean 验证是否通过
+     */
+    function checkLength($value, $length){
+        if(mb_strlen($value) != $length){
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /**
+     * 检测最大长度
+     * @param $value 值
+     * @param $max 最大长度
+     * @return Boolean 验证是否通过
+     */
+    function checkMaxLength($value, $max){
+        if(mb_strlen($value) > $max){
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /**
+     * 检测最小长度
+     * @param $value 值
+     * @param $min 最小长度
+     * @return Boolean 验证是否通过
+     */
+    function checkMinLength($value, $min){
+        if(mb_strlen($value) < $min){
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /**
+     * 检测数字
+     * @return Boolean 验证是否通过
+     */
+    function checkNumber($value){
+        if(!is_numeric($value)){
+            return false;
+        }
+
+        return true;
+    }
+    
+    /**
+     * 检测数字字符串
+     * @return Boolean 验证是否通过
+     */
+    function checkNumberString($value, $split){
+        $datas = explode($split, $value);
+        
+        if(empty($datas)){
+            return false;
+        }
+        
+        foreach($datas as $data){
+            if(!is_numeric($data)){
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    /**
+     * 检测数字数组
+     * @return Boolean 验证是否通过
+     */
+    function checkNumberArray($value){
+        $datas = $value;
+        
+        if(empty($datas)){
+            return false;
+        }
+        
+        foreach($datas as $data){
+            if(!is_numeric($data)){
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    /**
+     * 检测正则
+     * @return Boolean 验证是否通过
+     */
+    function checkRegex($value, $pattern){
+        if(empty($pattern)){
+            return true;
+        }
+        
+        if(preg_match($pattern, $value) === 0){
+            return false;
+        }
+        
+        return true;
     }
 }

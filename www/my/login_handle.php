@@ -4,25 +4,27 @@
  */
 require_once '../library/app.php';
 
-use \library\Session;
-use \library\Db;
-use \library\Config;
-use \library\Validate;
-use \library\Auth;
-use \library\Ip;
-use \library\User;
-use \library\Dictionary;
-
-Session::start();
+use library\Session;
+use library\Db;
+use library\Config;
+use library\Validate;
+use library\Auth;
+use library\Ip;
+use library\User;
+use library\Dictionary;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
 $sql = '';
+$validate = new Validate();
 $data = array(); // 数据
 $user = array();
+$userObject = new User();
 $department = array();
 $permissions = array(); // 权限
-$ip = '';
+$ip = new Ip();
+$ipString = '';
+$dictionary = new Dictionary();
 $return = array(
     'status'=>'error',
     'message'=>'',
@@ -33,21 +35,21 @@ $return = array(
 );
 
 // 验证
-Validate::setRule(array(
+$validate->setRule(array(
     'username' => 'require|max_length:64',
     'password' => 'require',
     'captcha' => 'require|max_length:6'
 ));
-Validate::setMessage(array(
+$validate->setMessage(array(
     'username.require' => '请输入用户名',
     'username.max_length' => '用户名不能超过64个字',
     'password.require' => '请输入密码',
     'captcha.require' => '请输入验证码',
     'captcha.max_length' => '验证码长度不能大于6个字符'
 ));
-if(!Validate::check($_POST)){
-    $return['message'] = Validate::getErrorMessage();
-    $return['data']['dom'] = '#'.Validate::getErrorField();
+if(!$validate->check($_POST)){
+    $return['message'] = $validate->getErrorMessage();
+    $return['data']['dom'] = '#'.$validate->getErrorField();
     echo json_encode($return);
     exit;
 }
@@ -89,11 +91,11 @@ if(empty($user)){
     exit;
 }
 if($user['status_id'] != 1){
-    $return['message'] = Dictionary::getValue('system_user_status', $user['status_id']);
+    $return['message'] = $dictionary->getValue('system_user_status', $user['status_id']);
     echo json_encode($return);
     exit;
 }
-$user['head_url'] = User::getHeadUrl($user['head']);
+$user['head_url'] = $userObject->getHeadUrl($user['head']);
 
 // 部门
 $sql = 'select id, name from department where id = :id';
@@ -122,8 +124,8 @@ if(empty($permissions)){
 }
 
 // 记录
-$ip = Ip::get();
-$sql = "update user set time_login = ".time().", ip = '".$ip."' where id = :id";
+$ipString = $ip->get();
+$sql = "update user set time_login = ".time().", ip = '".$ipString."' where id = :id";
 $data = array(
     ':id'=>$user['id']
 );
@@ -135,7 +137,7 @@ $data = array(
     ':user_id'=>$user['id'],
     ':department_id'=>$department['id'],
     ':time_login'=>time(),
-    ':ip'=>$ip
+    ':ip'=>$ipString
 );
 Db::query($pdo, $sql, $data);
 

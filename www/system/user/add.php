@@ -4,25 +4,22 @@
  */
 require_once '../../library/app.php';
 
-use \library\Session;
-use \library\Auth;
-use \library\Db;
-use \library\OperationLog;
-use \library\Config;
-use \library\ArrayTwo;
-use \library\Dictionary;
-
-Session::start();
+use library\Session;
+use library\Auth;
+use library\Db;
+use library\OperationLog;
+use library\Config;
+use library\ArrayTwo;
+use library\Dictionary;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
 $config = Config::getAll();
-$radioStatus = Dictionary::getRadio('system_user_status', 'status_id', 1);
+$radioStatus = '';
 $optionRole = '';
 $sql = '';
 $data = array();
-
-OperationLog::add();
+$dictionary = new Dictionary();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -36,8 +33,9 @@ if(!Auth::isPermission('system_user')){
 $sql = "select id, name from role order by id asc";
 $pdoStatement = Db::query($pdo, $sql);
 $roles = Db::fetchAll($pdoStatement);
-$optionRole = ArrayTwo::getSelectOption($roles);
+$optionRole = ArrayTwo::getOption($roles);
 
+$radioStatus = $dictionary->getRadio('system_user_status', 'status_id', 1);
 ?><!doctype html>
 <html>
 <head>

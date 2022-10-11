@@ -4,7 +4,7 @@
  */
 require_once '../library/app.php';
 
-use \library\Config;
+use library\Config;
 
 $config = Config::getAll();
 

@@ -1,12 +1,12 @@
 <?php
 /**
- * 用户服务
+ * 用户
  */
 namespace library;
 
-use \library\Db;
-use \library\Config;
-use \library\Dictionary;
+use library\Db;
+use library\Config;
+use library\Dictionary;
 
 class User{
     
@@ -16,7 +16,7 @@ class User{
      * @param Integer $id 用户id
      * @return String 用户姓名
      */
-    static function getName($id){
+    function getName($id){
         $pdo = Db::getInstance();
         $pdoStatement = null;
         $sql = '';
@@ -39,7 +39,7 @@ class User{
      * @param String $path 头像路径
      * @return String 头像url
      */
-    static function getHeadUrl($path){
+    function getHeadUrl($path){
         $config = Config::getAll();
         $url = '';
         
@@ -58,12 +58,13 @@ class User{
      * @param Integer $statusId 状态ID
      * @return String 徽章
      */
-    static function getBadgeStatusName($statusId){
+    function getBadgeStatusName($statusId){
         $statusName = '';
         $class = '';
         $node = '';
+        $dictionary = new Dictionary();
         
-        $statusName = Dictionary::getValue('system_user_status', $statusId);
+        $statusName = $dictionary->getValue('system_user_status', $statusId);
         switch($statusId){
             case 2:
                 $class = 'orange';

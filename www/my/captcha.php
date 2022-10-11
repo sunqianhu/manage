@@ -4,13 +4,12 @@
  */
 require_once '../library/app.php';
 
-use \library\Session;
-use \library\Captcha;
-
-Session::start();
+use library\Session;
+use library\Captcha;
 
 $code = '';
+$captcha = new Captcha();
 
-$code = Captcha::create();
+$code = $captcha->create();
 $_SESSION['login_captcha'] = $code;
 ?>

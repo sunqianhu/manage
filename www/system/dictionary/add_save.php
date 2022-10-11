@@ -4,16 +4,15 @@
  */
 require_once '../../library/app.php';
 
-use \library\Session;
-use \library\Auth;
-use \library\Db;
-use \library\Validate;
-
-Session::start();
+use library\Session;
+use library\Auth;
+use library\Db;
+use library\Validate;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
 $sql = '';
+$validate = new Validate();
 $data = array();
 $return = array(
     'status'=>'error',
@@ -35,13 +34,13 @@ if(!Auth::isPermission('system_dictionary')){
     exit;
 }
 
-Validate::setRule(array(
+$validate->setRule(array(
     'type' => 'require|max_length:64',
     'key' => 'require|max_length:64',
     'value' => 'require|max_length:128',
     'sort' => 'number|max_length:10'
 ));
-Validate::setMessage(array(
+$validate->setMessage(array(
     'type.require' => '请输入字典类型',
     'type.max_length' => '字典类型不能大于64个字',
     'key.require' => '请输入字典键',
@@ -51,9 +50,9 @@ Validate::setMessage(array(
     'sort.number' => '排序必须是个数字',
     'sort.max_length' => '排序不能大于10个字'
 ));
-if(!Validate::check($_POST)){
-    $return['message'] = Validate::getErrorMessage();
-    $return['data']['dom'] = '#'.Validate::getErrorField();
+if(!$validate->check($_POST)){
+    $return['message'] = $validate->getErrorMessage();
+    $return['data']['dom'] = '#'.$validate->getErrorField();
     echo json_encode($return);
     exit;
 }

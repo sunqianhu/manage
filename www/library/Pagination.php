@@ -1,10 +1,10 @@
 <?php
 /**
- * 分页服务
+ * 分页
  */
 namespace library;
 
-use \library\Config;
+use library\Config;
 
 class Pagination{
     public $id;

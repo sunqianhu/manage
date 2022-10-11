@@ -4,34 +4,34 @@
  */
 require_once '../../library/app.php';
 
-use \library\Session;
-use \library\Auth;
-use \library\Db;
-use \library\OperationLog;
-use \library\Validate;
-use \library\Config;
-use \library\FrameMain;
-use \library\Safe;
-use \library\Dictionary;
-use \library\ArrayTwo;
-use \library\MyString;
-use \library\Department;
-
-Session::start();
+use library\Session;
+use library\Auth;
+use library\Db;
+use library\OperationLog;
+use library\Validate;
+use library\Config;
+use library\FrameMain;
+use library\Safe;
+use library\Dictionary;
+use library\ArrayTwo;
+use library\MyString;
+use library\Department;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
 $sql = '';
+$validate = new Validate();
 $data = array();
 $config = Config::getAll();
+$frameMain = new FrameMain();
 $frameMainMenu = ''; // 框架菜单
 $roles = array(); // 角色
 $loginLogs = array();
 $loginLog = array();
 $operationLogs = array(); // 操作日志
 $operationLog = array();
-
-OperationLog::add();
+$department = new Department();
+$dictionary = new Dictionary();
 
 // 验证
 if(!Auth::isLogin()){
@@ -42,15 +42,15 @@ if(!Auth::isPermission('system_user')){
     header('location:../../error.php?message='.urlencode('无权限'));
     exit;
 }
-Validate::setRule(array(
+$validate->setRule(array(
     'id' => 'require|number'
 ));
-Validate::setMessage(array(
+$validate->setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
 ));
-if(!Validate::check($_GET)){
-    header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
+if(!$validate->check($_GET)){
+    header('location:../../error.php?message='.urlencode($validate->getErrorMessage()));
     exit;
 }
 
@@ -65,11 +65,11 @@ if(empty($user)){
     exit;
 }
 
-$user['status_name'] = Dictionary::getValue('system_user_status', $user['status_id']);
+$user['status_name'] = $dictionary->getValue('system_user_status', $user['status_id']);
 $user['time_add_name'] = date('Y-m-d H:i:s', $user['time_add']);
 $user['time_edit_name'] = $user['time_edit'] ? date('Y-m-d H:i:s', $user['time_edit']) : '-';
 $user['time_login_name'] = $user['time_login'] ? date('Y-m-d H:i:s', $user['time_login']) : '-';
-$user['department_name'] = Department::getName($user['department_id']);
+$user['department_name'] = $department->getName($user['department_id']);
 
 $sql = 'select name from role where id in (:id)';
 $data = array(
@@ -104,7 +104,7 @@ foreach($operationLogs as $key => $operationLog){
 $operationLogs = Safe::entity($operationLogs, 'url, url_sub');
 
 // 菜单
-$frameMainMenu = FrameMain::getMenu('system_user');
+$frameMainMenu = $frameMain->getMenu('system_user');
 
 ?><!doctype html>
 <html>

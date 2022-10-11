@@ -4,8 +4,8 @@
  */
 namespace library;
 
-use \library\Db;
-use \library\Ip;
+use library\Db;
+use library\Ip;
 
 class OperationLog{
     
@@ -14,14 +14,15 @@ class OperationLog{
      * @access public
      * @return id 日志id
      */
-    static function add(){
+    function add(){
         $pdo = Db::getInstance();
         $pdoStatement = null;
         $sql = '';
         $data = array();
         $departmentId = 0;
         $userId = 0;
-        $ip = Ip::get();
+        $ip = new Ip();
+        $ipString = $ip->get();
         $request = '';
         $url = '';
         $userAgent = '';
@@ -51,7 +52,7 @@ class OperationLog{
             ':department_id'=>$departmentId,
             ':user_id'=>$userId,
             ':url'=>$url,
-            ':ip'=>$ip,
+            ':ip'=>$ipString,
             ':user_agent'=>$userAgent,
             ':request'=>$request,
             ':time_add'=>time()

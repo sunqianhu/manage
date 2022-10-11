@@ -4,14 +4,12 @@
  */
 require_once '../../library/app.php';
 
-use \library\Session;
-use \library\Auth;
-use \library\Db;
-use \library\OperationLog;
-use \library\Config;
-use \library\Ztree;
-
-Session::start();
+use library\Session;
+use library\Auth;
+use library\Db;
+use library\OperationLog;
+use library\Config;
+use library\Ztree;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
@@ -19,8 +17,7 @@ $sql = '';
 $config = Config::getAll();
 $permissions = array();
 $permission = ''; // 权限json数据
-
-OperationLog::add();
+$ztree = new Ztree();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -34,7 +31,7 @@ if(!Auth::isPermission('system_role')){
 $sql = 'select id, name, parent_id from permission where parent_id != 0 order by parent_id asc, sort asc';
 $pdoStatement = Db::query($pdo, $sql);
 $permissions = Db::fetchAll($pdoStatement);
-$permissions = Ztree::setOpenByFirst($permissions);
+$permissions = $ztree->setOpenByFirst($permissions);
 $permission = json_encode($permissions);
 
 ?><!doctype html>

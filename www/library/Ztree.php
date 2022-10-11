@@ -1,6 +1,6 @@
 <?php
 /**
- * ztree服务
+ * ztree
  */
 namespace library;
 
@@ -10,7 +10,7 @@ class Ztree{
      * @param Array $datas 数据
      * @return array
      */
-    static function parentIdToPid($datas){
+    function parentIdToPid($datas){
         if(empty($datas)){
             return $datas;
         }
@@ -27,7 +27,7 @@ class Ztree{
      * @param Array $datas 数据
      * @return array
      */
-    static function setOpenByFirst($datas){
+    function setOpenByFirst($datas){
         if(empty($datas)){
             return $datas;
         }
@@ -55,7 +55,7 @@ class Ztree{
             }
 
             if(!empty($data[$childKey])){
-                $datas[$key][$childKey] = self::setChecked($data[$childKey], $ids);
+                $datas[$key][$childKey] = $this->setChecked($data[$childKey], $ids);
             }
         }
         

@@ -4,25 +4,23 @@
  */
 require_once '../../library/app.php';
 
-use \library\Session;
-use \library\Auth;
-use \library\Db;
-use \library\OperationLog;
-use \library\Config;
-use \library\Validate;
-use \library\Safe;
-use \library\Department;
-
-Session::start();
+use library\Session;
+use library\Auth;
+use library\Db;
+use library\OperationLog;
+use library\Config;
+use library\Validate;
+use library\Safe;
+use library\Department;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
 $sql = '';
+$validate = new Validate();
 $data = array();
 $config = Config::getAll();
 $department = array();
-
-OperationLog::add();
+$departmentObject = new Department();
 
 // 验证
 if(!Auth::isLogin()){
@@ -34,15 +32,15 @@ if(!Auth::isPermission('system_department')){
     exit;
 }
 
-Validate::setRule(array(
+$validate->setRule(array(
     'id' => 'require|number'
 ));
-Validate::setMessage(array(
+$validate->setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字'
 ));
-if(!Validate::check($_GET)){
-    header('location:../../error.php?message='.urlencode(Validate::getErrorMessage()));
+if(!$validate->check($_GET)){
+    header('location:../../error.php?message='.urlencode($validate->getErrorMessage()));
     exit;
 }
 if($_GET['id'] == '1'){
@@ -56,7 +54,7 @@ $data = array(
 );
 $pdoStatement = Db::query($pdo, $sql, $data);
 $department = Db::fetch($pdoStatement);
-$department['parent_name'] = Department::getName($department['parent_id']);
+$department['parent_name'] = $departmentObject->getName($department['parent_id']);
 $department = Safe::entity($department);
 
 ?><!doctype html>

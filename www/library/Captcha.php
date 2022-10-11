@@ -10,7 +10,7 @@ class Captcha{
      * 创建验证码
      * @return String 验证码字符串
      */
-    static function create(){
+    function create(){
         $chars = array('a','b','c','d','e','f','g','h','k','m','n','p','q','r','s','t','u','v','w','x','y','A','B','C','D','E','F','G','H','K','M','N','P','R','S','T','U','V','W','X','Y','3','4','5','6','7','8','9');
         $width = 100;
         $height = 35;

@@ -4,16 +4,15 @@
  */
 require_once '../library/app.php';
 
-use \library\Session;
-use \library\Db;
-use \library\Validate;
-use \library\Auth;
-
-Session::start();
+use library\Session;
+use library\Db;
+use library\Validate;
+use library\Auth;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
 $sql = '';
+$validate = new Validate();
 $data = array();
 $return = array(
     'status'=>'error',
@@ -30,19 +29,19 @@ if(!Auth::isLogin()){
     echo json_encode($return);
     exit;
 }
-Validate::setRule(array(
+$validate->setRule(array(
     'password' => 'require|min_length:8',
     'password2' => 'require|min_length:8',
 ));
-Validate::setMessage(array(
+$validate->setMessage(array(
     'password.require' => '请输入新密码',
     'password.min_length' => '新密码不能小于8个字符',
     'password2.require' => '请输入确认新密码',
     'password2.min_length' => '确认新密码不能小于8个字符',
 ));
-if(!Validate::check($_POST)){
-    $return['message'] = Validate::getErrorMessage();
-    $return['data']['dom'] = '#'.Validate::getErrorField();
+if(!$validate->check($_POST)){
+    $return['message'] = $validate->getErrorMessage();
+    $return['data']['dom'] = '#'.$validate->getErrorField();
     echo json_encode($return);
     exit;
 }

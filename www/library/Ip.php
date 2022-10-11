@@ -1,6 +1,6 @@
 <?php
 /**
- * ip服务
+ * ip
  */
 namespace library;
 
@@ -9,7 +9,7 @@ class Ip{
      * 得到访问者的ip
      * @return String ip
      */
-    static function get(){
+    function get(){
         $ip = '';
         
         if(getenv('HTTP_CLIENT_IP')){
@@ -24,5 +24,4 @@ class Ip{
         
         return $ip;
     }
-    
 }

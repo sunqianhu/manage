@@ -4,8 +4,8 @@
  */
 namespace library;
 
-use \library\Db;
-use \library\Cache;
+use library\Db;
+use library\Cache;
 
 class Dictionary{
     /**
@@ -13,7 +13,7 @@ class Dictionary{
      * @param String $type 类型
      * @return String value
      */
-    static function getAndSetCache($type){
+    function getSetCache($type){
         $pdo = Db::getInstance();
         $pdoStatement = null;
         $cacheKey = 'dictionary_'.$type; // 缓存key
@@ -49,12 +49,12 @@ class Dictionary{
      * @param String $key 键
      * @return String value
      */
-    static function getValue($type, $key){
+    function getValue($type, $key){
         $value = ''; // 返回值
         $data = ''; // 字典数据
         $datas = array(); // 字典数据数组
 
-        $data = self::getAndSetCache($type);
+        $data = $this->getSetCache($type);
         
         // 验证
         if($data == ''){
@@ -80,11 +80,11 @@ class Dictionary{
      * @param String $type 类型
      * @return array 集合
      */
-    static function getList($type){
+    function getList($type){
         $data = ''; // 字典数据
         $datas = array(); // 字典数据数组
 
-        $data = self::getAndSetCache($type);
+        $data = $this->getSetCache($type);
         
         if($data == ''){
             return $datas;
@@ -102,12 +102,12 @@ class Dictionary{
      * @param String $type 类型
      * @return String value
      */
-    static function getSelectOption($type, $selectKeys = array()){
+    function getOption($type, $selectKeys = array()){
         $node = ''; // 节点
         $data = ''; // 字典数据
         $datas = array(); // 字典数据数组
         
-        $data = self::getAndSetCache($type);
+        $data = $this->getSetCache($type);
         
         // 验证
         if($data == ''){
@@ -136,13 +136,13 @@ class Dictionary{
      * @param String $checkKey 选中项的key
      * @return String value
      */
-    static function getRadio($type, $name = '', $checkKey = '', $event = ''){
+    function getRadio($type, $name = '', $checkKey = '', $event = ''){
         $node = ''; // 返回值
         $data = ''; // 字典数据
         $datas = array(); // 字典数据数组
         $index = 0;
         
-        $data = self::getAndSetCache($type);
+        $data = $this->getSetCache($type);
         
         // 验证
         if($data == ''){
@@ -179,13 +179,13 @@ class Dictionary{
      * @param String $event 事件
      * @return String value
      */
-    static function getCheckBox($type, $name = '', $checkKeys = array(), $event = ''){
+    function getCheckBox($type, $name = '', $checkKeys = array(), $event = ''){
         $node = ''; // 返回值
         $data = ''; // 字典数据
         $datas = array(); // 字典数据数组
         $index = 0;
         
-        $data = self::getAndSetCache($type);
+        $data = $this->getSetCache($type);
         
         // 验证
         if($data == ''){

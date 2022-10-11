@@ -4,13 +4,11 @@
  */
 require_once '../../library/app.php';
 
-use \library\Session;
-use \library\Auth;
-use \library\Db;
-use \library\Config;
-use \library\Ztree;
-
-Session::start();
+use library\Session;
+use library\Auth;
+use library\Db;
+use library\Config;
+use library\Ztree;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
@@ -18,6 +16,7 @@ $sql = '';
 $config = Config::getAll();
 $departments = array();
 $department = ''; // 部门json数据
+$ztree = new Ztree();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -31,7 +30,7 @@ if(!Auth::isPermission('system_department')){
 $sql = 'select id, name, parent_id from department order by parent_id asc, id asc';
 $pdoStatement = Db::query($pdo, $sql);
 $departments = Db::fetchAll($pdoStatement);
-$departments = Ztree::setOpenByFirst($departments);
+$departments = $ztree->setOpenByFirst($departments);
 $department = json_encode($departments);
 
 ?><!doctype html>

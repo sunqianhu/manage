@@ -1,10 +1,10 @@
 <?php
 /**
- * 字符串服务
+ * 字符串
  */
 namespace library;
 
-use \library\Safe;
+use library\Safe;
 
 class MyString{
     /**

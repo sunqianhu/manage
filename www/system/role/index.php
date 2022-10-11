@@ -4,22 +4,21 @@
  */
 require_once '../../library/app.php';
 
-use \library\Session;
-use \library\Auth;
-use \library\Db;
-use \library\OperationLog;
-use \library\Config;
-use \library\FrameMain;
-use \library\Safe;
-use \library\Pagination;
-
-Session::start();
+use library\Session;
+use library\Auth;
+use library\Db;
+use library\OperationLog;
+use library\Config;
+use library\FrameMain;
+use library\Safe;
+use library\Pagination;
 
 $pdo = Db::getInstance();
 $pdoStatement = null;
 $sql = '';
 $data = array();
 $config = Config::getAll();
+$frameMain = new FrameMain();
 $frameMainMenu = ''; // 框架权限
 $search = array(
     'id'=>'',
@@ -32,8 +31,6 @@ $pagination = null; // 分页
 $paginationNodeIntact = ''; // 节点
 $roles = array();
 
-OperationLog::add();
-
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
     exit;
@@ -44,7 +41,7 @@ if(!Auth::isPermission('system_role')){
 }
 
 // 权限
-$frameMainMenu = FrameMain::getMenu('system_role');
+$frameMainMenu = $frameMain->getMenu('system_role');
 
 // 搜索
 if(!empty($_GET['id'])){
