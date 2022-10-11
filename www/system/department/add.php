@@ -6,13 +6,14 @@ require_once '../../library/app.php';
 
 use library\Session;
 use library\Auth;
-use library\Db;
+use library\DbHelper;
 use library\OperationLog;
 use library\Config;
 use library\Validate;
 use library\Safe;
 
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $sql = '';
 $validate = new Validate();
@@ -48,8 +49,8 @@ if(!empty($_GET['parent_id'])){
     $data = array(
         ':id'=>$_GET['parent_id']
     );
-    $pdoStatement = Db::query($pdo, $sql, $data);
-    $departmentParent = Db::fetch($pdoStatement);
+    $pdoStatement = $dbHelper->query($pdo, $sql, $data);
+    $departmentParent = $dbHelper->fetch($pdoStatement);
     if(!empty($departmentParent)){
         $init['parent_id'] = $departmentParent['id'];
         $init['parent_name'] = $departmentParent['name'];

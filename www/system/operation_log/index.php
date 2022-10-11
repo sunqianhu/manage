@@ -6,7 +6,7 @@ require_once '../../library/app.php';
 
 use library\Session;
 use library\Auth;
-use library\Db;
+use library\DbHelper;
 use library\OperationLog;
 use library\Config;
 use library\FrameMain;
@@ -16,7 +16,8 @@ use library\MyString;
 use library\User;
 use library\Department;
 
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -85,15 +86,15 @@ if(!empty($wheres)){
 }
 
 $sql = "select count(1) from login_log where $where";
-$pdoStatement = Db::query($pdo, $sql, $data);
-$recordTotal = Db::fetchColumn($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$recordTotal = $dbHelper->fetchColumn($pdoStatement);
 
 $pagination = new Pagination($recordTotal);
 $paginationNodeIntact = $pagination->getNodeIntact();
 
 $sql = "select id, user_id, department_id, ip, time_add, url from operation_log where $where order by id desc limit ".$pagination->limitStart.','.$pagination->pageSize;
-$pdoStatement = Db::query($pdo, $sql, $data);
-$operationLogs = Db::fetchAll($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$operationLogs = $dbHelper->fetchAll($pdoStatement);
 
 foreach($operationLogs as $key => $operationLog){
     $operationLogs[$key]['time_add_name'] = date('Y-m-d H:i:s', $operationLog['time_add']);

@@ -6,11 +6,12 @@ require_once '../../library/app.php';
 
 use library\Session;
 use library\Auth;
-use library\Db;
+use library\DbHelper;
 use library\Ztree;
 use library\Config;
 
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $sql = '';
 $config = Config::getAll();
@@ -28,8 +29,8 @@ if(!Auth::isPermission('system_user')){
 }
 
 $sql = 'select id, name, parent_id from department order by parent_id asc, id asc';
-$pdoStatement = Db::query($pdo, $sql);
-$departments = Db::fetchAll($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql);
+$departments = $dbHelper->fetchAll($pdoStatement);
 $departments = $ztree->setOpenByFirst($departments);
 $department = json_encode($departments);
 

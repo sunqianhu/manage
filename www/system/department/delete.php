@@ -6,11 +6,12 @@ require_once '../../library/app.php';
 
 use library\Session;
 use library\Auth;
-use library\Db;
+use library\DbHelper;
 use library\Validate;
 
 $validate = new Validate();
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $return = array(
     'status'=>'error',
@@ -54,8 +55,8 @@ $sql = 'select id from department where parent_id = :id limit 0,1';
 $data = array(
     ':id'=>$_GET['id']
 );
-$pdoStatement = Db::query($pdo, $sql, $data);
-$departmentChild = Db::fetch($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$departmentChild = $dbHelper->fetch($pdoStatement);
 if(!empty($departmentChild)){
     $return['message'] = '该部门存在下级部门';
     echo json_encode($return);
@@ -66,8 +67,8 @@ $sql = 'delete from department where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
-if(!Db::query($pdo, $sql, $data)){
-    $return['message'] = Db::getError();
+if(!$dbHelper->query($pdo, $sql, $data)){
+    $return['message'] = $dbHelper->getError();
     echo json_encode($return);
     exit;
 }

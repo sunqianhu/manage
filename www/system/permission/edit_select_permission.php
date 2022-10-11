@@ -5,12 +5,13 @@
 require_once '../../library/app.php';
 
 use library\Session;
-use library\Db;
+use library\DbHelper;
 use library\Config;
 use library\Ztree;
 use library\Auth;
 
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $config = Config::getAll();
 $permissions = array(); // 权限数据
@@ -27,8 +28,8 @@ if(!Auth::isPermission('system_permission')){
 }
 
 $sql = "select id, name, parent_id from permission order by parent_id asc, id asc";
-$pdoStatement = Db::query($pdo, $sql);
-$permissions = Db::fetchAll($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql);
+$permissions = $dbHelper->fetchAll($pdoStatement);
 $permissions = $ztree->setOpenByFirst($permissions);
 $permission = json_encode($permissions);
 

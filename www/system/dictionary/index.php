@@ -6,14 +6,15 @@ require_once '../../library/app.php';
 
 use library\Session;
 use library\Auth;
-use library\Db;
+use library\DbHelper;
 use library\OperationLog;
 use library\Config;
 use library\FrameMain;
 use library\Pagination;
 use library\Safe;
 
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -66,15 +67,15 @@ if(!empty($wheres)){
 }
 
 $sql = 'select count(1) from dictionary where '.$where;
-$pdoStatement = Db::query($pdo, $sql, $data);
-$recordTotal = Db::fetchColumn($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$recordTotal = $dbHelper->fetchColumn($pdoStatement);
 
 $pagination = new Pagination($recordTotal);
 $paginationNodeIntact = $pagination->getNodeIntact();
 
 $sql = "select id, type, `key`, `value`, `sort` from dictionary where $where order by type asc, `sort` asc, id asc limit ".$pagination->limitStart.','.$pagination->pageSize;
-$pdoStatement = Db::query($pdo, $sql, $data);
-$dictionarys = Db::fetchAll($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$dictionarys = $dbHelper->fetchAll($pdoStatement);
 
 $dictionarys = Safe::entity($dictionarys);
 ?><!doctype html>

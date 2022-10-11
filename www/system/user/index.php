@@ -6,7 +6,7 @@ require_once '../../library/app.php';
 
 use library\Session;
 use library\Auth;
-use library\Db;
+use library\DbHelper;
 use library\OperationLog;
 use library\Config;
 use library\FrameMain;
@@ -18,7 +18,8 @@ use library\Dictionary;
 use library\Department;
 use library\User;
 
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -106,15 +107,15 @@ if(isset($_GET['department_name'])){
 }
 
 $sql = "select count(1) from user where $where";
-$pdoStatement = Db::query($pdo, $sql, $data);
-$recordTotal = Db::fetchColumn($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$recordTotal = $dbHelper->fetchColumn($pdoStatement);
 
 $pagination = new Pagination($recordTotal);
 $paginationNodeIntact = $pagination->getNodeIntact();
 
 $sql = "select id, username, head, `name`, `time_login`, time_edit, phone, status_id, department_id from user where $where order by id asc limit ".$pagination->limitStart.','.$pagination->pageSize;
-$pdoStatement = Db::query($pdo, $sql, $data);
-$users = Db::fetchAll($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$users = $dbHelper->fetchAll($pdoStatement);
 foreach($users as $key => $user){
     $users[$key]['department_name'] = $departmentObject->getName($user['department_id']);
     $users[$key]['status_name'] = $userObject->getBadgeStatusName($user['status_id']);
@@ -124,16 +125,16 @@ foreach($users as $key => $user){
 }
 
 $sql = 'select id, name, parent_id from department order by parent_id asc, sort asc';
-$pdoStatement = Db::query($pdo, $sql);
-$departments = Db::fetchAll($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql);
+$departments = $dbHelper->fetchAll($pdoStatement);
 $departments = $ztree->setOpenByFirst($departments);
 $department = json_encode($departments);
 
 $optionStatus = $dictionary->getOption('system_user_status', array($search['status']));
 
 $sql = 'select id, name from role order by id asc';
-$pdoStatement = Db::query($pdo, $sql);
-$roles = Db::fetchAll($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql);
+$roles = $dbHelper->fetchAll($pdoStatement);
 $optionRole = ArrayTwo::getOption($roles, array($search['role_id']), 'id', 'name');
 
 $users = Safe::entity($users, 'status_name');

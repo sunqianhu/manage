@@ -6,11 +6,12 @@ require_once '../../library/app.php';
 
 use library\Session;
 use library\Auth;
-use library\Db;
+use library\DbHelper;
 use library\OperationLog;
 use library\Validate;
 
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $sql = '';
 $validate = new Validate();
@@ -67,8 +68,8 @@ $sql = 'select id from dictionary where id = :id';
 $data = array(
     ':id'=>$_POST['id']
 );
-$pdoStatement = Db::query($pdo, $sql, $data);
-$dictionary = Db::fetch($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$dictionary = $dbHelper->fetch($pdoStatement);
 if(empty($dictionary)){
     $return['message'] = '字典没有找到';
     echo json_encode($return);
@@ -89,8 +90,8 @@ $data = array(
     ':sort'=>$_POST['sort'],
     ':id'=>$dictionary['id']
 );
-if(!Db::query($pdo, $sql, $data)){
-    $return['message'] = Db::getError();
+if(!$dbHelper->query($pdo, $sql, $data)){
+    $return['message'] = $dbHelper->getError();
     echo json_encode($return);
     exit;
 }

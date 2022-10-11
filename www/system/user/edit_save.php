@@ -6,11 +6,12 @@ require_once '../../library/app.php';
 
 use library\Session;
 use library\Auth;
-use library\Db;
+use library\DbHelper;
 use library\Validate;
 
 $validate = new Validate();
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $return = array(
     'status'=>'error',
@@ -71,8 +72,8 @@ $sql = 'select id from user where id = :id';
 $data = array(
     ':id'=>$_POST['id']
 );
-$pdoStatement = Db::query($pdo, $sql, $data);
-$user = Db::fetch($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$user = $dbHelper->fetch($pdoStatement);
 if(empty($user)){
     $return['message'] = '用户没有找到';
     echo json_encode($return);
@@ -104,8 +105,8 @@ if($_POST['password'] !== ''){
 }else{
     $sql = str_replace('[password]', '', $sql);
 }
-if(!Db::query($pdo, $sql, $data)){
-    $return['message'] = Db::getError();
+if(!$dbHelper->query($pdo, $sql, $data)){
+    $return['message'] = $dbHelper->getError();
     echo json_encode($return);
     exit;
 }

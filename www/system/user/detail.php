@@ -6,7 +6,7 @@ require_once '../../library/app.php';
 
 use library\Session;
 use library\Auth;
-use library\Db;
+use library\DbHelper;
 use library\OperationLog;
 use library\Validate;
 use library\Config;
@@ -17,7 +17,8 @@ use library\ArrayTwo;
 use library\MyString;
 use library\Department;
 
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $sql = '';
 $validate = new Validate();
@@ -58,8 +59,8 @@ $sql = 'select id, username, name, phone, status_id, department_id, role_id_stri
 $data = array(
     ':id'=>$_GET['id']
 );
-$pdoStatement = Db::query($pdo, $sql, $data);
-$user = Db::fetch($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$user = $dbHelper->fetch($pdoStatement);
 if(empty($user)){
     header('location:../../error.php?message='.urlencode('没有找到用户'));
     exit;
@@ -75,8 +76,8 @@ $sql = 'select name from role where id in (:id)';
 $data = array(
     ':id'=>$user['role_id_string']
 );
-$pdoStatement = Db::query($pdo, $sql, $data);
-$roles = Db::fetchAll($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$roles = $dbHelper->fetchAll($pdoStatement);
 $user['role_name'] = ArrayTwo::getColumnString($roles, 'name', '，');
 $user = Safe::entity($user);
 
@@ -85,8 +86,8 @@ $sql = "select ip, time_login from login_log where user_id = :user_id order by i
 $data = array(
     ':user_id'=>$user['id']
 );
-$pdoStatement = Db::query($pdo, $sql, $data);
-$loginLogs = Db::fetchAll($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$loginLogs = $dbHelper->fetchAll($pdoStatement);
 $loginLogs = ArrayTwo::columnTimestampToTime($loginLogs, 'time_login', 'time_login_name');
 $loginLogs = Safe::entity($loginLogs);
 
@@ -95,8 +96,8 @@ $sql = "select id, ip, time_add, url from operation_log where user_id = :user_id
 $data = array(
     ':user_id'=>$user['id']
 );
-$pdoStatement = Db::query($pdo, $sql, $data);
-$operationLogs = Db::fetchAll($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$operationLogs = $dbHelper->fetchAll($pdoStatement);
 $operationLogs = ArrayTwo::columnTimestampToTime($operationLogs, 'time_add', 'time_add_name');
 foreach($operationLogs as $key => $operationLog){
     $operationLogs[$key]['url_sub'] = MyString::getSubFromZero($operationLog['url'], 60);

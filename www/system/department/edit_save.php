@@ -6,11 +6,12 @@ require_once '../../library/app.php';
 
 use library\Session;
 use library\Auth;
-use library\Db;
+use library\DbHelper;
 use library\Validate;
 
 $validate = new Validate();
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $return = array(
     'status'=>'error',
@@ -68,8 +69,8 @@ $sql = 'select id, parent_id from department where id = :id';
 $data = array(
     ':id'=>$_POST['id']
 );
-$pdoStatement = Db::query($pdo, $sql, $data);
-$departmentCurrent = Db::fetch($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$departmentCurrent = $dbHelper->fetch($pdoStatement);
 if(empty($departmentCurrent)){
     $return['message'] = '此部门没有找到';
     echo json_encode($return);
@@ -81,8 +82,8 @@ $sql = 'select parent_ids from department where id = :id';
 $data = array(
     ':id'=>$_POST['parent_id']
 );
-$pdoStatement = Db::query($pdo, $sql, $data);
-$departmentParent = Db::fetch($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$departmentParent = $dbHelper->fetch($pdoStatement);
 
 // 更新
 $sql = 'update department set
@@ -100,8 +101,8 @@ $data = array(
     ':remark'=>$_POST['remark'],
     ':id'=>$departmentCurrent['id']
 );
-if(!Db::query($pdo, $sql, $data)){
-    $return['message'] = Db::getError();
+if(!$dbHelper->query($pdo, $sql, $data)){
+    $return['message'] = $dbHelper->getError();
     echo json_encode($return);
     exit;
 }

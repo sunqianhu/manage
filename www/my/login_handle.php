@@ -5,7 +5,7 @@
 require_once '../library/app.php';
 
 use library\Session;
-use library\Db;
+use library\DbHelper;
 use library\Config;
 use library\Validate;
 use library\Auth;
@@ -13,7 +13,8 @@ use library\Ip;
 use library\User;
 use library\Dictionary;
 
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $sql = '';
 $validate = new Validate();
@@ -78,13 +79,13 @@ $data = array(
     ':username'=>$_POST['username'],
     ':password'=>md5($_POST['password'])
 );
-$pdoStatement = Db::query($pdo, $sql, $data);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
 if(empty($pdoStatement)){
-    $return['message'] = Db::getError();
+    $return['message'] = $dbHelper->getError();
     echo json_encode($return);
     exit;
 }
-$user = Db::fetch($pdoStatement);
+$user = $dbHelper->fetch($pdoStatement);
 if(empty($user)){
     $return['message'] = '用户名或密码错误';
     echo json_encode($return);
@@ -102,8 +103,8 @@ $sql = 'select id, name from department where id = :id';
 $data = array(
     ':id'=>$user['department_id']
 );
-$pdoStatement = Db::query($pdo, $sql, $data);
-$department = Db::fetch($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$department = $dbHelper->fetch($pdoStatement);
 if(empty($department)){
     $return['message'] = '用户还没有设置部门';
     echo json_encode($return);
@@ -115,8 +116,8 @@ $sql = 'select id, parent_id, type, name, tag from permission where id in (selec
 $data = array(
     ':role_id'=> $user['role_id_string']
 );
-$pdoStatement = Db::query($pdo, $sql, $data);
-$permissions = Db::fetchAll($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$permissions = $dbHelper->fetchAll($pdoStatement);
 if(empty($permissions)){
     $return['message'] = '用户还没有任何功能的权限';
     echo json_encode($return);
@@ -129,7 +130,7 @@ $sql = "update user set time_login = ".time().", ip = '".$ipString."' where id =
 $data = array(
     ':id'=>$user['id']
 );
-Db::query($pdo, $sql, $data);
+$dbHelper->query($pdo, $sql, $data);
 
 // 日志
 $sql = 'insert into login_log(user_id, department_id, time_login, ip) values(:user_id, :department_id, :time_login, :ip)';
@@ -139,7 +140,7 @@ $data = array(
     ':time_login'=>time(),
     ':ip'=>$ipString
 );
-Db::query($pdo, $sql, $data);
+$dbHelper->query($pdo, $sql, $data);
 
 // 会话
 $_SESSION['user'] = $user;

@@ -6,7 +6,7 @@ require_once '../../library/app.php';
 
 use library\Session;
 use library\Auth;
-use library\Db;
+use library\DbHelper;
 use library\OperationLog;
 use library\Config;
 use library\ArrayTwo;
@@ -16,7 +16,8 @@ use library\Dictionary;
 use library\Department;
 
 $validate = new Validate();
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $config = Config::getAll();
 $user = array();
@@ -53,8 +54,8 @@ $sql = 'select id, username, name, phone, status_id, department_id, role_id_stri
 $data = array(
     ':id'=>$_GET['id']
 );
-$pdoStatement = Db::query($pdo, $sql, $data);
-$user = Db::fetch($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$user = $dbHelper->fetch($pdoStatement);
 if(empty($user)){
     header('location:../../error.php?message='.urlencode('没有找到用户'));
     exit;
@@ -66,8 +67,8 @@ $user = Safe::entity($user);
 $radioStatus = $dictionary->getRadio('system_user_status', 'status_id', $user['status_id']);
 
 $sql = 'select id, name from role order by id asc';
-$pdoStatement = Db::query($pdo, $sql);
-$roles = Db::fetchAll($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql);
+$roles = $dbHelper->fetchAll($pdoStatement);
 $optionRole = ArrayTwo::getOption($roles, $user['role_ids'], 'id', 'name');
 
 ?><!doctype html>

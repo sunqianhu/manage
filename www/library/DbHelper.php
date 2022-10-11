@@ -6,16 +6,16 @@ namespace library;
 
 use library\Config;
 
-class Db{
+class DbHelper{
     static public $pdo;
-    static public $error = ''; // 错误
+    public $error = ''; // 错误
     
     /**
      * 得到错误
      * @return String 错误描述
      */
-    static function getError(){
-        return self::$error;
+    function getError(){
+        return $this->error;
     }
     
     /**
@@ -23,15 +23,15 @@ class Db{
      * @param String $error 错误描述
      * @return Boolean
      */
-    static function setError($error){
-        return self::$error = $error;
+    function setError($error){
+        return $this->error = $error;
     }
     
     /**
      * 得到pdo单例实例
      * @return Object pdo对象
      */
-    static function getInstance(){
+    function getInstance(){
         $pdo = null;
         $dsn = '';
         $config = array();
@@ -51,7 +51,7 @@ class Db{
             empty($config['db_username']) ||
             empty($config['db_password'])
         ){
-            self::setError('数据库配置参数错误');
+            $this->setError('数据库配置参数错误');
             return $pdo;
         }
         
@@ -74,21 +74,21 @@ class Db{
      * @param Array $data 数据
      * @return Object PDOStatement对象
      */
-    static function query($pdo, $sql, $data = array()){
+    function query($pdo, $sql, $data = array()){
         $pdoStatement = null;
         $field = ''; // 字段
         $value = ''; // 值
         $error = ''; // 错误描述
         
         if(empty($sql)){
-            self::setError('sql不能为空');
+            $this->setError('sql不能为空');
             return $pdoStatement;
         }
         
         $pdoStatement = $pdo->prepare($sql);
         if($pdoStatement === false){
-            $error = self::getPdoError($pdo);
-            self::setError($error);
+            $error = $this->getPdoError($pdo);
+            $this->setError($error);
             return null;
         }
         foreach($data as $field => $value){
@@ -99,8 +99,8 @@ class Db{
             }
         }
         if(!$pdoStatement->execute()){
-            $error = self::getPodStatementError($pdoStatement);
-            self::setError($error);
+            $error = $this->getPodStatementError($pdoStatement);
+            $this->setError($error);
             return null;
         }
         
@@ -114,7 +114,7 @@ class Db{
      * @param Integer $type 返回内容格式
      * @return Array
      */
-    static function fetchAll($pdoStatement, $type = \PDO::FETCH_ASSOC){
+    function fetchAll($pdoStatement, $type = \PDO::FETCH_ASSOC){
         $datas = array();
         
         $datas = $pdoStatement->fetchAll($type);
@@ -132,7 +132,7 @@ class Db{
      * @param Integer $type 返回内容格式
      * @return Array
      */
-    static function fetch($pdoStatement, $type = \PDO::FETCH_ASSOC){
+    function fetch($pdoStatement, $type = \PDO::FETCH_ASSOC){
         $data = array();
         
         $data = $pdoStatement->fetch($type);
@@ -150,7 +150,7 @@ class Db{
      * @param Array $data 数据
      * @return String
      */
-    static function fetchColumn($pdoStatement, $columnNumber = 0){
+    function fetchColumn($pdoStatement, $columnNumber = 0){
         $field = '';
         
         $field = $pdoStatement->fetchColumn($columnNumber);
@@ -166,7 +166,7 @@ class Db{
      * @param PDO $pdo pdo对象
      * @return String 错误描述
      */
-    static function getPdoError($pdo){
+    function getPdoError($pdo){
         $errors = array();
         $error = '';
 
@@ -189,7 +189,7 @@ class Db{
      * @param PDOStatement $pdoStatement 结果集对象
      * @return String 错误描述
      */
-    static function getPodStatementError($pdoStatement){
+    function getPodStatementError($pdoStatement){
         $errors = array();
         $error = '';
 

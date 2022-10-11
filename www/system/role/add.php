@@ -6,12 +6,13 @@ require_once '../../library/app.php';
 
 use library\Session;
 use library\Auth;
-use library\Db;
+use library\DbHelper;
 use library\OperationLog;
 use library\Config;
 use library\Ztree;
 
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $sql = '';
 $config = Config::getAll();
@@ -29,8 +30,8 @@ if(!Auth::isPermission('system_role')){
 }
 
 $sql = 'select id, name, parent_id from permission where parent_id != 0 order by parent_id asc, sort asc';
-$pdoStatement = Db::query($pdo, $sql);
-$permissions = Db::fetchAll($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql);
+$permissions = $dbHelper->fetchAll($pdoStatement);
 $permissions = $ztree->setOpenByFirst($permissions);
 $permission = json_encode($permissions);
 

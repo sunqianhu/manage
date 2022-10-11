@@ -6,7 +6,7 @@ require_once '../../library/app.php';
 
 use library\Session;
 use library\Auth;
-use library\Db;
+use library\DbHelper;
 use library\OperationLog;
 use library\Config;
 use library\FrameMain;
@@ -14,7 +14,8 @@ use library\Tree;
 use library\Safe;
 use library\Permission;
 
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -68,8 +69,8 @@ if(!empty($wheres)){
 
 // 数据
 $sql = "select id, parent_id, name, `sort`, tag from permission where $where order by `sort` asc, id asc";
-$pdoStatement = Db::query($pdo, $sql, $data);
-$permissions = Db::fetchAll($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$permissions = $dbHelper->fetchAll($pdoStatement);
 $permissions = $tree->getTree($permissions, 'child', 'id', 'parent_id');
 $permissions = Safe::entity($permissions, 'id,parent_id');
 $permissionNode = $permissionObject->getIndexTreeNode($permissions, 1);

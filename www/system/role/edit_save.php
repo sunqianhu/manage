@@ -6,10 +6,11 @@ require_once '../../library/app.php';
 
 use library\Session;
 use library\Auth;
-use library\Db;
+use library\DbHelper;
 use library\Validate;
 
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $sql = '';
 $validate = new Validate();
@@ -64,8 +65,8 @@ $sql = 'select id from role where id = :id';
 $data = array(
     ':id'=>$_POST['id']
 );
-$pdoStatement = Db::query($pdo, $sql, $data);
-$role = Db::fetch($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$role = $dbHelper->fetch($pdoStatement);
 if(empty($role)){
     $return['message'] = '角色没有找到';
     echo json_encode($return);
@@ -84,8 +85,8 @@ $data = array(
     ':time_edit'=>time(),
     ':id'=>$role['id']
 );
-if(!Db::query($pdo, $sql, $data)){
-    $return['message'] = Db::getError();
+if(!$dbHelper->query($pdo, $sql, $data)){
+    $return['message'] = $dbHelper->getError();
     echo json_encode($return);
     exit;
 }
@@ -95,14 +96,14 @@ $sql = 'delete from role_permission where role_id = :role_id';
 $data = array(
     ':role_id'=>$role['id']
 );
-Db::query($pdo, $sql, $data);
+$dbHelper->query($pdo, $sql, $data);
 foreach($permissionIds as $permissionId){
     $sql = 'insert into role_permission(role_id,permission_id) values(:role_id,:permission_id)';
     $data = array(
         ':role_id'=>$role['id'],
         ':permission_id'=>$permissionId
     );
-    Db::query($pdo, $sql, $data);
+    $dbHelper->query($pdo, $sql, $data);
 }
 
 $return['status'] = 'success';

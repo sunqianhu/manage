@@ -6,13 +6,14 @@ require_once '../../library/app.php';
 
 use library\Session;
 use library\Auth;
-use library\Db;
+use library\DbHelper;
 use library\OperationLog;
 use library\Config;
 use library\ArrayTwo;
 use library\Dictionary;
 
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $config = Config::getAll();
 $radioStatus = '';
@@ -31,8 +32,8 @@ if(!Auth::isPermission('system_user')){
 }
 
 $sql = "select id, name from role order by id asc";
-$pdoStatement = Db::query($pdo, $sql);
-$roles = Db::fetchAll($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql);
+$roles = $dbHelper->fetchAll($pdoStatement);
 $optionRole = ArrayTwo::getOption($roles);
 
 $radioStatus = $dictionary->getRadio('system_user_status', 'status_id', 1);

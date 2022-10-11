@@ -4,7 +4,7 @@
  */
 namespace library;
 
-use library\Db;
+use library\DbHelper;
 use library\Config;
 use library\Dictionary;
 
@@ -17,7 +17,8 @@ class User{
      * @return String 用户姓名
      */
     function getName($id){
-        $pdo = Db::getInstance();
+        $dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
         $pdoStatement = null;
         $sql = '';
         $data = array();
@@ -27,8 +28,8 @@ class User{
         $data = array(
             ':id'=>$id
         );
-        $pdoStatement = Db::query($pdo, $sql, $data);
-        $name = Db::fetchColumn($pdoStatement);
+        $pdoStatement = $dbHelper->query($pdo, $sql, $data);
+        $name = $dbHelper->fetchColumn($pdoStatement);
         
         return $name;
     }

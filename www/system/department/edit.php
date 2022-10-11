@@ -6,14 +6,15 @@ require_once '../../library/app.php';
 
 use library\Session;
 use library\Auth;
-use library\Db;
+use library\DbHelper;
 use library\OperationLog;
 use library\Config;
 use library\Validate;
 use library\Safe;
 use library\Department;
 
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $sql = '';
 $validate = new Validate();
@@ -52,8 +53,8 @@ $sql = 'select id, parent_id, name, `sort`, remark from department where id = :i
 $data = array(
     ':id'=>$_GET['id']
 );
-$pdoStatement = Db::query($pdo, $sql, $data);
-$department = Db::fetch($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$department = $dbHelper->fetch($pdoStatement);
 $department['parent_name'] = $departmentObject->getName($department['parent_id']);
 $department = Safe::entity($department);
 

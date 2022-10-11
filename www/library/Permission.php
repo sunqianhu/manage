@@ -4,7 +4,7 @@
  */
 namespace library;
 
-use library\Db;
+use library\DbHelper;
 
 class Permission{
     
@@ -15,7 +15,8 @@ class Permission{
      * @return String 用户姓名
      */
     function getName($id){
-        $pdo = Db::getInstance();
+        $dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
         $pdoStatement = null;
         $sql = '';
         $data = array();
@@ -25,8 +26,8 @@ class Permission{
         $data = array(
             ':id'=>$id
         );
-        $pdoStatement = Db::query($pdo, $sql, $data);
-        $name = Db::fetchColumn($pdoStatement);
+        $pdoStatement = $dbHelper->query($pdo, $sql, $data);
+        $name = $dbHelper->fetchColumn($pdoStatement);
         
         return $name;
     }

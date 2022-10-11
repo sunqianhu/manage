@@ -6,14 +6,15 @@ require_once '../../library/app.php';
 
 use library\Session;
 use library\Auth;
-use library\Db;
+use library\DbHelper;
 use library\OperationLog;
 use library\Config;
 use library\FrameMain;
 use library\Safe;
 use library\Pagination;
 
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -59,15 +60,15 @@ if(!empty($wheres)){
 }
 
 $sql = "select count(1) from role where $where";
-$pdoStatement = Db::query($pdo, $sql, $data);
-$recordTotal = Db::fetchColumn($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$recordTotal = $dbHelper->fetchColumn($pdoStatement);
 
 $pagination = new Pagination($recordTotal);
 $paginationNodeIntact = $pagination->getNodeIntact();
 
 $sql = "select id, name, time_edit from role where $where order by id asc limit ".$pagination->limitStart.','.$pagination->pageSize;
-$pdoStatement = Db::query($pdo, $sql, $data);
-$roles = Db::fetchAll($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$roles = $dbHelper->fetchAll($pdoStatement);
 foreach($roles as $key => $role){
     $roles[$key]['time_edit_name'] = date('Y-m-d H:i:s', $role['time_edit']);
 }

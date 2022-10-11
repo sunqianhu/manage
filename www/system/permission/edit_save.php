@@ -6,10 +6,11 @@ require_once '../../library/app.php';
 
 use library\Session;
 use library\Auth;
-use library\Db;
+use library\DbHelper;
 use library\Validate;
 
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $sql = '';
 $validate = new Validate();
@@ -68,8 +69,8 @@ $sql = 'select id, parent_id from permission where id = :id';
 $data = array(
     ':id'=>$_POST['id']
 );
-$pdoStatement = Db::query($pdo, $sql, $data);
-$permissionCurrent = Db::fetch($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$permissionCurrent = $dbHelper->fetch($pdoStatement);
 if(empty($permissionCurrent)){
     $return['message'] = '此权限没有找到';
     echo json_encode($return);
@@ -81,8 +82,8 @@ $sql = 'select parent_ids from permission where id = :id';
 $data = array(
     ':id'=>$_POST['parent_id']
 );
-$pdoStatement = Db::query($pdo, $sql, $data);
-$permissionParent = Db::fetch($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$permissionParent = $dbHelper->fetch($pdoStatement);
 
 // 更新
 $sql = 'update permission set
@@ -102,8 +103,8 @@ $data = array(
     ':sort'=>$_POST['sort'],
     ':id'=>$permissionCurrent['id']
 );
-if(!Db::query($pdo, $sql, $data)){
-    $return['message'] = Db::getError();
+if(!$dbHelper->query($pdo, $sql, $data)){
+    $return['message'] = $dbHelper->getError();
     echo json_encode($return);
     exit;
 }

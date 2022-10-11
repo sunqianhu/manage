@@ -6,7 +6,7 @@ require_once '../../library/app.php';
 
 use library\Session;
 use library\Auth;
-use library\Db;
+use library\DbHelper;
 use library\OperationLog;
 use library\Config;
 use library\Validate;
@@ -14,7 +14,8 @@ use library\Safe;
 use library\Dictionary;
 use library\Permission;
 
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $sql = '';
 $validate = new Validate();
@@ -50,8 +51,8 @@ $sql = 'select id, parent_id, type, name, `sort`, tag from permission where id =
 $data = array(
     ':id'=>$_GET['id']
 );
-$pdoStatement = Db::query($pdo, $sql, $data);
-$permission = Db::fetch($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$permission = $dbHelper->fetch($pdoStatement);
 
 $permission['parent_name'] = $permissionObject->getName($permission['parent_id']);
 $permission = Safe::entity($permission);

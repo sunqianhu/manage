@@ -5,7 +5,7 @@
 require_once '../../library/app.php';
 
 use library\Session;
-use library\Db;
+use library\DbHelper;
 use library\OperationLog;
 use library\Validate;
 use library\Auth;
@@ -16,7 +16,8 @@ use library\User;
 use library\Department;
 
 $validate = new Validate();
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $config = Config::getAll();
 $frameMain = new FrameMain();
@@ -52,8 +53,8 @@ $sql = 'select * from operation_log where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
-$pdoStatement = Db::query($pdo, $sql, $data);
-$operationLog = Db::fetch($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$operationLog = $dbHelper->fetch($pdoStatement);
 if(empty($operationLog)){
     header('location:../../error.php?message='.urlencode('没有找到记录'));
     exit;

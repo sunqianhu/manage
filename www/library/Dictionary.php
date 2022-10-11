@@ -4,7 +4,7 @@
  */
 namespace library;
 
-use library\Db;
+use library\DbHelper;
 use library\Cache;
 
 class Dictionary{
@@ -14,7 +14,8 @@ class Dictionary{
      * @return String value
      */
     function getSetCache($type){
-        $pdo = Db::getInstance();
+        $dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
         $pdoStatement = null;
         $cacheKey = 'dictionary_'.$type; // 缓存key
         $data = '';
@@ -31,8 +32,8 @@ class Dictionary{
         $dbData = array(
             ':type'=>$type
         );
-        $pdoStatement = Db::query($pdo, $sql, $dbData);
-        $datas = Db::fetchAll($pdoStatement);
+        $pdoStatement = $dbHelper->query($pdo, $sql, $dbData);
+        $datas = $dbHelper->fetchAll($pdoStatement);
         if(empty($datas)){
             return $data;
         }

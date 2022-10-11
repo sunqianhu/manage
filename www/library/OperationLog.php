@@ -4,7 +4,7 @@
  */
 namespace library;
 
-use library\Db;
+use library\DbHelper;
 use library\Ip;
 
 class OperationLog{
@@ -15,7 +15,8 @@ class OperationLog{
      * @return id 日志id
      */
     function add(){
-        $pdo = Db::getInstance();
+        $dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
         $pdoStatement = null;
         $sql = '';
         $data = array();
@@ -57,7 +58,7 @@ class OperationLog{
             ':request'=>$request,
             ':time_add'=>time()
         );
-        $pdoStatement = Db::query($pdo, $sql, $data);
+        $pdoStatement = $dbHelper->query($pdo, $sql, $data);
         $id = $pdo->lastInsertId();
         
         return $id;

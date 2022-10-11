@@ -6,7 +6,7 @@ require_once '../../library/app.php';
 
 use library\Session;
 use library\Auth;
-use library\Db;
+use library\DbHelper;
 use library\OperationLog;
 use library\Config;
 use library\FrameMain;
@@ -14,7 +14,8 @@ use library\Tree;
 use library\Safe;
 use library\Department;
 
-$pdo = Db::getInstance();
+$dbHelper = new DbHelper();
+$pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -69,8 +70,8 @@ if(!empty($wheres)){
 
 // 数据
 $sql = "select id, parent_id, name, `sort`, remark from department where $where order by `sort` asc, id asc";
-$pdoStatement = Db::query($pdo, $sql, $data);
-$departments = Db::fetchAll($pdoStatement);
+$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$departments = $dbHelper->fetchAll($pdoStatement);
 $departments = $tree->getTree($departments, 'child', 'id', 'parent_id');
 $departments = Safe::entity($departments);
 $departmentNode = $departmentObject->getIndexTreeNode($departments, 1);
