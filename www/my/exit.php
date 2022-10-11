@@ -4,7 +4,6 @@
  */
 require_once '../library/app.php';
 
-use library\Session;
 use library\Auth;
 
 unset($_SESSION['user']);

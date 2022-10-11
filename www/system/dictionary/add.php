@@ -4,9 +4,7 @@
  */
 require_once '../../library/app.php';
 
-use library\Session;
 use library\Auth;
-use library\OperationLog;
 use library\Config;
 
 if(!Auth::isLogin()){

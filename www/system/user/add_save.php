@@ -4,7 +4,6 @@
  */
 require_once '../../library/app.php';
 
-use library\Session;
 use library\DbHelper;
 use library\Validate;
 use library\Auth;

@@ -4,8 +4,6 @@
  */
 require_once '../library/app.php';
 
-use library\Session;
-use library\OperationLog;
 use library\Config;
 use library\Auth;
 

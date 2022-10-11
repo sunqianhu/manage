@@ -4,13 +4,10 @@
  */
 require_once '../../library/app.php';
 
-use library\Session;
 use library\DbHelper;
-use library\OperationLog;
 use library\Validate;
 use library\Auth;
 use library\Config;
-use library\FrameMain;
 use library\Safe;
 use library\User;
 use library\Department;
@@ -20,8 +17,6 @@ $dbHelper = new DbHelper();
 $pdo = $dbHelper->getInstance();
 $pdoStatement = null;
 $config = Config::getAll();
-$frameMain = new FrameMain();
-$frameMainMenu = ''; // 框架菜单
 $operationLog = array();
 $sql = '';
 $data = array();
@@ -64,9 +59,6 @@ $operationLog['user_name'] = $user->getName($operationLog['user_id']);
 $operationLog['department_name'] = $department->getName($operationLog['department_id']);
 
 $operationLog = Safe::entity($operationLog, 'url');
-
-// 菜单
-$frameMainMenu = $frameMain->getMenu('system_operation_log');
 ?><!doctype html>
 <html>
 <head>
