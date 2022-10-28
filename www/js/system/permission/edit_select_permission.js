@@ -39,9 +39,9 @@ function submit(){
     
     node = nodes[0];
     
-    iframeWindow = sun.layer.getIframeWindow(window.parent, "layer_permission_edit_iframe");
+    iframeWindow = sun.layer.getIframeWindow(window.parent, "edit_permission_iframe");
     iframeWindow.edit.selectPermissionCallback(node);
-    window.parent.sun.layer.close("layer_edit_select_permission");
+    window.parent.sun.layer.close("edit_select_permission");
 }
 
 $(function(){

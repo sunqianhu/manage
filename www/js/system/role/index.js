@@ -8,7 +8,7 @@
 function add(){
     var url = "add.php";
     sun.layer.open({
-        id: "layer_role_add",
+        id: "add_role",
         name: "添加角色",
         url: url,
         width: 600,
@@ -22,7 +22,7 @@ function add(){
 function edit(id){
     var url = "edit.php?id="+id;
     sun.layer.open({
-        id: "layer_role_edit",
+        id: "edit_role",
         name: "修改角色",
         url: url,
         width: 600,

@@ -2,7 +2,5 @@
  * 详情
  */
 @import url(../../iconfont/iconfont.css);
-@import url(../../public/frame_main.css);
-@import url(../../public/frame_main_detail.css);
 
-.page{}
+.page{ background: #f5f5f5; padding: 10px}

@@ -12,13 +12,13 @@ $validate = new Validate();
 $dbHelper = new DbHelper();
 $pdo = $dbHelper->getPdo();
 $pdoStatement = null;
+$departmentChild = array();
+$sql = '';
+$data = array();
 $return = array(
     'status'=>'error',
     'message'=>''
 );
-$departmentChild = array();
-$sql = '';
-$data = array();
 
 // 验证
 if(!Auth::isLogin()){

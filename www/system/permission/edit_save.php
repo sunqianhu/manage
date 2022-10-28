@@ -14,6 +14,8 @@ $pdoStatement = null;
 $sql = '';
 $data = array();
 $validate = new Validate();
+$permissionCurrent = array(); // 本权限
+$permissionParent = array(); // 上级权限
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -21,8 +23,6 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$permissionCurrent = array(); // 本权限
-$permissionParent = array(); // 上级权限
 
 // 验证
 if(!Auth::isLogin()){
@@ -39,7 +39,6 @@ if(!Auth::isPermission('system_permission')){
 $validate->setRule(array(
     'id' => 'require|number',
     'parent_id' => 'number',
-    'type' => 'require',
     'name' => 'require|max_length:32',
     'tag' => 'require|max_length:64',
     'sort' => 'number|max_length:10'
@@ -48,7 +47,6 @@ $validate->setMessage(array(
     'id.require' => 'id参数错误',
     'id.number' => 'id必须是个数字',
     'parent_id.number' => '请选择上级权限',
-    'type.require' => '请选择权限类型',
     'name.require' => '请输入权限名称',
     'name.max_length' => '权限名称不能大于32个字',
     'tag.require' => '请输入权限标识',
@@ -89,7 +87,6 @@ $sql = 'update permission set
 parent_id = :parent_id,
 parent_ids = :parent_ids,
 name = :name,
-type = :type,
 tag = :tag,
 sort = :sort
 where id = :id';
@@ -97,7 +94,6 @@ $data = array(
     ':parent_id'=>$_POST['parent_id'],
     ':parent_ids'=>$permissionParent['parent_ids'].','.$permissionCurrent['id'],
     ':name'=>$_POST['name'],
-    ':type'=>$_POST['type'],
     ':tag'=>$_POST['tag'],
     ':sort'=>$_POST['sort'],
     ':id'=>$permissionCurrent['id']

@@ -29,7 +29,7 @@ $search = array(
 );
 $wheres = array();
 $where = '1';
-$permissionObject = new Permission();
+$permissionModel = new Permission();
 $tree = new Tree();
 
 if(!Auth::isLogin()){
@@ -71,7 +71,7 @@ $pdoStatement = $dbHelper->query($pdo, $sql, $data);
 $permissions = $dbHelper->fetchAll($pdoStatement);
 $permissions = $tree->getTree($permissions, 'child', 'id', 'parent_id');
 $permissions = Safe::entity($permissions, 'id,parent_id');
-$permissionNode = $permissionObject->getIndexTreeNode($permissions, 1);
+$permissionNode = $permissionModel->getIndexTreeNode($permissions, 1);
 
 ?><!doctype html>
 <html>

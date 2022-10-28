@@ -20,7 +20,7 @@ $data = array();
 $validate = new Validate();
 $config = Config::getAll();
 $permission = array();
-$permissionObject = new Permission();
+$permissionModel = new Permission();
 $dictionaryModel = new Dictionary();
 
 // 验证
@@ -45,17 +45,15 @@ if(!$validate->check($_GET)){
     exit;
 }
 
-$sql = 'select id, parent_id, type, name, `sort`, tag from permission where id = :id';
+$sql = 'select id, parent_id, name, `sort`, tag from permission where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
 $pdoStatement = $dbHelper->query($pdo, $sql, $data);
 $permission = $dbHelper->fetch($pdoStatement);
 
-$permission['parent_name'] = $permissionObject->getName($permission['parent_id']);
+$permission['parent_name'] = $permissionModel->getName($permission['parent_id']);
 $permission = Safe::entity($permission);
-
-$permissionTypeRadioNode = $dictionaryModel->getRadio('system_permission_type', 'type', $permission['type']);
 
 ?><!doctype html>
 <html>
@@ -88,15 +86,6 @@ $permissionTypeRadioNode = $dictionaryModel->getRadio('system_permission_type', 
 </div>
 
 <div class="field">
-<div class="label"><span class="required">*</span> 权限类型</div>
-<div class="value">
-<div class="body">
-<?php echo $permissionTypeRadioNode;?>
-</div>
-</div>
-</div>
-
-<div class="field">
 <div class="label"><span class="required">*</span> 权限名称</div>
 <div class="value">
 <div class="body">
@@ -124,7 +113,7 @@ $permissionTypeRadioNode = $dictionaryModel->getRadio('system_permission_type', 
 </div>
 </div>
 <div class="page_button">
-<a href="javascript:;" class="sun-button plain" onClick="window.parent.sun.layer.close('layer_permission_edit');">关闭</a>
+<a href="javascript:;" class="sun-button plain" onClick="window.parent.sun.layer.close('edit_permission');">关闭</a>
 <input type="submit" class="sun-button" value="提交" />
 </div>
 </form>

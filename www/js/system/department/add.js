@@ -7,7 +7,7 @@
 function selectDepartment(){
     var url = "add_select_department.php";
     window.parent.sun.layer.open({
-        id: "layer_add_select_department",
+        id: "add_select_department",
         name: "选择上级部门",
         url: url,
         width: 500,
@@ -17,7 +17,7 @@ function selectDepartment(){
 
 /**
  * 选择部门回调
- * @param json node 节点数据
+ * @param {string} node 节点数据
  */
 function selectDepartmentCallback(node){
     var nodeParentId = $("#parent_id");

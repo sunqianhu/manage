@@ -50,7 +50,7 @@ function searchDepartmentSelected(event, id, node){
 function add(){
     var url = "add.php";
     sun.layer.open({
-        id: "layer_user_add",
+        id: "add_user",
         name: "添加用户",
         url: url,
         width: 700,
@@ -64,7 +64,7 @@ function add(){
 function edit(id){
     var url = "edit.php?id="+id;
     sun.layer.open({
-        id: "layer_user_edit",
+        id: "edit_user",
         name: "修改用户",
         url: url,
         width: 700,

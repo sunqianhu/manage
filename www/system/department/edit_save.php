@@ -12,6 +12,10 @@ $validate = new Validate();
 $dbHelper = new DbHelper();
 $pdo = $dbHelper->getPdo();
 $pdoStatement = null;
+$departmentCurrent = array(); // 本部门
+$departmentParent = array(); // 上级部门
+$sql = '';
+$data = array();
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -19,10 +23,6 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$departmentCurrent = array(); // 本部门
-$departmentParent = array(); // 上级部门
-$sql = '';
-$data = array();
 
 // 验证
 if(!Auth::isLogin()){

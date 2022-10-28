@@ -19,11 +19,11 @@ $sql = '';
 $data = array();
 $validate = new Validate(); // 数据
 $user = array();
-$userObject = new User();
 $department = array();
 $permissions = array(); // 权限
 $ip = new Ip();
 $ipString = '';
+$userModel = new User();
 $dictionaryModel = new Dictionary();
 $return = array(
     'status'=>'error',
@@ -95,7 +95,7 @@ if($user['status_id'] != 1){
     echo json_encode($return);
     exit;
 }
-$user['head_url'] = $userObject->getHeadUrl($user['head']);
+$user['head_url'] = $userModel->getHeadUrl($user['head']);
 
 // 部门
 $sql = 'select id, name from department where id = :id';
@@ -111,7 +111,7 @@ if(empty($department)){
 }
 
 // 权限
-$sql = 'select id, parent_id, type, name, tag from permission where id in (select permission_id from role_permission where role_id in (:role_id))';
+$sql = 'select id, parent_id, name, tag from permission where id in (select permission_id from role_permission where role_id in (:role_id))';
 $data = array(
     ':role_id'=> $user['role_id_string']
 );

@@ -34,7 +34,7 @@ $recordTotal = 0; // 总记录
 $pagination = null; // 分页
 $paginationNodeIntact = ''; // 节点
 $operationLogs = array();
-$department = new Department();
+$departmentModel = new Department();
 $userModel = new User();
 
 if(!Auth::isLogin()){
@@ -97,7 +97,7 @@ $operationLogs = $dbHelper->fetchAll($pdoStatement);
 foreach($operationLogs as $key => $operationLog){
     $operationLogs[$key]['add_time_name'] = date('Y-m-d H:i:s', $operationLog['add_time']);
     $operationLogs[$key]['user_name'] = $userModel->getName($operationLog['user_id']);
-    $operationLogs[$key]['department_name'] = $department->getName($operationLog['department_id']);
+    $operationLogs[$key]['department_name'] = $departmentModel->getName($operationLog['department_id']);
     $operationLogs[$key]['url_sub'] = MyString::getSubFromZero($operationLog['url'], 60);
 }
 
@@ -171,8 +171,8 @@ foreach($operationLogs as $operationLog){
     <td><?php echo $operationLog['url_sub'];?></td>
     <td><?php echo $operationLog['add_time_name'];?></td>
     <td>
-<a href="javascript:;" class="sun-button plain small sun-mr5" onClick="sun.layer.open({id: 'layer_detail', name: '操作日志详情', url: 'detail.php?id=<?php echo $operationLog['id'];?>', width: 700, height: 500})">详情</a>
-<a href="../user/detail.php?id=<?php echo $operationLog['user_id'];?>" class="sun-button plain small">用户</a>
+<a href="detail.php?id=<?php echo $operationLog['id'];?>" class="sun-button plain small sun-mr5" target="_blank">详情</a>
+<a href="../user/detail.php?id=<?php echo $operationLog['user_id'];?>" class="sun-button plain small" target="_blank">用户</a>
     </td>
   </tr>
 <?php

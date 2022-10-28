@@ -14,6 +14,9 @@ $pdoStatement = null;
 $sql = '';
 $data = array();
 $validate = new Validate();
+$permissionParent = array(); // 上级权限
+$id = 0; // 添加权限id
+$parentIds = ''; // 所有上级权限id
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -21,9 +24,6 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$permissionParent = array(); // 上级权限
-$id = 0; // 添加权限id
-$parentIds = ''; // 所有上级权限id
 
 // 验证
 if(!Auth::isLogin()){
@@ -39,14 +39,12 @@ if(!Auth::isPermission('system_permission')){
 
 $validate->setRule(array(
     'parent_id' => 'number',
-    'type' => 'require',
     'name' => 'require|max_length:32',
     'tag' => 'require|max_length:64',
     'sort' => 'number|max_length:10'
 ));
 $validate->setMessage(array(
     'parent_id.number' => '请选择上级权限',
-    'type.require' => '请选择权限类型',
     'name.require' => '请输入权限名称',
     'name.max_length' => '权限名称不能大于32个字',
     'tag.require' => '请输入权限标识',
@@ -70,10 +68,9 @@ $pdoStatement = $dbHelper->query($pdo, $sql, $data);
 $permissionParent = $dbHelper->fetch($pdoStatement);
 
 // 入库
-$sql = 'insert into permission(parent_id,type,name,tag,sort) values(:parent_id,:type,:name,:tag,:sort)';
+$sql = 'insert into permission(parent_id,name,tag,sort) values(:parent_id,:name,:tag,:sort)';
 $data = array(
     ':parent_id'=>$_POST['parent_id'],
-    ':type'=>$_POST['type'],
     ':name'=>$_POST['name'],
     ':tag'=>$_POST['tag'],
     ':sort'=>$_POST['sort']

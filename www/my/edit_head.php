@@ -11,7 +11,7 @@ $config = Config::getAll();
 
 // 验证
 if(!Auth::isLogin()){
-    header('location:../my/login.php');
+    header('location:login.php');
     exit;
 }
 
@@ -55,7 +55,7 @@ if(!Auth::isLogin()){
 </div>
 </div>
 <div class="page_button">
-<a href="javascript:;" class="sun-button plain" onClick="window.parent.sun.layer.close('layer_edit_head');">关闭</a>
+<a href="javascript:;" class="sun-button plain" onClick="window.parent.sun.layer.close('edit_head');">关闭</a>
 <input type="submit" class="sun-button" value="提交" onClick="submit();" />
 </div>
 </body>

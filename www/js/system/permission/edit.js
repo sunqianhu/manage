@@ -8,7 +8,7 @@
 function selectPermission(){
     var url = "edit_select_permission.php";
     window.parent.sun.layer.open({
-        id: "layer_edit_select_permission",
+        id: "edit_select_permission",
         name: "选择上级权限",
         url: url,
         width: 500,

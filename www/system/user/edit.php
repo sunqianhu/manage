@@ -24,7 +24,7 @@ $radioStatus = '';
 $optionRole = '';
 $sql = '';
 $data = array();
-$department = new Department();
+$departmentModel = new Department();
 $dictionaryModel = new Dictionary();
 
 // 验证
@@ -60,7 +60,7 @@ if(empty($user)){
 }
 
 $user['role_ids'] = explode(',', $user['role_id_string']);
-$user['department_name'] = $department->getName($user['department_id']);
+$user['department_name'] = $departmentModel->getName($user['department_id']);
 $user = Safe::entity($user);
 $radioStatus = $dictionaryModel->getRadio('system_user_status', 'status_id', $user['status_id']);
 
@@ -162,7 +162,7 @@ $optionRole = ArrayTwo::getOption($roles, $user['role_ids'], 'id', 'name');
 
 </div>
 <div class="page_button">
-<a href="javascript:;" class="sun-button plain" onClick="window.parent.sun.layer.close('layer_user_edit');">关闭</a>
+<a href="javascript:;" class="sun-button plain" onClick="window.parent.sun.layer.close('edit_user');">关闭</a>
 <input type="submit" class="sun-button" value="提交" />
 </div>
 </form>

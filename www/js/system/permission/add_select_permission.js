@@ -1,9 +1,7 @@
 /**
  * 添加选择权限
  */
-var addSelectPermission = {
-    ztree: null
-};
+var ztree;
 
 /**
  * ztree初始化
@@ -41,9 +39,9 @@ function submit(){
     
     node = nodes[0];
     
-    iframeWindow = sun.layer.getIframeWindow(window.parent, "layer_permission_add_iframe");
+    iframeWindow = sun.layer.getIframeWindow(window.parent, "add_permission_iframe");
     iframeWindow.selectPermissionCallback(node);
-    window.parent.sun.layer.close("layer_add_select_permission");
+    window.parent.sun.layer.close("add_select_permission");
 }
 
 $(function(){

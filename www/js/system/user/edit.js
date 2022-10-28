@@ -8,7 +8,7 @@
 function selectDepartment(){
     var url = "edit_select_department.php";
     window.parent.sun.layer.open({
-        id: "layer_edit_select_department",
+        id: "edit_select_department",
         name: "选择上级部门",
         url: url,
         width: 500,

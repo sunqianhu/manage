@@ -40,7 +40,7 @@ $search = array(
     'phone'=>''
 ); // 搜索
 $users = array();
-$userObject = new User();
+$userModel = new User();
 $departments = array();
 $department = ''; // 部门json数据
 $departmentObject = new Department();
@@ -116,15 +116,16 @@ $pdoStatement = $dbHelper->query($pdo, $sql, $data);
 $users = $dbHelper->fetchAll($pdoStatement);
 foreach($users as $key => $user){
     $users[$key]['department_name'] = $departmentObject->getName($user['department_id']);
-    $users[$key]['status_name'] = $userObject->getBadgeStatusName($user['status_id']);
+    $users[$key]['status_name'] = $userModel->getBadgeStatusName($user['status_id']);
     $users[$key]['edit_time_name'] = $user['edit_time'] ? date('Y-m-d H:i:s', $user['edit_time']) : '-';
     $users[$key]['login_time_name'] = $user['login_time'] ? date('Y-m-d H:i:s', $user['login_time']) : '-';
-    $users[$key]['head_url'] = $userObject->getHeadUrl($user['head']);
+    $users[$key]['head_url'] = $userModel->getHeadUrl($user['head']);
 }
 
 $sql = 'select id, name, parent_id from department order by parent_id asc, sort asc';
 $pdoStatement = $dbHelper->query($pdo, $sql);
 $departments = $dbHelper->fetchAll($pdoStatement);
+
 $departments = $ztree->setOpenByFirst($departments);
 $department = json_encode($departments);
 
@@ -236,7 +237,7 @@ foreach($users as $user){
     <td><?php echo $user['login_time_name'];?></td>
     <td><?php echo $user['status_name'];?></td>
     <td>
-<a href="detail.php?id=<?php echo $user['id'];?>" class="sun-button plain small sun-mr5">详情</a>
+<a href="detail.php?id=<?php echo $user['id'];?>" class="sun-button plain small sun-mr5" target="_blank">详情</a>
 <a href="javascript:;" class="sun-button plain small sun-mr5" onClick="edit(<?php echo $user['id'];?>)">修改</a>
 <span class="sun-dropdown-menu align-right operation_more">
 <div class="title"><a href="javascript:;" class="sun-button plain small">更多 <span class="iconfont icon-arrow-down arrow"></span></a></div>

@@ -33,7 +33,7 @@ $recordTotal = 0; // 总记录
 $pagination = null; // 分页
 $paginationNodeIntact = ''; // 节点
 $loginLogs = array();
-$department = new Department();
+$departmentModel = new Department();
 $userModel = new User();
 
 if(!Auth::isLogin()){
@@ -91,7 +91,7 @@ $loginLogs = $dbHelper->fetchAll($pdoStatement);
 foreach($loginLogs as $key => $loginLog){
     $loginLogs[$key]['login_time_name'] = date('Y-m-d H:i:s', $loginLog['login_time']);
     $loginLogs[$key]['user_name'] = $userModel->getName($loginLog['user_id']);
-    $loginLogs[$key]['department_name'] = $department->getName($loginLog['department_id']);
+    $loginLogs[$key]['department_name'] = $departmentModel->getName($loginLog['department_id']);
 }
 
 $search = Safe::entity($search);
@@ -161,7 +161,7 @@ foreach($loginLogs as $loginLog){
     <td><?php echo $loginLog['ip'];?></td>
     <td><?php echo $loginLog['login_time_name'];?></td>
     <td>
-<a href="../user/detail.php?id=<?php echo $loginLog['user_id'];?>" class="sun-button plain small">用户</a>
+<a href="../user/detail.php?id=<?php echo $loginLog['user_id'];?>" class="sun-button plain small" target="_blank">用户</a>
     </td>
   </tr>
 <?php

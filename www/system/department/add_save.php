@@ -14,6 +14,9 @@ $pdoStatement = null;
 $sql = '';
 $data = array();
 $validate = new Validate();
+$departmentParent = array(); // 上级部门
+$id = 0; // 添加部门id
+$parentIds = ''; // 所有上级部门id
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -21,9 +24,6 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$departmentParent = array(); // 上级部门
-$id = 0; // 添加部门id
-$parentIds = ''; // 所有上级部门id
 
 // 验证
 if(!Auth::isLogin()){

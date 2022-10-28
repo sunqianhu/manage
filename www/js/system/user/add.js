@@ -2,15 +2,13 @@
  * 添加
  */
 
-var add = {};
-
 /**
  * 选择部门
  */
 function selectDepartment(){
     var url = "add_select_department.php";
     window.parent.sun.layer.open({
-        id: "layer_add_select_department",
+        id: "add_select_department",
         name: "选择部门",
         url: url,
         width: 500,

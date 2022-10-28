@@ -14,6 +14,7 @@ $pdoStatement = null;
 $sql = '';
 $data = array();
 $validate = new Validate();
+$user = array();
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -21,7 +22,6 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$user = array();
 
 // 验证
 if(!Auth::isLogin()){

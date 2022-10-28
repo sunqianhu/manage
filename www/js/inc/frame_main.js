@@ -137,7 +137,7 @@ frameMain.menuToggle = function(){
 frameMain.editUserHead = function(){
     var url = "/my/edit_head.php";
     window.parent.sun.layer.open({
-        id: "layer_edit_head",
+        id: "edit_head",
         name: "修改头像",
         url: url,
         width: 700,
@@ -151,7 +151,7 @@ frameMain.editUserHead = function(){
 frameMain.editUserPassword = function(){
     var url = "/my/edit_password.php";
     window.parent.sun.layer.open({
-        id: "layer_edit_password",
+        id: "edit_password",
         name: "修改密码",
         url: url,
         width: 500,

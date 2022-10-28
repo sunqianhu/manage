@@ -14,11 +14,11 @@ $pdoStatement = null;
 $sql = '';
 $data = array();
 $validate = new Validate();
+$user = array();
 $return = array(
     'status'=>'error',
     'message'=>''
 );
-$user = array();
 
 // 验证
 if(!Auth::isLogin()){

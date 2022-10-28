@@ -16,7 +16,7 @@ $sql = '';
 $data = array();
 $user = array();
 $path = ''; // 头像路径
-$userObject = new User();
+$userModel = new User();
 $userFileUpload = new UserFileUpload();
 $return = array(
     'status'=>'error',
@@ -60,7 +60,7 @@ $data = array(
 $dbHelper->query($pdo, $sql, $data);
 
 $_SESSION['user']['head'] = $path;
-$_SESSION['user']['head_url'] = $userObject->getHeadUrl($path);
+$_SESSION['user']['head_url'] = $userModel->getHeadUrl($path);
 
 $return['status'] = 'success';
 $return['message'] = '修改成功';

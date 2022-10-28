@@ -20,7 +20,7 @@ $config = Config::getAll();
 $operationLog = array();
 $sql = '';
 $data = array();
-$department = new Department();
+$departmentModel = new Department();
 $userModel = new User();
 
 // 验证
@@ -56,7 +56,7 @@ if(empty($operationLog)){
 }
 $operationLog['add_time_name'] = date('Y-m-d H:i:s', $operationLog['add_time']);
 $operationLog['user_name'] = $userModel->getName($operationLog['user_id']);
-$operationLog['department_name'] = $department->getName($operationLog['department_id']);
+$operationLog['department_name'] = $departmentModel->getName($operationLog['department_id']);
 
 $operationLog = Safe::entity($operationLog, 'url');
 ?><!doctype html>

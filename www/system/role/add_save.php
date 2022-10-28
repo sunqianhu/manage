@@ -14,6 +14,8 @@ $pdoStatement = null;
 $sql = '';
 $data = array();
 $validate = new Validate();
+$roleId = 0; // 角色id
+$permissionIds = array();
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -21,8 +23,6 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$roleId = 0; // 角色id
-$permissionIds = array();
 
 // 验证
 if(!Auth::isLogin()){

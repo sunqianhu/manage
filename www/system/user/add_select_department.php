@@ -56,7 +56,7 @@ var departmentData = <?php echo $department;?>;
 <ul id="ztree" class="ztree"></ul>
 </div>
 <div class="page_button">
-<a href="javascript:;" class="sun-button plain" onClick="window.parent.sun.layer.close('layer_add_select_department');">关闭</a>
+<a href="javascript:;" class="sun-button plain" onClick="window.parent.sun.layer.close('add_select_department');">关闭</a>
 <input type="button" class="sun-button" value="确定" onClick="submit();" />
 </div>
 </body>

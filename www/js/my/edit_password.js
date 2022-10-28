@@ -17,7 +17,7 @@ function submitForm(){
                 return;
             }
             sun.toast("success", ret.message, 1000, function(){
-                parent.sun.layer.close("layer_edit_password");
+                parent.sun.layer.close("edit_password");
             });
         }
     });

@@ -10,9 +10,9 @@ use library\Validate;
 use library\Config;
 use library\FrameMain;
 use library\Safe;
-use library\model\Dictionary;
 use library\ArrayTwo;
 use library\MyString;
+use library\model\Dictionary;
 use library\model\Department;
 
 $dbHelper = new DbHelper();
@@ -29,7 +29,7 @@ $loginLogs = array();
 $loginLog = array();
 $operationLogs = array(); // 操作日志
 $operationLog = array();
-$department = new Department();
+$departmentModel = new Department();
 $dictionaryModel = new Dictionary();
 
 // 验证
@@ -68,7 +68,7 @@ $user['status_name'] = $dictionaryModel->getValue('system_user_status', $user['s
 $user['add_time_name'] = date('Y-m-d H:i:s', $user['add_time']);
 $user['edit_time_name'] = $user['edit_time'] ? date('Y-m-d H:i:s', $user['edit_time']) : '-';
 $user['login_time_name'] = $user['login_time'] ? date('Y-m-d H:i:s', $user['login_time']) : '-';
-$user['department_name'] = $department->getName($user['department_id']);
+$user['department_name'] = $departmentModel->getName($user['department_id']);
 
 $sql = 'select name from role where id in (:id)';
 $data = array(
@@ -114,26 +114,10 @@ $frameMainMenu = $frameMain->getMenu('system_user');
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/jquery-1.12.4/jquery.min.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.js"></script>
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/inc/frame_main.js"></script>
 <link href="<?php echo $config['app_domain'];?>css/system/user/detail.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body class="page">
-<?php require_once '../../public/frame_main_header.php';?>
-<div class="page_body">
-<?php require_once '../../public/frame_main_left.php';?>
-<div class="page_right">
-<div class="header">
-<div class="location">
-<span class="iconfont icon-home icon"></span>
-<a href="../../index.php">系统首页</a> <span class="split">&gt;</span>
-<a href="index.php">用户管理</a> <span class="split">&gt;</span>
-用户详情
-</div>
-<a href="javascript:;" class="sun-button small plain back" onClick="history.back();">返回</a>
-</div>
-<div class="body">
-
 <div class="sun-section">
 <div class="title">
 <span class="name">用户信息</span>
@@ -250,8 +234,5 @@ foreach($operationLogs as $operationLog){
 </div>
 </div>
 
-</div>
-</div>
-</div>
 </body>
 </html>

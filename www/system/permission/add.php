@@ -18,7 +18,6 @@ $sql = '';
 $data = array();
 $validate = new Validate();
 $config = Config::getAll();
-$radioPermissionType = '';
 $permissionParent = array();
 $init = array(
     'parent_id'=>1,
@@ -59,7 +58,6 @@ if(!empty($_GET['parent_id'])){
     $init = Safe::entity($init);
 }
 
-$radioPermissionType = $dictionaryModel->getRadio('system_permission_type', 'type', 1);
 ?><!doctype html>
 <html>
 <head>
@@ -85,15 +83,6 @@ $radioPermissionType = $dictionaryModel->getRadio('system_permission_type', 'typ
 <input type="text" name="parent_name" id="parent_name" readonly value="<?php echo $init['parent_name'];?>" />
 <span class="addon"><span class="iconfont icon-magnifier icon"></span></span>
 </div>
-</div>
-</div>
-</div>
-
-<div class="field">
-<div class="label"><span class="required">*</span> 权限类型</div>
-<div class="value">
-<div class="body">
-<?php echo $radioPermissionType;?>
 </div>
 </div>
 </div>
@@ -127,7 +116,7 @@ $radioPermissionType = $dictionaryModel->getRadio('system_permission_type', 'typ
 
 </div>
 <div class="page_button">
-<a href="javascript:;" class="sun-button plain" onClick="window.parent.sun.layer.close('layer_permission_add');">关闭</a>
+<a href="javascript:;" class="sun-button plain" onClick="window.parent.sun.layer.close('add_permission');">关闭</a>
 <input type="submit" class="sun-button" value="提交" />
 </div>
 </form>

@@ -2,7 +2,7 @@
 /**
  * 操作日志模型
  */
-namespace library;
+namespace library\model;
 
 use library\DbHelper;
 use library\Ip;
