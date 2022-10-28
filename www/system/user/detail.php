@@ -8,7 +8,6 @@ use library\Auth;
 use library\DbHelper;
 use library\Validate;
 use library\Config;
-use library\FrameMain;
 use library\Safe;
 use library\ArrayTwo;
 use library\MyString;
@@ -22,8 +21,6 @@ $sql = '';
 $data = array();
 $validate = new Validate();
 $config = Config::getAll();
-$frameMain = new FrameMain();
-$frameMainMenu = ''; // 框架菜单
 $roles = array(); // 角色
 $loginLogs = array();
 $loginLog = array();
@@ -101,9 +98,6 @@ foreach($operationLogs as $key => $operationLog){
     $operationLogs[$key]['url_sub'] = MyString::getSubFromZero($operationLog['url'], 60);
 }
 $operationLogs = Safe::entity($operationLogs, 'url, url_sub');
-
-// 菜单
-$frameMainMenu = $frameMain->getMenu('system_user');
 
 ?><!doctype html>
 <html>
