@@ -9,11 +9,11 @@ use library\Validate;
 use library\Auth;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
-$validate = new Validate();
 $data = array();
+$validate = new Validate();
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -103,7 +103,7 @@ if(!empty($user)){
 }
 
 // 入库
-$sql = 'insert into user(username,status_id,password,name,phone,department_id,role_id_string,time_add) values(:username,:status_id,:password,:name,:phone,:department_id,:role_id_string,:time_add)';
+$sql = 'insert into user(username,status_id,password,name,phone,department_id,role_id_string,add_time) values(:username,:status_id,:password,:name,:phone,:department_id,:role_id_string,:add_time)';
 $data = array(
     ':username'=>$_POST['username'],
     ':status_id'=>$_POST['status_id'],
@@ -112,7 +112,7 @@ $data = array(
     ':phone'=>$_POST['phone'],
     ':department_id'=>$_POST['department_id'],
     ':role_id_string'=>$_POST['role_id_string'],
-    ':time_add'=>time()
+    ':add_time'=>time()
 );
 if(!$dbHelper->query($pdo, $sql, $data)){
     $return['message'] = $dbHelper->getError();

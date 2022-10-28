@@ -4,13 +4,13 @@
  */
 require_once '../../library/app.php';
 
-use library\DbHelper;
 use library\Config;
+use library\DbHelper;
 use library\Ztree;
 use library\Auth;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $config = Config::getAll();
 $permissions = array(); // 权限数据
@@ -46,7 +46,7 @@ $permission = json_encode($permissions);
 <link href="<?php echo $config['app_domain'];?>css/system/permission/edit_select_permission.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/system/permission/edit_select_permission.js"></script>
 <script type="text/javascript">
-editSelectPermission.permissionData = <?php echo $permission;?>;
+permissionData = <?php echo $permission;?>;
 </script>
 </head>
 
@@ -56,7 +56,7 @@ editSelectPermission.permissionData = <?php echo $permission;?>;
 </div>
 <div class="page_button">
 <a href="javascript:;" class="sun-button plain" onClick="window.parent.sun.layer.close('layer_edit_select_permission');">关闭</a>
-<input type="button" class="sun-button" value="确定" onClick="editSelectPermission.submit();" />
+<input type="button" class="sun-button" value="确定" onClick="submit();" />
 </div>
 </body>
 </html>

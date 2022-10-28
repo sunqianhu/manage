@@ -12,7 +12,7 @@ class DbHelper{
     
     /**
      * 得到错误
-     * @return String 错误描述
+     * @return string 错误描述
      */
     function getError(){
         return $this->error;
@@ -20,8 +20,8 @@ class DbHelper{
     
     /**
      * 设置错误
-     * @param String $error 错误描述
-     * @return Boolean
+     * @param string $error 错误描述
+     * @return boolean
      */
     function setError($error){
         return $this->error = $error;
@@ -29,9 +29,9 @@ class DbHelper{
     
     /**
      * 得到pdo单例实例
-     * @return Object pdo对象
+     * @return object pdo对象
      */
-    function getInstance(){
+    function getPdo(){
         $pdo = null;
         $dsn = '';
         $config = array();
@@ -69,10 +69,10 @@ class DbHelper{
     /**
      * 执行sql语句
      * @access public
-     * @param Object $pdo pdo对象
-     * @param String $sql sql
-     * @param Array $data 数据
-     * @return Object PDOStatement对象
+     * @param PDO $pdo pdo对象
+     * @param string $sql sql
+     * @param array $data 数据
+     * @return PDOStatement PDOStatement对象
      */
     function query($pdo, $sql, $data = array()){
         $pdoStatement = null;
@@ -110,9 +110,9 @@ class DbHelper{
     /**
      * 得到查询条件的全部数据
      * @access public
-     * @param Object $pdoStatement 结果集对象
-     * @param Integer $type 返回内容格式
-     * @return Array
+     * @param PDO $pdoStatement 结果集对象
+     * @param integer $type 返回内容格式
+     * @return array
      */
     function fetchAll($pdoStatement, $type = \PDO::FETCH_ASSOC){
         $datas = array();
@@ -128,9 +128,9 @@ class DbHelper{
     /**
      * 从结果集中获取下一行
      * @access public
-     * @param Object $pdoStatement 结果集对象
-     * @param Integer $type 返回内容格式
-     * @return Array
+     * @param PDO $pdoStatement 结果集对象
+     * @param integer $type 返回内容格式
+     * @return array
      */
     function fetch($pdoStatement, $type = \PDO::FETCH_ASSOC){
         $data = array();
@@ -146,9 +146,9 @@ class DbHelper{
     /**
      * 从结果集中的下一行返回单独的一列
      * @access public
-     * @param Object $pdoStatement 结果集对象
-     * @param Array $data 数据
-     * @return String
+     * @param PDO $pdoStatement 结果集对象
+     * @param array $data 数据
+     * @return string
      */
     function fetchColumn($pdoStatement, $columnNumber = 0){
         $field = '';
@@ -164,7 +164,7 @@ class DbHelper{
     /**
      * 得到pdo错误描述
      * @param PDO $pdo pdo对象
-     * @return String 错误描述
+     * @return string 错误描述
      */
     function getPdoError($pdo){
         $errors = array();
@@ -187,7 +187,7 @@ class DbHelper{
     /**
      * 得到预处理结果对象错误描述
      * @param PDOStatement $pdoStatement 结果集对象
-     * @return String 错误描述
+     * @return string 错误描述
      */
     function getPodStatementError($pdoStatement){
         $errors = array();

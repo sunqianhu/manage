@@ -8,9 +8,9 @@ class Safe{
     
     /**
      * 转实体
-     * @param Array $datas 数据
-     * @param Array $excludeField 排除字段
-     * @return String 处理后可以被前台显示的字符串
+     * @param array $datas 数据
+     * @param array $excludeField 排除字段
+     * @return string 处理后可以被前台显示的字符串
      */
     static function entity($datas, $excludeField = ''){
         $excludeFields = array();

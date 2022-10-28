@@ -9,11 +9,11 @@ use library\Validate;
 use library\Auth;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
-$validate = new Validate();
 $data = array();
+$validate = new Validate();
 $return = array(
     'status'=>'error',
     'message'=>''

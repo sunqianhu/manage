@@ -2,12 +2,10 @@
  * 添加权限
  */
 
-var add = {};
-
 /**
  * 选择权限
  */
-add.selectPermission = function(){
+function selectPermission(){
     var url = "add_select_permission.php";
     window.parent.sun.layer.open({
         id: "layer_add_select_permission",
@@ -22,19 +20,19 @@ add.selectPermission = function(){
  * 选择权限回调
  * @param json node 节点数据
  */
-add.selectPermissionCallback = function(node){
-    var domParentId = $("#parent_id");
-    var domParentName = $("#parent_name");
+function selectPermissionCallback(node){
+    var nodeParentId = $("#parent_id");
+    var nodeParentName = $("#parent_name");
     
-    domParentId.val(node.id);
-    domParentName.val(node.name);
+    nodeParentId.val(node.id);
+    nodeParentName.val(node.name);
 }
 
 /**
  * 提交表单
  */
-add.formSubmit = function(){
-    sun.formSubmit({
+function submitForm(id){
+    sun.submitForm({
         selector: ".form",
         success: function(ret){
             if(ret.status == "error"){
@@ -52,5 +50,5 @@ add.formSubmit = function(){
 }
 
 $(function(){
-    add.formSubmit();
+    submitForm();
 });

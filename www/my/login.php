@@ -39,7 +39,7 @@ $config = Config::getAll();
 <div class="row captcha">
 <span class="iconfont icon-auth icon"></span>
 <input type="text" id="captcha" name="captcha" placeholder="请输入密码" required />
-<img src="captcha.php?mo=<?php echo time();?>" title="点击更新验证码" onClick="index.changeCaptcha();" />
+<img src="captcha.php?mo=<?php echo time();?>" title="点击更新验证码" onClick="changeCaptcha();" />
 </div>
 <div class="button_box">
 <input type="submit" class="sun-button big block" value="登录" />

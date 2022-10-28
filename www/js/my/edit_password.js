@@ -2,13 +2,11 @@
  * 修改密码
  */
 
-var editPassword = {};
-
 /**
  * 提交表单
  */
-editPassword.formSubmit = function(){
-    sun.formSubmit({
+function submitForm(){
+    sun.submitForm({
         selector: ".form",
         success: function(ret){
             if(ret.status == "error"){
@@ -26,5 +24,5 @@ editPassword.formSubmit = function(){
 }
 
 $(function(){
-    editPassword.formSubmit();
+    submitForm();
 });

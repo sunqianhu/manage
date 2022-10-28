@@ -5,19 +5,19 @@
 require_once '../../library/app.php';
 
 use library\Auth;
-use library\DbHelper;
 use library\Config;
+use library\DbHelper;
 use library\FrameMain;
 use library\Pagination;
 use library\Ztree;
 use library\ArrayTwo;
 use library\Safe;
-use library\Dictionary;
-use library\Department;
-use library\User;
+use library\model\Dictionary;
+use library\model\Department;
+use library\model\User;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -48,7 +48,7 @@ $roles = array();
 $optionRole = '';
 $optionStatus = '';
 $ztree = new Ztree();
-$dictionary = new Dictionary();
+$dictionaryModel = new Dictionary();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -111,14 +111,14 @@ $recordTotal = $dbHelper->fetchColumn($pdoStatement);
 $pagination = new Pagination($recordTotal);
 $paginationNodeIntact = $pagination->getNodeIntact();
 
-$sql = "select id, username, head, `name`, `time_login`, time_edit, phone, status_id, department_id from user where $where order by id asc limit ".$pagination->limitStart.','.$pagination->pageSize;
+$sql = "select id, username, head, `name`, `login_time`, edit_time, phone, status_id, department_id from user where $where order by id asc limit ".$pagination->limitStart.','.$pagination->pageSize;
 $pdoStatement = $dbHelper->query($pdo, $sql, $data);
 $users = $dbHelper->fetchAll($pdoStatement);
 foreach($users as $key => $user){
     $users[$key]['department_name'] = $departmentObject->getName($user['department_id']);
     $users[$key]['status_name'] = $userObject->getBadgeStatusName($user['status_id']);
-    $users[$key]['time_edit_name'] = $user['time_edit'] ? date('Y-m-d H:i:s', $user['time_edit']) : '-';
-    $users[$key]['time_login_name'] = $user['time_login'] ? date('Y-m-d H:i:s', $user['time_login']) : '-';
+    $users[$key]['edit_time_name'] = $user['edit_time'] ? date('Y-m-d H:i:s', $user['edit_time']) : '-';
+    $users[$key]['login_time_name'] = $user['login_time'] ? date('Y-m-d H:i:s', $user['login_time']) : '-';
     $users[$key]['head_url'] = $userObject->getHeadUrl($user['head']);
 }
 
@@ -128,7 +128,7 @@ $departments = $dbHelper->fetchAll($pdoStatement);
 $departments = $ztree->setOpenByFirst($departments);
 $department = json_encode($departments);
 
-$optionStatus = $dictionary->getOption('system_user_status', array($search['status']));
+$optionStatus = $dictionaryModel->getOption('system_user_status', array($search['status']));
 
 $sql = 'select id, name from role order by id asc';
 $pdoStatement = $dbHelper->query($pdo, $sql);
@@ -153,7 +153,7 @@ $search = Safe::entity($search);
 <link href="<?php echo $config['app_domain'];?>css/system/user/index.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/system/user/index.js"></script>
 <script type="text/javascript">
-index.departmentData = <?php echo $department;?>;
+var departmentData = <?php echo $department;?>;
 </script>
 </head>
 
@@ -205,7 +205,7 @@ index.departmentData = <?php echo $department;?>;
 
 <div class="data sun-mt10">
 <div class="toolbar">
-<a href="javascript:;" class="sun-button" onClick="index.add(0);">添加</a>
+<a href="javascript:;" class="sun-button" onClick="add(0);">添加</a>
 </div>
 <table class="sun-table-list hover sun-mt10" width="100%">
   <tr>
@@ -232,18 +232,18 @@ foreach($users as $user){
     <td><?php echo $user['name'];?></td>
     <td><?php echo $user['phone'];?></td>
     <td><?php echo $user['department_name'];?></td>
-    <td><?php echo $user['time_edit_name'];?></td>
-    <td><?php echo $user['time_login_name'];?></td>
+    <td><?php echo $user['edit_time_name'];?></td>
+    <td><?php echo $user['login_time_name'];?></td>
     <td><?php echo $user['status_name'];?></td>
     <td>
 <a href="detail.php?id=<?php echo $user['id'];?>" class="sun-button plain small sun-mr5">详情</a>
-<a href="javascript:;" class="sun-button plain small sun-mr5" onClick="index.edit(<?php echo $user['id'];?>)">修改</a>
+<a href="javascript:;" class="sun-button plain small sun-mr5" onClick="edit(<?php echo $user['id'];?>)">修改</a>
 <span class="sun-dropdown-menu align-right operation_more">
 <div class="title"><a href="javascript:;" class="sun-button plain small">更多 <span class="iconfont icon-arrow-down arrow"></span></a></div>
 <div class="content">
 <ul>
-<li><a href="javascript:;" onClick="index.enable(<?php echo $user['id'];?>)">启用</a></li>
-<li><a href="javascript:;" onClick="index.disable(<?php echo $user['id'];?>)">停用</a></li>
+<li><a href="javascript:;" onClick="enable(<?php echo $user['id'];?>)">启用</a></li>
+<li><a href="javascript:;" onClick="disable(<?php echo $user['id'];?>)">停用</a></li>
 </ul>
 </div>
 </span>

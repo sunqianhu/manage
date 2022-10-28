@@ -9,11 +9,11 @@ use library\DbHelper;
 use library\Validate;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
-$validate = new Validate();
 $data = array();
+$validate = new Validate();
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -57,12 +57,12 @@ if(!$validate->check($_POST)){
 $permissionIds = explode(',', $_POST['permission_ids']);
 
 // 入库
-$sql = 'insert into role(name,remark,time_add,time_edit) values(:name,:remark,:time_add,:time_edit)';
+$sql = 'insert into role(name,remark,add_time,edit_time) values(:name,:remark,:add_time,:edit_time)';
 $data = array(
     ':name'=>$_POST['name'],
     ':remark'=>$_POST['remark'],
-    ':time_add'=>time(),
-    ':time_edit'=>time()
+    ':add_time'=>time(),
+    ':edit_time'=>time()
 );
 if(!$dbHelper->query($pdo, $sql, $data)){
     $return['message'] = $dbHelper->getError();

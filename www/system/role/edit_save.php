@@ -9,11 +9,11 @@ use library\DbHelper;
 use library\Validate;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
-$validate = new Validate();
 $data = array();
+$validate = new Validate();
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -76,12 +76,12 @@ if(empty($role)){
 $sql = 'update role set
 name = :name,
 remark = :remark,
-time_edit = :time_edit
+edit_time = :edit_time
 where id = :id';
 $data = array(
     ':name'=>$_POST['name'],
     ':remark'=>$_POST['remark'],
-    ':time_edit'=>time(),
+    ':edit_time'=>time(),
     ':id'=>$role['id']
 );
 if(!$dbHelper->query($pdo, $sql, $data)){

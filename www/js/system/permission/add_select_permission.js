@@ -8,7 +8,7 @@ var addSelectPermission = {
 /**
  * ztree初始化
  */
-addSelectPermission.ztreeInit = function(){
+function ztreeInit(){
     var setting = {
         data: {
             simpleData: {
@@ -18,16 +18,16 @@ addSelectPermission.ztreeInit = function(){
             }
         }
     };
-    var nodes = addSelectPermission.permissionData;
-    addSelectPermission.ztree = $.fn.zTree.init($("#ztree"), setting, nodes);
+    var nodes = permissionData;
+    ztree = $.fn.zTree.init($("#ztree"), setting, nodes);
 }
 
 /**
  * 确定
  */
-addSelectPermission.submit = function(){
+function submit(){
     var node = {}
-    var nodes = addSelectPermission.ztree.getSelectedNodes();
+    var nodes = ztree.getSelectedNodes();
     var iframeWindow;
     
     if(!nodes || nodes.length == 0){
@@ -42,10 +42,10 @@ addSelectPermission.submit = function(){
     node = nodes[0];
     
     iframeWindow = sun.layer.getIframeWindow(window.parent, "layer_permission_add_iframe");
-    iframeWindow.add.selectPermissionCallback(node);
+    iframeWindow.selectPermissionCallback(node);
     window.parent.sun.layer.close("layer_add_select_permission");
 }
 
 $(function(){
-    addSelectPermission.ztreeInit();
+    ztreeInit();
 });

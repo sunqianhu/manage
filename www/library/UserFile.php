@@ -11,7 +11,7 @@ class UserFile{
     
     /**
      * 得到错误
-     * @return String 错误描述
+     * @return string 错误描述
      */
     function getError(){
         return $this->error;
@@ -19,8 +19,8 @@ class UserFile{
     
     /**
      * 设置错误
-     * @param String $error 错误描述
-     * @return Boolean
+     * @param string $error 错误描述
+     * @return boolean
      */
     function setError($error){
         return $this->error = $error;
@@ -28,8 +28,8 @@ class UserFile{
 
     /**
      * 得到文件访问url
-     * @param String $path 文件全路径
-     * @return String 文件访问url
+     * @param string $path 文件全路径
+     * @return string 文件访问url
      */
     function getUrl($path){
         $url = '';
@@ -46,9 +46,9 @@ class UserFile{
     
     /**
      * copy附件到本地
-     * @param String $url 文件网络路径 
-     * @param String $path 本地文件相对路径 
-     * @return String path
+     * @param string $url 文件网络路径 
+     * @param string $path 本地文件相对路径 
+     * @return string path
      */
     function copy($url, $path){
         $configUserFilePath = ''; // 配置文件路径

@@ -5,17 +5,17 @@
 require_once '../../library/app.php';
 
 use library\Auth;
-use library\DbHelper;
 use library\Config;
+use library\DbHelper;
 use library\Validate;
 use library\Safe;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
-$validate = new Validate();
 $data = array();
+$validate = new Validate();
 $config = Config::getAll();
 $dictionary = array();
 
@@ -65,31 +65,39 @@ $dictionary = Safe::entity($dictionary);
 <form method="post" action="edit_save.php" class="sun-form-brief form">
 <div class="page_body">
 <input type="hidden" name="id" value="<?php echo $dictionary['id'];?>" />
-<div class="row">
-<div class="title"><span class="required">*</span> 字典类型</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 字典类型</div>
+<div class="value">
+<div class="body">
 <input type="text" name="type" id="type" value="<?php echo $dictionary['type'];?>" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 字典键</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 字典键</div>
+<div class="value">
+<div class="body">
 <input type="text" name="key" id="key" value="<?php echo $dictionary['key'];?>" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 字典值</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 字典值</div>
+<div class="value">
+<div class="body">
 <input type="text" name="value" id="value" value="<?php echo $dictionary['value'];?>" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 排序</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 排序</div>
+<div class="value">
+<div class="body">
 <input type="number" name="sort" id="sort" value="<?php echo $dictionary['sort'];?>" />
+</div>
 </div>
 </div>
 

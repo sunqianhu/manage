@@ -10,7 +10,7 @@ use library\Validate;
 
 $validate = new Validate();
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $return = array(
     'status'=>'error',
@@ -86,7 +86,7 @@ name = :name,
 phone = :phone,
 department_id = :department_id,
 role_id_string = :role_id_string,
-time_edit = :time_edit
+edit_time = :edit_time
 [password]
 where id = :id';
 $data = array(
@@ -95,7 +95,7 @@ $data = array(
     ':phone'=>$_POST['phone'],
     ':department_id'=>$_POST['department_id'],
     ':role_id_string'=>$_POST['role_id_string'],
-    ':time_edit'=>time(),
+    ':edit_time'=>time(),
     ':id'=>$user['id']
 );
 if($_POST['password'] !== ''){

@@ -10,7 +10,7 @@ use library\Validate;
 
 $validate = new Validate();
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $return = array(
     'status'=>'error',

@@ -1,12 +1,11 @@
 /**
  * 首页
  */
-var index = {};
 
 /**
  * 添加
  */
-index.add = function(){
+function add(){
     var url = "add.php";
     sun.layer.open({
         id: "layer_dictionary_add",
@@ -20,7 +19,7 @@ index.add = function(){
 /**
  * 修改
  */
-index.edit = function(id){
+edit = function(id){
     var url = "edit.php?id="+id;
     sun.layer.open({
         id: "layer_dictionary_edit",
@@ -34,7 +33,7 @@ index.edit = function(id){
 /**
  * 删除
  */
-index.delete = function(id){
+function myDelete(id){
     var url = "delete.php?id="+id;
     if(!confirm("确定删除吗？")){
         return;

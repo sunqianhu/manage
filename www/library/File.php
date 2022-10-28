@@ -7,8 +7,8 @@ namespace library;
 class File{
     /**
      * 得到可读文件大小
-     * @param Integer $byte 字节数
-     * @return String 可读字节大小
+     * @param integer $byte 字节数
+     * @return string 可读字节大小
      */
     function getSizeReadable($byte){
         $readable = '';

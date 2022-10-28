@@ -1,14 +1,12 @@
 /**
  * 首页
  */
-var index = {
-    searchDepartmentZtree: null
-};
+var searchDepartmentZtree;
 
 /**
  * 搜索部门初始化
  */
-index.searchDepartmentZtreeInit = function(){
+function searchDepartmentZtreeInit(){
     var setting = {
         data: {
             simpleData: {
@@ -18,11 +16,11 @@ index.searchDepartmentZtreeInit = function(){
             }
         },
         callback: {
-            onClick: index.searchDepartmentSelected
+            onClick: searchDepartmentSelected
         }
     };
-    var nodes = index.departmentData;
-    index.searchDepartmentZtree = $.fn.zTree.init($(".search #ztree"), setting, nodes);
+    var nodes = departmentData;
+    searchDepartmentZtree = $.fn.zTree.init($(".search #ztree"), setting, nodes);
     
     sun.dropDownClick.init({
         selector: ".search .department"
@@ -32,24 +30,24 @@ index.searchDepartmentZtreeInit = function(){
 /**
  * 设置选中的菜单
  */
-index.searchDepartmentSelected = function(event, id, node){
-    var domDepartmentId = $(".search #department_id");
-    var domDepartmentName = $(".search #department_name");
-    var domDropDownContent = $(".search .department > .content");
+function searchDepartmentSelected(event, id, node){
+    var nodeDepartmentId = $(".search #department_id");
+    var nodeDepartmentName = $(".search #department_name");
+    var nodeDropDownContent = $(".search .department > .content");
     
     if(!node){
         return;
     }
     
-    domDepartmentId.val(node.id);
-    domDepartmentName.val(node.name);
+    nodeDepartmentId.val(node.id);
+    nodeDepartmentName.val(node.name);
     sun.dropDownClick.close(".search .department");
 }
 
 /**
  * 添加
  */
-index.add = function(){
+function add(){
     var url = "add.php";
     sun.layer.open({
         id: "layer_user_add",
@@ -63,7 +61,7 @@ index.add = function(){
 /**
  * 修改
  */
-index.edit = function(id){
+function edit(id){
     var url = "edit.php?id="+id;
     sun.layer.open({
         id: "layer_user_edit",
@@ -77,7 +75,7 @@ index.edit = function(id){
 /**
  * 启用
  */
-index.enable = function(id){
+function enable(id){
     var url = "enable.php?id="+id;
     
     $.getJSON(url, function(ret){
@@ -94,7 +92,7 @@ index.enable = function(id){
 /**
  * 停用
  */
-index.disable = function(id){
+function disable(id){
     var url = "disable.php?id="+id;
     if(!confirm("确定停用吗？")){
         return;
@@ -112,7 +110,7 @@ index.disable = function(id){
 }
 
 $(function(){
-    index.searchDepartmentZtreeInit();
+    searchDepartmentZtreeInit();
     
     sun.dropDownMenuClick.init({
         selector: ".data table .operation_more"

@@ -5,16 +5,16 @@
 require_once '../../library/app.php';
 
 use library\Auth;
-use library\DbHelper;
 use library\Config;
+use library\DbHelper;
 use library\FrameMain;
 use library\Pagination;
 use library\Safe;
-use library\User;
-use library\Department;
+use library\model\User;
+use library\model\Department;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -34,7 +34,7 @@ $pagination = null; // 分页
 $paginationNodeIntact = ''; // 节点
 $loginLogs = array();
 $department = new Department();
-$user = new User();
+$userModel = new User();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -50,12 +50,12 @@ $frameMainMenu = $frameMain->getMenu('system_login_log');
 
 // 搜索
 if(isset($_GET['time_start']) && $_GET['time_start'] !== ''){
-    $wheres[] = 'time_login > :time_start';
+    $wheres[] = 'login_time > :time_start';
     $data[':time_start'] = strtotime($_GET['time_start']);
     $search['time_start'] = $_GET['time_start'];
 }
 if(isset($_GET['time_end']) && $_GET['time_end'] !== ''){
-    $wheres[] = 'time_login < :time_end';
+    $wheres[] = 'login_time < :time_end';
     $data[':time_end'] = strtotime($_GET['time_end']);
     $search['time_end'] = $_GET['time_end'];
 }
@@ -84,13 +84,13 @@ $recordTotal = $dbHelper->fetchColumn($pdoStatement);
 $pagination = new Pagination($recordTotal);
 $paginationNodeIntact = $pagination->getNodeIntact();
 
-$sql = "select id, user_id, department_id, ip, time_login from login_log where $where order by id desc limit ".$pagination->limitStart.','.$pagination->pageSize;
+$sql = "select id, user_id, department_id, ip, login_time from login_log where $where order by id desc limit ".$pagination->limitStart.','.$pagination->pageSize;
 $pdoStatement = $dbHelper->query($pdo, $sql, $data);
 $loginLogs = $dbHelper->fetchAll($pdoStatement);
 
 foreach($loginLogs as $key => $loginLog){
-    $loginLogs[$key]['time_login_name'] = date('Y-m-d H:i:s', $loginLog['time_login']);
-    $loginLogs[$key]['user_name'] = $user->getName($loginLog['user_id']);
+    $loginLogs[$key]['login_time_name'] = date('Y-m-d H:i:s', $loginLog['login_time']);
+    $loginLogs[$key]['user_name'] = $userModel->getName($loginLog['user_id']);
     $loginLogs[$key]['department_name'] = $department->getName($loginLog['department_id']);
 }
 
@@ -159,7 +159,7 @@ foreach($loginLogs as $loginLog){
     <td><?php echo $loginLog['department_name'];?></td>
     <td><?php echo $loginLog['user_name'];?></td>
     <td><?php echo $loginLog['ip'];?></td>
-    <td><?php echo $loginLog['time_login_name'];?></td>
+    <td><?php echo $loginLog['login_time_name'];?></td>
     <td>
 <a href="../user/detail.php?id=<?php echo $loginLog['user_id'];?>" class="sun-button plain small">用户</a>
     </td>

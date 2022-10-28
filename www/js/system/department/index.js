@@ -1,13 +1,12 @@
 /**
  * 部门管理
  */
-var index = {};
 
 /**
  * 添加
  * @param int parentId 上级id
  */
-index.add = function(parentId){
+function add(parentId){
     var url = "add.php?parent_id="+parentId;
     sun.layer.open({
         id: "layer_department_add",
@@ -21,7 +20,7 @@ index.add = function(parentId){
 /**
  * 修改
  */
-index.edit = function(id){
+function edit(id){
     var url = "edit.php?id="+id;
     sun.layer.open({
         id: "layer_department_edit",
@@ -35,9 +34,9 @@ index.edit = function(id){
 /**
  * 删除
  */
-index.delete = function(id){
+function myDelete(id){
     var url = "delete.php?id="+id;
-    var domTr = $(".data table .tr"+id);
+    var nodeTr = $(".data table .tr"+id);
     if(!confirm("确定删除吗？")){
         return;
     }
@@ -48,7 +47,7 @@ index.delete = function(id){
             return;
         }
         sun.toast("success", ret.message, 1000, function(){
-            domTr.remove();
+            nodeTr.remove();
         });
     });
 }

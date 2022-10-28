@@ -1,24 +1,24 @@
 <?php
 /**
- * 用户
+ * 用户模型
  */
-namespace library;
+namespace library\model;
 
-use library\DbHelper;
 use library\Config;
-use library\Dictionary;
+use library\DbHelper;
+use library\model\Dictionary;
 
 class User{
     
     /**
      * 得到用户姓名
      * @access public
-     * @param Integer $id 用户id
-     * @return String 用户姓名
+     * @param integer $id 用户id
+     * @return string 用户姓名
      */
     function getName($id){
         $dbHelper = new DbHelper();
-        $pdo = $dbHelper->getInstance();
+        $pdo = $dbHelper->getPdo();
         $pdoStatement = null;
         $sql = '';
         $data = array();
@@ -37,8 +37,8 @@ class User{
     /**
      * 得到用户头像url
      * @access public
-     * @param String $path 头像路径
-     * @return String 头像url
+     * @param string $path 头像路径
+     * @return string 头像url
      */
     function getHeadUrl($path){
         $config = Config::getAll();
@@ -56,23 +56,23 @@ class User{
     /**
      * 得到徽章状态
      * @access public
-     * @param Integer $statusId 状态ID
-     * @return String 徽章
+     * @param integer $statusId 状态ID
+     * @return string 徽章
      */
     function getBadgeStatusName($statusId){
         $statusName = '';
         $class = '';
-        $node = '';
-        $dictionary = new Dictionary();
+        $tag = '';
+        $dictionaryModel = new Dictionary();
         
-        $statusName = $dictionary->getValue('system_user_status', $statusId);
+        $statusName = $dictionaryModel->getValue('system_user_status', $statusId);
         switch($statusId){
             case 2:
                 $class = 'orange';
             break;
         }
-        $node = '<span class="sun-badge '.$class.'">'.$statusName.'</span>';
+        $tag = '<span class="sun-badge '.$class.'">'.$statusName.'</span>';
         
-        return $node;
+        return $tag;
     }
 }

@@ -4,24 +4,24 @@
  */
 require_once '../library/app.php';
 
-use library\DbHelper;
-use library\UserFileUpload;
-use library\User;
 use library\Auth;
+use library\DbHelper;
+use library\model\User;
+use library\UserFileUpload;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
-$return = array(
-    'status'=>'error',
-    'msg'=>''
-); // 返回数据
 $user = array();
 $path = ''; // 头像路径
 $userObject = new User();
 $userFileUpload = new UserFileUpload();
+$return = array(
+    'status'=>'error',
+    'msg'=>''
+); // 返回数据
 
 // 验证
 if(!Auth::isLogin()){

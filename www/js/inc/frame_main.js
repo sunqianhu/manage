@@ -17,17 +17,17 @@ frameMain.userDropDownMenu = function(){
  * 页面左边初始化
  */
 frameMain.pageLeftInit = function(){
-	var domBody = $("body");
+	var nodeBody = $("body");
     var cookie = "";
     var windowWidth = $(window).width();
     
     cookie = frameMain.pageLeftGetCookie();
 	if(cookie == "close"){
-		domBody.addClass("close");
+		nodeBody.addClass("close");
 	}
     
     if(windowWidth < 768 && cookie == ""){
-        domBody.addClass("close");
+        nodeBody.addClass("close");
     }
 }
 
@@ -35,13 +35,13 @@ frameMain.pageLeftInit = function(){
  * 页面左边打开关闭
  */
 frameMain.pageLeftToggle = function(){
-    var domBody = $("body");
+    var nodeBody = $("body");
     
-    if(domBody.hasClass("close")){
-        domBody.removeClass("close");
+    if(nodeBody.hasClass("close")){
+        nodeBody.removeClass("close");
         frameMain.pageLeftSetCookie("open");
     }else{
-        domBody.addClass("close");
+        nodeBody.addClass("close");
         frameMain.pageLeftSetCookie("close");
     }
 };
@@ -82,35 +82,35 @@ frameMain.pageLeftSetCookie = function(value){
  * 菜单活跃
  */
 frameMain.menuActive = function(){
-    var domActiveLi;
-    var domActiveParentLis;
-    var domActiveParentLiUls;
+    var nodeActiveLi;
+    var nodeActiveParentLis;
+    var nodeActiveParentLiUls;
     
-    domActiveLi = $(".page_left .menu li.active"); // 活跃的li
-    if(domActiveLi.length == 0){
+    nodeActiveLi = $(".page_left .menu li.active"); // 活跃的li
+    if(nodeActiveLi.length == 0){
         return;
     }
     
-    domActiveParentLis = domActiveLi.parents(".page_left .menu li"); // 活跃的li的所有父li
-    domActiveParentLiUls = $(" > ul", domActiveParentLis); // 活跃的li的所有父li的ul
+    nodeActiveParentLis = nodeActiveLi.parents(".page_left .menu li"); // 活跃的li的所有父li
+    nodeActiveParentLiUls = $(" > ul", nodeActiveParentLis); // 活跃的li的所有父li的ul
 
-    domActiveParentLis.addClass("open");
-    domActiveParentLiUls.css({"display":"block"});
+    nodeActiveParentLis.addClass("open");
+    nodeActiveParentLiUls.css({"display":"block"});
 };
 
 /**
  * 菜单切换
  */
 frameMain.menuToggle = function(){
-    var domAs = $(".page_left .menu li a");
+    var nodeAs = $(".page_left .menu li a");
     
-    domAs.on("click", function(){
-        var domClickA = $(this); // 点击的a
-        var domClickLi = domClickA.parent(); // 点击的li
-        var domClickLiUl = domClickA.next("ul"); // 点击的li的ul
-        var domSiblingLis = domClickLi.siblings("li"); // 同级li
-        var domSiblingLiUls = $(" > ul", domSiblingLis); // 同级li的ul
-        var clickLiUlExists = domClickLiUl.length > 0 ? true : false; // 点击的li的ul是否存在
+    nodeAs.on("click", function(){
+        var nodeClickA = $(this); // 点击的a
+        var nodeClickLi = nodeClickA.parent(); // 点击的li
+        var nodeClickLiUl = nodeClickA.next("ul"); // 点击的li的ul
+        var nodeSiblingLis = nodeClickLi.siblings("li"); // 同级li
+        var nodeSiblingLiUls = $(" > ul", nodeSiblingLis); // 同级li的ul
+        var clickLiUlExists = nodeClickLiUl.length > 0 ? true : false; // 点击的li的ul是否存在
         
         // 没有子菜单什么都不做
         if(!clickLiUlExists){
@@ -118,15 +118,15 @@ frameMain.menuToggle = function(){
         }
         
         // 展开折叠
-        if(domClickLi.hasClass("open")){
-            domClickLi.removeClass("open"); // 去掉open
-			domClickLiUl.slideUp(); // 折叠
+        if(nodeClickLi.hasClass("open")){
+            nodeClickLi.removeClass("open"); // 去掉open
+			nodeClickLiUl.slideUp(); // 折叠
 		}else{
-            domClickLi.addClass("open"); // 添加open
-			domClickLiUl.slideDown(); // 展开
+            nodeClickLi.addClass("open"); // 添加open
+			nodeClickLiUl.slideDown(); // 展开
             
-            domSiblingLis.removeClass("open"); // 同级去掉open
-            domSiblingLiUls.slideUp(); // 同级折叠
+            nodeSiblingLis.removeClass("open"); // 同级去掉open
+            nodeSiblingLiUls.slideUp(); // 同级折叠
 		}
     });
 };

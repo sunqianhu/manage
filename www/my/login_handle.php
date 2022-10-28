@@ -4,27 +4,27 @@
  */
 require_once '../library/app.php';
 
-use library\DbHelper;
 use library\Config;
+use library\DbHelper;
 use library\Validate;
 use library\Auth;
 use library\Ip;
-use library\User;
-use library\Dictionary;
+use library\model\User;
+use library\model\Dictionary;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
-$validate = new Validate();
-$data = array(); // 数据
+$data = array();
+$validate = new Validate(); // 数据
 $user = array();
 $userObject = new User();
 $department = array();
 $permissions = array(); // 权限
 $ip = new Ip();
 $ipString = '';
-$dictionary = new Dictionary();
+$dictionaryModel = new Dictionary();
 $return = array(
     'status'=>'error',
     'message'=>'',
@@ -73,7 +73,7 @@ unset($_SESSION['login_captcha']);
 $return['data']['captcha'] = '1';
 
 // 用户
-$sql = 'select id, username, name, department_id, role_id_string, head, status_id, time_login, ip from user where username = :username and password = :password limit 0,1';
+$sql = 'select id, username, name, department_id, role_id_string, head, status_id, login_time, ip from user where username = :username and password = :password limit 0,1';
 $data = array(
     ':username'=>$_POST['username'],
     ':password'=>md5($_POST['password'])
@@ -91,7 +91,7 @@ if(empty($user)){
     exit;
 }
 if($user['status_id'] != 1){
-    $return['message'] = $dictionary->getValue('system_user_status', $user['status_id']);
+    $return['message'] = $dictionaryModel->getValue('system_user_status', $user['status_id']);
     echo json_encode($return);
     exit;
 }
@@ -125,18 +125,18 @@ if(empty($permissions)){
 
 // 记录
 $ipString = $ip->get();
-$sql = "update user set time_login = ".time().", ip = '".$ipString."' where id = :id";
+$sql = "update user set login_time = ".time().", ip = '".$ipString."' where id = :id";
 $data = array(
     ':id'=>$user['id']
 );
 $dbHelper->query($pdo, $sql, $data);
 
 // 日志
-$sql = 'insert into login_log(user_id, department_id, time_login, ip) values(:user_id, :department_id, :time_login, :ip)';
+$sql = 'insert into login_log(user_id, department_id, login_time, ip) values(:user_id, :department_id, :login_time, :ip)';
 $data = array(
     ':user_id'=>$user['id'],
     ':department_id'=>$department['id'],
-    ':time_login'=>time(),
+    ':login_time'=>time(),
     ':ip'=>$ipString
 );
 $dbHelper->query($pdo, $sql, $data);

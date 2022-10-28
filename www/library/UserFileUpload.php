@@ -15,7 +15,6 @@ class UserFileUpload{
     public $type = ''; // 类型
     public $size = ''; // 文件大小
     public $error = ''; // 错误描述
-    
     public $sizeMax = 1024 * 1024 * 500; // 文件上传大小限制
     public $typeAllows = array(
         'jpeg'=> 'image/jpeg', 
@@ -41,7 +40,7 @@ class UserFileUpload{
     
     /**
      * 得到错误
-     * @return String 错误描述
+     * @return string 错误描述
      */
     function getError(){
         return $this->error;
@@ -49,8 +48,8 @@ class UserFileUpload{
     
     /**
      * 设置错误
-     * @param String $error 错误描述
-     * @return Boolean
+     * @param string $error 错误描述
+     * @return boolean
      */
     function setError($error){
         return $this->error = $error;
@@ -59,7 +58,7 @@ class UserFileUpload{
     /**
      * 设置最大上传文件大小
      * @param integer $max 文件大小 
-     * @return Boolean
+     * @return boolean
      */
     function setSizeMax($max){
         return $this->sizeMax = $max;
@@ -67,8 +66,8 @@ class UserFileUpload{
     
     /**
      * 设置允许上传的文件类型
-     * @param Array $typeAllows 文件类型 
-     * @return Boolean
+     * @param array $typeAllows 文件类型 
+     * @return boolean
      */
     function settypeAllows($typeAllows){
         return $this->typeAllows = $typeAllows;
@@ -76,9 +75,9 @@ class UserFileUpload{
     
     /**
      * 上传
-     * @param String $dirModule 目录模块 
-     * @param String $fieldName 文件表单字段名称 
-     * @return Boolean 上传结果 true | false
+     * @param string $dirModule 目录模块 
+     * @param string $fieldName 文件表单字段名称 
+     * @return boolean 上传结果 true | false
      */
     function upload($dirModule, $fieldName){
         $configUserFilePath = ''; // 配置文件路径

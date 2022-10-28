@@ -9,19 +9,19 @@ use library\Validate;
 use library\Auth;
 use library\Config;
 use library\Safe;
-use library\User;
-use library\Department;
+use library\model\User;
+use library\model\Department;
 
 $validate = new Validate();
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $config = Config::getAll();
 $operationLog = array();
 $sql = '';
 $data = array();
 $department = new Department();
-$user = new User();
+$userModel = new User();
 
 // 验证
 if(!Auth::isLogin()){
@@ -54,8 +54,8 @@ if(empty($operationLog)){
     header('location:../../error.php?message='.urlencode('没有找到记录'));
     exit;
 }
-$operationLog['time_add_name'] = date('Y-m-d H:i:s', $operationLog['time_add']);
-$operationLog['user_name'] = $user->getName($operationLog['user_id']);
+$operationLog['add_time_name'] = date('Y-m-d H:i:s', $operationLog['add_time']);
+$operationLog['user_name'] = $userModel->getName($operationLog['user_id']);
 $operationLog['department_name'] = $department->getName($operationLog['department_id']);
 
 $operationLog = Safe::entity($operationLog, 'url');
@@ -91,7 +91,7 @@ $operationLog = Safe::entity($operationLog, 'url');
 </tr>
 <tr>
 <td class="name" align="right">操作时间</td>
-<td><?php echo $operationLog['time_add_name'];?></td>
+<td><?php echo $operationLog['add_time_name'];?></td>
 </tr>
 <tr>
 <td class="name" align="right">User Agent</td>

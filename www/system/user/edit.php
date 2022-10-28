@@ -5,17 +5,17 @@
 require_once '../../library/app.php';
 
 use library\Auth;
-use library\DbHelper;
 use library\Config;
+use library\DbHelper;
 use library\ArrayTwo;
 use library\Validate;
 use library\Safe;
-use library\Dictionary;
-use library\Department;
+use library\model\Dictionary;
+use library\model\Department;
 
 $validate = new Validate();
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $config = Config::getAll();
 $user = array();
@@ -25,7 +25,7 @@ $optionRole = '';
 $sql = '';
 $data = array();
 $department = new Department();
-$dictionary = new Dictionary();
+$dictionaryModel = new Dictionary();
 
 // 验证
 if(!Auth::isLogin()){
@@ -62,7 +62,7 @@ if(empty($user)){
 $user['role_ids'] = explode(',', $user['role_id_string']);
 $user['department_name'] = $department->getName($user['department_id']);
 $user = Safe::entity($user);
-$radioStatus = $dictionary->getRadio('system_user_status', 'status_id', $user['status_id']);
+$radioStatus = $dictionaryModel->getRadio('system_user_status', 'status_id', $user['status_id']);
 
 $sql = 'select id, name from role order by id asc';
 $pdoStatement = $dbHelper->query($pdo, $sql);
@@ -90,57 +90,73 @@ $optionRole = ArrayTwo::getOption($roles, $user['role_ids'], 'id', 'name');
 <form method="post" action="edit_save.php" class="sun-form-brief form">
 <div class="page_body">
 <input type="hidden" name="id" value="<?php echo $user['id'];?>" />
-<div class="row">
-<div class="title"><span class="required">*</span> 用户名</div>
-<div class="content"><?php echo $user['username'];?></div>
+<div class="field">
+<div class="label"><span class="required">*</span> 用户名</div>
+<div class="value">
+<div class="body">
+<?php echo $user['username'];?>
+</div>
+</div>
 </div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 状态</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 状态</div>
+<div class="value">
+<div class="body">
 <?php echo $radioStatus;?>
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 密码</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 密码</div>
+<div class="value">
+<div class="body">
 <input type="password" name="password" id="password" autocomplete="off" />
 <span class="tip">不修改请保持密码输入框为空</span>
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 姓名</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 姓名</div>
+<div class="value">
+<div class="body">
 <input type="text" name="name" id="name" value="<?php echo $user['name'];?>" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 手机号码</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 手机号码</div>
+<div class="value">
+<div class="body">
 <input type="text" name="phone" id="phone" value="<?php echo $user['phone'];?>" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 部门</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 部门</div>
+<div class="value">
+<div class="body">
 <input type="hidden" name="department_id" id="department_id" value="<?php echo $user['department_id'];?>" />
-<div class="sun-input-group" onClick="edit.selectDepartment();">
+<div class="sun-input-group" onClick="selectDepartment();">
 <input type="text" name="department_name" id="department_name" readonly value="<?php echo $user['department_name'];?>" />
 <div class="addon"><span class="iconfont icon-magnifier icon"></span></div>
 </div>
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 角色</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 角色</div>
+<div class="value">
+<div class="body">
 <select name="role_ids[]" multiple="multiple" class="selectpicker role_ids" id="role_ids" data-live-search="true" title="请选择" data-width="170px">
 <?php echo $optionRole;?>
 </select>
+</div>
 </div>
 </div>
 

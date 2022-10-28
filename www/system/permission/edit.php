@@ -5,23 +5,23 @@
 require_once '../../library/app.php';
 
 use library\Auth;
-use library\DbHelper;
 use library\Config;
+use library\DbHelper;
 use library\Validate;
 use library\Safe;
-use library\Dictionary;
-use library\Permission;
+use library\model\Dictionary;
+use library\model\Permission;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
-$validate = new Validate();
 $data = array();
+$validate = new Validate();
 $config = Config::getAll();
 $permission = array();
 $permissionObject = new Permission();
-$dictionary = new Dictionary();
+$dictionaryModel = new Dictionary();
 
 // 验证
 if(!Auth::isLogin()){
@@ -55,7 +55,7 @@ $permission = $dbHelper->fetch($pdoStatement);
 $permission['parent_name'] = $permissionObject->getName($permission['parent_id']);
 $permission = Safe::entity($permission);
 
-$permissionTypeRadioNode = $dictionary->getRadio('system_permission_type', 'type', $permission['type']);
+$permissionTypeRadioNode = $dictionaryModel->getRadio('system_permission_type', 'type', $permission['type']);
 
 ?><!doctype html>
 <html>
@@ -74,9 +74,10 @@ $permissionTypeRadioNode = $dictionary->getRadio('system_permission_type', 'type
 <form method="post" action="edit_save.php" class="sun-form-brief form">
 <div class="page_body">
 <input type="hidden" name="id" value="<?php echo $permission['id'];?>" />
-<div class="row">
-<div class="title"><span class="required">*</span> 权限组</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 权限组</div>
+<div class="value">
+<div class="body">
 <input type="hidden" name="parent_id" id="parent_id" value="<?php echo $permission['parent_id'];?>" />
 <div class="sun-input-group" onClick="edit.selectPermission();">
 <input type="text" name="parent_name" id="parent_name" readonly value="<?php echo $permission['parent_name'];?>" />
@@ -84,32 +85,41 @@ $permissionTypeRadioNode = $dictionary->getRadio('system_permission_type', 'type
 </div>
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 权限类型</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 权限类型</div>
+<div class="value">
+<div class="body">
 <?php echo $permissionTypeRadioNode;?>
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 权限名称</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 权限名称</div>
+<div class="value">
+<div class="body">
 <input type="text" name="name" id="name" value="<?php echo $permission['name'];?>" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 权限标识</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 权限标识</div>
+<div class="value">
+<div class="body">
 <input type="text" name="tag" id="tag" value="<?php echo $permission['tag'];?>" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 排序</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 排序</div>
+<div class="value">
+<div class="body">
 <input type="number" name="sort" id="sort" value="<?php echo $permission['sort'];?>" />
+</div>
 </div>
 </div>
 </div>

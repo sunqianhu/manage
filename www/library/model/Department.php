@@ -1,6 +1,6 @@
 <?php
 /**
- * 部门
+ * 部门模型
  */
 namespace library;
 
@@ -11,12 +11,12 @@ class Department{
     /**
      * 得到部门名
      * @access public
-     * @param Integer $id 用户id
-     * @return String 用户姓名
+     * @param integer $id 用户id
+     * @return string 用户姓名
      */
     function getName($id){
         $dbHelper = new DbHelper();
-        $pdo = $dbHelper->getInstance();
+        $pdo = $dbHelper->getPdo();
         $pdoStatement = null;
         $name = '';
         $sql = '';
@@ -34,27 +34,27 @@ class Department{
     
     /**
      * 得到首页节点树
-     * @param Array $datas 数据
+     * @param array $datas 数据
      * @return array
      */
     function getIndexTreeNode($departments, $level = 1){
-        $node = '';
+        $tag = '';
         if(!empty($departments)){
         foreach($departments as $department){
-            $node .= '
+            $tag .= '
 <tr tree_table_id="'.$department['id'].'" tree_table_parent_id="'.$department['parent_id'].'" tree_table_level="'.$level.'" class="tr tr'.$department['id'].'">
 <td>'.$department['id'].'</td>
 <td class="column">'.$department['name'].'</td>
 <td>'.$department['sort'].'</td>
 <td>'.$department['remark'].'</td>
 <td>
-<a href="javascript:;" class="sun-button plain small sun-mr5" onclick="index.add('.$department['id'].');" title="添加子部门">添加</a>
-<a href="javascript:;" class="sun-button small plain sun-mr5" onclick="index.edit('.$department['id'].');">修改</a>
+<a href="javascript:;" class="sun-button plain small sun-mr5" onclick="add('.$department['id'].');" title="添加子部门">添加</a>
+<a href="javascript:;" class="sun-button small plain sun-mr5" onclick="edit('.$department['id'].');">修改</a>
 <span class="sun-dropdown-menu align-right operation_more">
 <div class="title"><a href="javascript:;" class="sun-button plain small">更多 <span class="iconfont icon-arrow-down arrow"></span></a></div>
 <div class="content">
 <ul>
-<li><a href="javascript:;" onClick="index.delete('.$department['id'].')">删除</a></li>
+<li><a href="javascript:;" onClick="myDelete('.$department['id'].')">删除</a></li>
 </ul>
 </div>
 </span>
@@ -62,12 +62,12 @@ class Department{
 </tr>
 ';
             if(!empty($department['child'])){
-                $node .= $this->getIndexTreeNode($department['child'], ($level + 1));
+                $tag .= $this->getIndexTreeNode($department['child'], ($level + 1));
             }
         }
         }else{
-            $node = '<tr><td colspan="5" align="center">无部门</td></td>';
+            $tag = '<tr><td colspan="5" align="center">无部门</td></td>';
         }
-        return $node;
+        return $tag;
     }
 }

@@ -33,31 +33,39 @@ $config = Config::getAll();
 <body class="page">
 <form method="post" action="add_save.php" class="sun-form-brief form">
 <div class="page_body">
-<div class="row">
-<div class="title"><span class="required">*</span> 字典类型</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 字典类型</div>
+<div class="value">
+<div class="body">
 <input type="text" name="type" id="type" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 字典键</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 字典键</div>
+<div class="value">
+<div class="body">
 <input type="text" name="key" id="key" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 字典值</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 字典值</div>
+<div class="value">
+<div class="body">
 <input type="text" name="value" id="value" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 排序</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 排序</div>
+<div class="value">
+<div class="body">
 <input type="number" name="sort" id="sort" value="1" />
+</div>
 </div>
 </div>
 

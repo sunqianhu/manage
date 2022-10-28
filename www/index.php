@@ -5,13 +5,13 @@
 require_once 'library/app.php';
 
 use library\Config;
-use library\FrameMain;
 use library\Auth;
+use library\FrameMain;
 
 $config = array();
 $frameMain = new FrameMain();
 $frameMainMenu = '';
-$timeLogin = '无';
+$loginTime = '无';
 $ip = '无';
 
 if(!Auth::isLogin()){
@@ -21,8 +21,8 @@ if(!Auth::isLogin()){
 
 $config = Config::getAll();
 $frameMainMenu = $frameMain->getMenu('home');
-if($_SESSION['user']['time_login'] > 0){
-    $timeLogin = date('Y-m-d H:i:s', $_SESSION['user']['time_login']);
+if($_SESSION['user']['login_time'] > 0){
+    $loginTime = date('Y-m-d H:i:s', $_SESSION['user']['login_time']);
 }
 if($_SESSION['user']['ip']){
     $ip = $_SESSION['user']['ip'];
@@ -56,7 +56,7 @@ if($_SESSION['user']['ip']){
 
 <div class="welcome">
 欢迎<span><?php echo $_SESSION['user']['name'];?></span>登录系统，
-上次登录时间：<?php echo $timeLogin;?>，
+上次登录时间：<?php echo $loginTime;?>，
 上次登录ip：<?php echo $ip;?>
 <div>
 

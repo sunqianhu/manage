@@ -7,7 +7,7 @@ var add = {};
 /**
  * 选择部门
  */
-add.selectDepartment = function(){
+function selectDepartment(){
     var url = "add_select_department.php";
     window.parent.sun.layer.open({
         id: "layer_add_select_department",
@@ -22,19 +22,19 @@ add.selectDepartment = function(){
  * 选择部门回调
  * @param json node 节点数据
  */
-add.selectDepartmentCallback = function(node){
-    var domDepartmentId = $("#department_id");
-    var domDepartmentName = $("#department_name");
+function selectDepartmentCallback(node){
+    var nodeDepartmentId = $("#department_id");
+    var nodeDepartmentName = $("#department_name");
     
-    domDepartmentId.val(node.id);
-    domDepartmentName.val(node.name);
+    nodeDepartmentId.val(node.id);
+    nodeDepartmentName.val(node.name);
 }
 
 /**
  * 提交表单
  */
-add.formSubmit = function(){
-    sun.formSubmit({
+function submitForm(id){
+    sun.submitForm({
         selector: ".form",
         success: function(ret){
             if(ret.status == "error"){
@@ -52,5 +52,5 @@ add.formSubmit = function(){
 }
 
 $(function(){
-    add.formSubmit();
+    submitForm();
 });

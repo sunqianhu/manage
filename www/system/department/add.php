@@ -5,17 +5,17 @@
 require_once '../../library/app.php';
 
 use library\Auth;
-use library\DbHelper;
 use library\Config;
+use library\DbHelper;
 use library\Validate;
 use library\Safe;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
-$validate = new Validate();
 $data = array();
+$validate = new Validate();
 $config = array();
 $departmentParent = array();
 $init = array(
@@ -72,35 +72,43 @@ $config = Config::getAll();
 <body class="page">
 <form method="post" action="add_save.php" class="sun-form-brief form">
 <div class="page_body">
-<div class="row">
-<div class="title"><span class="required">*</span> 上级部门</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 上级部门</div>
+<div class="value">
+<div class="body">
 <input type="hidden" name="parent_id" id="parent_id" value="<?php echo $init['parent_id'];?>" />
-<div class="sun-input-group" onClick="add.selectDepartment();">
+<div class="sun-input-group" onClick="selectDepartment();">
 <input type="text" name="parent_name" id="parent_name" readonly value="<?php echo $init['parent_name'];?>" />
 <span class="addon"><span class="iconfont icon-magnifier icon"></span></span>
 </div>
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 部门名称</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 部门名称</div>
+<div class="value">
+<div class="body">
 <input type="text" name="name" id="name" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 显示排序</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 显示排序</div>
+<div class="value">
+<div class="body">
 <input type="number" name="sort" id="sort" value="1" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title">备注</div>
-<div class="content">
+<div class="field">
+<div class="label">备注</div>
+<div class="value">
+<div class="body">
 <textarea name="remark" id="remark" class="remark"></textarea>
+</div>
 </div>
 </div>
 </div>

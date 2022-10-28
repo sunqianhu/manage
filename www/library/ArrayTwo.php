@@ -7,36 +7,36 @@ namespace library;
 class ArrayTwo{
     /**
      * 得到下拉选项
-     * @param Array $datas 二维数组
-     * @param Array $selectKeys 选中项的key
-     * @param String $key option的key
-     * @param String $value option的值
-     * @return String option字符串
+     * @param array $datas 二维数组
+     * @param array $selectKeys 选中项的key
+     * @param string $key option的key
+     * @param string $value option的值
+     * @return string option字符串
      */
     static function getOption($datas, $selectKeys = array(), $key = 'id', $value = 'name'){
-        $node = ''; // 节点
+        $tag = ''; // 标签
 
         if(empty($datas)){
-            return $node;
+            return $tag;
         }
         
         foreach($datas as $data){
-            $node .= '<option value="'.$data[$key].'"';
+            $tag .= '<option value="'.$data[$key].'"';
             if(in_array($data[$key], $selectKeys)){
-                $node .= ' selected="selected"';
+                $tag .= ' selected="selected"';
             }
-            $node .= '>'.$data[$value].'</option>'."\r\n";
+            $tag .= '>'.$data[$value].'</option>'."\r\n";
         }
         
-        return $node;
+        return $tag;
     }
     
     /**
      * 得到某列的字符串
-     * @param Array $datas 二维数组
-     * @param String $column 列
-     * @param String $split 分隔符
-     * @return String
+     * @param array $datas 二维数组
+     * @param string $column 列
+     * @param string $split 分隔符
+     * @return string
      */
     static function getColumnString($datas, $column, $split = ','){
         $content = '';
@@ -58,11 +58,11 @@ class ArrayTwo{
     
     /**
      * 某列时间戳转时间
-     * @param Array $datas 二维数组
-     * @param String $columnOld 列老
-     * @param String $columnNew 列新
-     * @param String $split 分隔符
-     * @return String
+     * @param array $datas 二维数组
+     * @param string $columnOld 列老
+     * @param string $columnNew 列新
+     * @param string $split 分隔符
+     * @return string
      */
     static function columnTimestampToTime($datas, $columnOld, $columnNew, $format = 'Y-m-d H:i:s'){
         $data = array();

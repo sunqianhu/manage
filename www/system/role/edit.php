@@ -5,18 +5,18 @@
 require_once '../../library/app.php';
 
 use library\Auth;
-use library\DbHelper;
 use library\Config;
+use library\DbHelper;
 use library\Ztree;
 use library\Validate;
 use library\Safe;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
-$validate = new Validate();
 $data = array();
+$validate = new Validate();
 $config = Config::getAll();
 $role = array();
 $rolePermissions = array();
@@ -90,7 +90,7 @@ $permission = json_encode($permissions);
 <link href="<?php echo $config['app_domain'];?>css/system/role/edit.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/system/role/edit.js"></script>
 <script type="text/javascript">
-edit.permissionData = <?php echo $permission;?>;
+var permissionData = <?php echo $permission;?>;
 </script>
 </head>
 
@@ -98,25 +98,31 @@ edit.permissionData = <?php echo $permission;?>;
 <form method="post" action="edit_save.php" class="sun-form-brief form">
 <div class="page_body">
 <input type="hidden" name="id" value="<?php echo $role['id'];?>" />
-<div class="row">
-<div class="title"><span class="required">*</span> 角色名称</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 角色名称</div>
+<div class="value">
+<div class="body">
 <input type="text" name="name" id="name" value="<?php echo $role['name'];?>" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title">备注</div>
-<div class="content">
+<div class="field">
+<div class="label">备注</div>
+<div class="value">
+<div class="body">
 <input type="text" name="remark" id="remark" value="<?php echo $role['remark'];?>" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title">权限</div>
-<div class="content">
+<div class="field">
+<div class="label">权限</div>
+<div class="value">
+<div class="body">
 <input type="hidden" name="permission_ids" id="permission_ids" value="<?php echo $role['permission_ids'];?>"  />
 <div class="ztree" id="ztree_permission"></div>
+</div>
 </div>
 </div>
 

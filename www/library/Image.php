@@ -9,7 +9,7 @@ class Image{
     
     /**
      * 得到错误
-     * @return String 错误描述
+     * @return string 错误描述
      */
     function getError(){
         return $this->error;
@@ -17,8 +17,8 @@ class Image{
     
     /**
      * 设置错误
-     * @param String $error 错误描述
-     * @return Boolean
+     * @param string $error 错误描述
+     * @return boolean
      */
     function setError($error){
         return $this->error = $error;
@@ -26,11 +26,11 @@ class Image{
 
     /**
      * 缩略（只支持jpg和png）
-     * @param String $srcPath 原图像路径
-     * @param String $dstPath 目标图像路径
-     * @param Integer $size 缩略到的大小
-     * @param String $type width|height|无 缩略参照边
-     * @return Boolean 布尔
+     * @param string $srcPath 原图像路径
+     * @param string $dstPath 目标图像路径
+     * @param integer $size 缩略到的大小
+     * @param string $type width|height|无 缩略参照边
+     * @return boolean 布尔
      */
     function shrink($srcPath, $dstPath, $size, $type = ''){
         $srcImageSizes = array(); // 源图像信息
@@ -151,10 +151,10 @@ class Image{
     
     /**
      * 图片加水印（只支持jpg和png）
-     * @param String $srcPath 原图像路径
-     * @param String $markPath 水印图像路径
-     * @param String$alpha 水印透明度
-     * @return Boolean 布尔
+     * @param string $srcPath 原图像路径
+     * @param string $markPath 水印图像路径
+     * @param string$alpha 水印透明度
+     * @return boolean 布尔
      */
     function waterMark($srcPath, $markPath, $alpha = 80){
         $srcImageSizes = array(); // 源图像信息
@@ -268,9 +268,9 @@ class Image{
     
     /**
      * 正方形居中裁剪
-     * @param String $srcPath 原图像路径
-     * @param String $dstPath 目标图像路径
-     * @return Boolean 布尔
+     * @param string $srcPath 原图像路径
+     * @param string $dstPath 目标图像路径
+     * @return boolean 布尔
      */
     function squareCenterCrop($srcPath, $dstPath){
         $srcImageSizes = array(); // 源图像信息

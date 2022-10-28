@@ -1,7 +1,6 @@
 /**
  * 首页
  */
-var index = {};
 
 $(function(){
     laydate.render({

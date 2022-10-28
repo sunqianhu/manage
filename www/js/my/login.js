@@ -2,12 +2,10 @@
  * 登录
  */
 
-var index = {};
-
 /**
  * 粒子背景
  */
-index.bg = function(){
+function bg(){
     $(".page > .bg").particleground({
         dotColor: "rgba(50,100,150,0.05)",
         lineColor: "rgba(50,100,150,0.05)",
@@ -17,21 +15,21 @@ index.bg = function(){
 /**
  * 修改验证码
  */
-index.changeCaptcha = function(){
+function changeCaptcha(){
     var url = "captcha.php?"+Math.random();
-    var domImg = $(".captcha img");
-    domImg.attr("src", url);
+    var nodeImg = $(".captcha img");
+    nodeImg.attr("src", url);
 }
 
 /**
- * 表单提交
+ * 提交表单
  */
-index.formSubmit = function(){
-    sun.formSubmit({
+function submitForm(){
+    sun.submitForm({
         selector: ".form",
         success: function(ret){
             if(ret.data.captcha == "1"){
-                index.changeCaptcha();
+                changeCaptcha();
             }
             
             if(ret.status == "error"){
@@ -49,7 +47,7 @@ index.formSubmit = function(){
 }
 
 $(function(){
-    index.bg();
-    index.formSubmit();
+    bg();
+    submitForm();
 });
 

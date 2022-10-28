@@ -20,7 +20,7 @@ class Config{
     
     /**
      * 得到一个配置
-     * @param String $key 配置key
+     * @param string $key 配置key
      */
     static function getOne($key){
         $value = '';

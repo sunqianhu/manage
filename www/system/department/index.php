@@ -5,15 +5,15 @@
 require_once '../../library/app.php';
 
 use library\Auth;
-use library\DbHelper;
 use library\Config;
+use library\DbHelper;
 use library\FrameMain;
 use library\Tree;
 use library\Safe;
-use library\Department;
+use library\model\Department;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -118,7 +118,7 @@ $departmentNode = $departmentObject->getIndexTreeNode($departments, 1);
 
 <div class="data sun-mt10">
 <div class="toolbar">
-<a href="javascript:;" class="sun-button" data-toggle="tooltip" title="添加部门" onClick="index.add(0);">添加</a>
+<a href="javascript:;" class="sun-button" data-toggle="tooltip" title="添加部门" onClick="add(0);">添加</a>
 </div>
 <table class="sun-table-list hover sun-treetable sun-mt10" width="100%">
   <tr>

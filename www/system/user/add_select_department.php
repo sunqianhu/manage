@@ -10,7 +10,7 @@ use library\Ztree;
 use library\Config;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
 $config = Config::getAll();
@@ -47,7 +47,7 @@ $department = json_encode($departments);
 <link href="<?php echo $config['app_domain'];?>css/system/user/add_select_department.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/system/user/add_select_department.js"></script>
 <script type="text/javascript">
-addSelectDepartment.departmentData = <?php echo $department;?>;
+var departmentData = <?php echo $department;?>;
 </script>
 </head>
 
@@ -57,7 +57,7 @@ addSelectDepartment.departmentData = <?php echo $department;?>;
 </div>
 <div class="page_button">
 <a href="javascript:;" class="sun-button plain" onClick="window.parent.sun.layer.close('layer_add_select_department');">关闭</a>
-<input type="button" class="sun-button" value="确定" onClick="addSelectDepartment.submit();" />
+<input type="button" class="sun-button" value="确定" onClick="submit();" />
 </div>
 </body>
 </html>

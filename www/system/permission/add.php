@@ -5,18 +5,18 @@
 require_once '../../library/app.php';
 
 use library\Auth;
-use library\DbHelper;
 use library\Config;
-use library\Dictionary;
+use library\DbHelper;
+use library\model\Dictionary;
 use library\Validate;
 use library\Safe;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
-$validate = new Validate();
 $data = array();
+$validate = new Validate();
 $config = Config::getAll();
 $radioPermissionType = '';
 $permissionParent = array();
@@ -24,7 +24,7 @@ $init = array(
     'parent_id'=>1,
     'parent_name'=>'顶级权限',
 );
-$dictionary = new Dictionary();
+$dictionaryModel = new Dictionary();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -59,7 +59,7 @@ if(!empty($_GET['parent_id'])){
     $init = Safe::entity($init);
 }
 
-$radioPermissionType = $dictionary->getRadio('system_permission_type', 'type', 1);
+$radioPermissionType = $dictionaryModel->getRadio('system_permission_type', 'type', 1);
 ?><!doctype html>
 <html>
 <head>
@@ -76,42 +76,52 @@ $radioPermissionType = $dictionary->getRadio('system_permission_type', 'type', 1
 <body class="page">
 <form method="post" action="add_save.php" class="sun-form-brief form">
 <div class="page_body">
-<div class="row">
-<div class="title"><span class="required">*</span> 上级权限</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 上级权限</div>
+<div class="value">
+<div class="body">
 <input type="hidden" name="parent_id" id="parent_id" value="<?php echo $init['parent_id'];?>" />
-<div class="sun-input-group" onClick="add.selectPermission();">
+<div class="sun-input-group" onClick="selectPermission();">
 <input type="text" name="parent_name" id="parent_name" readonly value="<?php echo $init['parent_name'];?>" />
 <span class="addon"><span class="iconfont icon-magnifier icon"></span></span>
 </div>
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 权限类型</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 权限类型</div>
+<div class="value">
+<div class="body">
 <?php echo $radioPermissionType;?>
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 权限名称</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 权限名称</div>
+<div class="value">
+<div class="body">
 <input type="text" name="name" id="name" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 权限标识</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 权限标识</div>
+<div class="value">
+<div class="body">
 <input type="text" name="tag" id="tag" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 排序</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 排序</div>
+<div class="value">
+<div class="body">
 <input type="number" name="sort" id="sort" value="1" />
+</div>
 </div>
 </div>
 

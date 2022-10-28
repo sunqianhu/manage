@@ -56,7 +56,7 @@ if(!Auth::isLogin()){
 </div>
 <div class="page_button">
 <a href="javascript:;" class="sun-button plain" onClick="window.parent.sun.layer.close('layer_edit_head');">关闭</a>
-<input type="submit" class="sun-button" value="提交" onClick="editHead.submit();" />
+<input type="submit" class="sun-button" value="提交" onClick="submit();" />
 </div>
 </body>
 </html>

@@ -9,7 +9,7 @@ use library\Safe;
 class MyString{
     /**
      * 得到字符串长度
-     * @param String $string 字符串
+     * @param string $string 字符串
      * @return int 字符串长度
      */
     static function getLength($string){
@@ -32,10 +32,10 @@ class MyString{
 
     /**
      * 获取字符串的一部分（截取）
-     * @param String $string 字符串
-     * @param Integer $start 开始位置
-     * @param Integer $end 结束位置
-     * @return String 截取后的字符串
+     * @param string $string 字符串
+     * @param integer $start 开始位置
+     * @param integer $end 结束位置
+     * @return string 截取后的字符串
      */
     static function getSub($string, $start, $end){
         $stringNew = '';
@@ -58,9 +58,9 @@ class MyString{
     
     /**
      * 得到字符串的一部分显示
-     * @param String $string 字符串
-     * @param Integer $length 截取长度
-     * @return String 截取后的字符串
+     * @param string $string 字符串
+     * @param integer $length 截取长度
+     * @return string 截取后的字符串
      */
     static function getSubFromZero($string, $length){
         $stringNew = '';

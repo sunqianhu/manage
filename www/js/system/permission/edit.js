@@ -2,12 +2,10 @@
  * 修改权限
  */
 
-var edit = {};
-
 /**
  * 选择权限
  */
-edit.selectPermission = function(){
+function selectPermission(){
     var url = "edit_select_permission.php";
     window.parent.sun.layer.open({
         id: "layer_edit_select_permission",
@@ -22,19 +20,19 @@ edit.selectPermission = function(){
  * 选择权限回调
  * @param json node 节点数据
  */
-edit.selectPermissionCallback = function(node){
-    var domParentId = $("#parent_id");
-    var domParentName = $("#parent_name");
+function selectPermissionCallback(node){
+    var nodeParentId = $("#parent_id");
+    var nodeParentName = $("#parent_name");
     
-    domParentId.val(node.id);
-    domParentName.val(node.name);
+    nodeParentId.val(node.id);
+    nodeParentName.val(node.name);
 }
 
 /**
  * 提交表单
  */
-edit.formSubmit = function(){
-    sun.formSubmit({
+function submitForm(id){
+    sun.submitForm({
         selector: ".form",
         success: function(ret){
             if(ret.status == "error"){
@@ -52,5 +50,5 @@ edit.formSubmit = function(){
 }
 
 $(function(){
-    edit.formSubmit();
+    submitForm();
 });

@@ -4,16 +4,17 @@
  */
 require_once '../library/app.php';
 
+use library\Auth;
 use library\DbHelper;
 use library\Validate;
-use library\Auth;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
-$validate = new Validate();
 $data = array();
+$validate = new Validate();
+$user = array();
 $return = array(
     'status'=>'error',
     'msg'=>'',
@@ -21,7 +22,6 @@ $return = array(
         'dom'=>''
     )
 ); // 返回数据
-$user = array();
 
 // 验证
 if(!Auth::isLogin()){

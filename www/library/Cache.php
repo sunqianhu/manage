@@ -5,18 +5,17 @@
 namespace library;
 
 class Cache{
-    
-    static $dir = array(); // 缓存目录
+    public $dir = array(); // 缓存目录
     
     /**
      * 设置缓存
      * @access public
-     * @param String $key 缓存key
-     * @param String $value 缓存value
-     * @param Integer $timeOut 超时时间
-     * @return Boolean 布尔
+     * @param string $key 缓存key
+     * @param string $value 缓存value
+     * @param int $timeOut 超时时间
+     * @return boolean 布尔
      */
-    static function set($key, $value, $timeOut = 0){
+    function set($key, $value, $timeOut = 0){
         $path = '';
         
         if($timeOut === 0){
@@ -24,12 +23,12 @@ class Cache{
         }
         
         // 配置
-        if(empty(self::$dir)){
-            self::$dir = Config::getOne('cache_dir');
+        if(empty($this->dir)){
+            $this->dir = Config::getOne('cache_dir');
         }
         
         // 保存
-        $path = self::$dir.$key.'.txt';
+        $path = $this->dir.$key.'.txt';
         file_put_contents($path, $value);
         touch($path, $timeOut);
         
@@ -39,21 +38,21 @@ class Cache{
     /**
      * 获取缓存
      * @access public
-     * @param String $key 缓存key
-     * @return String 缓存内容
+     * @param string $key 缓存key
+     * @return string 缓存内容
      */
-    static function get($key){
+    function get($key){
         $path = '';
         $fileTimeLast = 0; // 文件最后修改时间
         $return = '';
         
         // 配置
-        if(empty(self::$dir)){
-            self::$dir = Config::getOne('cache_dir');
+        if(empty($this->dir)){
+            $this->dir = Config::getOne('cache_dir');
         }
         
         // 存在
-        $path = self::$dir.$key.'.txt';
+        $path = $this->dir.$key.'.txt';
         if(!file_exists($path)){
             return $return;
         }

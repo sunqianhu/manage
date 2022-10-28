@@ -5,17 +5,17 @@
 require_once '../../library/app.php';
 
 use library\Auth;
-use library\DbHelper;
 use library\Config;
+use library\DbHelper;
 use library\FrameMain;
 use library\Pagination;
 use library\Safe;
 use library\MyString;
-use library\User;
-use library\Department;
+use library\model\User;
+use library\model\Department;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -35,7 +35,7 @@ $pagination = null; // 分页
 $paginationNodeIntact = ''; // 节点
 $operationLogs = array();
 $department = new Department();
-$user = new User();
+$userModel = new User();
 
 if(!Auth::isLogin()){
     header('location:../../operation/index.php');
@@ -51,12 +51,12 @@ $frameMainMenu = $frameMain->getMenu('system_operation_log');
 
 // 搜索
 if(isset($_GET['time_start']) && $_GET['time_start'] !== ''){
-    $wheres[] = 'time_add > :time_start';
+    $wheres[] = 'add_time > :time_start';
     $data[':time_start'] = strtotime($_GET['time_start']);
     $search['time_start'] = $_GET['time_start'];
 }
 if(isset($_GET['time_end']) && $_GET['time_end'] !== ''){
-    $wheres[] = 'time_add < :time_end';
+    $wheres[] = 'add_time < :time_end';
     $data[':time_end'] = strtotime($_GET['time_end']);
     $search['time_end'] = $_GET['time_end'];
 }
@@ -90,13 +90,13 @@ $recordTotal = $dbHelper->fetchColumn($pdoStatement);
 $pagination = new Pagination($recordTotal);
 $paginationNodeIntact = $pagination->getNodeIntact();
 
-$sql = "select id, user_id, department_id, ip, time_add, url from operation_log where $where order by id desc limit ".$pagination->limitStart.','.$pagination->pageSize;
+$sql = "select id, user_id, department_id, ip, add_time, url from operation_log where $where order by id desc limit ".$pagination->limitStart.','.$pagination->pageSize;
 $pdoStatement = $dbHelper->query($pdo, $sql, $data);
 $operationLogs = $dbHelper->fetchAll($pdoStatement);
 
 foreach($operationLogs as $key => $operationLog){
-    $operationLogs[$key]['time_add_name'] = date('Y-m-d H:i:s', $operationLog['time_add']);
-    $operationLogs[$key]['user_name'] = $user->getName($operationLog['user_id']);
+    $operationLogs[$key]['add_time_name'] = date('Y-m-d H:i:s', $operationLog['add_time']);
+    $operationLogs[$key]['user_name'] = $userModel->getName($operationLog['user_id']);
     $operationLogs[$key]['department_name'] = $department->getName($operationLog['department_id']);
     $operationLogs[$key]['url_sub'] = MyString::getSubFromZero($operationLog['url'], 60);
 }
@@ -169,7 +169,7 @@ foreach($operationLogs as $operationLog){
     <td><?php echo $operationLog['user_name'];?></td>
     <td><?php echo $operationLog['ip'];?></td>
     <td><?php echo $operationLog['url_sub'];?></td>
-    <td><?php echo $operationLog['time_add_name'];?></td>
+    <td><?php echo $operationLog['add_time_name'];?></td>
     <td>
 <a href="javascript:;" class="sun-button plain small sun-mr5" onClick="sun.layer.open({id: 'layer_detail', name: '操作日志详情', url: 'detail.php?id=<?php echo $operationLog['id'];?>', width: 700, height: 500})">详情</a>
 <a href="../user/detail.php?id=<?php echo $operationLog['user_id'];?>" class="sun-button plain small">用户</a>

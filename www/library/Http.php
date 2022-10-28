@@ -10,7 +10,7 @@ class Http{
     
     /**
      * 得到错误
-     * @return String 错误描述
+     * @return string 错误描述
      */
     function getError(){
         return $this->error;
@@ -18,8 +18,8 @@ class Http{
     
     /**
      * 设置错误
-     * @param String $error 错误描述
-     * @return Boolean
+     * @param string $error 错误描述
+     * @return boolean
      */
     function setError($error){
         return $this->error = $error;
@@ -27,7 +27,7 @@ class Http{
     
     /**
      * 得到结果
-     * @return String 结果
+     * @return string 结果
      */
     function getResult(){
         return $this->result;
@@ -35,8 +35,8 @@ class Http{
     
     /**
      * 设置结果
-     * @param String $result 结果
-     * @return Boolean
+     * @param string $result 结果
+     * @return boolean
      */
     function setResult($result){
         return $this->result = $result;
@@ -44,9 +44,9 @@ class Http{
 
     /**
      * get请求
-     * @param String $url 网址
-     * @param Array $options 选项参数
-     * @return Boolean
+     * @param string $url 网址
+     * @param array $options 选项参数
+     * @return boolean
      */
     function get($url, $options = array()){
         $ch = null;
@@ -77,10 +77,10 @@ class Http{
     
     /**
      * post请求
-     * @param String $url 网址
-     * @param Array $content 请求内容
-     * @param Array $options 选项参数
-     * @return Boolean
+     * @param string $url 网址
+     * @param array $content 请求内容
+     * @param array $options 选项参数
+     * @return boolean
      */
     function post($url, $content = array(), $options = array()){
         $ch = null;

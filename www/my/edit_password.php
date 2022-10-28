@@ -31,17 +31,21 @@ if(!Auth::isLogin()){
 <body class="page">
 <form method="post" action="edit_password_save.php" class="sun-form-brief form">
 <div class="page_body">
-<div class="row">
-<div class="title"><span class="required">*</span> 新密码</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 新密码</div>
+<div class="value">
+<div class="body">
 <input type="password" name="password" id="password" autocomplete="off" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 确认新密码</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 确认新密码</div>
+<div class="value">
+<div class="body">
 <input type="password" name="password2" id="password2" autocomplete="off" />
+</div>
 </div>
 </div>
 

@@ -8,7 +8,7 @@ class Auth{
     /**
      * 是否登录
      * @access public
-     * @return Boolean
+     * @return boolean
      */
     static function isLogin(){
         if(empty($_SESSION['user'])){
@@ -21,8 +21,8 @@ class Auth{
     /**
      * 是否有权限
      * @access public
-     * @param String $tag 权限标识
-     * @return Boolean
+     * @param string $tag 权限标识
+     * @return boolean
      */
     static function isPermission($tag){
         $permissions = $_SESSION['permission'];

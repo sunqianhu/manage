@@ -2,13 +2,11 @@
  * 修改
  */
 
-var edit = {};
-
 /**
  * 提交表单
  */
-edit.formSubmit = function(){
-    sun.formSubmit({
+function submitForm(){
+    sun.submitForm({
         selector: ".form",
         success: function(ret){
             if(ret.status == "error"){
@@ -26,5 +24,5 @@ edit.formSubmit = function(){
 }
 
 $(function(){
-    edit.formSubmit();
+    submitForm();
 });

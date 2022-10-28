@@ -12,8 +12,8 @@ $message = '';
 
 if(isset($_GET['message'])){
     $message = $_GET['message'];
+    $message = Safe::entity($message);
 }
-$message = Safe::entity($message);
 ?><!doctype html>
 <html>
 <head>

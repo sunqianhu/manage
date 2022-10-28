@@ -2,14 +2,12 @@
  * 添加
  */
 
-var add = {
-    ztree: null
-};
+var ztree;
 
 /**
  * ztree初始化
  */
-add.ztreeInit = function(){
+function ztreeInit(){
     var setting = {
         check: {
             enable: true,
@@ -24,19 +22,19 @@ add.ztreeInit = function(){
             }
         },
         callback: {
-            onCheck: add.setPermissionId
+            onCheck: setPermissionId
         }
     };
-    var nodes = add.permissionData;
-    add.ztree = $.fn.zTree.init($("#ztree_permission"), setting, nodes);
+    var nodes = permissionData;
+    ztree = $.fn.zTree.init($("#ztree_permission"), setting, nodes);
 }
 
 /**
  * 设置选中的权限
  */
-add.setPermissionId = function(){
-    var domPermissionIds = $("#permission_ids");
-    var nodes = add.ztree.getCheckedNodes(true);
+function setPermissionId(){
+    var nodePermissionIds = $("#permission_ids");
+    var nodes = ztree.getCheckedNodes(true);
     var nodeLength = nodes.length;
     var i = 0;
     var permissionIds = [];
@@ -46,14 +44,14 @@ add.setPermissionId = function(){
         permissionIds.push(node.id);
     }
     
-    domPermissionIds.val(permissionIds.join(","));
+    nodePermissionIds.val(permissionIds.join(","));
 }
 
 /**
  * 提交表单
  */
-add.formSubmit = function(){
-    sun.formSubmit({
+function submitForm(id){
+    sun.submitForm({
         selector: ".form",
         success: function(ret){
             if(ret.status == "error"){
@@ -71,6 +69,6 @@ add.formSubmit = function(){
 }
 
 $(function(){
-    add.ztreeInit();
-    add.formSubmit();
+    ztreeInit();
+    submitForm();
 });

@@ -1,8 +1,8 @@
 <?php
 /**
- * 字典服务
+ * 字典模型
  */
-namespace library;
+namespace library\model;
 
 use library\DbHelper;
 use library\Cache;
@@ -10,20 +10,21 @@ use library\Cache;
 class Dictionary{
     /**
      * 得到和设置缓存字典的某一类型
-     * @param String $type 类型
-     * @return String value
+     * @param string $type 类型
+     * @return string value
      */
     function getSetCache($type){
         $dbHelper = new DbHelper();
-        $pdo = $dbHelper->getInstance();
+        $pdo = $dbHelper->getPdo();
         $pdoStatement = null;
         $cacheKey = 'dictionary_'.$type; // 缓存key
         $data = '';
         $datas = array();
         $sql = '';
         $dbData = array();
+        $cache = new Cache();
         
-        $data = Cache::get($cacheKey);
+        $data = $cache->get($cacheKey);
         if($data !== ''){
             return $data;
         }
@@ -39,16 +40,16 @@ class Dictionary{
         }
         
         $data = json_encode($datas);
-        Cache::set($cacheKey, $data);
+        $cache->set($cacheKey, $data);
         
         return $data;
     }
 
     /**
      * 得到值
-     * @param String $type 类型
-     * @param String $key 键
-     * @return String value
+     * @param string $type 类型
+     * @param string $key 键
+     * @return string value
      */
     function getValue($type, $key){
         $value = ''; // 返回值
@@ -78,7 +79,7 @@ class Dictionary{
     
     /**
      * 得到集合
-     * @param String $type 类型
+     * @param string $type 类型
      * @return array 集合
      */
     function getList($type){
@@ -100,11 +101,11 @@ class Dictionary{
     
     /**
      * 得到得到下拉菜单选项
-     * @param String $type 类型
-     * @return String value
+     * @param string $type 类型
+     * @return string value
      */
     function getOption($type, $selectKeys = array()){
-        $node = ''; // 节点
+        $tag = ''; // 标签
         $data = ''; // 字典数据
         $datas = array(); // 字典数据数组
         
@@ -112,33 +113,33 @@ class Dictionary{
         
         // 验证
         if($data == ''){
-            return $node;
+            return $tag;
         }
         $datas = json_decode($data, true);
         if(empty($datas)){
-            return $node;
+            return $tag;
         }
         
         foreach($datas as $data){
-            $node .= '<option value="'.$data['key'].'"';
+            $tag .= '<option value="'.$data['key'].'"';
             if(in_array($data['key'], $selectKeys)){
-                $node .= ' selected="selected"';
+                $tag .= ' selected="selected"';
             }
-            $node .= '>'.$data['value'].'</option>'."\r\n";
+            $tag .= '>'.$data['value'].'</option>'."\r\n";
         }
         
-        return $node;
+        return $tag;
     }
     
     /**
      * 得到单选按钮
-     * @param String $type 类型
-     * @param String $name 单选按钮名称
-     * @param String $checkKey 选中项的key
-     * @return String value
+     * @param string $type 类型
+     * @param string $name 单选按钮名称
+     * @param string $checkKey 选中项的key
+     * @return string value
      */
     function getRadio($type, $name = '', $checkKey = '', $event = ''){
-        $node = ''; // 返回值
+        $tag = ''; // 返回值
         $data = ''; // 字典数据
         $datas = array(); // 字典数据数组
         $index = 0;
@@ -147,41 +148,41 @@ class Dictionary{
         
         // 验证
         if($data == ''){
-            return $node;
+            return $tag;
         }
         $datas = json_decode($data, true);
         if(empty($datas)){
-            return $node;
+            return $tag;
         }
         
         foreach($datas as $data){
             $index ++;
-            $node .= '<span><label><input type="radio"';
+            $tag .= '<span><label><input type="radio"';
             if($name !== ''){
-                $node .= ' name="'.$name.'" id="'.$name.$index.'"';
+                $tag .= ' name="'.$name.'" id="'.$name.$index.'"';
             }
             if($checkKey == $data['key']){
-                $node .= ' checked="checked"';
+                $tag .= ' checked="checked"';
             }
             if($event !== ''){
-                $node .= ' '.$event;
+                $tag .= ' '.$event;
             }
-            $node .= ' value="'.$data['key'].'" />'.$data['value'].'</label></span>'."\r\n";
+            $tag .= ' value="'.$data['key'].'" />'.$data['value'].'</label></span>'."\r\n";
         }
         
-        return $node;
+        return $tag;
     }
     
     /**
      * 得到得到复选按钮
-     * @param String $type 类型
-     * @param String $name 单选按钮名称
-     * @param String $checkKeys 选中项的key
-     * @param String $event 事件
-     * @return String value
+     * @param string $type 类型
+     * @param string $name 单选按钮名称
+     * @param string $checkKeys 选中项的key
+     * @param string $event 事件
+     * @return string value
      */
     function getCheckBox($type, $name = '', $checkKeys = array(), $event = ''){
-        $node = ''; // 返回值
+        $tag = ''; // 返回值
         $data = ''; // 字典数据
         $datas = array(); // 字典数据数组
         $index = 0;
@@ -190,28 +191,28 @@ class Dictionary{
         
         // 验证
         if($data == ''){
-            return $node;
+            return $tag;
         }
         $datas = json_decode($data, true);
         if(empty($datas)){
-            return $node;
+            return $tag;
         }
         
         foreach($datas as $data){
             $index ++;
-            $node .= '<span><label><input type="checkbox"';
+            $tag .= '<span><label><input type="checkbox"';
             if($name !== ''){
-                $node .= ' name="'.$name.'"';
+                $tag .= ' name="'.$name.'"';
             }
             if(in_array($data['key'], $checkKeys)){
-                $node .= ' checked="checked"';
+                $tag .= ' checked="checked"';
             }
             if($event !== ''){
-                $node .= ' '.$event;
+                $tag .= ' '.$event;
             }
-            $node .= ' value="'.$data['key'].'" />'.$data['value'].'</label></span>'."\r\n";
+            $tag .= ' value="'.$data['key'].'" />'.$data['value'].'</label></span>'."\r\n";
         }
         
-        return $node;
+        return $tag;
     }
 }

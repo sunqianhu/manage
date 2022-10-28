@@ -1,14 +1,12 @@
 /**
  * 修改选择权限
  */
-var editSelectPermission = {
-    ztree: null
-};
+var ztree;
 
 /**
  * ztree初始化
  */
-editSelectPermission.ztreeInit = function(){
+function ztreeInit(){
     var setting = {
         data: {
             simpleData: {
@@ -18,16 +16,16 @@ editSelectPermission.ztreeInit = function(){
             }
         }
     };
-    var nodes = editSelectPermission.permissionData;
-    editSelectPermission.ztree = $.fn.zTree.init($("#ztree"), setting, nodes)
+    var nodes = permissionData;
+    ztree = $.fn.zTree.init($("#ztree"), setting, nodes)
 }
 
 /**
  * 确定
  */
-editSelectPermission.submit = function(){
+function submit(){
     var node = {}
-    var nodes = editSelectPermission.ztree.getSelectedNodes();
+    var nodes = ztree.getSelectedNodes();
     var iframeWindow;
     
     if(!nodes || nodes.length == 0){
@@ -47,5 +45,5 @@ editSelectPermission.submit = function(){
 }
 
 $(function(){
-    editSelectPermission.ztreeInit();
+    ztreeInit();
 });

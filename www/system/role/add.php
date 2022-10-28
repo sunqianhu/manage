@@ -5,12 +5,12 @@
 require_once '../../library/app.php';
 
 use library\Auth;
-use library\DbHelper;
 use library\Config;
+use library\DbHelper;
 use library\Ztree;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
 $config = Config::getAll();
@@ -48,32 +48,38 @@ $permission = json_encode($permissions);
 <link href="<?php echo $config['app_domain'];?>css/system/role/add.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/system/role/add.js"></script>
 <script type="text/javascript">
-add.permissionData = <?php echo $permission;?>;
+var permissionData = <?php echo $permission;?>;
 </script>
 </head>
 
 <body class="page">
 <form method="post" action="add_save.php" class="sun-form-brief form">
 <div class="page_body">
-<div class="row">
-<div class="title"><span class="required">*</span> 角色名称</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 角色名称</div>
+<div class="value">
+<div class="body">
 <input type="text" name="name" id="name" maxlength="64" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title">备注</div>
-<div class="content">
+<div class="field">
+<div class="label">备注</div>
+<div class="value">
+<div class="body">
 <input type="text" name="remark" id="remark" maxlength="255" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title">权限</div>
-<div class="content">
+<div class="field">
+<div class="label">权限</div>
+<div class="value">
+<div class="body">
 <input type="hidden" name="permission_ids" id="permission_ids" />
 <div class="ztree" id="ztree_permission"></div>
+</div>
 </div>
 </div>
 

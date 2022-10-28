@@ -1,6 +1,6 @@
 <?php
 /**
- * 操作日志服务
+ * 操作日志模型
  */
 namespace library;
 
@@ -16,7 +16,7 @@ class OperationLog{
      */
     function add(){
         $dbHelper = new DbHelper();
-        $pdo = $dbHelper->getInstance();
+        $pdo = $dbHelper->getPdo();
         $pdoStatement = null;
         $sql = '';
         $data = array();
@@ -48,7 +48,7 @@ class OperationLog{
             $request .= 'post参数：'.print_r($_POST, true);
         }
         
-        $sql = 'insert into operation_log(user_id,department_id,url,ip,user_agent,request,time_add) values(:user_id,:department_id,:url,:ip,:user_agent,:request,:time_add)';
+        $sql = 'insert into operation_log(user_id,department_id,url,ip,user_agent,request,add_time) values(:user_id,:department_id,:url,:ip,:user_agent,:request,:add_time)';
         $data = array(
             ':department_id'=>$departmentId,
             ':user_id'=>$userId,
@@ -56,7 +56,7 @@ class OperationLog{
             ':ip'=>$ipString,
             ':user_agent'=>$userAgent,
             ':request'=>$request,
-            ':time_add'=>time()
+            ':add_time'=>time()
         );
         $pdoStatement = $dbHelper->query($pdo, $sql, $data);
         $id = $pdo->lastInsertId();

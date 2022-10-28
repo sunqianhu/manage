@@ -2,21 +2,19 @@
  * 修改头像
  */
 
-var editHead = {
-    cropper: null
-};
+var cropper;
 
 /**
  * 图片裁剪器初始化
  */
-editHead.cropperInit = function(){
-    var domNativeCropperImg = $(".cropper .img img").eq(0).get(0); // 图片原生元素
-    var domInputImage = $("#input_image"); // 文件选择表单控件
-    var domButtonCropperControls = $(".button_cropper_control"); // 全部控制按钮
-    var domButtonCropperControl; // 一个控制按钮
+function initCropper(){
+    var nodeNativeCropperImg = $(".cropper .img img").eq(0).get(0); // 图片原生元素
+    var nodeInputImage = $("#input_image"); // 文件选择表单控件
+    var nodeButtonCropperControls = $(".button_cropper_control"); // 全部控制按钮
+    var nodeButtonCropperControl; // 一个控制按钮
     
     // 初始化裁剪
-    editHead.cropper = new Cropper(domNativeCropperImg, {
+    cropper = new Cropper(nodeNativeCropperImg, {
         aspectRatio: 1 / 1,
         viewMode: 1, // 限制裁剪框不能超出图片的范围
         autoCropArea: 1, // 设置裁剪区域占图片的大小
@@ -24,12 +22,12 @@ editHead.cropperInit = function(){
     });
     
     // 上传图片
-    domInputImage.on("change", function() {
+    nodeInputImage.on("change", function() {
 		var fileReader = new FileReader();
-		var file = domInputImage.get(0).files[0];
+		var file = nodeInputImage.get(0).files[0];
 		if (/^image\/\w+$/.test(file.type)) {
 			fileReader.onload = function(e) {
-                editHead.cropper.replace(e.target.result)
+                cropper.replace(e.target.result)
 			}
 			fileReader.readAsDataURL(this.files[0]);
 		}else{
@@ -38,17 +36,17 @@ editHead.cropperInit = function(){
 	});
     
     // 控制
-    domButtonCropperControls.on("click",function (e) {
-        domButtonCropperControl = $(this);
+    nodeButtonCropperControls.on("click",function (e) {
+        nodeButtonCropperControl = $(this);
 		var data = {
-			method: domButtonCropperControl.attr('method'),
-			parameter: domButtonCropperControl.attr('parameter') || undefined,
+			method: nodeButtonCropperControl.attr('method'),
+			parameter: nodeButtonCropperControl.attr('parameter') || undefined,
 		};
-		var result = editHead.cropper[data.method](data.parameter);
+		var result = cropper[data.method](data.parameter);
         
         // 翻转再次点击
 		if(["scaleX", "scaleY"].indexOf(data.method) !== -1){
-			domButtonCropperControl.attr("parameter", -data.parameter);
+			nodeButtonCropperControl.attr("parameter", -data.parameter);
 		}
 	})
 };
@@ -56,11 +54,11 @@ editHead.cropperInit = function(){
 /**
  * 提交
  */
-editHead.submit = function(){
+function submit(){
     var formdata;
     var url = "edit_head_save.php";
     
-    editHead.cropper.getCroppedCanvas({
+    cropper.getCroppedCanvas({
         width: 50,
         height: 50,
         fillColor: "transparent",
@@ -117,5 +115,5 @@ if (!HTMLCanvasElement.prototype.toBlob) {
 }
 
 $(function(){
-    editHead.cropperInit();
+    initCropper();
 });

@@ -19,8 +19,8 @@ class Validate{
     
     /**
      * 设置规则
-     * @param Array $rule 规则数组
-     * @return Boolean
+     * @param array $rule 规则数组
+     * @return boolean
      */
     function setRule($rule){
         $this->rule = $rule;
@@ -28,7 +28,7 @@ class Validate{
     
     /**
      * 得到规则
-     * @return Boolean
+     * @return boolean
      */
     function getRule(){
         return $this->rule;
@@ -36,8 +36,8 @@ class Validate{
     
     /**
      * 设置描述
-     * @param Array $message 描述
-     * @return Boolean
+     * @param array $message 描述
+     * @return boolean
      */
     function setMessage($message){
         $this->message = $message;
@@ -45,7 +45,7 @@ class Validate{
     
     /**
      * 得到描述
-     * @return Boolean
+     * @return boolean
      */
     function getMessage(){
         return $this->message;
@@ -53,7 +53,7 @@ class Validate{
     
     /**
      * 得到字段描述
-     * @return String
+     * @return string
      */
     function getMessageField($field, $checkName, $checkValue){
         $message = '';
@@ -86,8 +86,8 @@ class Validate{
     
     /**
      * 设置错误
-     * @param String $field 字段
-     * @param String $message 描述
+     * @param string $field 字段
+     * @param string $message 描述
      */
     function setError($field, $message = ''){
         $this->error['field'] = $field;
@@ -96,7 +96,7 @@ class Validate{
     
     /**
      * 得到错误
-     * @return String 错误描述
+     * @return string 错误描述
      */
     function getError(){
         return $this->error;
@@ -104,7 +104,7 @@ class Validate{
     
     /**
      * 得到错误字段
-     * @return String 错误描述
+     * @return string 错误描述
      */
     function getErrorField(){
         return $this->error['field'];
@@ -112,7 +112,7 @@ class Validate{
     
     /**
      * 得到错误描述
-     * @return String 错误描述
+     * @return string 错误描述
      */
     function getErrorMessage(){
         return $this->error['message'];
@@ -120,8 +120,8 @@ class Validate{
     
     /**
      * 验证
-     * @param Array $datas 数据
-     * @return Boolean
+     * @param array $datas 数据
+     * @return boolean
      */
     function check($datas){
         $field = ''; // 数据字段
@@ -236,7 +236,7 @@ class Validate{
     
     /**
      * 检测必填
-     * @return Boolean 验证是否通过
+     * @return boolean 验证是否通过
      */
     function checkRequire($value, $rule = ''){
         // 字符串
@@ -263,7 +263,7 @@ class Validate{
      * 检测长度
      * @param $value 值
      * @param $length 最大长度
-     * @return Boolean 验证是否通过
+     * @return boolean 验证是否通过
      */
     function checkLength($value, $length){
         if(mb_strlen($value) != $length){
@@ -277,7 +277,7 @@ class Validate{
      * 检测最大长度
      * @param $value 值
      * @param $max 最大长度
-     * @return Boolean 验证是否通过
+     * @return boolean 验证是否通过
      */
     function checkMaxLength($value, $max){
         if(mb_strlen($value) > $max){
@@ -291,7 +291,7 @@ class Validate{
      * 检测最小长度
      * @param $value 值
      * @param $min 最小长度
-     * @return Boolean 验证是否通过
+     * @return boolean 验证是否通过
      */
     function checkMinLength($value, $min){
         if(mb_strlen($value) < $min){
@@ -303,7 +303,7 @@ class Validate{
     
     /**
      * 检测数字
-     * @return Boolean 验证是否通过
+     * @return boolean 验证是否通过
      */
     function checkNumber($value){
         if(!is_numeric($value)){
@@ -315,7 +315,7 @@ class Validate{
     
     /**
      * 检测数字字符串
-     * @return Boolean 验证是否通过
+     * @return boolean 验证是否通过
      */
     function checkNumberString($value, $split){
         $datas = explode($split, $value);
@@ -335,7 +335,7 @@ class Validate{
     
     /**
      * 检测数字数组
-     * @return Boolean 验证是否通过
+     * @return boolean 验证是否通过
      */
     function checkNumberArray($value){
         $datas = $value;
@@ -355,7 +355,7 @@ class Validate{
     
     /**
      * 检测正则
-     * @return Boolean 验证是否通过
+     * @return boolean 验证是否通过
      */
     function checkRegex($value, $pattern){
         if(empty($pattern)){

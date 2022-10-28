@@ -10,17 +10,17 @@ use library\Validate;
 use library\Config;
 use library\FrameMain;
 use library\Safe;
-use library\Dictionary;
+use library\model\Dictionary;
 use library\ArrayTwo;
 use library\MyString;
-use library\Department;
+use library\model\Department;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
-$validate = new Validate();
 $data = array();
+$validate = new Validate();
 $config = Config::getAll();
 $frameMain = new FrameMain();
 $frameMainMenu = ''; // 框架菜单
@@ -30,7 +30,7 @@ $loginLog = array();
 $operationLogs = array(); // 操作日志
 $operationLog = array();
 $department = new Department();
-$dictionary = new Dictionary();
+$dictionaryModel = new Dictionary();
 
 // 验证
 if(!Auth::isLogin()){
@@ -53,7 +53,7 @@ if(!$validate->check($_GET)){
     exit;
 }
 
-$sql = 'select id, username, name, phone, status_id, department_id, role_id_string, time_add, time_login, time_edit, ip from user where id = :id';
+$sql = 'select id, username, name, phone, status_id, department_id, role_id_string, add_time, login_time, edit_time, ip from user where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
@@ -64,10 +64,10 @@ if(empty($user)){
     exit;
 }
 
-$user['status_name'] = $dictionary->getValue('system_user_status', $user['status_id']);
-$user['time_add_name'] = date('Y-m-d H:i:s', $user['time_add']);
-$user['time_edit_name'] = $user['time_edit'] ? date('Y-m-d H:i:s', $user['time_edit']) : '-';
-$user['time_login_name'] = $user['time_login'] ? date('Y-m-d H:i:s', $user['time_login']) : '-';
+$user['status_name'] = $dictionaryModel->getValue('system_user_status', $user['status_id']);
+$user['add_time_name'] = date('Y-m-d H:i:s', $user['add_time']);
+$user['edit_time_name'] = $user['edit_time'] ? date('Y-m-d H:i:s', $user['edit_time']) : '-';
+$user['login_time_name'] = $user['login_time'] ? date('Y-m-d H:i:s', $user['login_time']) : '-';
 $user['department_name'] = $department->getName($user['department_id']);
 
 $sql = 'select name from role where id in (:id)';
@@ -80,23 +80,23 @@ $user['role_name'] = ArrayTwo::getColumnString($roles, 'name', '，');
 $user = Safe::entity($user);
 
 // 登录日志
-$sql = "select ip, time_login from login_log where user_id = :user_id order by id desc limit 0,10";
+$sql = "select ip, login_time from login_log where user_id = :user_id order by id desc limit 0,10";
 $data = array(
     ':user_id'=>$user['id']
 );
 $pdoStatement = $dbHelper->query($pdo, $sql, $data);
 $loginLogs = $dbHelper->fetchAll($pdoStatement);
-$loginLogs = ArrayTwo::columnTimestampToTime($loginLogs, 'time_login', 'time_login_name');
+$loginLogs = ArrayTwo::columnTimestampToTime($loginLogs, 'login_time', 'login_time_name');
 $loginLogs = Safe::entity($loginLogs);
 
 // 操作日志
-$sql = "select id, ip, time_add, url from operation_log where user_id = :user_id order by id desc limit 0,10";
+$sql = "select id, ip, add_time, url from operation_log where user_id = :user_id order by id desc limit 0,10";
 $data = array(
     ':user_id'=>$user['id']
 );
 $pdoStatement = $dbHelper->query($pdo, $sql, $data);
 $operationLogs = $dbHelper->fetchAll($pdoStatement);
-$operationLogs = ArrayTwo::columnTimestampToTime($operationLogs, 'time_add', 'time_add_name');
+$operationLogs = ArrayTwo::columnTimestampToTime($operationLogs, 'add_time', 'add_time_name');
 foreach($operationLogs as $key => $operationLog){
     $operationLogs[$key]['url_sub'] = MyString::getSubFromZero($operationLog['url'], 60);
 }
@@ -158,11 +158,11 @@ $frameMainMenu = $frameMain->getMenu('system_user');
 </tr>
 <tr>
 <td class="name" align="right">添加时间</td>
-<td><?php echo $user['time_add_name'];?></td>
+<td><?php echo $user['add_time_name'];?></td>
 <td class="name" align="right">最后修改时间</td>
-<td><?php echo $user['time_edit_name'];?></td>
+<td><?php echo $user['edit_time_name'];?></td>
 <td class="name" align="right">最后登录时间</td>
-<td><?php echo $user['time_login_name'];?></td>
+<td><?php echo $user['login_time_name'];?></td>
 </tr>
 <tr>
 <td class="name" align="right">登录ip</td>
@@ -193,7 +193,7 @@ foreach($loginLogs as $loginLog){
 ?>
 <tr>
 <td><?php echo $loginLog['ip'];?></td>
-<td><?php echo $loginLog['time_login_name'];?></td>
+<td><?php echo $loginLog['login_time_name'];?></td>
 </tr>
 <?php
 }
@@ -231,7 +231,7 @@ foreach($operationLogs as $operationLog){
 ?>
 <tr>
 <td><?php echo $operationLog['ip'];?></td>
-<td><?php echo $operationLog['time_add_name'];?></td>
+<td><?php echo $operationLog['add_time_name'];?></td>
 <td><?php echo $operationLog['url_sub'];?></td>
 <td><a href="../operation_log/detail.php?id=<?php echo $operationLog['id'];?>" target="_blank">详情</a></td>
 </tr>

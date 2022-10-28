@@ -5,18 +5,18 @@
 require_once '../../library/app.php';
 
 use library\Auth;
-use library\DbHelper;
 use library\Config;
+use library\DbHelper;
 use library\Validate;
 use library\Safe;
-use library\Department;
+use library\model\Department;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
-$validate = new Validate();
 $data = array();
+$validate = new Validate();
 $config = Config::getAll();
 $department = array();
 $departmentObject = new Department();
@@ -73,35 +73,43 @@ $department = Safe::entity($department);
 <form method="post" action="edit_save.php" class="sun-form-brief form">
 <div class="page_body">
 <input type="hidden" name="id" value="<?php echo $department['id'];?>" />
-<div class="row">
-<div class="title"><span class="required">*</span> 上级部门</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 上级部门</div>
+<div class="value">
+<div class="body">
 <input type="hidden" name="parent_id" id="parent_id" value="<?php echo $department['parent_id'];?>" />
-<div class="sun-input-group" onClick="edit.selectDepartment();">
+<div class="sun-input-group" onClick="selectDepartment();">
 <input type="text" name="parent_name" id="parent_name" readonly value="<?php echo $department['parent_name'];?>" />
 <span class="addon"><span class="iconfont icon-magnifier icon"></span></span>
 </div>
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 部门名称</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 部门名称</div>
+<div class="value">
+<div class="body">
 <input type="text" name="name" id="name" value="<?php echo $department['name'];?>" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title"><span class="required">*</span> 显示排序</div>
-<div class="content">
+<div class="field">
+<div class="label"><span class="required">*</span> 显示排序</div>
+<div class="value">
+<div class="body">
 <input type="number" name="sort" id="sort" value="<?php echo $department['sort'];?>" />
 </div>
 </div>
+</div>
 
-<div class="row">
-<div class="title">备注</div>
-<div class="content">
+<div class="field">
+<div class="label">备注</div>
+<div class="value">
+<div class="body">
 <textarea name="remark" id="remark" class="remark"><?php echo $department['remark'];?></textarea>
+</div>
 </div>
 </div>
 </div>

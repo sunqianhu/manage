@@ -5,15 +5,15 @@
 require_once '../../library/app.php';
 
 use library\Auth;
-use library\DbHelper;
 use library\Config;
+use library\DbHelper;
 use library\FrameMain;
 use library\Tree;
 use library\Safe;
-use library\Permission;
+use library\model\Permission;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -117,7 +117,7 @@ $permissionNode = $permissionObject->getIndexTreeNode($permissions, 1);
 
 <div class="data sun-mt10">
 <div class="toolbar">
-<a href="javascript:;" class="sun-button" data-toggle="tooltip" title="添加权限" onClick="index.add(0);">添加</a>
+<a href="javascript:;" class="sun-button" data-toggle="tooltip" title="添加权限" onClick="add(0);">添加</a>
 </div>
 <table class="sun-table-list hover sun-mt10 sun-treetable" width="100%">
   <tr>

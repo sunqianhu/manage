@@ -7,7 +7,7 @@ namespace library;
 class Tree{
     /**
      * 得到数据树
-     * @param Array $datas 数据
+     * @param array $datas 数据
      * @return array
      */
     function getTree($datas, $child = 'child', $id = 'id', $parentId = 'parent_id'){
@@ -36,8 +36,8 @@ class Tree{
     
     /**
      * 为树形结构数据加上级别
-     * @param Array $datas 数据
-     * @param Integer $level 开始级别
+     * @param array $datas 数据
+     * @param integer $level 开始级别
      * @return array
      */
     function addLevel($datas, $level = 1){

@@ -13,7 +13,7 @@ header('Content-type: text/html; charset=utf-8');
 require_once dirname(__DIR__).'/vendor/autoload.php';
 
 use library\Session;
-use library\OperationLog;
+use library\model\OperationLog;
 
 $session = new Session();
 $operationLog = new OperationLog();

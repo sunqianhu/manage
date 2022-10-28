@@ -2,13 +2,11 @@
  * 添加
  */
 
-var add = {};
-
 /**
  * 提交表单
  */
-add.formSubmit = function(){
-    sun.formSubmit({
+function submitForm(id){
+    sun.submitForm({
         selector: ".form",
         success: function(ret){
             if(ret.status == "error"){
@@ -26,5 +24,5 @@ add.formSubmit = function(){
 }
 
 $(function(){
-    add.formSubmit();
+    submitForm();
 });

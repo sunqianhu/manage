@@ -5,14 +5,14 @@
 require_once '../../library/app.php';
 
 use library\Auth;
-use library\DbHelper;
 use library\Config;
+use library\DbHelper;
 use library\FrameMain;
 use library\Safe;
 use library\Pagination;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -64,11 +64,11 @@ $recordTotal = $dbHelper->fetchColumn($pdoStatement);
 $pagination = new Pagination($recordTotal);
 $paginationNodeIntact = $pagination->getNodeIntact();
 
-$sql = "select id, name, time_edit from role where $where order by id asc limit ".$pagination->limitStart.','.$pagination->pageSize;
+$sql = "select id, name, edit_time from role where $where order by id asc limit ".$pagination->limitStart.','.$pagination->pageSize;
 $pdoStatement = $dbHelper->query($pdo, $sql, $data);
 $roles = $dbHelper->fetchAll($pdoStatement);
 foreach($roles as $key => $role){
-    $roles[$key]['time_edit_name'] = date('Y-m-d H:i:s', $role['time_edit']);
+    $roles[$key]['edit_time_name'] = date('Y-m-d H:i:s', $role['edit_time']);
 }
 
 $search = Safe::entity($search);
@@ -116,7 +116,7 @@ $roles = Safe::entity($roles);
 
 <div class="data sun-mt10">
 <div class="toolbar">
-<a href="javascript:;" class="sun-button" onClick="index.add();">添加</a>
+<a href="javascript:;" class="sun-button" onClick="add();">添加</a>
 </div>
 <table class="sun-table-list hover sun-mt10" width="100%">
   <tr>
@@ -132,10 +132,10 @@ foreach($roles as $role){
   <tr>
     <td><?php echo $role['id'];?></td>
     <td><?php echo $role['name'];?></td>
-    <td><?php echo $role['time_edit_name'];?></td>
+    <td><?php echo $role['edit_time_name'];?></td>
     <td>
-<a href="javascript:;" class="sun-button plain small sun-mr5" onClick="index.edit(<?php echo $role['id'];?>)">修改</a>
-<a href="javascript:;" class="sun-button plain small" onClick="index.delete(<?php echo $role['id'];?>)">删除</a>
+<a href="javascript:;" class="sun-button plain small sun-mr5" onClick="edit(<?php echo $role['id'];?>)">修改</a>
+<a href="javascript:;" class="sun-button plain small" onClick="myDelete(<?php echo $role['id'];?>)">删除</a>
     </td>
   </tr>
 <?php

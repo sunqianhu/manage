@@ -17,10 +17,10 @@ class Pagination{
     
     /**
      * 分页
-     * @param Integer $recordNumber 总记录数
-     * @param Integer $pageSize 每页显示多少条
-     * @param Integer $pageCurrent 当前页
-     * @return String 分页数据
+     * @param integer $recordNumber 总记录数
+     * @param integer $pageSize 每页显示多少条
+     * @param integer $pageCurrent 当前页
+     * @return string 分页数据
      */
     function __construct($recordNumber, $pageSize = 50, $pageCurrent = 1, $urlTemplate = ''){
         $this->id = time().rand(100,999);
@@ -65,9 +65,9 @@ class Pagination{
     
     /**
      * 得到url
-     * @param Integer $pageSize 每页显示多少条
-     * @param Integer $pageCurrent 当前页
-     * @return String url
+     * @param integer $pageSize 每页显示多少条
+     * @param integer $pageCurrent 当前页
+     * @return string url
      */
     function getUrl($pageSize, $pageCurrent){
         $url = str_replace(array('PAGE_SIZE', 'PAGE_CURRENT'), array($pageSize, $pageCurrent), $this->urlTemplate);
@@ -76,63 +76,63 @@ class Pagination{
     
     /**
      * 得到节点总记录
-     * @return String node
+     * @return string node
      */
     function getNodeTotal(){
-        $node = '';
+        $tag = '';
         
         if($this->pageTotal == 0){
-            return $node;
+            return $tag;
         }
         
-        $node = '<div class="count">共<span>'.$this->recordTotal.'</span>条</div>';
+        $tag = '<div class="count">共<span>'.$this->recordTotal.'</span>条</div>';
         
-        return $node;
+        return $tag;
     }
     
     /**
      * 得到节点记录范围
-     * @return String node
+     * @return string node
      */
     function getNodeRecordRange(){
-        $node = '';
+        $tag = '';
         
         if($this->pageTotal == 0){
-            return $node;
+            return $tag;
         }
         
-        $node = '<div class="record_range">显示<span>'.($this->limitStart + 1).'-'.($this->limitStart+$this->pageSize).'</span>条</div>';
+        $tag = '<div class="record_range">显示<span>'.($this->limitStart + 1).'-'.($this->limitStart+$this->pageSize).'</span>条</div>';
         
-        return $node;
+        return $tag;
     }
     
     /**
      * 得到节点页码范围
-     * @return String node
+     * @return string node
      */
     function getNodePageRange(){
-        $node = '';
+        $tag = '';
         
         if($this->pageTotal == 0){
-            return $node;
+            return $tag;
         }
         
-        $node = '<div class="page_range"><span>'.$this->pageCurrent.'/'.$this->pageTotal.'</span></div>';
-        return $node;
+        $tag = '<div class="page_range"><span>'.$this->pageCurrent.'/'.$this->pageTotal.'</span></div>';
+        return $tag;
     }
     
     /**
      * 得到节点链接
-     * @return String node
+     * @return string node
      */
     function getNodeLink(){
-        $node = '';
+        $tag = '';
         $pageStart = 0;
         $pageEnd = 0;
         $difference = 0;
         
         if($this->pageTotal == 0){
-            return $node;
+            return $tag;
         }
         
         $pageStart = $this->pageCurrent - 2;
@@ -153,81 +153,81 @@ class Pagination{
         }
         
         if($pageStart > 1){
-            $node .= '<a href="'.$this->getUrl($this->pageSize, $this->pageCurrent - 1).'">上一页</a>';
-            $node .= '<a href="'.$this->getUrl($this->pageSize, 1).'">1</a>';
+            $tag .= '<a href="'.$this->getUrl($this->pageSize, $this->pageCurrent - 1).'">上一页</a>';
+            $tag .= '<a href="'.$this->getUrl($this->pageSize, 1).'">1</a>';
             if($pageStart > 2){
-                $node .= '<span class="ellipsis">...</span>';
+                $tag .= '<span class="ellipsis">...</span>';
             }
         }else{
-            $node .= '<span class="disabled">上一页</span>';
+            $tag .= '<span class="disabled">上一页</span>';
         }
         
         for($i = $pageStart; $i <= $pageEnd; $i ++){
-            $node .= '<a href="'.$this->getUrl($this->pageSize, $i).'"'.($i == $this->pageCurrent ? ' class="active"' : '').'>'.$i.'</a>';
+            $tag .= '<a href="'.$this->getUrl($this->pageSize, $i).'"'.($i == $this->pageCurrent ? ' class="active"' : '').'>'.$i.'</a>';
         }
         
         if($pageEnd < $this->pageTotal){
             if($pageEnd < $this->pageTotal - 1){
-                $node .= '<span class="ellipsis">...</span>';
+                $tag .= '<span class="ellipsis">...</span>';
             }
-            $node .= '<a href="'.$this->getUrl($this->pageSize, $this->pageTotal).'">'.$this->pageTotal.'</a>';
-            $node .= '<a href="'.$this->getUrl($this->pageSize, $this->pageCurrent + 1).'">下一页</a>';
+            $tag .= '<a href="'.$this->getUrl($this->pageSize, $this->pageTotal).'">'.$this->pageTotal.'</a>';
+            $tag .= '<a href="'.$this->getUrl($this->pageSize, $this->pageCurrent + 1).'">下一页</a>';
         }else{
-            $node .= '<span class="disabled">下一页</span>';
+            $tag .= '<span class="disabled">下一页</span>';
         }
 
-        return '<div class="link">'.$node.'</div>';
+        return '<div class="link">'.$tag.'</div>';
     }
     
     /**
      * 获取节点limit
-     * @return String node
+     * @return string node
      */
     function getNodeLimit(){
-        $node = '';
+        $tag = '';
         $step = 1;
         
         if($this->pageTotal == 0){
-            return $node;
+            return $tag;
         }
         
-        $node = '每页显示<select onchange="sun.pagination.limit(\''.$this->urlTemplate.'\', this)">';
+        $tag = '每页显示<select onchange="sun.pagination.limit(\''.$this->urlTemplate.'\', this)">';
         for($i = 10; $i < 500; $i += $step * 10){
             $step ++;
-            $node .= '<option value="'.$i.'"'.($i == $this->pageSize ? ' selected="selected"' : '').'>'.$i.'</option>';
+            $tag .= '<option value="'.$i.'"'.($i == $this->pageSize ? ' selected="selected"' : '').'>'.$i.'</option>';
         }
-        $node .= '</select>条';
+        $tag .= '</select>条';
         
-        return '<div class="limit">'.$node.'</div>';
+        return '<div class="limit">'.$tag.'</div>';
     }
     
     /**
      * 得到节点跳转到第几页
-     * @return String node
+     * @return string node
      */
     function getNodeSkip(){
-        $node = '';
+        $tag = '';
         
         if($this->pageTotal == 0){
-            return $node;
+            return $tag;
         }
         
         $url = 'location.href=\''.$this->urlTemplate.'\'.replace(\'PAGE_SIZE\', document.getElementById(\'pagination_skip_'.$this->id.'\').value).replace(\'PAGE_CURRENT\', \'1\');';
         
-        $node = '跳转到第<input type="text" class="number pagination_skip_'.$this->id.'" min="1" class="number" value="'.$this->pageCurrent.'" page_size="'.$this->pageSize.'">页
+        $tag = '跳转到第<input type="text" class="number pagination_skip_'.$this->id.'" min="1" class="number" value="'.$this->pageCurrent.'" page_size="'.$this->pageSize.'">页
 <button type="button" class="sun-button small plain" onclick="sun.pagination.skip(\''.$this->urlTemplate.'\', \''.$this->id.'\')">确定</button>';
         
-        return '<div class="skip">'.$node.'</div>';
+        return '<div class="skip">'.$tag.'</div>';
     }
     
     /**
      * 得到节点完整分页
-     * @return String node
+     * @return string node
      */
     function getNodeIntact(){
-        $node = '';
+        $tag = '';
         
-        $node = '<div class="sun-pagination-intact">
+        $tag = '<div class="sun-pagination-intact">
 <div class="left">
 '.$this->getNodeTotal().'
 '.$this->getNodeRecordRange().'
@@ -239,30 +239,30 @@ class Pagination{
 </div>
 </div>';
 
-        return $node;
+        return $tag;
     }
     
     /**
      * 得到节点简单分页
-     * @return String node
+     * @return string node
      */
     function getNodeSimple(){
-        $node = '';
+        $tag = '';
         
-        $node = '<div class="sun-pagination-simple">';
+        $tag = '<div class="sun-pagination-simple">';
         if($this->pageCurrent > 1){
-            $node .= '<a href="'.$this->getUrl($this->pageSize, $this->pageCurrent - 1).'">上一页</a>';
+            $tag .= '<a href="'.$this->getUrl($this->pageSize, $this->pageCurrent - 1).'">上一页</a>';
         }else{
-            $node .= '<a href="javascript:;" class="disabled">上一页</a>';
+            $tag .= '<a href="javascript:;" class="disabled">上一页</a>';
         }
-        $node .= $this->getNodePageRange();
+        $tag .= $this->getNodePageRange();
         if($this->pageCurrent < $this->pageTotal){
-            $node .= '<a href="'.$this->getUrl($this->pageSize, $this->pageCurrent + 1).'">下一页</a>';
+            $tag .= '<a href="'.$this->getUrl($this->pageSize, $this->pageCurrent + 1).'">下一页</a>';
         }else{
-            $node .= '<a href="javascript:;" class="disabled">下一页</a>';
+            $tag .= '<a href="javascript:;" class="disabled">下一页</a>';
         }
-        $node .= '</div>';
+        $tag .= '</div>';
 
-        return $node;
+        return $tag;
     }
 }

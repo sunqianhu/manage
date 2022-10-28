@@ -5,14 +5,14 @@
 require_once '../../library/app.php';
 
 use library\Auth;
-use library\DbHelper;
 use library\Config;
+use library\DbHelper;
 use library\FrameMain;
 use library\Pagination;
 use library\Safe;
 
 $dbHelper = new DbHelper();
-$pdo = $dbHelper->getInstance();
+$pdo = $dbHelper->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -45,8 +45,8 @@ $frameMainMenu = $frameMain->getMenu('system_dictionary');
 
 // 搜索
 if(isset($_GET['type']) && $_GET['type'] !== ''){
-    $wheres[] = 'type = :type';
-    $data[':type'] = $_GET['type'];
+    $wheres[] = 'type like :type';
+    $data[':type'] = '%'.$_GET['type'].'%';
     $search['type'] = $_GET['type'];
 }
 if(isset($_GET['key']) && $_GET['key'] !== ''){
@@ -120,7 +120,7 @@ $dictionarys = Safe::entity($dictionarys);
 
 <div class="data sun-mt10">
 <div class="toolbar">
-<a href="javascript:;" class="sun-button" onClick="index.add();">添加</a>
+<a href="javascript:;" class="sun-button" onClick="add();">添加</a>
 </div>
 <table class="sun-table-list hover sun-mt10" width="100%">
   <tr>
@@ -142,8 +142,8 @@ foreach($dictionarys as $dictionary){
     <td><?php echo $dictionary['value'];?></td>
     <td><?php echo $dictionary['sort'];?></td>
     <td>
-<a href="javascript:;" class="sun-button plain small sun-mr5" onClick="index.edit(<?php echo $dictionary['id'];?>)">修改</a>
-<a href="javascript:;" class="sun-button plain small" onClick="index.delete(<?php echo $dictionary['id'];?>)">删除</a>
+<a href="javascript:;" class="sun-button plain small sun-mr5" onClick="edit(<?php echo $dictionary['id'];?>)">修改</a>
+<a href="javascript:;" class="sun-button plain small" onClick="myDelete(<?php echo $dictionary['id'];?>)">删除</a>
     </td>
   </tr>
 <?php
