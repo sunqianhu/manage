@@ -71,7 +71,7 @@ $config = Config::getAll();
 
 </div>
 <div class="page_button">
-<a href="javascript:;" class="sun-button plain" onClick="window.parent.sun.layer.close('add_dictionary');">关闭</a>
+<a href="javascript:;" class="sun-button plain" onClick="window.parent.sun.layer.close('add');">关闭</a>
 <input type="submit" class="sun-button" value="提交" />
 </div>
 </form>

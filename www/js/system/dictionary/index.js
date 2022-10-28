@@ -8,7 +8,7 @@
 function add(){
     var url = "add.php";
     sun.layer.open({
-        id: "add_dictionary",
+        id: "add",
         name: "添加字典",
         url: url,
         width: 600,
@@ -22,7 +22,7 @@ function add(){
 edit = function(id){
     var url = "edit.php?id="+id;
     sun.layer.open({
-        id: "edit_dictionary",
+        id: "edit",
         name: "修改字典",
         url: url,
         width: 600,

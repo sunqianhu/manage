@@ -9,7 +9,7 @@
 function add(parentId){
     var url = "add.php?parent_id="+parentId;
     sun.layer.open({
-        id: "add_permission",
+        id: "add",
         name: "添加权限",
         url: url,
         width: 600,
@@ -23,7 +23,7 @@ function add(parentId){
 function edit(id){
     var url = "edit.php?id="+id;
     sun.layer.open({
-        id: "edit_permission",
+        id: "edit",
         name: "修改权限",
         url: url,
         width: 600,

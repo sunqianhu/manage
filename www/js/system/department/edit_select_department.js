@@ -39,7 +39,7 @@ function submit(){
     
     node = nodes[0];
     
-    iframeWindow = sun.layer.getIframeWindow(window.parent, "department_edit_iframe");
+    iframeWindow = sun.layer.getIframeWindow(window.parent, "edit_iframe");
     iframeWindow.selectDepartmentCallback(node);
     window.parent.sun.layer.close("edit_select_department");
 }
