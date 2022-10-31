@@ -98,20 +98,20 @@ transition: all 0.5s ease;
 }
 .sun-button:hover{ background: #5284b6; text-decoration: none; color: #ffffff}
 .sun-button:active{ background: #5284b6}
-.sun-button[disabled] { background: #aaaaaa; color: #919191}
 .sun-button .icon{ font-size: 12px; vertical-align: middle}
 
 .sun-button.plain{ background: #f5f7f9; color: #191919; border: 1px solid #cccccc}
 .sun-button.plain:hover{ background: #e5e7e9; color: #191919; border-color: #acacac}
 .sun-button.warning{ background: #FF5722}
 .sun-button.warning:hover{ background: #FF7742}
-
 .sun-button.small{ height: 22px; line-height: 22px; padding: 0px 5px; font-size: 12px}
 .sun-button.small .icon{ font-size: 10px; vertical-align: middle}
 .sun-button.big{ height: 40px; line-height: 40px; padding: 0px 18px}
 .sun-button.big .icon{ vertical-align: middle}
-
 .sun-button.block{ display: block; width: 100%; text-align: center}
+
+.sun-button[disabled] { background: #aaaaaa; color: #919191}
+.sun-button.disabled{ background: #aaaaaa; color: #919191}
 
 /*按钮组*/
 .sun-button-group{ display: table; border-collapse: separate}

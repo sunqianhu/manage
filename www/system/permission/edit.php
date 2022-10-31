@@ -77,7 +77,7 @@ $permission = Safe::entity($permission);
 <div class="value">
 <div class="body">
 <input type="hidden" name="parent_id" id="parent_id" value="<?php echo $permission['parent_id'];?>" />
-<div class="sun-input-group" onClick="edit.selectPermission();">
+<div class="sun-input-group" onClick="selectPermission();">
 <input type="text" name="parent_name" id="parent_name" readonly value="<?php echo $permission['parent_name'];?>" />
 <span class="addon"><span class="iconfont icon-magnifier icon"></span></span>
 </div>

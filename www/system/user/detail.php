@@ -112,7 +112,8 @@ $operationLogs = Safe::entity($operationLogs, 'url, url_sub');
 </head>
 
 <body class="page">
-<div class="sun-section">
+<div class="name"><h1><?php echo $user['name'];?></h1></div>
+<div class="sun-section sun-mt10">
 <div class="title">
 <span class="name">用户信息</span>
 </div>

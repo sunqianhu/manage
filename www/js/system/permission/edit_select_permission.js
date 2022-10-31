@@ -40,7 +40,7 @@ function submit(){
     node = nodes[0];
     
     iframeWindow = sun.layer.getIframeWindow(window.parent, "edit_iframe");
-    iframeWindow.edit.selectPermissionCallback(node);
+    iframeWindow.selectPermissionCallback(node);
     window.parent.sun.layer.close("edit_select_permission");
 }
 
