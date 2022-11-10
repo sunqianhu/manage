@@ -2,14 +2,14 @@
 /**
  * 停用
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\DbHelper;
-use library\Validate;
+use library\helper\Auth;
+use library\core\Db;
+use library\core\Validate;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -49,8 +49,8 @@ $sql = 'select id, status_id from user where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$user = $dbHelper->fetch($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$user = $db->fetch($pdoStatement);
 if(empty($user)){
     $return['message'] = '用户没有找到';
     echo json_encode($return);
@@ -69,8 +69,8 @@ $data = array(
     ':status_id'=>2,
     ':id'=>$user['id']
 );
-if(!$dbHelper->query($pdo, $sql, $data)){
-    $return['message'] = $dbHelper->getError();
+if(!$db->query($pdo, $sql, $data)){
+    $return['message'] = $db->getError();
     echo json_encode($return);
     exit;
 }

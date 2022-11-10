@@ -2,7 +2,7 @@
 /**
  * ztree
  */
-namespace library;
+namespace library\core;
 
 class Ztree{
     /**

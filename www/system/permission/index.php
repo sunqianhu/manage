@@ -2,18 +2,18 @@
 /**
  * 权限管理
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\Config;
-use library\DbHelper;
-use library\FrameMain;
-use library\Tree;
-use library\Safe;
-use library\model\Permission;
+use library\helper\Auth;
+use library\core\Config;
+use library\core\Db;
+use library\helper\FrameMain;
+use library\core\Tree;
+use library\core\Safe;
+use library\helper\Permission;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -29,7 +29,7 @@ $search = array(
 );
 $wheres = array();
 $where = '1';
-$permissionModel = new Permission();
+$permissionHelper = new Permission();
 $tree = new Tree();
 
 if(!Auth::isLogin()){
@@ -67,11 +67,11 @@ if(!empty($wheres)){
 
 // 数据
 $sql = "select id, parent_id, name, `sort`, tag from permission where $where order by `sort` asc, id asc";
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$permissions = $dbHelper->fetchAll($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$permissions = $db->fetchAll($pdoStatement);
 $permissions = $tree->getTree($permissions, 'child', 'id', 'parent_id');
 $permissions = Safe::entity($permissions, 'id,parent_id');
-$permissionNode = $permissionModel->getIndexTreeNode($permissions, 1);
+$permissionNode = $permissionHelper->getIndexTreeNode($permissions, 1);
 
 ?><!doctype html>
 <html>
@@ -82,7 +82,7 @@ $permissionNode = $permissionModel->getIndexTreeNode($permissions, 1);
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/jquery-1.12.4/jquery.min.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.js"></script>
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/inc/frame_main.js"></script>
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/public/frame_main.js"></script>
 <link href="<?php echo $config['app_domain'];?>css/system/permission/index.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/system/permission/index.js"></script>
 </head>

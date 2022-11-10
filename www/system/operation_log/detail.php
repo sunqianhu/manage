@@ -2,26 +2,26 @@
 /**
  * 详情
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\DbHelper;
-use library\Validate;
-use library\Auth;
-use library\Config;
-use library\Safe;
-use library\model\User;
-use library\model\Department;
+use library\core\Db;
+use library\core\Validate;
+use library\helper\Auth;
+use library\core\Config;
+use library\core\Safe;
+use library\helper\User;
+use library\helper\Department;
 
 $validate = new Validate();
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $config = Config::getAll();
 $operationLog = array();
 $sql = '';
 $data = array();
-$departmentModel = new Department();
-$userModel = new User();
+$departmentHelper = new Department();
+$userHelper = new User();
 
 // 验证
 if(!Auth::isLogin()){
@@ -48,15 +48,15 @@ $sql = 'select * from operation_log where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$operationLog = $dbHelper->fetch($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$operationLog = $db->fetch($pdoStatement);
 if(empty($operationLog)){
     header('location:../../error.php?message='.urlencode('没有找到记录'));
     exit;
 }
 $operationLog['add_time_name'] = date('Y-m-d H:i:s', $operationLog['add_time']);
-$operationLog['user_name'] = $userModel->getName($operationLog['user_id']);
-$operationLog['department_name'] = $departmentModel->getName($operationLog['department_id']);
+$operationLog['user_name'] = $userHelper->getName($operationLog['user_id']);
+$operationLog['department_name'] = $departmentHelper->getName($operationLog['department_id']);
 
 $operationLog = Safe::entity($operationLog, 'url');
 ?><!doctype html>

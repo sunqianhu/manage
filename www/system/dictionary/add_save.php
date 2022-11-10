@@ -2,14 +2,14 @@
 /**
  * 添加保存
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\DbHelper;
-use library\Validate;
+use library\helper\Auth;
+use library\core\Db;
+use library\core\Validate;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -65,8 +65,8 @@ $data = array(
     ':value'=>$_POST['value'],
     ':sort'=>$_POST['sort']
 );
-if(!$dbHelper->query($pdo, $sql, $data)){
-    $return['message'] = $dbHelper->getError();
+if(!$db->query($pdo, $sql, $data)){
+    $return['message'] = $db->getError();
     echo json_encode($return);
     exit;
 }

@@ -2,9 +2,9 @@
 /**
  * 验证码
  */
-require_once '../library/app.php';
+require_once '../main.php';
 
-use library\Captcha;
+use library\core\Captcha;
 
 $code = '';
 $captcha = new Captcha();

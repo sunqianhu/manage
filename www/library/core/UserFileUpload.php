@@ -2,10 +2,10 @@
 /**
  * 文件上传服务
  */
-namespace library;
+namespace library\core;
 
-use library\Config;
-use library\UserFile;
+use library\core\Config;
+use library\core\UserFile;
 
 class UserFileUpload{
     public $name = ''; // 文件名

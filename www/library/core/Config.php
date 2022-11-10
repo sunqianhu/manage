@@ -2,7 +2,7 @@
 /**
  * 配置
  */
-namespace library;
+namespace library\core;
 
 class Config{
     static $config = array();
@@ -12,7 +12,7 @@ class Config{
      */
     static function getAll(){
         if(empty(self::$config)){
-            self::$config = require_once dirname(__DIR__).'/config.php';
+            self::$config = require_once dirname(dirname(__DIR__)).'/config.php';
         }
         
         return self::$config;
@@ -26,7 +26,7 @@ class Config{
         $value = '';
         
         if(empty(self::$config)){
-            self::$config = require_once dirname(__DIR__).'/config.php';
+            self::$config = require_once dirname(dirname(__DIR__)).'/config.php';
         }
         
         if(isset(self::$config[$key])){

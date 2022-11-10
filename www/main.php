@@ -10,10 +10,10 @@ date_default_timezone_set('PRC');
 header('Content-type: text/html; charset=utf-8');
 
 // 自动加载
-require_once dirname(__DIR__).'/vendor/autoload.php';
+require_once __DIR__.'/vendor/autoload.php';
 
-use library\Session;
-use library\model\OperationLog;
+use library\core\Session;
+use library\helper\OperationLog;
 
 $session = new Session();
 $operationLog = new OperationLog();

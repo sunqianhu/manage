@@ -2,7 +2,7 @@
 /**
  * 验证码
  */
-namespace library;
+namespace library\core;
 
 class Captcha{
 
@@ -16,7 +16,7 @@ class Captcha{
         $height = 35;
         $image = null;
         $color = null;
-        $font = dirname(__DIR__).'/resource/heiti.ttf'; // 字体路径
+        $font = dirname(dirname(__DIR__)).'/resource/heiti.ttf'; // 字体路径
         $i = 0;
         
         $image = imagecreate($width, $height);

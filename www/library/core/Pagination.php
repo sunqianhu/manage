@@ -2,9 +2,9 @@
 /**
  * 分页
  */
-namespace library;
+namespace library\core;
 
-use library\Config;
+use library\core\Config;
 
 class Pagination{
     public $id;

@@ -2,11 +2,11 @@
 /**
  * 用户模型
  */
-namespace library\model;
+namespace library\helper;
 
-use library\Config;
-use library\DbHelper;
-use library\model\Dictionary;
+use library\core\Config;
+use library\core\Db;
+use library\helper\Dictionary;
 
 class User{
     
@@ -17,8 +17,8 @@ class User{
      * @return string 用户姓名
      */
     function getName($id){
-        $dbHelper = new DbHelper();
-        $pdo = $dbHelper->getPdo();
+        $db = new Db();
+        $pdo = $db->getPdo();
         $pdoStatement = null;
         $sql = '';
         $data = array();
@@ -28,8 +28,8 @@ class User{
         $data = array(
             ':id'=>$id
         );
-        $pdoStatement = $dbHelper->query($pdo, $sql, $data);
-        $name = $dbHelper->fetchColumn($pdoStatement);
+        $pdoStatement = $db->query($pdo, $sql, $data);
+        $name = $db->fetchColumn($pdoStatement);
         
         return $name;
     }
@@ -63,9 +63,9 @@ class User{
         $statusName = '';
         $class = '';
         $tag = '';
-        $dictionaryModel = new Dictionary();
+        $dictionaryHelper = new Dictionary();
         
-        $statusName = $dictionaryModel->getValue('system_user_status', $statusId);
+        $statusName = $dictionaryHelper->getValue('system_user_status', $statusId);
         switch($statusId){
             case 2:
                 $class = 'orange';

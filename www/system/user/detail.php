@@ -2,20 +2,20 @@
 /**
  * 用户详情
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\DbHelper;
-use library\Validate;
-use library\Config;
-use library\Safe;
-use library\ArrayTwo;
-use library\MyString;
-use library\model\Dictionary;
-use library\model\Department;
+use library\helper\Auth;
+use library\core\Db;
+use library\core\Validate;
+use library\core\Config;
+use library\core\Safe;
+use library\core\ArrayTwo;
+use library\core\MyString;
+use library\helper\Dictionary;
+use library\helper\Department;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -26,8 +26,8 @@ $loginLogs = array();
 $loginLog = array();
 $operationLogs = array(); // 操作日志
 $operationLog = array();
-$departmentModel = new Department();
-$dictionaryModel = new Dictionary();
+$departmentHelper = new Department();
+$dictionaryHelper = new Dictionary();
 
 // 验证
 if(!Auth::isLogin()){
@@ -54,25 +54,25 @@ $sql = 'select id, username, name, phone, status_id, department_id, role_id_stri
 $data = array(
     ':id'=>$_GET['id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$user = $dbHelper->fetch($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$user = $db->fetch($pdoStatement);
 if(empty($user)){
     header('location:../../error.php?message='.urlencode('没有找到用户'));
     exit;
 }
 
-$user['status_name'] = $dictionaryModel->getValue('system_user_status', $user['status_id']);
+$user['status_name'] = $dictionaryHelper->getValue('system_user_status', $user['status_id']);
 $user['add_time_name'] = date('Y-m-d H:i:s', $user['add_time']);
 $user['edit_time_name'] = $user['edit_time'] ? date('Y-m-d H:i:s', $user['edit_time']) : '-';
 $user['login_time_name'] = $user['login_time'] ? date('Y-m-d H:i:s', $user['login_time']) : '-';
-$user['department_name'] = $departmentModel->getName($user['department_id']);
+$user['department_name'] = $departmentHelper->getName($user['department_id']);
 
 $sql = 'select name from role where id in (:id)';
 $data = array(
     ':id'=>$user['role_id_string']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$roles = $dbHelper->fetchAll($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$roles = $db->fetchAll($pdoStatement);
 $user['role_name'] = ArrayTwo::getColumnString($roles, 'name', '，');
 $user = Safe::entity($user);
 
@@ -81,8 +81,8 @@ $sql = "select ip, login_time from login_log where user_id = :user_id order by i
 $data = array(
     ':user_id'=>$user['id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$loginLogs = $dbHelper->fetchAll($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$loginLogs = $db->fetchAll($pdoStatement);
 $loginLogs = ArrayTwo::columnTimestampToTime($loginLogs, 'login_time', 'login_time_name');
 $loginLogs = Safe::entity($loginLogs);
 
@@ -91,8 +91,8 @@ $sql = "select id, ip, add_time, url from operation_log where user_id = :user_id
 $data = array(
     ':user_id'=>$user['id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$operationLogs = $dbHelper->fetchAll($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$operationLogs = $db->fetchAll($pdoStatement);
 $operationLogs = ArrayTwo::columnTimestampToTime($operationLogs, 'add_time', 'add_time_name');
 foreach($operationLogs as $key => $operationLog){
     $operationLogs[$key]['url_sub'] = MyString::getSubFromZero($operationLog['url'], 60);

@@ -2,17 +2,17 @@
 /**
  * 修改
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\Config;
-use library\DbHelper;
-use library\Validate;
-use library\Safe;
-use library\model\Department;
+use library\helper\Auth;
+use library\core\Config;
+use library\core\Db;
+use library\core\Validate;
+use library\core\Safe;
+use library\helper\Department;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -51,8 +51,8 @@ $sql = 'select id, parent_id, name, `sort`, remark from department where id = :i
 $data = array(
     ':id'=>$_GET['id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$department = $dbHelper->fetch($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$department = $db->fetch($pdoStatement);
 $department['parent_name'] = $departmentObject->getName($department['parent_id']);
 $department = Safe::entity($department);
 

@@ -2,10 +2,10 @@
 /**
  * 添加
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\Config;
+use library\helper\Auth;
+use library\core\Config;
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');

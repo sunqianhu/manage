@@ -2,15 +2,15 @@
 /**
  * 选择部门
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\DbHelper;
-use library\Ztree;
-use library\Config;
+use library\helper\Auth;
+use library\core\Db;
+use library\core\Ztree;
+use library\core\Config;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $config = Config::getAll();
@@ -28,8 +28,8 @@ if(!Auth::isPermission('system_user')){
 }
 
 $sql = 'select id, name, parent_id from department order by parent_id asc, id asc';
-$pdoStatement = $dbHelper->query($pdo, $sql);
-$departments = $dbHelper->fetchAll($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql);
+$departments = $db->fetchAll($pdoStatement);
 $departments = $ztree->setOpenByFirst($departments);
 $department = json_encode($departments);
 

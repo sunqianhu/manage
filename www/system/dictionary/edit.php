@@ -2,16 +2,16 @@
 /**
  * 修改
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\Config;
-use library\DbHelper;
-use library\Validate;
-use library\Safe;
+use library\helper\Auth;
+use library\core\Config;
+use library\core\Db;
+use library\core\Validate;
+use library\core\Safe;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -45,8 +45,8 @@ $sql = 'select id, type, `key`, `value`, `sort` from dictionary where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$dictionary = $dbHelper->fetch($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$dictionary = $db->fetch($pdoStatement);
 $dictionary = Safe::entity($dictionary);
 ?><!doctype html>
 <html>

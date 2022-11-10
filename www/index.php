@@ -2,11 +2,11 @@
 /**
  * 首页
  */
-require_once 'library/app.php';
+require_once 'main.php';
 
-use library\Config;
-use library\Auth;
-use library\FrameMain;
+use library\core\Config;
+use library\helper\Auth;
+use library\helper\FrameMain;
 
 $config = array();
 $frameMain = new FrameMain();
@@ -35,7 +35,7 @@ if($_SESSION['user']['ip']){
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?php echo $config['app_name'];?></title>
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/jquery-1.12.4/jquery.min.js"></script>
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/inc/frame_main.js"></script>
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/public/frame_main.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.js"></script>
 <link href="<?php echo $config['app_domain'];?>css/index.css" rel="stylesheet" type="text/css" />

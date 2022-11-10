@@ -2,7 +2,7 @@
 /**
  * 会话
  */
-namespace library;
+namespace library\core;
 
 class Session{
     /**

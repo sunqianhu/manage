@@ -2,20 +2,20 @@
 /**
  * 修改
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\Config;
-use library\DbHelper;
-use library\ArrayTwo;
-use library\Validate;
-use library\Safe;
-use library\model\Dictionary;
-use library\model\Department;
+use library\helper\Auth;
+use library\core\Config;
+use library\core\Db;
+use library\core\ArrayTwo;
+use library\core\Validate;
+use library\core\Safe;
+use library\helper\Dictionary;
+use library\helper\Department;
 
 $validate = new Validate();
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $config = Config::getAll();
 $user = array();
@@ -24,8 +24,8 @@ $radioStatus = '';
 $optionRole = '';
 $sql = '';
 $data = array();
-$departmentModel = new Department();
-$dictionaryModel = new Dictionary();
+$departmentHelper = new Department();
+$dictionaryHelper = new Dictionary();
 
 // 验证
 if(!Auth::isLogin()){
@@ -52,21 +52,21 @@ $sql = 'select id, username, name, phone, status_id, department_id, role_id_stri
 $data = array(
     ':id'=>$_GET['id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$user = $dbHelper->fetch($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$user = $db->fetch($pdoStatement);
 if(empty($user)){
     header('location:../../error.php?message='.urlencode('没有找到用户'));
     exit;
 }
 
 $user['role_ids'] = explode(',', $user['role_id_string']);
-$user['department_name'] = $departmentModel->getName($user['department_id']);
+$user['department_name'] = $departmentHelper->getName($user['department_id']);
 $user = Safe::entity($user);
-$radioStatus = $dictionaryModel->getRadio('system_user_status', 'status_id', $user['status_id']);
+$radioStatus = $dictionaryHelper->getRadio('system_user_status', 'status_id', $user['status_id']);
 
 $sql = 'select id, name from role order by id asc';
-$pdoStatement = $dbHelper->query($pdo, $sql);
-$roles = $dbHelper->fetchAll($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql);
+$roles = $db->fetchAll($pdoStatement);
 $optionRole = ArrayTwo::getOption($roles, $user['role_ids'], 'id', 'name');
 
 ?><!doctype html>

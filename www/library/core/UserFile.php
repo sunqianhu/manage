@@ -2,9 +2,9 @@
 /**
  * 用户文件
  */
-namespace library;
+namespace library\core;
 
-use library\Config;
+use library\core\Config;
 
 class UserFile{
     public $error = ''; // 错误

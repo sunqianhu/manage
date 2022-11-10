@@ -2,11 +2,11 @@
 /**
  * 数据库操作辅助类
  */
-namespace library;
+namespace library\core;
 
-use library\Config;
+use library\core\Config;
 
-class DbHelper{
+class Db{
     static public $pdo;
     public $error = ''; // 错误
     
@@ -29,9 +29,10 @@ class DbHelper{
     
     /**
      * 得到pdo单例实例
+     * @param string $db 数据库
      * @return object pdo对象
      */
-    function getPdo(){
+    function getPdo($db = 'db'){
         $pdo = null;
         $dsn = '';
         $config = array();
@@ -40,27 +41,27 @@ class DbHelper{
             return self::$pdo;
         }
     
-        $config = Config::getAll();
+        $config = Config::getOne($db);
         if(
             empty($config) || 
-            empty($config['db_type']) ||
-            empty($config['db_host']) ||
-            empty($config['db_port']) ||
-            empty($config['db_database']) ||
-            empty($config['db_charset']) ||
-            empty($config['db_username']) ||
-            empty($config['db_password'])
+            empty($config['type']) ||
+            empty($config['host']) ||
+            empty($config['port']) ||
+            empty($config['database']) ||
+            empty($config['charset']) ||
+            empty($config['username']) ||
+            empty($config['password'])
         ){
             $this->setError('数据库配置参数错误');
             return $pdo;
         }
         
-        $dsn = $config['db_type'].
-        ':host='.$config['db_host'].
-        ';port='.$config['db_port'].
-        ';dbname='.$config['db_database'].
-        ';charset='.$config['db_charset'];
-        $pdo = new \PDO($dsn, $config['db_username'], $config['db_password']);
+        $dsn = $config['type'].
+        ':host='.$config['host'].
+        ';port='.$config['port'].
+        ';dbname='.$config['database'].
+        ';charset='.$config['charset'];
+        $pdo = new \PDO($dsn, $config['username'], $config['password']);
         
         self::$pdo = $pdo;
         return $pdo;

@@ -2,7 +2,7 @@
 /**
  * 树
  */
-namespace library;
+namespace library\core;
 
 class Tree{
     /**

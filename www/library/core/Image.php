@@ -2,7 +2,7 @@
 /**
  * 图片处理
  */
-namespace library;
+namespace library\core;
 
 class Image{
     public $error = ''; // 错误描述

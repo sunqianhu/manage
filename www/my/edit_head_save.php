@@ -2,21 +2,21 @@
 /**
  * 修改头像保存
  */
-require_once '../library/app.php';
+require_once '../main.php';
 
-use library\Auth;
-use library\DbHelper;
-use library\model\User;
-use library\UserFileUpload;
+use library\helper\Auth;
+use library\core\Db;
+use library\helper\User;
+use library\core\UserFileUpload;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
 $user = array();
 $path = ''; // 头像路径
-$userModel = new User();
+$userHelper = new User();
 $userFileUpload = new UserFileUpload();
 $return = array(
     'status'=>'error',
@@ -35,8 +35,8 @@ $sql = "select id from user where id = :id";
 $data = array(
     ':id'=>$_SESSION['user']['id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$user = $dbHelper->fetch($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$user = $db->fetch($pdoStatement);
 if(empty($user)){
     $return['message'] = '用户没有找到';
     echo json_encode($return);
@@ -57,10 +57,10 @@ $data = array(
     ':head'=>$path,
     ':id'=>$user['id']
 );
-$dbHelper->query($pdo, $sql, $data);
+$db->query($pdo, $sql, $data);
 
 $_SESSION['user']['head'] = $path;
-$_SESSION['user']['head_url'] = $userModel->getHeadUrl($path);
+$_SESSION['user']['head_url'] = $userHelper->getHeadUrl($path);
 
 $return['status'] = 'success';
 $return['message'] = '修改成功';

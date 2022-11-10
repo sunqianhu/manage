@@ -2,14 +2,14 @@
 /**
  * 添加保存
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\DbHelper;
-use library\Validate;
+use library\helper\Auth;
+use library\core\Db;
+use library\core\Validate;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -64,8 +64,8 @@ $data = array(
     ':add_time'=>time(),
     ':edit_time'=>time()
 );
-if(!$dbHelper->query($pdo, $sql, $data)){
-    $return['message'] = $dbHelper->getError();
+if(!$db->query($pdo, $sql, $data)){
+    $return['message'] = $db->getError();
     echo json_encode($return);
     exit;
 }
@@ -78,7 +78,7 @@ foreach($permissionIds as $permissionId){
         ':role_id'=>$roleId,
         ':permission_id'=>$permissionId
     );
-    $dbHelper->query($pdo, $sql, $data);
+    $db->query($pdo, $sql, $data);
 }
 
 $return['status'] = 'success';

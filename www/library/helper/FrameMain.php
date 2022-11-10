@@ -2,10 +2,10 @@
 /**
  * 主框架
  */
-namespace library;
+namespace library\helper;
 
-use library\Config;
-use library\Auth;
+use library\core\Config;
+use library\helper\Auth;
 
 class FrameMain{
     /**

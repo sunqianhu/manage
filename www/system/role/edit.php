@@ -2,17 +2,17 @@
 /**
  * 修改
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\Config;
-use library\DbHelper;
-use library\Ztree;
-use library\Validate;
-use library\Safe;
+use library\helper\Auth;
+use library\core\Config;
+use library\core\Db;
+use library\core\Ztree;
+use library\core\Validate;
+use library\core\Safe;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -51,8 +51,8 @@ $sql = 'select id, name, remark from role where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$role = $dbHelper->fetch($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$role = $db->fetch($pdoStatement);
 if(empty($role)){
     header('location:../../error.php?message='.urlencode('角色没有找到'));
     exit;
@@ -62,15 +62,15 @@ $sql = 'select permission_id from role_permission where role_id = :role_id';
 $data = array(
     ':role_id'=>$role['id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$rolePermissions = $dbHelper->fetchAll($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$rolePermissions = $db->fetchAll($pdoStatement);
 $permissionIds = array_column($rolePermissions, 'permission_id');
 $role['permission_ids'] = implode(',', $permissionIds);
 $role = Safe::entity($role);
 
 $sql = 'select id, name, parent_id from permission where parent_id != 0 order by parent_id asc, id asc';
-$pdoStatement = $dbHelper->query($pdo, $sql);
-$permissions = $dbHelper->fetchAll($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql);
+$permissions = $db->fetchAll($pdoStatement);
 $permissions = $ztree->setOpenByFirst($permissions);
 $permissions = $ztree->setChecked($permissions, $permissionIds);
 $permission = json_encode($permissions);

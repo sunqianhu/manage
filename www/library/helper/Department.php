@@ -2,9 +2,9 @@
 /**
  * 部门模型
  */
-namespace library\model;
+namespace library\helper;
 
-use library\DbHelper;
+use library\core\Db;
 
 class Department{
     
@@ -15,8 +15,8 @@ class Department{
      * @return string 用户姓名
      */
     function getName($id){
-        $dbHelper = new DbHelper();
-        $pdo = $dbHelper->getPdo();
+        $db = new Db();
+        $pdo = $db->getPdo();
         $pdoStatement = null;
         $name = '';
         $sql = '';
@@ -26,8 +26,8 @@ class Department{
         $data = array(
             ':id'=>$id
         );
-        $pdoStatement = $dbHelper->query($pdo, $sql, $data);
-        $name = $dbHelper->fetchColumn($pdoStatement);
+        $pdoStatement = $db->query($pdo, $sql, $data);
+        $name = $db->fetchColumn($pdoStatement);
         
         return $name;
     }

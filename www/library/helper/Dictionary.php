@@ -2,10 +2,10 @@
 /**
  * 字典模型
  */
-namespace library\model;
+namespace library\helper;
 
-use library\DbHelper;
-use library\Cache;
+use library\core\Db;
+use library\core\Cache;
 
 class Dictionary{
     /**
@@ -14,8 +14,8 @@ class Dictionary{
      * @return string value
      */
     function getSetCache($type){
-        $dbHelper = new DbHelper();
-        $pdo = $dbHelper->getPdo();
+        $db = new Db();
+        $pdo = $db->getPdo();
         $pdoStatement = null;
         $cacheKey = 'dictionary_'.$type; // 缓存key
         $data = '';
@@ -33,8 +33,8 @@ class Dictionary{
         $dbData = array(
             ':type'=>$type
         );
-        $pdoStatement = $dbHelper->query($pdo, $sql, $dbData);
-        $datas = $dbHelper->fetchAll($pdoStatement);
+        $pdoStatement = $db->query($pdo, $sql, $dbData);
+        $datas = $db->fetchAll($pdoStatement);
         if(empty($datas)){
             return $data;
         }

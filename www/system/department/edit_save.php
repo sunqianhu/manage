@@ -2,15 +2,15 @@
 /**
  * 修改保存
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\DbHelper;
-use library\Validate;
+use library\helper\Auth;
+use library\core\Db;
+use library\core\Validate;
 
 $validate = new Validate();
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $departmentCurrent = array(); // 本部门
 $departmentParent = array(); // 上级部门
@@ -68,8 +68,8 @@ $sql = 'select id, parent_id from department where id = :id';
 $data = array(
     ':id'=>$_POST['id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$departmentCurrent = $dbHelper->fetch($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$departmentCurrent = $db->fetch($pdoStatement);
 if(empty($departmentCurrent)){
     $return['message'] = '此部门没有找到';
     echo json_encode($return);
@@ -81,8 +81,8 @@ $sql = 'select parent_ids from department where id = :id';
 $data = array(
     ':id'=>$_POST['parent_id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$departmentParent = $dbHelper->fetch($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$departmentParent = $db->fetch($pdoStatement);
 
 // 更新
 $sql = 'update department set
@@ -100,8 +100,8 @@ $data = array(
     ':remark'=>$_POST['remark'],
     ':id'=>$departmentCurrent['id']
 );
-if(!$dbHelper->query($pdo, $sql, $data)){
-    $return['message'] = $dbHelper->getError();
+if(!$db->query($pdo, $sql, $data)){
+    $return['message'] = $db->getError();
     echo json_encode($return);
     exit;
 }

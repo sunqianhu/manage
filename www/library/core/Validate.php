@@ -2,7 +2,7 @@
 /**
  * 验证器
  */
-namespace library;
+namespace library\core;
 
 class Validate{
     // 规则

@@ -2,23 +2,23 @@
 /**
  * 添加
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\Config;
-use library\DbHelper;
-use library\ArrayTwo;
-use library\model\Dictionary;
+use library\helper\Auth;
+use library\core\Config;
+use library\core\Db;
+use library\core\ArrayTwo;
+use library\helper\Dictionary;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $config = Config::getAll();
 $radioStatus = '';
 $optionRole = '';
 $sql = '';
 $data = array();
-$dictionaryModel = new Dictionary();
+$dictionaryHelper = new Dictionary();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -30,11 +30,11 @@ if(!Auth::isPermission('system_user')){
 }
 
 $sql = "select id, name from role order by id asc";
-$pdoStatement = $dbHelper->query($pdo, $sql);
-$roles = $dbHelper->fetchAll($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql);
+$roles = $db->fetchAll($pdoStatement);
 $optionRole = ArrayTwo::getOption($roles);
 
-$radioStatus = $dictionaryModel->getRadio('system_user_status', 'status_id', 1);
+$radioStatus = $dictionaryHelper->getRadio('system_user_status', 'status_id', 1);
 ?><!doctype html>
 <html>
 <head>

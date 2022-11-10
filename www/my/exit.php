@@ -2,7 +2,7 @@
 /**
  * 退出
  */
-require_once '../library/app.php';
+require_once '../main.php';
 
 unset($_SESSION['user']);
 unset($_SESSION['department']);

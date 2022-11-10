@@ -2,9 +2,9 @@
 /**
  * 字符串
  */
-namespace library;
+namespace library\core;
 
-use library\Safe;
+use library\core\Safe;
 
 class MyString{
     /**

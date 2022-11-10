@@ -2,15 +2,15 @@
 /**
  * 删除
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\DbHelper;
-use library\Validate;
+use library\helper\Auth;
+use library\core\Db;
+use library\core\Validate;
 
 $validate = new Validate();
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $sql = '';
 $data = array();
 $return = array(
@@ -47,8 +47,8 @@ $sql = 'delete from dictionary where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
-if(!$dbHelper->query($pdo, $sql, $data)){
-    $return['message'] = $dbHelper->getError();
+if(!$db->query($pdo, $sql, $data)){
+    $return['message'] = $db->getError();
     echo json_encode($return);
     exit;
 }

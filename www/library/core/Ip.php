@@ -2,7 +2,7 @@
 /**
  * ip
  */
-namespace library;
+namespace library\core;
 
 class Ip{
     /**

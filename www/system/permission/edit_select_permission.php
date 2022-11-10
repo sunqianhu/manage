@@ -2,15 +2,15 @@
 /**
  * 选择上级权限
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Config;
-use library\DbHelper;
-use library\Ztree;
-use library\Auth;
+use library\core\Config;
+use library\core\Db;
+use library\core\Ztree;
+use library\helper\Auth;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $config = Config::getAll();
 $permissions = array(); // 权限数据
@@ -27,8 +27,8 @@ if(!Auth::isPermission('system_permission')){
 }
 
 $sql = "select id, name, parent_id from permission order by parent_id asc, id asc";
-$pdoStatement = $dbHelper->query($pdo, $sql);
-$permissions = $dbHelper->fetchAll($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql);
+$permissions = $db->fetchAll($pdoStatement);
 $permissions = $ztree->setOpenByFirst($permissions);
 $permission = json_encode($permissions);
 

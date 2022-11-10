@@ -2,7 +2,7 @@
 /**
  * 缓存
  */
-namespace library;
+namespace library\core;
 
 class Cache{
     public $dir = array(); // 缓存目录

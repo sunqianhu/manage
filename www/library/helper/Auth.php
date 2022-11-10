@@ -2,7 +2,7 @@
 /**
  * 认证
  */
-namespace library;
+namespace library\helper;
 
 class Auth{
     /**

@@ -2,14 +2,14 @@
 /**
  * 添加保存
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\DbHelper;
-use library\Validate;
+use library\helper\Auth;
+use library\core\Db;
+use library\core\Validate;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -64,8 +64,8 @@ $sql = 'select parent_ids from permission where id = :id';
 $data = array(
     ':id'=>$_POST['parent_id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$permissionParent = $dbHelper->fetch($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$permissionParent = $db->fetch($pdoStatement);
 
 // 入库
 $sql = 'insert into permission(parent_id,name,tag,sort) values(:parent_id,:name,:tag,:sort)';
@@ -75,8 +75,8 @@ $data = array(
     ':tag'=>$_POST['tag'],
     ':sort'=>$_POST['sort']
 );
-if(!$dbHelper->query($pdo, $sql, $data)){
-    $return['message'] = $dbHelper->getError();
+if(!$db->query($pdo, $sql, $data)){
+    $return['message'] = $db->getError();
     echo json_encode($return);
     exit;
 }
@@ -88,7 +88,7 @@ $data = array(
     ':parent_ids'=>$parentIds,
     ':id'=>$id
 );
-$dbHelper->query($pdo, $sql, $data);
+$db->query($pdo, $sql, $data);
 
 $return['status'] = 'success';
 $return['message'] = '添加成功';

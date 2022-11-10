@@ -2,18 +2,18 @@
 /**
  * 登录
  */
-require_once '../library/app.php';
+require_once '../main.php';
 
-use library\Config;
-use library\DbHelper;
-use library\Validate;
-use library\Auth;
-use library\Ip;
-use library\model\User;
-use library\model\Dictionary;
+use library\core\Config;
+use library\core\Db;
+use library\core\Validate;
+use library\helper\Auth;
+use library\core\Ip;
+use library\helper\User;
+use library\helper\Dictionary;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -23,8 +23,8 @@ $department = array();
 $permissions = array(); // 权限
 $ip = new Ip();
 $ipString = '';
-$userModel = new User();
-$dictionaryModel = new Dictionary();
+$userHelper = new User();
+$dictionaryHelper = new Dictionary();
 $return = array(
     'status'=>'error',
     'message'=>'',
@@ -78,32 +78,32 @@ $data = array(
     ':username'=>$_POST['username'],
     ':password'=>md5($_POST['password'])
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
+$pdoStatement = $db->query($pdo, $sql, $data);
 if(empty($pdoStatement)){
-    $return['message'] = $dbHelper->getError();
+    $return['message'] = $db->getError();
     echo json_encode($return);
     exit;
 }
-$user = $dbHelper->fetch($pdoStatement);
+$user = $db->fetch($pdoStatement);
 if(empty($user)){
     $return['message'] = '用户名或密码错误';
     echo json_encode($return);
     exit;
 }
 if($user['status_id'] != 1){
-    $return['message'] = $dictionaryModel->getValue('system_user_status', $user['status_id']);
+    $return['message'] = $dictionaryHelper->getValue('system_user_status', $user['status_id']);
     echo json_encode($return);
     exit;
 }
-$user['head_url'] = $userModel->getHeadUrl($user['head']);
+$user['head_url'] = $userHelper->getHeadUrl($user['head']);
 
 // 部门
 $sql = 'select id, name from department where id = :id';
 $data = array(
     ':id'=>$user['department_id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$department = $dbHelper->fetch($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$department = $db->fetch($pdoStatement);
 if(empty($department)){
     $return['message'] = '用户还没有设置部门';
     echo json_encode($return);
@@ -115,8 +115,8 @@ $sql = 'select id, parent_id, name, tag from permission where id in (select perm
 $data = array(
     ':role_id'=> $user['role_id_string']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$permissions = $dbHelper->fetchAll($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$permissions = $db->fetchAll($pdoStatement);
 if(empty($permissions)){
     $return['message'] = '用户还没有任何功能的权限';
     echo json_encode($return);
@@ -129,7 +129,7 @@ $sql = "update user set login_time = ".time().", ip = '".$ipString."' where id =
 $data = array(
     ':id'=>$user['id']
 );
-$dbHelper->query($pdo, $sql, $data);
+$db->query($pdo, $sql, $data);
 
 // 日志
 $sql = 'insert into login_log(user_id, department_id, login_time, ip) values(:user_id, :department_id, :login_time, :ip)';
@@ -139,7 +139,7 @@ $data = array(
     ':login_time'=>time(),
     ':ip'=>$ipString
 );
-$dbHelper->query($pdo, $sql, $data);
+$db->query($pdo, $sql, $data);
 
 // 会话
 $_SESSION['user'] = $user;

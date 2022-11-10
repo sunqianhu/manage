@@ -2,14 +2,14 @@
 /**
  * 修改保存
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\DbHelper;
-use library\Validate;
+use library\helper\Auth;
+use library\core\Db;
+use library\core\Validate;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -66,8 +66,8 @@ $sql = 'select id, parent_id from permission where id = :id';
 $data = array(
     ':id'=>$_POST['id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$permissionCurrent = $dbHelper->fetch($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$permissionCurrent = $db->fetch($pdoStatement);
 if(empty($permissionCurrent)){
     $return['message'] = '此权限没有找到';
     echo json_encode($return);
@@ -79,8 +79,8 @@ $sql = 'select parent_ids from permission where id = :id';
 $data = array(
     ':id'=>$_POST['parent_id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$permissionParent = $dbHelper->fetch($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$permissionParent = $db->fetch($pdoStatement);
 
 // 更新
 $sql = 'update permission set
@@ -98,8 +98,8 @@ $data = array(
     ':sort'=>$_POST['sort'],
     ':id'=>$permissionCurrent['id']
 );
-if(!$dbHelper->query($pdo, $sql, $data)){
-    $return['message'] = $dbHelper->getError();
+if(!$db->query($pdo, $sql, $data)){
+    $return['message'] = $db->getError();
     echo json_encode($return);
     exit;
 }

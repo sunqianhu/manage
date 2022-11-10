@@ -2,10 +2,10 @@
 /**
  * 修改密码
  */
-require_once '../library/app.php';
+require_once '../main.php';
 
-use library\Config;
-use library\Auth;
+use library\core\Config;
+use library\helper\Auth;
 
 $config = Config::getAll();
 

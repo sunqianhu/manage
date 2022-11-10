@@ -2,26 +2,26 @@
 /**
  * 修改
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\Config;
-use library\DbHelper;
-use library\Validate;
-use library\Safe;
-use library\model\Dictionary;
-use library\model\Permission;
+use library\helper\Auth;
+use library\core\Config;
+use library\core\Db;
+use library\core\Validate;
+use library\core\Safe;
+use library\helper\Dictionary;
+use library\helper\Permission;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
 $validate = new Validate();
 $config = Config::getAll();
 $permission = array();
-$permissionModel = new Permission();
-$dictionaryModel = new Dictionary();
+$permissionHelper = new Permission();
+$dictionaryHelper = new Dictionary();
 
 // 验证
 if(!Auth::isLogin()){
@@ -49,10 +49,10 @@ $sql = 'select id, parent_id, name, `sort`, tag from permission where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$permission = $dbHelper->fetch($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$permission = $db->fetch($pdoStatement);
 
-$permission['parent_name'] = $permissionModel->getName($permission['parent_id']);
+$permission['parent_name'] = $permissionHelper->getName($permission['parent_id']);
 $permission = Safe::entity($permission);
 
 ?><!doctype html>

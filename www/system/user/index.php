@@ -2,22 +2,22 @@
 /**
  * 用户管理
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\Config;
-use library\DbHelper;
-use library\FrameMain;
-use library\Pagination;
-use library\Ztree;
-use library\ArrayTwo;
-use library\Safe;
-use library\model\Dictionary;
-use library\model\Department;
-use library\model\User;
+use library\helper\Auth;
+use library\core\Config;
+use library\core\Db;
+use library\helper\FrameMain;
+use library\core\Pagination;
+use library\core\Ztree;
+use library\core\ArrayTwo;
+use library\core\Safe;
+use library\helper\Dictionary;
+use library\helper\Department;
+use library\helper\User;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -40,7 +40,7 @@ $search = array(
     'phone'=>''
 ); // 搜索
 $users = array();
-$userModel = new User();
+$userHelper = new User();
 $departments = array();
 $department = ''; // 部门json数据
 $departmentObject = new Department();
@@ -48,7 +48,7 @@ $roles = array();
 $optionRole = '';
 $optionStatus = '';
 $ztree = new Ztree();
-$dictionaryModel = new Dictionary();
+$dictionaryHelper = new Dictionary();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -105,35 +105,35 @@ if(isset($_GET['department_name'])){
 }
 
 $sql = "select count(1) from user where $where";
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$recordTotal = $dbHelper->fetchColumn($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$recordTotal = $db->fetchColumn($pdoStatement);
 
 $pagination = new Pagination($recordTotal);
 $paginationNodeIntact = $pagination->getNodeIntact();
 
 $sql = "select id, username, head, `name`, `login_time`, edit_time, phone, status_id, department_id from user where $where order by id asc limit ".$pagination->limitStart.','.$pagination->pageSize;
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$users = $dbHelper->fetchAll($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$users = $db->fetchAll($pdoStatement);
 foreach($users as $key => $user){
     $users[$key]['department_name'] = $departmentObject->getName($user['department_id']);
-    $users[$key]['status_name'] = $userModel->getBadgeStatusName($user['status_id']);
+    $users[$key]['status_name'] = $userHelper->getBadgeStatusName($user['status_id']);
     $users[$key]['edit_time_name'] = $user['edit_time'] ? date('Y-m-d H:i:s', $user['edit_time']) : '-';
     $users[$key]['login_time_name'] = $user['login_time'] ? date('Y-m-d H:i:s', $user['login_time']) : '-';
-    $users[$key]['head_url'] = $userModel->getHeadUrl($user['head']);
+    $users[$key]['head_url'] = $userHelper->getHeadUrl($user['head']);
 }
 
 $sql = 'select id, name, parent_id from department order by parent_id asc, sort asc';
-$pdoStatement = $dbHelper->query($pdo, $sql);
-$departments = $dbHelper->fetchAll($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql);
+$departments = $db->fetchAll($pdoStatement);
 
 $departments = $ztree->setOpenByFirst($departments);
 $department = json_encode($departments);
 
-$optionStatus = $dictionaryModel->getOption('system_user_status', array($search['status']));
+$optionStatus = $dictionaryHelper->getOption('system_user_status', array($search['status']));
 
 $sql = 'select id, name from role order by id asc';
-$pdoStatement = $dbHelper->query($pdo, $sql);
-$roles = $dbHelper->fetchAll($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql);
+$roles = $db->fetchAll($pdoStatement);
 $optionRole = ArrayTwo::getOption($roles, array($search['role_id']), 'id', 'name');
 
 $users = Safe::entity($users, 'status_name');
@@ -150,7 +150,7 @@ $search = Safe::entity($search);
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/ztree-3.5.48/js/jquery.ztree.core.min.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.js"></script>
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/inc/frame_main.js"></script>
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/public/frame_main.js"></script>
 <link href="<?php echo $config['app_domain'];?>css/system/user/index.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/system/user/index.js"></script>
 <script type="text/javascript">

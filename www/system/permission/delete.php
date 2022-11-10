@@ -2,15 +2,15 @@
 /**
  * 删除
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\DbHelper;
-use library\Validate;
+use library\helper\Auth;
+use library\core\Db;
+use library\core\Validate;
 
 $validate = new Validate();
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $return = array(
     'status'=>'error',
@@ -54,8 +54,8 @@ $sql = 'select id from permission where parent_id = :parent_id limit 0,1';
 $data = array(
     ':parent_id'=>$_GET['id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$permissionChild = $dbHelper->fetch($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$permissionChild = $db->fetch($pdoStatement);
 if(!empty($permissionChild)){
     $return['message'] = '该权限存在下级权限';
     echo json_encode($return);
@@ -66,8 +66,8 @@ $sql = 'delete from permission where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
-if(!$dbHelper->query($pdo, $sql, $data)){
-    $return['message'] = $dbHelper->getError();
+if(!$db->query($pdo, $sql, $data)){
+    $return['message'] = $db->getError();
     echo json_encode($return);
     exit;
 }

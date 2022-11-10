@@ -2,10 +2,10 @@
 /**
  * 系统提示
  */
-require_once 'library/app.php';
+require_once 'main.php';
 
-use library\Config;
-use library\Safe;
+use library\core\Config;
+use library\core\Safe;
 
 $config = Config::getAll();
 $message = '';

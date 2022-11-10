@@ -2,20 +2,20 @@
 /**
  * 操作日志
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\Config;
-use library\DbHelper;
-use library\FrameMain;
-use library\Pagination;
-use library\Safe;
-use library\MyString;
-use library\model\User;
-use library\model\Department;
+use library\helper\Auth;
+use library\core\Config;
+use library\core\Db;
+use library\helper\FrameMain;
+use library\core\Pagination;
+use library\core\Safe;
+use library\core\MyString;
+use library\helper\User;
+use library\helper\Department;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -34,8 +34,8 @@ $recordTotal = 0; // 总记录
 $pagination = null; // 分页
 $paginationNodeIntact = ''; // 节点
 $operationLogs = array();
-$departmentModel = new Department();
-$userModel = new User();
+$departmentHelper = new Department();
+$userHelper = new User();
 
 if(!Auth::isLogin()){
     header('location:../../operation/index.php');
@@ -84,20 +84,20 @@ if(!empty($wheres)){
 }
 
 $sql = "select count(1) from login_log where $where";
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$recordTotal = $dbHelper->fetchColumn($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$recordTotal = $db->fetchColumn($pdoStatement);
 
 $pagination = new Pagination($recordTotal);
 $paginationNodeIntact = $pagination->getNodeIntact();
 
 $sql = "select id, user_id, department_id, ip, add_time, url from operation_log where $where order by id desc limit ".$pagination->limitStart.','.$pagination->pageSize;
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$operationLogs = $dbHelper->fetchAll($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$operationLogs = $db->fetchAll($pdoStatement);
 
 foreach($operationLogs as $key => $operationLog){
     $operationLogs[$key]['add_time_name'] = date('Y-m-d H:i:s', $operationLog['add_time']);
-    $operationLogs[$key]['user_name'] = $userModel->getName($operationLog['user_id']);
-    $operationLogs[$key]['department_name'] = $departmentModel->getName($operationLog['department_id']);
+    $operationLogs[$key]['user_name'] = $userHelper->getName($operationLog['user_id']);
+    $operationLogs[$key]['department_name'] = $departmentHelper->getName($operationLog['department_id']);
     $operationLogs[$key]['url_sub'] = MyString::getSubFromZero($operationLog['url'], 60);
 }
 
@@ -114,7 +114,7 @@ $operationLogs = Safe::entity($operationLogs, 'id,url,url_sub');
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/laydate-5.3.1/laydate.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.js"></script>
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/inc/frame_main.js"></script>
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/public/frame_main.js"></script>
 <link href="<?php echo $config['app_domain'];?>css/system/operation_log/index.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/system/operation_log/index.js"></script>
 </head>

@@ -2,10 +2,10 @@
 /**
  * 操作日志模型
  */
-namespace library\model;
+namespace library\helper;
 
-use library\DbHelper;
-use library\Ip;
+use library\core\Db;
+use library\core\Ip;
 
 class OperationLog{
     
@@ -15,8 +15,8 @@ class OperationLog{
      * @return id 日志id
      */
     function add(){
-        $dbHelper = new DbHelper();
-        $pdo = $dbHelper->getPdo();
+        $db = new Db();
+        $pdo = $db->getPdo();
         $pdoStatement = null;
         $sql = '';
         $data = array();
@@ -58,7 +58,7 @@ class OperationLog{
             ':request'=>$request,
             ':add_time'=>time()
         );
-        $pdoStatement = $dbHelper->query($pdo, $sql, $data);
+        $pdoStatement = $db->query($pdo, $sql, $data);
         $id = $pdo->lastInsertId();
         
         return $id;

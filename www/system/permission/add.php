@@ -2,17 +2,17 @@
 /**
  * 添加
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\Config;
-use library\DbHelper;
-use library\model\Dictionary;
-use library\Validate;
-use library\Safe;
+use library\helper\Auth;
+use library\core\Config;
+use library\core\Db;
+use library\helper\Dictionary;
+use library\core\Validate;
+use library\core\Safe;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -23,7 +23,7 @@ $init = array(
     'parent_id'=>1,
     'parent_name'=>'顶级权限',
 );
-$dictionaryModel = new Dictionary();
+$dictionaryHelper = new Dictionary();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -49,8 +49,8 @@ if(!empty($_GET['parent_id'])){
     $data = array(
         ':id'=> $_GET['parent_id']
     );
-    $pdoStatement = $dbHelper->query($pdo, $sql, $data);
-    $permissionParent = $dbHelper->fetch($pdoStatement);
+    $pdoStatement = $db->query($pdo, $sql, $data);
+    $permissionParent = $db->fetch($pdoStatement);
     if(!empty($permissionParent)){
         $init['parent_id'] = $permissionParent['id'];
         $init['parent_name'] = $permissionParent['name'];

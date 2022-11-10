@@ -2,9 +2,9 @@
 /**
  * 系统登录
  */
-require_once '../library/app.php';
+require_once '../main.php';
 
-use library\Config;
+use library\core\Config;
 
 $config = Config::getAll();
 

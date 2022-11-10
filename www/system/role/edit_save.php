@@ -2,14 +2,14 @@
 /**
  * 修改保存
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\DbHelper;
-use library\Validate;
+use library\helper\Auth;
+use library\core\Db;
+use library\core\Validate;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -64,8 +64,8 @@ $sql = 'select id from role where id = :id';
 $data = array(
     ':id'=>$_POST['id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$role = $dbHelper->fetch($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$role = $db->fetch($pdoStatement);
 if(empty($role)){
     $return['message'] = '角色没有找到';
     echo json_encode($return);
@@ -84,8 +84,8 @@ $data = array(
     ':edit_time'=>time(),
     ':id'=>$role['id']
 );
-if(!$dbHelper->query($pdo, $sql, $data)){
-    $return['message'] = $dbHelper->getError();
+if(!$db->query($pdo, $sql, $data)){
+    $return['message'] = $db->getError();
     echo json_encode($return);
     exit;
 }
@@ -95,14 +95,14 @@ $sql = 'delete from role_permission where role_id = :role_id';
 $data = array(
     ':role_id'=>$role['id']
 );
-$dbHelper->query($pdo, $sql, $data);
+$db->query($pdo, $sql, $data);
 foreach($permissionIds as $permissionId){
     $sql = 'insert into role_permission(role_id,permission_id) values(:role_id,:permission_id)';
     $data = array(
         ':role_id'=>$role['id'],
         ':permission_id'=>$permissionId
     );
-    $dbHelper->query($pdo, $sql, $data);
+    $db->query($pdo, $sql, $data);
 }
 
 $return['status'] = 'success';

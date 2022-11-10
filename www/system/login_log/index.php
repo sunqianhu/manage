@@ -2,19 +2,19 @@
 /**
  * 登录日志
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\Config;
-use library\DbHelper;
-use library\FrameMain;
-use library\Pagination;
-use library\Safe;
-use library\model\User;
-use library\model\Department;
+use library\helper\Auth;
+use library\core\Config;
+use library\core\Db;
+use library\helper\FrameMain;
+use library\core\Pagination;
+use library\core\Safe;
+use library\helper\User;
+use library\helper\Department;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -33,8 +33,8 @@ $recordTotal = 0; // 总记录
 $pagination = null; // 分页
 $paginationNodeIntact = ''; // 节点
 $loginLogs = array();
-$departmentModel = new Department();
-$userModel = new User();
+$departmentHelper = new Department();
+$userHelper = new User();
 
 if(!Auth::isLogin()){
     header('location:../../my/login.php');
@@ -78,20 +78,20 @@ if(!empty($wheres)){
 }
 
 $sql = 'select count(1) from login_log where '.$where;
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$recordTotal = $dbHelper->fetchColumn($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$recordTotal = $db->fetchColumn($pdoStatement);
 
 $pagination = new Pagination($recordTotal);
 $paginationNodeIntact = $pagination->getNodeIntact();
 
 $sql = "select id, user_id, department_id, ip, login_time from login_log where $where order by id desc limit ".$pagination->limitStart.','.$pagination->pageSize;
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$loginLogs = $dbHelper->fetchAll($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$loginLogs = $db->fetchAll($pdoStatement);
 
 foreach($loginLogs as $key => $loginLog){
     $loginLogs[$key]['login_time_name'] = date('Y-m-d H:i:s', $loginLog['login_time']);
-    $loginLogs[$key]['user_name'] = $userModel->getName($loginLog['user_id']);
-    $loginLogs[$key]['department_name'] = $departmentModel->getName($loginLog['department_id']);
+    $loginLogs[$key]['user_name'] = $userHelper->getName($loginLog['user_id']);
+    $loginLogs[$key]['department_name'] = $departmentHelper->getName($loginLog['department_id']);
 }
 
 $search = Safe::entity($search);
@@ -107,7 +107,7 @@ $loginLogs = Safe::entity($loginLogs);
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/laydate-5.3.1/laydate.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.js"></script>
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/inc/frame_main.js"></script>
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/public/frame_main.js"></script>
 <link href="<?php echo $config['app_domain'];?>css/system/login_log/index.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/system/login_log/index.js"></script>
 </head>

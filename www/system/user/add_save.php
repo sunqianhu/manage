@@ -2,14 +2,14 @@
 /**
  * 添加保存
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\DbHelper;
-use library\Validate;
-use library\Auth;
+use library\core\Db;
+use library\core\Validate;
+use library\helper\Auth;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -80,8 +80,8 @@ $sql = 'select id from user where username = :username';
 $data = array(
     ':username'=>$_POST['username']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$user = $dbHelper->fetch($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$user = $db->fetch($pdoStatement);
 if(!empty($user)){
     $return['message'] = '用户名已经存在';
     $return['data']['dom'] = '#username';
@@ -93,8 +93,8 @@ $sql = 'select id from user where phone = :phone';
 $data = array(
     ':phone'=>$_POST['phone']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$user = $dbHelper->fetch($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$user = $db->fetch($pdoStatement);
 if(!empty($user)){
     $return['message'] = '手机号码已经存在';
     $return['data']['dom'] = '#phone';
@@ -114,8 +114,8 @@ $data = array(
     ':role_id_string'=>$_POST['role_id_string'],
     ':add_time'=>time()
 );
-if(!$dbHelper->query($pdo, $sql, $data)){
-    $return['message'] = $dbHelper->getError();
+if(!$db->query($pdo, $sql, $data)){
+    $return['message'] = $db->getError();
     echo json_encode($return);
     exit;
 }

@@ -2,18 +2,18 @@
 /**
  * 部门管理
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\Config;
-use library\DbHelper;
-use library\FrameMain;
-use library\Tree;
-use library\Safe;
-use library\model\Department;
+use library\helper\Auth;
+use library\core\Config;
+use library\core\Db;
+use library\helper\FrameMain;
+use library\core\Tree;
+use library\core\Safe;
+use library\helper\Department;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -68,8 +68,8 @@ if(!empty($wheres)){
 
 // 数据
 $sql = "select id, parent_id, name, `sort`, remark from department where $where order by `sort` asc, id asc";
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$departments = $dbHelper->fetchAll($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$departments = $db->fetchAll($pdoStatement);
 $departments = $tree->getTree($departments, 'child', 'id', 'parent_id');
 $departments = Safe::entity($departments);
 $departmentNode = $departmentObject->getIndexTreeNode($departments, 1);
@@ -83,7 +83,7 @@ $departmentNode = $departmentObject->getIndexTreeNode($departments, 1);
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/jquery-1.12.4/jquery.min.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.js"></script>
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/inc/frame_main.js"></script>
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/public/frame_main.js"></script>
 <link href="<?php echo $config['app_domain'];?>css/system/department/index.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/system/department/index.js"></script>
 </head>

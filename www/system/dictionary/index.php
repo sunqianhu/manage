@@ -2,17 +2,17 @@
 /**
  * 字典管理
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\Config;
-use library\DbHelper;
-use library\FrameMain;
-use library\Pagination;
-use library\Safe;
+use library\helper\Auth;
+use library\core\Config;
+use library\core\Db;
+use library\helper\FrameMain;
+use library\core\Pagination;
+use library\core\Safe;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -65,15 +65,15 @@ if(!empty($wheres)){
 }
 
 $sql = 'select count(1) from dictionary where '.$where;
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$recordTotal = $dbHelper->fetchColumn($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$recordTotal = $db->fetchColumn($pdoStatement);
 
 $pagination = new Pagination($recordTotal);
 $paginationNodeIntact = $pagination->getNodeIntact();
 
 $sql = "select id, type, `key`, `value`, `sort` from dictionary where $where order by type asc, `sort` asc, id asc limit ".$pagination->limitStart.','.$pagination->pageSize;
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$dictionarys = $dbHelper->fetchAll($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$dictionarys = $db->fetchAll($pdoStatement);
 
 $dictionarys = Safe::entity($dictionarys);
 ?><!doctype html>
@@ -85,7 +85,7 @@ $dictionarys = Safe::entity($dictionarys);
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/jquery-1.12.4/jquery.min.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.js"></script>
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/inc/frame_main.js"></script>
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/public/frame_main.js"></script>
 <link href="<?php echo $config['app_domain'];?>css/system/dictionary/index.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/system/dictionary/index.js"></script>
 </head>

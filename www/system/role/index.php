@@ -2,17 +2,17 @@
 /**
  * 角色管理
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\Config;
-use library\DbHelper;
-use library\FrameMain;
-use library\Safe;
-use library\Pagination;
+use library\helper\Auth;
+use library\core\Config;
+use library\core\Db;
+use library\helper\FrameMain;
+use library\core\Safe;
+use library\core\Pagination;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $data = array();
@@ -58,15 +58,15 @@ if(!empty($wheres)){
 }
 
 $sql = "select count(1) from role where $where";
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$recordTotal = $dbHelper->fetchColumn($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$recordTotal = $db->fetchColumn($pdoStatement);
 
 $pagination = new Pagination($recordTotal);
 $paginationNodeIntact = $pagination->getNodeIntact();
 
 $sql = "select id, name, edit_time from role where $where order by id asc limit ".$pagination->limitStart.','.$pagination->pageSize;
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$roles = $dbHelper->fetchAll($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$roles = $db->fetchAll($pdoStatement);
 foreach($roles as $key => $role){
     $roles[$key]['edit_time_name'] = date('Y-m-d H:i:s', $role['edit_time']);
 }
@@ -83,7 +83,7 @@ $roles = Safe::entity($roles);
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/jquery-1.12.4/jquery.min.js"></script>
 <link href="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/sun-1.0.0/sun.js"></script>
-<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/inc/frame_main.js"></script>
+<script type="text/javascript" src="<?php echo $config['app_domain'];?>js/public/frame_main.js"></script>
 <link href="<?php echo $config['app_domain'];?>css/system/role/index.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $config['app_domain'];?>js/system/role/index.js"></script>
 </head>

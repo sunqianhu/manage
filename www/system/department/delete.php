@@ -2,15 +2,15 @@
 /**
  * 删除
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\DbHelper;
-use library\Validate;
+use library\helper\Auth;
+use library\core\Db;
+use library\core\Validate;
 
 $validate = new Validate();
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $departmentChild = array();
 $sql = '';
@@ -54,8 +54,8 @@ $sql = 'select id from department where parent_id = :id limit 0,1';
 $data = array(
     ':id'=>$_GET['id']
 );
-$pdoStatement = $dbHelper->query($pdo, $sql, $data);
-$departmentChild = $dbHelper->fetch($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql, $data);
+$departmentChild = $db->fetch($pdoStatement);
 if(!empty($departmentChild)){
     $return['message'] = '该部门存在下级部门';
     echo json_encode($return);
@@ -66,8 +66,8 @@ $sql = 'delete from department where id = :id';
 $data = array(
     ':id'=>$_GET['id']
 );
-if(!$dbHelper->query($pdo, $sql, $data)){
-    $return['message'] = $dbHelper->getError();
+if(!$db->query($pdo, $sql, $data)){
+    $return['message'] = $db->getError();
     echo json_encode($return);
     exit;
 }

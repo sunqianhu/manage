@@ -2,15 +2,15 @@
 /**
  * 添加
  */
-require_once '../../library/app.php';
+require_once '../../main.php';
 
-use library\Auth;
-use library\Config;
-use library\DbHelper;
-use library\Ztree;
+use library\helper\Auth;
+use library\core\Config;
+use library\core\Db;
+use library\core\Ztree;
 
-$dbHelper = new DbHelper();
-$pdo = $dbHelper->getPdo();
+$db = new Db();
+$pdo = $db->getPdo();
 $pdoStatement = null;
 $sql = '';
 $config = Config::getAll();
@@ -28,8 +28,8 @@ if(!Auth::isPermission('system_role')){
 }
 
 $sql = 'select id, name, parent_id from permission where parent_id != 0 order by parent_id asc, sort asc';
-$pdoStatement = $dbHelper->query($pdo, $sql);
-$permissions = $dbHelper->fetchAll($pdoStatement);
+$pdoStatement = $db->query($pdo, $sql);
+$permissions = $db->fetchAll($pdoStatement);
 $permissions = $ztree->setOpenByFirst($permissions);
 $permission = json_encode($permissions);
 

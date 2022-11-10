@@ -2,7 +2,7 @@
 /**
  * http
  */
-namespace library;
+namespace library\core;
 
 class Http{
     public $error = ''; // 错误描述
