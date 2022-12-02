@@ -104,9 +104,9 @@ $permissionNode = $permissionHelper->getIndexTreeNode($permissions, 1);
 <div class="search">
 <form method="get" action="" class="form">
 <ul>
-<li>权限id：<input type="text" name="id" value="<?php echo $search['id'];?>" /></li>
-<li>权限名称：<input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
-<li>权限标识：<input type="text" name="permission" value="<?php echo $search['permission'];?>" /></li>
+<li>权限id <input type="text" name="id" value="<?php echo $search['id'];?>" /></li>
+<li>权限名称 <input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
+<li>权限标识 <input type="text" name="permission" value="<?php echo $search['permission'];?>" /></li>
 <li>
 <input type="submit" value="搜索" class="sun-button" />
 <input type="reset" class="sun-button plain sun-ml5" value="重置" />

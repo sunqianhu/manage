@@ -107,10 +107,10 @@ $dictionarys = Safe::entity($dictionarys);
 <div class="search">
 <form method="get" action="" class="form">
 <ul>
-<li>字典类型：<input type="text" name="type" value="<?php echo $search['type'];?>" /></li>
-<li>字典键：<input type="text" name="key" value="<?php echo $search['key'];?>" /></li>
+<li>字典类型 <input type="text" name="type" value="<?php echo $search['type'];?>" /></li>
+<li>字典键 <input type="text" name="key" value="<?php echo $search['key'];?>" /></li>
 <li>
-<li>字典值：<input type="text" name="value" value="<?php echo $search['value'];?>" /></li>
+<li>字典值 <input type="text" name="value" value="<?php echo $search['value'];?>" /></li>
 <li>
 <input type="submit" value="搜索" class="sun-button" />
 </li>

@@ -129,10 +129,10 @@ $loginLogs = Safe::entity($loginLogs);
 <div class="search">
 <form method="get" action="" class="form">
 <ul>
-<li>登录时间：<span class="time_range"><input type="text" name="time_start" id="time_start" value="<?php echo $search['time_start'];?>" autocomplete="off" /> 到 
+<li>登录时间 <span class="time_range"><input type="text" name="time_start" id="time_start" value="<?php echo $search['time_start'];?>" autocomplete="off" /> 到 
 <input type="text" name="time_end" id="time_end" value="<?php echo $search['time_end'];?>" autocomplete="off" /></span></li>
-<li>部门：<input type="text" name="department_name" value="<?php echo $search['department_name'];?>" /></li>
-<li>姓名：<input type="text" name="user_name" value="<?php echo $search['user_name'];?>" /></li>
+<li>部门 <input type="text" name="department_name" value="<?php echo $search['department_name'];?>" /></li>
+<li>姓名 <input type="text" name="user_name" value="<?php echo $search['user_name'];?>" /></li>
 <li>
 <input type="submit" value="搜索" class="sun-button" />
 </li>

@@ -4,7 +4,7 @@
  */
 namespace library\core;
 
-class Http{
+class Curl{
     public $error = ''; // 错误描述
     public $result = ''; // 请求结果
     
@@ -66,6 +66,7 @@ class Http{
         
         if($result === false){
             $this->setError('错误号：'.curl_errno($ch).','.'错误描述：'.curl_error($ch));
+            curl_close($ch);
             return false;
         }
         curl_close($ch);
@@ -102,6 +103,7 @@ class Http{
         
         if($result === false){
             $this->setError('错误号：'.curl_errno($ch).','.'错误描述：'.curl_error($ch));
+            curl_close($ch);
             return false;
         }
         curl_close($ch);

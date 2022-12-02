@@ -185,18 +185,18 @@ var departmentData = <?php echo $department;?>;
 <ul id="ztree" class="ztree"></ul>
 </div>
 </span></li>
-<li>状态：<select name="status">
+<li>状态 <select name="status">
 <option value="0">不限</option>
 <?php echo $optionStatus;?>
 </select></li>
-<li>角色：<select name="role_id">
+<li>角色 <select name="role_id">
 <option value="0">不限</option>
 <?php echo $optionRole;?>
 </select></li>
-<li>用户id：<input type="text" name="id" value="<?php echo $search['id'];?>" /></li>
-<li>用户名：<input type="text" name="username" value="<?php echo $search['username'];?>" /></li>
-<li>用户姓名：<input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
-<li>手机号码：<input type="text" name="phone" value="<?php echo $search['phone'];?>" /></li>
+<li>用户id <input type="text" name="id" value="<?php echo $search['id'];?>" /></li>
+<li>用户名 <input type="text" name="username" value="<?php echo $search['username'];?>" /></li>
+<li>用户姓名 <input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
+<li>手机号码 <input type="text" name="phone" value="<?php echo $search['phone'];?>" /></li>
 <li>
 <input type="submit" value="搜索" class="sun-button" />
 </li>

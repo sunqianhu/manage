@@ -105,8 +105,8 @@ $roles = Safe::entity($roles);
 <div class="search">
 <form method="get" action="" class="form">
 <ul>
-<li>角色id：<input type="text" name="id" value="<?php echo $search['id'];?>" /></li>
-<li>角色名称：<input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
+<li>角色id <input type="text" name="id" value="<?php echo $search['id'];?>" /></li>
+<li>角色名称 <input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
 <li>
 <input type="submit" value="搜索" class="sun-button" />
 </li>

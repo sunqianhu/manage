@@ -105,9 +105,9 @@ $departmentNode = $departmentObject->getIndexTreeNode($departments, 1);
 <div class="search">
 <form method="get" action="" class="form">
 <ul>
-<li>部门id：<input type="text" name="id" value="<?php echo $search['id'];?>" /></li>
-<li>部门名称：<input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
-<li>备注：<input type="text" name="remark" value="<?php echo $search['remark'];?>" /></li>
+<li>部门id <input type="text" name="id" value="<?php echo $search['id'];?>" /></li>
+<li>部门名称 <input type="text" name="name" value="<?php echo $search['name'];?>" /></li>
+<li>备注 <input type="text" name="remark" value="<?php echo $search['remark'];?>" /></li>
 <li>
 <input type="submit" value="搜索" class="sun-button" />
 <input type="reset" class="sun-button plain sun-ml5" value="重置" />
